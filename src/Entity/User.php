@@ -7,7 +7,9 @@ class User
     private ?int $id = null;
     private ?string $login = null;
     private ?string $password = null;
-    private $player = null;
+    private ?Player $player = null;
+
+    private ?int $playerId = null;
 
     public function getId(): ?int
     {
@@ -35,6 +37,22 @@ class User
     {
         $this->password = $password;
 
+        return $this;
+    }
+
+    public function getPlayer(): ?Player
+    {
+        return $this->player;
+    }
+
+    public function getPlayerId(): ?int
+    {
+        return $this->playerId;
+    }
+
+    public function setPlayerId(int $playerId): static
+    {
+        $this->playerId = $playerId;
         return $this;
     }
 }

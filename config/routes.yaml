@@ -1,5 +1,17 @@
-controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
-    type: attribute
+index:
+    path: /
+    methods: GET
+    controller: App\Controller\UserController::index
+register:
+    path: /signup
+    controller: App\Controller\UserController::register
+
+
+
+
+
+# api
+api_register:
+    path: /api/register
+    controller: App\Controller\UserController::registerByJson
+    methods: POST

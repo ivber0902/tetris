@@ -12,7 +12,7 @@ class Player
     private ?int $gameCount = null;
     private ?int $winCount = null;
 
-    private $user = null;
+    private ?User $user = null;
 
     public function getId(): ?int
     {
@@ -87,5 +87,13 @@ class Player
     public function setAverageScore(?int $averageScore): static {
         $this->averageScore = $averageScore;
         return $this;
+    }
+
+    /**
+     * @return null
+     */
+    public function getUser(): null
+    {
+        return $this->user;
     }
 }

@@ -1,0 +1,11 @@
+App\Entity\User:
+  properties:
+    login:
+      - NotBlank: ~
+      - App\Service\Validator\UsernameValidator:
+          mode: 'loose'
+      - Length:
+          min: 2
+          minMassage: Минимальная длина имени пользователя 2 символа
+    password:
+      - NotBlank ~

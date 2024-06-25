@@ -7,7 +7,8 @@
         <id name="id" type="integer" column="id">
             <generator strategy="IDENTITY"/>
         </id>
-        <field name="login" column="Login" type="string" length="255"/>
-        <field name="password" column="Password" type="string" length="255"/>
+        <field name="login" column="login" type="string" length="255"/>
+        <field name="password" column="password" type="string" length="255"/>
+        <field name="playerId" column="player_id" type="integer" nullable="true"/>
     </entity>
 </doctrine-mapping>

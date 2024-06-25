@@ -3,41 +3,35 @@
 namespace App\Repository;
 
 use App\Entity\Player;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 
-/**
- * @extends ServiceEntityRepository<Player>
- */
-class PlayerRepository extends ServiceEntityRepository
+
+class PlayerRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private EntityRepository $repository;
+
+    public function __construct(private readonly EntityManagerInterface $entityManager)
     {
-        parent::__construct($registry, Player::class);
+        $this->repository = $entityManager->getRepository(Player::class);
     }
 
-    //    /**
-    //     * @return Player[] Returns an array of Player objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('p.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function store(Player $player): int
+    {
+        $this->entityManager->persist($player);
+        $this->entityManager->flush();
+        return $player->getId();
+    }
 
-    //    public function findOneBySomeField($value): ?Player
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function delete(Player $player): void
+    {
+        $this->entityManager->remove($player);
+        $this->entityManager->flush();
+    }
+
+    public function find(int $id): Player
+    {
+        return $this->entityManager->find(Player::class, $id);
+    }
 }
+
