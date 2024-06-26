@@ -8,7 +8,6 @@ register:
 login:
     path: /login
     controller: App\Controller\SecurityController::login
-
 logout:
     path: /logout
     controller: App\Controller\SecurityController::logout
@@ -22,9 +21,7 @@ game_over:
 game:
     path: /game
     controller: App\Controller\GameController::game
-login-page:
-    path: /login-page
-    controller: App\Controller\GameController::loginPage
+
 
 # api
 api_register:
