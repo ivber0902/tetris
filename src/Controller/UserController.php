@@ -29,17 +29,9 @@ class UserController extends AbstractController
     {
         $input = new RegisterUserInput();
         $form = $this->createForm(RegisterUserInput::class, $input, [
-            'action' => $this->generateUrl('register'),
+            'action' => $this->generateUrl('api_register'),
         ]);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid())
-        {
-            $input = $form->getData();
-            $userId = $this->userService->register($input);
-
-            return $this->redirectToRoute('index', ["id" => $userId]);
-        }
-
         return $this->render('user/register.html.twig', [
             'form' => $form->createView(),
         ]);

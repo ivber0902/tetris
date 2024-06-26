@@ -6,7 +6,7 @@
         <id name="id" type="integer" column="id">
             <generator strategy="IDENTITY"/>
         </id>
-        <field name="userId" type="integer" column="user_id"/>
+        <field name="userId" type="integer" column="user_id" nullable="true"/>
         <field name="maxScore" type="integer" column="max_score" nullable="true"/>
         <field name="averageScore" type="integer" column="average_score" nullable="true"/>
         <field name="totalScore" type="integer" column="total_score" nullable="true"/>
