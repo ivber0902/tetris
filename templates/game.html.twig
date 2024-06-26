@@ -1,0 +1,25 @@
+{% extends "base.html.twig" %}
+{% block style %}game.css{% endblock %}
+{% block script %}game.js{% endblock %}
+{% block content %}
+<body>
+   <main class="main">
+        <img class="logo" src="../images/logo.svg" alt="logo">
+        <div class="wrapper-game">
+            <div class="game__buffer">
+                <img class="buffer__figure" src="" alt="figure">
+            </div>
+            <canvas id="game">
+                
+            </canvas>
+            <div class="next__figure">
+                <img class="figure"  src="" alt="figure">
+                <img class="figure"  src="" alt="figure">
+                <img class="figure"  src="" alt="figure">
+                <img class="figure"  src="" alt="figure">
+            </div>
+        </div>
+   </main>
+</body>
+</html>
+{% endblock %}
