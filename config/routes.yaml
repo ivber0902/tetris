@@ -5,10 +5,13 @@ index:
 register:
     path: /signup
     controller: App\Controller\UserController::register
+login:
+    path: /login
+    controller: App\Controller\SecurityController::login
 
-
-
-
+logout:
+    path: /logout
+    controller: App\Controller\SecurityController::logout
 
 # api
 api_register:

@@ -5,10 +5,10 @@
 </head>
 <body>
 {{ form_start(form) }}
-{{ form_label(form.login) }}
-{{ form_widget(form.login) }}
-{{ form_label(form.password) }}
-{{ form_widget(form.password) }}
+{{ form_label(form.login, 'Hello', {label_attr: {class: 'labelok'}}) }}
+{{ form_widget(form.login, {attr: {class: 'skjdfhkjshdf'}}) }}
+<label for="{{ form.password.vars.id }}">Пароль: </label>
+{{ form_widget(form.password, {attr: {placeholder: '*****', class: 'class', autocomplete: 'off'}}) }}
 {{ form_end(form) }}
 </body>
 </html>

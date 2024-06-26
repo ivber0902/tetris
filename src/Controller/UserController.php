@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Controller\Input\RegisterUserInput;
+use App\Service\PlayerService;
 use App\Service\UserService;
 use Symfony\Component\HttpFoundation\Request;
 use \Symfony\Component\HttpFoundation\Response;
@@ -11,18 +12,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class UserController extends AbstractController
 {
     public function __construct(
-        private readonly UserService  $userService
+        private readonly UserService $userService
     )
     {
     }
 
     public function index(Request $request): Response
     {
-        $id = $request->query->get('id');
-        if (null !== $id) {
-            $user = $this->userService->findUser($id);
-            var_dump($user);
-        }
+        var_dump($this->getUser());
         return $this->render('index.html.twig');
     }
     public function register(Request $request): Response
@@ -37,7 +34,7 @@ class UserController extends AbstractController
             $input = $form->getData();
             $userId = $this->userService->register($input);
 
-            return $this->redirectToRoute('index', ["id" => $userId]);
+            return $this->redirectToRoute('login');
         }
 
         return $this->render('user/register.html.twig', [

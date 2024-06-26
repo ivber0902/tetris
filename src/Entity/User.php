@@ -55,4 +55,9 @@ class User
         $this->playerId = $playerId;
         return $this;
     }
+
+    public function getRole(): string
+    {
+        return 'ROLE_USER';
+    }
 }

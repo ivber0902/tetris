@@ -4,31 +4,19 @@ namespace App\Entity;
 
 class Player
 {
-    private ?int $id = null;
-    private ?int $userId = null;
-    private ?int $maxScore = null;
-    private ?int $averageScore = null;
-    private ?int $totalScore = null;
-    private ?int $gameCount = null;
-    private ?int $winCount = null;
+    private readonly ?int $id;
+    private ?int $userId;
+    private ?int $maxScore = 0;
+    private ?int $averageScore = 0;
+    private ?int $totalScore = 0;
+    private ?int $gameCount = 0;
+    private ?int $winCount = 0;
 
-    private ?User $user = null;
+    private ?User $user;
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getUserId(): ?int
-    {
-        return $this->userId;
-    }
-
-    public function setUserId(int $userId): static
-    {
-        $this->userId = $userId;
-
-        return $this;
     }
 
     public function getMaxScore(): ?int
@@ -88,12 +76,23 @@ class Player
         $this->averageScore = $averageScore;
         return $this;
     }
-
-    /**
-     * @return null
-     */
-    public function getUser(): null
+    public function setUser(?User $user): void
+    {
+        $this->user = $user;
+    }
+    public function getUser(): ?User
     {
         return $this->user;
+    }
+
+    public function setUserId(?int $userId): static
+    {
+        $this->userId = $userId;
+        return $this;
+    }
+
+    public function getUserId(): ?int
+    {
+        return $this->userId;
     }
 }

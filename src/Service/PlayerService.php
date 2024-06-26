@@ -3,7 +3,6 @@
 namespace App\Service;
 
 use App\Entity\Player;
-use App\Entity\User;
 use App\Repository\PlayerRepository;
 
 class PlayerService
@@ -12,11 +11,14 @@ class PlayerService
     {
     }
 
-    public function addPlayer(int $userId): int {
+    public function addPlayer(?int $userId): int {
         $player = new Player();
         $player->setUserId($userId);
-
         return $this->playerRepository->store($player);
+    }
+
+    public function findPlayerById(int $id): ?Player {
+        return $this->playerRepository->find($id);
     }
 
     public function updatePlayer(
@@ -26,7 +28,7 @@ class PlayerService
         int $totalScore,
         int $gameCount,
         int $winCount,
-        int $userId = null
+        ?int $userId = null
     ): int
     {
         $player = $this->playerRepository->find($id);

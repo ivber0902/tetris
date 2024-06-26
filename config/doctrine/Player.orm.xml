@@ -3,18 +3,15 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
     <entity name="App\Entity\Player" table="player">
+        <one-to-one field="user" target-entity="App\Entity\User" inversed-by="player"/>
         <id name="id" type="integer" column="id">
             <generator strategy="IDENTITY"/>
         </id>
         <field name="userId" type="integer" column="user_id"/>
-        <field name="maxScore" type="integer" column="max_score" nullable="true"/>
-        <field name="averageScore" type="integer" column="average_score" nullable="true"/>
-        <field name="totalScore" type="integer" column="total_score" nullable="true"/>
-        <field name="gameCount" type="integer" column="game_count" nullable="true"/>
-        <field name="winCount" type="integer" column="win_count" nullable="true"/>
-
-        <one-to-one field="user" target-entity="App\Entity\User" inversed-by="player">
-            <join-column name="user_id" referenced-column-name="id"/>
-        </one-to-one>
+        <field name="maxScore" type="integer" column="max_score"/>
+        <field name="averageScore" type="integer" column="average_score"/>
+        <field name="totalScore" type="integer" column="total_score"/>
+        <field name="gameCount" type="integer" column="game_count"/>
+        <field name="winCount" type="integer" column="win_count"/>
     </entity>
 </doctrine-mapping>
