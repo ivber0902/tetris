@@ -25,6 +25,15 @@ class UserController extends AbstractController
         }
         return $this->render('index.html.twig');
     }
+
+    public function menu(): Response
+    {
+        return $this->render('menu.html.twig');
+    }
+    public function game_over(): Response
+    {
+        return $this->render('game-over.html.twig');
+    }
     public function register(Request $request): Response
     {
         $input = new RegisterUserInput();

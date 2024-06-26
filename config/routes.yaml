@@ -5,7 +5,12 @@ index:
 register:
     path: /signup
     controller: App\Controller\UserController::register
-
+menu:
+    path: /menu
+    controller: App\Controller\UserController::menu
+game_over:
+    path: /game_over
+    controller: App\Controller\UserController::game_over
 
 
 
