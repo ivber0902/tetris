@@ -1,14 +1,32 @@
-<!doctype html>
-<html lang="ru">
-<head>
-    <title>Document</title>
-</head>
-<body>
-{{ form_start(form) }}
-{{ form_label(form.login) }}
-{{ form_widget(form.login) }}
-{{ form_label(form.password) }}
-{{ form_widget(form.password) }}
-{{ form_end(form) }}
-</body>
-</html>
+{% extends "base.html.twig" %}
+{% block style %}register-style.css{% endblock %}
+{% block script %}register.js{% endblock %}
+{% block content %}
+<main class="main">
+    <div class="title">
+        <img class="logo" src="../images/logo.svg">
+    </div>
+    <div class="login">
+        <p class="login__title">ДОБРО ПОЖАЛОВАТЬ В СЛАВЯНСКИЙ ТЕТРИС!</p>
+        {{ form_start(form, { 'attr' : { 'class': 'login-input' }})}}
+                {{ form_widget(form.login, { 'attr' : { 'class': 'login-input__username-input', 'placeholder': 'ЛОГИН'}})}}
+            <p class="login-input__username-validation">НЕПРАВИЛЬНЫЙ ФОРМАТ ЛОГИНА</p>
+            <p class="login-input__username-require">ВВЕДИТЕ ЛОГИН</p>
+            <p class="login-input__username-employment">ТАКОЕ ИМЯ УЖЕ СУЩЕСТВУЕТ</p>
+            {{ form_widget(form.password, { 'attr' : { 'class': 'login-input__password-input', 'placeholder': 'ПАРОЛЬ'}})}}
+            <p class="login-input__password-require">ВВЕДИТЕ ПАРОЛЬ</p>
+            <p class="login-input__password-validation">ПАРОЛЬ ДОЛЖЕН СОДЕРЖАТЬ НЕ МЕНЕЕ 8 СИМВОЛОВ</p> 
+            <input class="login-input__password-again" type="password" placeholder="ПОВТОРИТЕ ПАРОЛЬ"> 
+            <p class="login-input__again-require">ВВЕДИТЕ ПАРОЛЬ</p>
+            <p class="login-input__again-validation">ПАРОЛЬ ДОЛЖЕН СОДЕРЖАТЬ НЕ МЕНЕЕ 8 СИМВОЛОВ</p>
+            <p class="login-input__again-identical">ПАРОЛИ ДОЛЖНЫ БЫТЬ ОДИНАКОВЫМИ</p>                 
+            <div class="login-input__button">
+                <input class="LogIn" value="Вход"/> 
+                <input class="Register" type="submit" value="Регистрация"/>
+            </div>
+        {{ form_end(form) }}
+    </div>
+</main> 
+{% endblock %}
+
+
