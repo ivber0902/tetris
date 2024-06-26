@@ -9,7 +9,7 @@
         <div class="login">
             <p class="login__title">ДОБРО ПОЖАЛОВАТЬ В СЛАВЯНСКИЙ ТЕТРИС!</p>
             {{ form_start(form, { 'attr' : { 'class': 'login-input' }})}}
-            {{ form_widget(form.login, { 'attr' : { 'class': 'login-input__username-input', 'placeholder': 'ЛОГИН'}})}}
+            {{ form_widget(form.login, { 'attr' : { 'class': 'login-input__username-input', 'placeholder': 'ЛОГИН', 'autocomplete': 'off'}})}}
             <p class="login-input__username-validation">НЕПРАВИЛЬНЫЙ ФОРМАТ ЛОГИНА</p>
             <p class="login-input__username-require">ВВЕДИТЕ ЛОГИН</p>
             <p class="login-input__username-employment">ТАКОЕ ИМЯ УЖЕ СУЩЕСТВУЕТ</p>

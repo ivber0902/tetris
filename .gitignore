@@ -9,7 +9,7 @@
 #/vendor/
 ###< symfony/framework-bundle ###
 /var/
-/.env/
 /.env
 /vendor/
 /.idea
+/.vscode
