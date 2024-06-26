@@ -34,7 +34,6 @@ class RegisterUserInput extends AbstractType implements RegisterUserInputInterfa
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('login', TextType::class)
-                ->add('password', PasswordType::class)
-                ->add('submit', SubmitType::class);
+                ->add('password', PasswordType::class);
     }
 }

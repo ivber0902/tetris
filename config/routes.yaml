@@ -13,6 +13,19 @@ logout:
     path: /logout
     controller: App\Controller\SecurityController::logout
 
+menu:
+    path: /menu
+    controller: App\Controller\GameController::menu
+game_over:
+    path: /game_over
+    controller: App\Controller\GameController::game_over
+game:
+    path: /game
+    controller: App\Controller\GameController::game
+login-page:
+    path: /login-page
+    controller: App\Controller\GameController::loginPage
+
 # api
 api_register:
     path: /api/register
