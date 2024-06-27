@@ -11,13 +11,15 @@ class PlayerService
     {
     }
 
-    public function addPlayer(?int $userId): int {
+    public function addPlayer(?int $userId): int
+    {
         $player = new Player();
         $player->setUserId($userId);
         return $this->playerRepository->store($player);
     }
 
-    public function findPlayerById(int $id): ?Player {
+    public function findPlayerById(int $id): ?Player
+    {
         return $this->playerRepository->find($id);
     }
 
@@ -47,31 +49,31 @@ class PlayerService
 
     public function updateStatistics(
         int $id,
-        int $score,
-        bool $isWon
+        ?int $score,
+        ?bool $isWon
     ): int
     {
         $player = $this->playerRepository->find($id);
 
-        if ($player->getMaxScore() === null || $player->getMaxScore() < $score) {
-            $player->setMaxScore($score);
-        }
+        if ($isWon === null && $score !== null) {
+            if ($player->getMaxScore() === null || $player->getMaxScore() < $score) {
+                $player->setMaxScore($score);
+            }
 
-        if ($player->getAverageScore() === null) {
-            $player->setAverageScore($score);
-        } else {
-            $player->setAverageScore(
-                ($player->getAverageScore() * $player->getGameCount() + $score) / ($player->getGameCount() + 1)
-            );
+            if ($player->getAverageScore() === null) {
+                $player->setAverageScore($score);
+            } else {
+                $player->setAverageScore(
+                    ($player->getAverageScore() * $player->getGameCount() + $score) / ($player->getGameCount() + 1)
+                );
+            }
+            $player->setTotalScore(($player->getTotalScore() ?? 0) + $score);
         }
-
-        $player->setGameCount(($player->getGameCount() ?? 0) + 1);
 
         if ($isWon) {
             $player->setWinCount(($player->getWinCount() ?? 0) + 1);
         }
-
-        $player->setTotalScore(($player->getTotalScore() ?? 0) + $score);
+        $player->setGameCount(($player->getGameCount() ?? 0) + 1);
 
         return $this->playerRepository->store($player);
     }
