@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", (event) => {
     const canvas = document.getElementById('game');
     const field = canvas.getContext('2d');
-    let nextFifures = document.querySelectorAll(".figure");
     const BOX = 34;
     const BOARD_WIDTH = 10;
     const BOARD_HEIGHT = 20;
@@ -144,13 +143,12 @@ document.addEventListener("DOMContentLoaded", (event) => {
     }
 
     function rotateMatrix(matrix) {
-        const N = matrix.length;
         let rotated = [];
 
-        for (let i = 0; i < N; i++) {
+        for (let i = 0; i < matrix.length; i++) {
             rotated[i] = [];
-            for (let j = 0; j < N; j++) {
-                rotated[i][j] = matrix[N - 1 - j][i];
+            for (let j = 0; j < matrix.length; j++) {
+                rotated[i][j] = matrix[matrix.length - 1 - j][i];
             }
         }
 
@@ -162,7 +160,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
         return figures[randomIndex];
     }
 
-    function clearFigure() {
+    function clearFigure(figure) {
         for (let i = 0; i < figure.matrix[0].length; i++) {
             for (let j = 0; j < figure.matrix[0].length; j++) {
                 if (figure.matrix[i][j])
@@ -186,32 +184,22 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
     function clearRow() {
         let cleared = 0;
-        for(let row = 19; row >= 0; row--)
-            {
-
-                if (playField[row].every(element => element > 5))
-                    {
-                        console.log('tetris', playField);
-                        for (let column = 0; column < 10; column++)
-                        {
-                            playField[row][column] = 0;            
-                        }
-                        score = score + 100;
-                        console.log(score);
-                        for (let j = 0; j < 10; j++)
-                        {
-                            for (let i = 19; i > 0; i--)
-                                {
-                                    playField[i][j] = playField[i - 1][j]
-                                }
-                        }
-                        cleared++;
+        for (let row = 19; row > 0; row--) {
+            if (playField[row].every(element => element > 5)) {
+                score = score + 100;
+                console.log(score);
+                for (let j = 0; j < 10; j++) {
+                    for (let i = row; i > 0; i--) {
+                        playField[i][j] = playField[i - 1][j]
                     }
+                }
+                cleared++;
             }
+        }
         return cleared;
     }
 
-    
+
 
     document.addEventListener('keydown', (e) => {
         if (e.code == 'ArrowLeft') {
@@ -230,12 +218,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
         }
         if (e.key === 'ArrowUp') {
             let rotated = rotateMatrix(figure.matrix);
-            if (checkPosition(figure.x, figure.y, rotated))
-                {
+            if (checkPosition(figure.x, figure.y, rotated)) {
 
-            clearFigure();
-                    figure.matrix=rotated
-                }
+                clearFigure(figure);
+                figure.matrix = rotated
+            }
         }
     })
 
@@ -245,8 +232,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
         };
     })
 
-    
-    init()
+
+    init();
     function game() {
         field.clearRect(0, 0, canvas.width, canvas.height);
         for (let i = 0; i < figure.matrix[0].length; i++) {
@@ -263,7 +250,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
                 }
             }
         }
-        playTime++;
         if (playTime * nitro >= tiktime) {
             playTime = 0;
             if (checkPosition(figure.x, figure.y + 1, figure.matrix))
@@ -277,22 +263,19 @@ document.addEventListener("DOMContentLoaded", (event) => {
                 }
                 figure = getRandomFigure(figures)
                 if (checkPosition(3, 0, figure.matrix)) {
-                figure.x = 3;
-                figure.y = 0;
+                    figure.x = 3;
+                    figure.y = 0;
                 } else {
                     window.location.href = "/game_over";
                 }
             }
         }
-
-        clearRow();
-
         // if (figure.x === 0 && figure.y === 15) {
         //     window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
         //     return;
         // }
         if (moveFlag !== '') {
-            clearFigure();
+            clearFigure(figure);
             switch (moveFlag) {
                 case 'down':
                     figure.y++
@@ -310,7 +293,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
             }
             moveFlag = '';
         }
-        
+        playTime++;
+        clearRow();
         requestAnimationFrame(game);
     }
 
