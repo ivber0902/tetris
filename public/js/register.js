@@ -123,7 +123,11 @@ async function Validation()
             let json = await response.json();
             window.location.href = '/menu';
           } else {
-            usernameEmployment.style.display = "flex";
+            if(response.status >= 500){
+                alert("Сервер временно не доступен :(");
+            }else{
+                usernameEmployment.style.display = "flex";
+            }
           }
     }
 
