@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     canvas.width = 340;
     canvas.height = 680;
     let playField = [];
+    let GameOver = false;
     const linkBlock = ['/images/blocks/blue.png', '/images/blocks/pink.png', '/images/blocks/yellow.png', '/images/blocks/orange.png', '/images/blocks/red.png', '/images/blocks/green.png', '/images/blocks/green.png'];
     const linkImage = ['/images/blocks/blueD.png', '/images/blocks/pinkD.png', '/images/blocks/yellowD.png', '/images/blocks/orangeD.png', '/images/blocks/redD.png', '/images/blocks/greenD.png', '/images/blocks/greenD.png']
     let figures = [
@@ -142,6 +143,20 @@ document.addEventListener("DOMContentLoaded", (event) => {
         startGame()
     }
 
+    async function SendResult(score) {
+        let response = await fetch('/api/statistics', {
+            method: 'POST',
+            body: JSON.stringify({
+                score: score
+            })
+        });
+        if (response.ok) {
+            window.location.href = '/game_over';
+        } else {
+            window.location.href = '/';
+        }
+    }
+    
     function rotateMatrix(matrix) {
         let rotated = [];
 
@@ -173,7 +188,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
         for (let i = 0; i < matrix[0].length; i++) {
             for (let j = 0; j < matrix[0].length; j++) {
                 if (matrix[i][j]) {
-                    if (Math.floor(playField[y + i][x + j] / 10) !== 0) {
+                    let color = playField[y + i][x + j];
+                    if (10 < color && color < 20 || 30 < color) {
                         return false;
                     }
                 }
@@ -199,7 +215,22 @@ document.addEventListener("DOMContentLoaded", (event) => {
         return cleared;
     }
 
+    function createShadow(figure) {
+        let pos = getBottomPosition(figure);
+        for (let i = 0; i < figure.matrix.length; i++) {
+            for (let j = 0; j < figure.matrix[i].length; j++) {
+                if (playField[pos.y + i][pos.x + j] === 0 && figure.matrix[i][j] !== 0) {
+                    playField[pos.y + i][pos.x + j] = figure.matrix[i][j] + 20;
+                }
+            }
+        }
+    }
 
+    function getBottomPosition(figure) {
+        let i = 1;
+        for (; checkPosition(figure.x, figure.y + i, figure.matrix); i++);
+        return {x: figure.x, y: figure.y + i - 1}
+    }
 
     document.addEventListener('keydown', (e) => {
         if (e.code == 'ArrowLeft') {
@@ -242,6 +273,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
                     playField[i + figure.y][j + figure.x] = figure.matrix[i][j];
             }
         }
+        createShadow(figure);
 
         for (let row = 0; row < BOARD_HEIGHT; row++) {
             for (let col = 0; col < BOARD_WIDTH; col++) {
@@ -250,6 +282,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
                 }
             }
         }
+        clearFigure({matrix: figure.matrix, ...getBottomPosition(figure)})
+        playTime++;
         if (playTime * nitro >= tiktime) {
             playTime = 0;
             if (checkPosition(figure.x, figure.y + 1, figure.matrix))
@@ -266,7 +300,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
                     figure.x = 3;
                     figure.y = 0;
                 } else {
-                    window.location.href = "/game_over";
+                    SendResult(score);
+                    GameOver = true
                 }
             }
         }
@@ -287,9 +322,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
                     figure.x++
                     break;
                 case 'set':
-                    let i = 1;
-                    for (; checkPosition(figure.x, figure.y + i, figure.matrix); i++);
-                    figure.y += i - 1;
+                    let pos = getBottomPosition(figure);
+                    figure.y = pos.y;
             }
             moveFlag = '';
         }
