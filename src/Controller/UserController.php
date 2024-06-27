@@ -8,6 +8,7 @@ use App\Service\UserService;
 use Symfony\Component\HttpFoundation\Request;
 use \Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class UserController extends AbstractController
 {
@@ -31,7 +32,7 @@ class UserController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-    public function registerByJson(Request $request): Response
+    public function registerByJson(Request $request, ValidatorInterface $validator): Response
     {
         $input = new RegisterUserInput();
         $form = $this->createForm(RegisterUserInput::class, $input);
@@ -48,9 +49,9 @@ class UserController extends AbstractController
                     "userID" => $userId
                 ], 200, ["Content-Type" => "application/json"]);
             } else {
-                $formErrors = $form->getErrors();
+                $errors = $validator->validate($input);
                 return $this->json([
-                    "message" => $formErrors
+                    "message" => $errors
                 ], 400, ["Content-Type" => "application/json"]);
             }
         }
