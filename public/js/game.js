@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     canvas.width = 340;
     canvas.height = 680;
     let playField = [];
+    let GameOver = false;
     const linkBlock = ['/images/blocks/blue.png', '/images/blocks/pink.png', '/images/blocks/yellow.png', '/images/blocks/orange.png', '/images/blocks/red.png', '/images/blocks/green.png', '/images/blocks/green.png'];
     const linkImage = ['/images/blocks/blueD.png', '/images/blocks/pinkD.png', '/images/blocks/yellowD.png', '/images/blocks/orangeD.png', '/images/blocks/redD.png', '/images/blocks/greenD.png', '/images/blocks/greenD.png']
     let figures = [
@@ -142,6 +143,20 @@ document.addEventListener("DOMContentLoaded", (event) => {
         startGame()
     }
 
+    async function SendResult(score) {
+        let response = await fetch('/api/statistics', {
+            method: 'POST',
+            body: JSON.stringify({
+                score: score
+            })
+        });
+        if (response.ok) {
+            window.location.href = '/game_over';
+        } else {
+            window.location.href = '/';
+        }
+    }
+    
     function rotateMatrix(matrix) {
         let rotated = [];
 
@@ -285,7 +300,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
                     figure.x = 3;
                     figure.y = 0;
                 } else {
-                    window.location.href = "/game_over";
+                    SendResult(score);
+                    GameOver = true
                 }
             }
         }
