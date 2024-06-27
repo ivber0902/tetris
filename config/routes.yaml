@@ -29,3 +29,7 @@ api_register:
     path: /api/register
     controller: App\Controller\UserController::registerByJson
     methods: POST
+api_update_statistics:
+    path: /api/statistics
+    methods: POST
+    controller: App\Controller\PlayerController::updateStatistics
