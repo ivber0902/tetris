@@ -1,0 +1,12 @@
+App\Controller\Input\RegisterUserInput:
+  properties:
+    login:
+      - NotBlank: ~
+      - Regex:
+           pattern: '/^[абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫБЭЮЯ0-9_]+$/i' # Регулярки тут не умеют обрабатывать кириллицу
+           message: Доступен только русский алфавит
+    password:
+      - NotBlank: ~
+      - Length:
+          min: 8
+          minMessage: Минимальная длина пароля 8 символов

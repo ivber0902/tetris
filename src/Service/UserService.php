@@ -65,7 +65,7 @@ class UserService {
     {
         $user = $this->findUserByLogin($input->getLogin());
         if ($user !== null) {
-            throw new \InvalidArgumentException("User with login \"" . $input->getLogin() . "\" already has been registered");
+            throw new \InvalidArgumentException("Пользователь с логином \"" . $input->getLogin() . "\" уже зарегистрирован");
         }
 
         return $this->addUser(

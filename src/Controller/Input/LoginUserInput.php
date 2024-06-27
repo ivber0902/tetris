@@ -2,15 +2,14 @@
 
 namespace App\Controller\Input;
 
-use App\Service\Input\RegisterUserInputInterface;
+use App\Service\Input\LoginUserInputInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class RegisterUserInput extends AbstractType implements RegisterUserInputInterface {
+class LoginUserInput extends AbstractType implements LoginUserInputInterface {
     private string $login;
     private string $password;
 
@@ -35,6 +34,7 @@ class RegisterUserInput extends AbstractType implements RegisterUserInputInterfa
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('login', TextType::class)
-                ->add('password', PasswordType::class);
+                ->add('password', PasswordType::class)
+                ->add('submit', SubmitType::class);
     }
 }

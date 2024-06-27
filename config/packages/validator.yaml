@@ -3,7 +3,7 @@ framework:
         enabled: true
         mapping:
             paths:
-                - '%kernel.project_dir%/config/validator/validation.yaml'
+                - '%kernel.project_dir%/config/validator/user.yaml'
         # Enables validator auto-mapping support.
         # For instance, basic validation constraints will be inferred from Doctrine's metadata.
         #auto_mapping:

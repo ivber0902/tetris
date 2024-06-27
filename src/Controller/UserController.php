@@ -3,49 +3,36 @@
 namespace App\Controller;
 
 use App\Controller\Input\RegisterUserInput;
+use App\Service\PlayerService;
 use App\Service\UserService;
 use Symfony\Component\HttpFoundation\Request;
 use \Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class UserController extends AbstractController
 {
     public function __construct(
-        private readonly UserService  $userService
+        private readonly UserService $userService
     )
     {
     }
 
     public function index(Request $request): Response
     {
-        $id = $request->query->get('id');
-        if (null !== $id) {
-            $user = $this->userService->findUser($id);
-            var_dump($user);
-        }
+        var_dump($this->getUser());
         return $this->render('index.html.twig');
-    }
-
-    public function menu(): Response
-    {
-        return $this->render('menu.html.twig');
-    }
-    public function game_over(): Response
-    {
-        return $this->render('game-over.html.twig');
     }
     public function register(Request $request): Response
     {
         $input = new RegisterUserInput();
-        $form = $this->createForm(RegisterUserInput::class, $input, [
-            'action' => $this->generateUrl('api_register'),
-        ]);
-        $form->handleRequest($request);
+        $form = $this->createForm(RegisterUserInput::class, $input);
+
         return $this->render('user/register.html.twig', [
             'form' => $form->createView(),
         ]);
     }
-    public function registerByJson(Request $request): Response
+    public function registerByJson(Request $request, ValidatorInterface $validator): Response
     {
         $input = new RegisterUserInput();
         $form = $this->createForm(RegisterUserInput::class, $input);
@@ -62,9 +49,9 @@ class UserController extends AbstractController
                     "userID" => $userId
                 ], 200, ["Content-Type" => "application/json"]);
             } else {
-                $formErrors = $form->getErrors();
+                $errors = $validator->validate($input);
                 return $this->json([
-                    "message" => $formErrors
+                    "message" => $errors
                 ], 400, ["Content-Type" => "application/json"]);
             }
         }
