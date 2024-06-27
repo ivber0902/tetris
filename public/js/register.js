@@ -118,7 +118,6 @@ async function Validation()
             method: 'POST',
             body: data
         });
-        console.log(response)
         if (response.ok) {
             let json = await response.json();
             window.location.href = '/menu';
