@@ -162,7 +162,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
         return figures[randomIndex];
     }
 
-    function clearFigure() {
+    function clearFigure(figure) {
         for (let i = 0; i < figure.matrix[0].length; i++) {
             for (let j = 0; j < figure.matrix[0].length; j++) {
                 if (figure.matrix[i][j])
@@ -175,7 +175,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
         for (let i = 0; i < matrix[0].length; i++) {
             for (let j = 0; j < matrix[0].length; j++) {
                 if (matrix[i][j]) {
-                    if (Math.floor(playField[y + i][x + j] / 10) !== 0) {
+                    let color = playField[y + i][x + j];
+                    if (10 < color && color < 20 || 30 < color) {
                         return false;
                     }
                 }
@@ -211,7 +212,22 @@ document.addEventListener("DOMContentLoaded", (event) => {
         return cleared;
     }
 
-    
+    function createShadow(figure) {
+        let pos = getBottomPosition(figure);
+        for (let i = 0; i < figure.matrix.length; i++) {
+            for (let j = 0; j < figure.matrix[i].length; j++) {
+                if (playField[pos.y + i][pos.x + j] === 0 && figure.matrix[i][j] !== 0) {
+                    playField[pos.y + i][pos.x + j] = figure.matrix[i][j] + 20;
+                }
+            }
+        }
+    }
+
+    function getBottomPosition(figure) {
+        let i = 1;
+        for (; checkPosition(figure.x, figure.y + i, figure.matrix); i++);
+        return {x: figure.x, y: figure.y + i - 1}
+    }
 
     document.addEventListener('keydown', (e) => {
         if (e.code == 'ArrowLeft') {
@@ -233,7 +249,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
             if (checkPosition(figure.x, figure.y, rotated))
                 {
 
-            clearFigure();
+            clearFigure(figure);
                     figure.matrix=rotated
                 }
         }
@@ -255,6 +271,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
                     playField[i + figure.y][j + figure.x] = figure.matrix[i][j];
             }
         }
+        createShadow(figure);
 
         for (let row = 0; row < BOARD_HEIGHT; row++) {
             for (let col = 0; col < BOARD_WIDTH; col++) {
@@ -263,6 +280,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
                 }
             }
         }
+        clearFigure({matrix: figure.matrix, ...getBottomPosition(figure)})
         playTime++;
         if (playTime * nitro >= tiktime) {
             playTime = 0;
@@ -292,7 +310,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
         //     return;
         // }
         if (moveFlag !== '') {
-            clearFigure();
+            clearFigure(figure);
             switch (moveFlag) {
                 case 'down':
                     figure.y++
@@ -304,12 +322,13 @@ document.addEventListener("DOMContentLoaded", (event) => {
                     figure.x++
                     break;
                 case 'set':
-                    let i = 1;
-                    for (; checkPosition(figure.x, figure.y + i, figure.matrix); i++);
-                    figure.y += i - 1;
+                    let pos = getBottomPosition(figure);
+                    figure.y = pos.y;
             }
             moveFlag = '';
         }
+
+
         
         requestAnimationFrame(game);
     }
