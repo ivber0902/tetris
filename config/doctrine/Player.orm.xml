@@ -9,6 +9,7 @@
         </id>
         <field name="userId" type="integer" column="user_id"/>
         <field name="maxScore" type="integer" column="max_score"/>
+        <field name="lastScore" type="integer" column="last_score"/>
         <field name="averageScore" type="integer" column="average_score"/>
         <field name="totalScore" type="integer" column="total_score"/>
         <field name="gameCount" type="integer" column="game_count"/>

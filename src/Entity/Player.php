@@ -11,6 +11,7 @@ class Player
     private ?int $totalScore = 0;
     private ?int $gameCount = 0;
     private ?int $winCount = 0;
+    private ?int $lastScore = 0;
 
     private ?User $user;
 
@@ -83,6 +84,16 @@ class Player
     public function getUser(): ?User
     {
         return $this->user;
+    }
+
+    public function getLastScore(): ?int
+    {
+        return $this->lastScore;
+    }
+
+    public function setLastScore(?int $lastScore): static {
+        $this->lastScore = $lastScore;
+        return $this;
     }
 
     public function setUserId(?int $userId): static

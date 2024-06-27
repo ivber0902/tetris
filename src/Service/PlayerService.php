@@ -30,6 +30,7 @@ class PlayerService
         int $totalScore,
         int $gameCount,
         int $winCount,
+        int $lastScore,
         ?int $userId = null
     ): int
     {
@@ -39,6 +40,7 @@ class PlayerService
         $player->setTotalScore($totalScore);
         $player->setGameCount($gameCount);
         $player->setWinCount($winCount);
+        $player->setLastScore($lastScore);
 
         if ($userId !== null) {
             $player->setUserId($userId);
@@ -68,6 +70,7 @@ class PlayerService
                 );
             }
             $player->setTotalScore(($player->getTotalScore() ?? 0) + $score);
+            $player->setLastScore($score);
         }
 
         if ($isWon) {
