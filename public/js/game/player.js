@@ -76,6 +76,7 @@ class Player {
     }
 
     update() {
+        this.moveDown();
         if (!this.checkPosition(this.currentFigure.x, this.currentFigure.y + 1, this.currentFigure.matrix)) {
             this.insertToField(true);
             this.nextFigure();
@@ -89,7 +90,6 @@ class Player {
                 return;
             }
         }
-        this.moveDown();
         this.clearRow();
     }
 
@@ -124,6 +124,7 @@ class Player {
             this.currentFigure.x = pos.x;
             this.currentFigure.y = pos.y;
             this.move.set = 0;
+            this.update();
         }
     }
 
