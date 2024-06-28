@@ -13,8 +13,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
     canvas.height = 680;
     let playField = [];
     let GameOver = false;
-    const linkBlock = ['/images/blocks/blue.png', '/images/blocks/pink.png', '/images/blocks/yellow.png', '/images/blocks/orange.png', '/images/blocks/red.png', '/images/blocks/green.png', '/images/blocks/green.png'];
-    const linkImage = ['/images/blocks/blueD.png', '/images/blocks/pinkD.png', '/images/blocks/yellowD.png', '/images/blocks/orangeD.png', '/images/blocks/redD.png', '/images/blocks/greenD.png', '/images/blocks/greenD.png']
+    const linkShadow = ['/images/shadow/blue.png', '/images/shadow/pink.png', '/images/shadow/yellow.png', '/images/shadow/orange.png', '/images/shadow/red.png', '/images/shadow/green.png', '/images/shadow/mint.png'];
+    const linkBlock = ['/images/blocks/blue.png', '/images/blocks/pink.png', '/images/blocks/yellow.png', '/images/blocks/orange.png', '/images/blocks/red.png', '/images/blocks/green.png', '/images/blocks/mint.png'];
+    const linkImage = ['/images/blocks/blueD.png', '/images/blocks/pinkD.png', '/images/blocks/yellowD.png', '/images/blocks/orangeD.png', '/images/blocks/redD.png', '/images/blocks/greenD.png', '/images/blocks/mintD.png']
     let figures = [
         {
             matrix:
@@ -25,6 +26,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
                 ],
             image: new Image(),
             block: new Image(),
+            shadow: new Image(),
             x: 3,
             y: 0
         },
@@ -37,6 +39,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
                 ],
             image: new Image(),
             block: new Image(),
+            shadow: new Image(),
             x: 3,
             y: 0
         },
@@ -49,6 +52,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
                 ],
             image: new Image(),
             block: new Image(),
+            shadow: new Image(),
             x: 3,
             y: 0
         },
@@ -61,6 +65,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
                 ],
             image: new Image(),
             block: new Image(),
+            shadow: new Image(),
             x: 3,
             y: 0
         },
@@ -73,6 +78,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
                 ],
             image: new Image(),
             block: new Image(),
+            shadow: new Image(),
             x: 3,
             y: 0
         },
@@ -85,19 +91,21 @@ document.addEventListener("DOMContentLoaded", (event) => {
                 ],
             image: new Image(),
             block: new Image(),
+            shadow: new Image(),
             x: 3,
             y: 0
         },
         {
             matrix:
                 [
-                    [0, 6, 0, 0],
-                    [0, 6, 0, 0],
-                    [0, 6, 0, 0],
-                    [0, 6, 0, 0],
+                    [0, 7, 0, 0],
+                    [0, 7, 0, 0],
+                    [0, 7, 0, 0],
+                    [0, 7, 0, 0],
                 ],
             image: new Image(),
             block: new Image(),
+            shadow: new Image(),
             x: 3,
             y: 0
         },
@@ -128,6 +136,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
         figures.forEach((figure) => {
             figure.image.src = linkImage[i];
             figure.block.src = linkBlock[i];
+            figure.shadow.src = linkShadow[i];
             i++
         });
         for (let line = -1; line <= BOARD_HEIGHT; line++) {
@@ -278,7 +287,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
         for (let row = 0; row < BOARD_HEIGHT; row++) {
             for (let col = 0; col < BOARD_WIDTH; col++) {
                 if (playField[row][col]) {
-                    field.drawImage(figures[(playField[row][col] - 1) % 10].block, col * BOX, row * BOX, BOX, BOX)
+                    if (playField[row][col] - 1 >= 20)
+                        field.drawImage(figures[(playField[row][col] - 1) % 10].shadow, col * BOX, row * BOX, BOX, BOX)
+                    else
+                        field.drawImage(figures[(playField[row][col] - 1) % 10].block, col * BOX, row * BOX, BOX, BOX)
                 }
             }
         }
