@@ -18,7 +18,7 @@ menu:
     controller: App\Controller\GameController::menu
 game_over:
     path: /game_over
-    controller: App\Controller\GameController::game_over
+    controller: App\Controller\GameController::gameOver
 game:
     path: /game
     controller: App\Controller\GameController::game

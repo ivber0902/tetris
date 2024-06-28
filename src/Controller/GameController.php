@@ -19,7 +19,7 @@ class GameController extends AbstractController
     {
         return $this->render('menu.html.twig');
     }
-    public function game_over(Request $request): Response
+    public function gameOver(Request $request): Response
     {
         $securityUser = $this->getUser();
         if ($securityUser === null) {
@@ -32,7 +32,7 @@ class GameController extends AbstractController
         $player = $user->getPlayer();
         return $this->render('game-over.html.twig', [
             'lastScore' => $player->getLastScore(),
-            'totalScore' => $player->getTotalScore(),
+            'maxScore' => $player->getMaxScore(),
         ]);
     }
 
