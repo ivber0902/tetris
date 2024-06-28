@@ -49,7 +49,6 @@ let GAME = {
         this.clear(field);
 
         if (player.isActive) {
-            player.insertToField();
             player.drawField(this.width, this.height);
             field.font="40px serif";
             field.fillStyle = 'white';

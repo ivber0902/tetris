@@ -76,6 +76,7 @@ class Player {
     }
 
     update() {
+        this.clearShadow(this.currentFigure);
         this.moveDown();
         if (!this.checkPosition(this.currentFigure.x, this.currentFigure.y + 1, this.currentFigure.matrix)) {
             this.insertToField(true);
@@ -106,8 +107,10 @@ class Player {
     }
 
     updatePosition() {
+        this.clearShadow(this.currentFigure);
         this.updateHorizontalPosition();
         this.updateVerticalPosition();
+        this.insertToField();
     }
 
     updateHorizontalPosition() {
@@ -156,8 +159,6 @@ class Player {
                 }
             }
         }
-
-        this.clearFigure({matrix: this.currentFigure.matrix, ...this.getBottomPosition(this.currentFigure)});
     }
 
     rotateFigure(matrix) {
@@ -245,6 +246,10 @@ class Player {
         }
     }
 
+    clearShadow(figure) {
+        this.clearFigure({matrix: figure.matrix, ...this.getBottomPosition(figure)});
+    }
+
     getBottomPosition(figure) {
         let i = 1;
         for (; this.checkPosition(figure.x, figure.y + i, figure.matrix);) i++;
@@ -276,6 +281,7 @@ class Player {
 
                     if (this.checkPosition(this.currentFigure.x, this.currentFigure.y, rotated)) {
                         this.clearFigure(this.currentFigure);
+                        this.clearShadow(this.currentFigure);
                         this.currentFigure.matrix = rotated;
                     }
                     break;
@@ -292,6 +298,7 @@ class Player {
         document.addEventListener('keyup', (e) => {
             if (e.code === 'ShiftLeft') {
                 this.clearFigure(this.currentFigure);
+                this.clearShadow(this.currentFigure);
                 let figure = this.currentFigure;
                 this.currentFigure = this.buffer;
                 this.buffer = figure;
