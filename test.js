@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", (event) => {
     const canvas = document.getElementById('game');
     const field = canvas.getContext('2d');
+    let nextFifures = document.querySelectorAll(".figure");
     let buffer = document.querySelector(".buffer__figure");
-    let viewNextFigures = document.querySelectorAll(".figure");
     const BOX = 34;
     const BOARD_WIDTH = 10;
     const BOARD_HEIGHT = 20;
@@ -14,9 +14,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
     canvas.width = 340;
     canvas.height = 680;
     let playField = [];
-    let GameOver = false;
-    const linkBlock = ['/images/blocks/blue.png', '/images/blocks/pink.png', '/images/blocks/yellow.png', '/images/blocks/orange.png', '/images/blocks/red.svg', '/images/blocks/green.png', '/images/blocks/mint.png'];
-    const linkImage = ['/images/figures/blueD.png', '/images/figures/pinkD.png', '/images/figures/yellowD.png', '/images/figures/orangeD.png', '/images/figures/redD.png', '/images/figures/greenD.png', '/images/figures/mintD.png']
+    const linkBlock = ['/images/blocks/blue.png', '/images/blocks/pink.png', '/images/blocks/yellow.png', '/images/blocks/orange.png', '/images/blocks/red.png', '/images/blocks/green.png', '/images/blocks/mint.png'];
+    const linkImage = ['/images/blocks/blueD.png', '/images/blocks/pinkD.png', '/images/blocks/yellowD.png', '/images/blocks/orangeD.png', '/images/blocks/redD.png', '/images/blocks/greenD.png', '/images/blocks/mintD.png']
     let figures = [
         {
             matrix:
@@ -33,9 +32,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
         {
             matrix:
                 [
-                    [0, 0, 0],
                     [2, 2, 2],
                     [0, 2, 0],
+                    [0, 0, 0],
                 ],
             image: new Image(),
             block: new Image(),
@@ -104,8 +103,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
             y: 0
         },
     ];
-    let figure = getRandomFigure(figures);
     let nextFigures = [];
+    let figure = getRandomFigure(figures);
+
     function startGame() {
         let counter = 0;
         figures.forEach((figure) => {
@@ -125,21 +125,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
         )
     }
 
-    document.addEventListener('keyup', (e) => {
-        if (e.code == 'ShiftLeft') {
-            clearFigure(figure);
-            det = figure;
-            figure = buffon;
-            buffon = det;
-            buffer.src = buffon.image.src;
-            figure.x = 3;
-            figure.y = 0;
-            buffon.x = 3;
-            buffon.y = 0;
-
-        };
-    })
-
     function init() {
         let i = 0;
         figures.forEach((figure) => {
@@ -157,22 +142,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
                 }
             }
         }
-        startGame()
-    }
 
-    async function SendResult(score) {
-        let response = await fetch('/api/statistics', {
-            method: 'POST',
-            body: JSON.stringify({
-                score: score
-            })
-        });
-        console.log(response);
-        if (response.ok) {
-            window.location.href = '/game_over'
-        } else {
-            window.location.href = "/game_over?score=" + score;
-        }
+
+        startGame()
     }
 
     function rotateMatrix(matrix) {
@@ -206,8 +178,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
         for (let i = 0; i < matrix[0].length; i++) {
             for (let j = 0; j < matrix[0].length; j++) {
                 if (matrix[i][j]) {
-                    let color = playField[y + i][x + j];
-                    if (10 < color && color < 20 || 30 < color) {
+                    if (Math.floor(playField[y + i][x + j] / 10) !== 0) {
                         return false;
                     }
                 }
@@ -219,16 +190,16 @@ document.addEventListener("DOMContentLoaded", (event) => {
     function clearRow() {
         let cleared = 0;
         for (let row = 19; row > 0; row--) {
-            if (playField[row].every(element => element > 10)) {
+            if (playField[row].every(element => element > 6)) {
                 cleared++;
                 for (let j = 0; j < 10; j++) {
                     for (let i = row; i > 0; i--) {
                         playField[i][j] = playField[i - 1][j];
                     }
                 }
-                row++;
             }
         }
+    
         switch (cleared) {
             case 1:
                 score += 100;
@@ -252,23 +223,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
         return cleared;
     }
 
-    // function createShadow(figure) {
-    //     let pos = getBottomPosition(figure);
-    //     for (let i = 0; i < figure.matrix.length; i++) {
-    //         for (let j = 0; j < figure.matrix[i].length; j++) {
-    //             if (pos.y + i )
-    //             if (playField[pos.y + i][pos.x + j] === 0 && figure.matrix[i][j] !== 0) {
-    //                 playField[pos.y + i][pos.x + j] = figure.matrix[i][j] + 20;
-    //             }
-    //         }
-    //     }
-    // }
 
-    function getBottomPosition(figure) {
-        let i = 1;
-        for (; checkPosition(figure.x, figure.y + i, figure.matrix); i++);
-        return { x: figure.x, y: figure.y + i - 1 }
-    }
 
     document.addEventListener('keydown', (e) => {
         if (e.code == 'ArrowLeft') {
@@ -301,6 +256,21 @@ document.addEventListener("DOMContentLoaded", (event) => {
         };
     })
 
+    document.addEventListener('keyup', (e) => {
+        if (e.code == 'ShiftLeft') {
+            clearFigure(figure);
+            det = figure;
+            figure = buffon;
+            buffon = det;
+            buffer.src = buffon.image.src;
+            figure.x = 3;
+            figure.y = 0;
+            buffon.x = 3;
+            buffon.y = 0;
+            
+        };
+    })
+
 
     init();
 
@@ -309,12 +279,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
         nextFigures[i] = det;
     }
     for (let i = 0; i < 4; i++) {
-        viewNextFigures[i].src = nextFigures[i].image.src;
+        nextFifures[i].src = nextFigures[i].image.src;
     }
 
     buffon = getRandomFigure(figures);
     buffer.src = buffon.image.src;
-
 
     function game() {
         field.clearRect(0, 0, canvas.width, canvas.height);
@@ -324,7 +293,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
                     playField[i + figure.y][j + figure.x] = figure.matrix[i][j];
             }
         }
-        // createShadow(figure);
 
         for (let row = 0; row < BOARD_HEIGHT; row++) {
             for (let col = 0; col < BOARD_WIDTH; col++) {
@@ -333,7 +301,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
                 }
             }
         }
-        clearFigure({ matrix: figure.matrix, ...getBottomPosition(figure) })
         if (playTime * nitro >= tiktime) {
             playTime = 0;
             if (checkPosition(figure.x, figure.y + 1, figure.matrix))
@@ -354,15 +321,14 @@ document.addEventListener("DOMContentLoaded", (event) => {
                 nextFigures[3] = getRandomFigure(figures);
 
                 for (let i = 0; i < 4; i++) {
-                    viewNextFigures[i].src = nextFigures[i].image.src;
+                    nextFifures[i].src = nextFigures[i].image.src;
                 }
 
                 if (checkPosition(3, 0, figure.matrix)) {
                     figure.x = 3;
                     figure.y = 0;
                 } else {
-                    SendResult(score);
-                    GameOver = true
+                    window.location.href = "/game_over";
                 }
             }
         }
@@ -383,8 +349,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
                     figure.x++
                     break;
                 case 'set':
-                    let pos = getBottomPosition(figure);
-                    figure.y = pos.y;
+                    let i = 1;
+                    for (; checkPosition(figure.x, figure.y + i, figure.matrix); i++);
+                    figure.y += i - 1;
             }
             moveFlag = '';
         }
