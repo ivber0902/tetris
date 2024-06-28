@@ -17,7 +17,8 @@ class GameController extends AbstractController
 
     public function menu(): Response
     {
-        return $this->render('menu.html.twig');
+        $securityUser = $this->getUser();
+        return $this->render('menu.html.twig', ["user" => $securityUser]);
     }
     public function gameOver(Request $request): Response
     {
