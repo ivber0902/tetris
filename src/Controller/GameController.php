@@ -26,7 +26,7 @@ class GameController extends AbstractController
         if ($securityUser === null) {
             return $this->render('game-over.html.twig', [
                 'lastScore' => $request->get('score', '0'),
-                'totalScore' => $request->get('score', '0'),
+                'maxScore' => $request->get('score', '0'),
             ]);
         }
         $user = $this->userService->findUser($securityUser->getId());
