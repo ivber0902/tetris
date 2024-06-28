@@ -25,6 +25,9 @@ class UserController extends AbstractController
     }
     public function register(Request $request): Response
     {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('index');
+        }
         $input = new RegisterUserInput();
         $form = $this->createForm(RegisterUserInput::class, $input);
 
