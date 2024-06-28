@@ -1,38 +1,53 @@
-*{
+*
+{
     margin: 0;
     padding: 0;
+    font-family: "Russo One", sans-serif;
+    text-decoration: none;
 }
-body{
+
+body
+{
     max-width: 100%;
     max-height: 100%;
-    background-image: url(./background.png);
+    background-image: url(/images/bg.png);
     background-size: cover;  
 }
 
-.logo{
+.logo
+{
     padding-top: 50px;
 }
 
-.title{
-    margin:1% 0% 15% 35%;
+.title
+{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15%;
 }
 
-.login{
+.login
+{
+    box-sizing: border-box;
     background-color: white;
-    margin-left: 22%;
+    margin: 0 auto;
     width: 900px;
-    height: 288px;
     padding: 21px 25px;
+    border-radius: 10px;
 }
-.login__title{
-    font-family: "Russo One", sans-serif;
+
+.login__title
+{
     font-size: 32px;
     margin-bottom: 15px;
 }
 
-.login-input__username-input{
+.login-input__username-input, .login-input__password-input
+{
     border: none;
-    padding-left: 5px;
+    box-sizing: border-box;
+    padding-left: 15px;
     border-radius: 5px;
     width: 850px;
     height: 50px;
@@ -41,94 +56,62 @@ body{
     font-size: 32px;
     margin-bottom: 19px;
 }
-
-.login-input__username-input:not(:placeholder-shown){
+.login-input__username-input:not(:placeholder-shown), .login-input__password-input:not(:placeholder-shown)
+{
     background:#4b4a4a;
-    color: white;   
-}
-
-.login-input__password-input{
-    border: none;
-    padding-left: 5px;
-    border-radius: 5px;
-    width: 850px;
-    height: 50px;
-    background: #222;
-    font-family: "Russo One", sans-serif;
-    font-size: 32px;
-    margin-bottom: 19px;
-}
-
-.login-input__password-input:not(:placeholder-shown){
-    background:#4b4a4a;
-    color: white;   
+    color: white;       
 }
 
 .viewPass{
     display: none;
 }
 
-.login-input__button{
+.login-input__button
+{
     display: flex;
+    gap: 25px;
 }
 
-.Register{
-    font-family: "Russo One", sans-serif;
-    border-radius: 5px;
-    font-size: 32px;
-    border: none;
+.Register
+{
     width: 375px;
-    height: 50px;
-    background: #aaa;
-    margin-right: 30px;
-    cursor: pointer;
-    text-decoration: none;
+    padding: 15px 0;
     text-align: center;
-    color: white;
-    text-decoration: none;
-    text-align: center;
-}
-.LogIn{
-    font-family: "Russo One", sans-serif;
-    border-radius: 5px;
+    background-color: #AAAAAA;
+    color: #000000;
     font-size: 32px;
-    border: none;
+    font-weight: 800;
+    border-radius: 5px;
+}
+
+.LogIn
+{
     width: 450px;
-    height: 50px;
-    color: #fff;
-    background: #1e48ff;
+    padding: 11px 0;
+    text-align: center;
+    background-color: #1E48FF;
+    color: #FFFFFF;
+    font-size: 32px;
+    font-weight: 800;
+    border-radius: 5px;
     cursor: pointer;
+    border: none;
 }
 
-.login-input__password-require{
-    font: 400 12px/16px Russo One, sans-serif;
-    text-align: left;
-    color: rgba(232, 105, 97, 1);
-    display: none;
-}
-.login-input__password-validation{
-    font: 400 12px/16px Russo One, sans-serif;
+.login-input__password-require, .login-input__username-validation, .login-input__username-require
+{
+    font: 400 12px/16px "Russo One", sans-serif;
     text-align: left;
     color: rgba(232, 105, 97, 1);
     display: none;
 }
 
-.login-input__username-validation{
-    font: 400 12px/16px Russo One, sans-serif;
+.login-input__username-error
+{
+    font: 400 12px/16px "Russo One", sans-serif;
     text-align: left;
     color: rgba(232, 105, 97, 1);
-    display: none;
+    padding-bottom: 5px;
 }
 
-.login-input__username-error{
-    font: 400 12px/16px Russo One, sans-serif;
-    text-align: left;
-    color: rgba(232, 105, 97, 1);
-}
 
-.login-input__username-require{
-    font: 400 12px/16px Russo One, sans-serif;
-    text-align: left;
-    color: rgba(232, 105, 97, 1);
-    display: none;
-}

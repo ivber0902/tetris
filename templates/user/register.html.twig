@@ -1,10 +1,10 @@
 {% extends "base.html.twig" %}
-{% block style %}register-style.css{% endblock %}
-{% block script %}register.js{% endblock %}
+{% block style %}<link rel="stylesheet" href="css/register-style.css"/>{% endblock %}
+{% block script %}<script src="js/register.js"></script>{% endblock %}
 {% block content %}
     <main class="main">
         <div class="title">
-            <img class="logo" src="../images/logo.svg">
+            <img class="logo" src="images/logo.svg">
         </div>
         <div class="login">
             <p class="login__title">ДОБРО ПОЖАЛОВАТЬ В СЛАВЯНСКИЙ ТЕТРИС!</p>
@@ -22,7 +22,7 @@
             <p class="login-input__again-identical">ПАРОЛИ ДОЛЖНЫ БЫТЬ ОДИНАКОВЫМИ</p>
             <div class="login-input__button">
                 <a class="LogIn" href="/login">Вход</a>
-                <input class="Register" type="submit" value="Регистрация"/>
+                <button class="Register">Регистрация</button>
             </div>
             {{ form_end(form) }}
         </div>

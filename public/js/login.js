@@ -12,13 +12,10 @@ function Validation(e)
     const passwordInput = document.querySelector('.login-input__password-input').value;
     const element = document.querySelector('.login-input__username-input');
     const password = document.querySelector('.login-input__password-input');
-    const passError = document.querySelector('.login-input__password-validation');
     const usernameError = document.querySelector('.login-input__username-validation');
     const usernameRequire = document.querySelector('.login-input__username-require');
     const passwordRequire = document.querySelector('.login-input__password-require');
     const username = element.value;
-
-
 
     if (usernameInput === '')
     {
@@ -49,7 +46,6 @@ function Validation(e)
     if (passwordInput === '')
     {
         successfull = false;
-        passError.style.display = 'none';
         passwordRequire.style.display = 'flex';
         passwordRequire.style.marginBottom = '10px';
         password.style.marginBottom = '5px';

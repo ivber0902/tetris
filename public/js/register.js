@@ -120,8 +120,7 @@ async function Validation()
         });
         console.log(response)
         if (response.ok) {
-            let json = await response.json();
-            window.location.href = '/menu';
+            window.location.href = '/login';
           } else {
             if(response.status >= 500){
                 alert("Сервер временно не доступен :(");

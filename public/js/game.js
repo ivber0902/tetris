@@ -3,6 +3,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
     const field = canvas.getContext('2d');
     let buffer = document.querySelector(".buffer__figure");
     let viewNextFigures = document.querySelectorAll(".figure");
+
+    let viewScore = document.querySelector(".game__score");
+
     const BOX = 34;
     const BOARD_WIDTH = 10;
     const BOARD_HEIGHT = 20;
@@ -241,23 +244,20 @@ document.addEventListener("DOMContentLoaded", (event) => {
         switch (cleared) {
             case 1:
                 score += 100;
-                console.log(score)
                 break;
             case 2:
                 score += 300;
-                console.log(score)
                 break;
             case 3:
                 score += 700;
-                console.log(score)
                 break;
             case 4:
                 score += 1000;
-                console.log(score)
                 break;
             default:
                 break;
         }
+        viewScore.innerHTML = score;
         return cleared;
     }
 

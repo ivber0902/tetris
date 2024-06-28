@@ -1,47 +1,50 @@
 {% extends "base.html.twig" %}
-{% block style %}menu.css{% endblock %}
-{% block script %}menu.js{% endblock %}
+{% block style %}<link rel="stylesheet" href="css/menu.css"/>{% endblock %}
+{% block script %}<script src="js/menu.js"></script>{% endblock %}
 {% block content %}
     <div class="bg">
         <div class="header">
-            <img src="../images/settings.png" alt="settings" class="settings">
-            <img src="../images/logo.png" alt="logo" class="logo">
+            <img src="images/settings.png" alt="settings" class="settings">
+            <img src="images/logo.png" alt="logo" class="logo">
             <div class="profile">
                 <p class="profile__nickname">{{user.login}}</p>
-                <img src="../images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
+                <img src="images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
             </div>
         </div>
         <div class="menu">
             <div class="link play-solo-bg" onclick="window.location.href = '/game'">
                 <div class="img-placeholder">
-                    <img src="../images/solo.png" alt="solo" class="link__image">
+                    <img src="images/solo.png" alt="solo" class="link__image">
                 </div>
                 <div class="link__text">
-                    <h1 class="play-solo-header">ОДНОПОЛЬЗОВАТЕЛЬСКИЙ РЕЖИМ</h2>
+                    <h1 class="play-solo-header">ОДНОПОЛЬЗОВАТЕЛЬСКИЙ РЕЖИМ</h1>
                         <p class="play-solo-subtitle">ПРЕВЗОЙДИ СЕБЯ И ПОСТАВЬ НОВЫЙ РЕКОРД</p>
                 </div>
             </div>
             <div class="link multiplayer-bg" onclick="window.location.href = '/game'">
                 <div class="img-placeholder">
-                    <img src="../images/multiplayer.png" alt="multiplayer" class="link__image">
+                    <img src="images/multiplayer.png" alt="multiplayer" class="link__image">
                 </div>
                 <div class="link__text">
-                    <h1 class="multiplayer-header">МНОГОПОЛЬЗОВАТЕЛЬСКИЙ РЕЖИМ</h2>
+                    <h1 class="multiplayer-header">МНОГОПОЛЬЗОВАТЕЛЬСКИЙ РЕЖИМ</h1>
                         <p class="multiplayer-subtitle">ИГРАЙТЕ ОНЛАЙН С ДРУЗЬЯМИ</p>
                 </div>
             </div>
             <div class="link about-us-bg">
                 <div class="img-placeholder">
-                    <img src="../images/about.png" alt="about us" class="link__image">
+                    <img src="images/about.png" alt="about us" class="link__image">
                 </div>
                 <div class="link__text">
-                    <h1 class="about-us-header">ПРО НАС</h2>
+                    <h1 class="about-us-header">ПРО НАС</h1>
                         <p class="about-us-subtitle">УЗНАЙТЕ ВСЕ О СЛАВЯНАХ</p>
                 </div>
             </div>
         </div>
     </div>
 {% endblock %}
+
+
+
 
 
 

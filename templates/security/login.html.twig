@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Log in!{% endblock %}
-{% block style %}login.css{% endblock %}
-{% block script %}login.js{% endblock %}
+{% block style %}<link rel="stylesheet" href="css/login.css"/>{% endblock %}
+{% block script %}<script src="js/login.js"></script>{% endblock %}
 {% block content %}
     <main class="main">
         <div class="title">
-            <img class="logo" src="../images/logo.svg">
+            <img class="logo" src="images/logo.svg" alt="logo">
         </div>
         <div class="login">
             <h1 class="login__title">ДОБРО ПОЖАЛОВАТЬ В СЛАВЯНСКИЙ ТЕТРИС!</h1>
@@ -19,16 +19,17 @@
                 {% if error %}
                     <p class="login-input__username-error">НЕВЕРНЫЙ ЛОГИН ИЛИ ПАРОЛЬ</p>
                 {% endif %}
-                <input type="text" value="{{ last_username }}" name="login" id="inputLogin" class="login-input__username-input" autocomplete="username" required autofocus>
+                <label for="inputLogin" hidden>Login</label>
+                <input type="text" value="{{ last_username }}" name="login" id="inputLogin" class="login-input__username-input" autocomplete="username" placeholder="ЛОГИН" required autofocus>
                 <p class="login-input__username-validation">НЕПРАВИЛЬНЫЙ ФОРМАТ ЛОГИНА</p>
                 <p class="login-input__username-require">ВВЕДИТЕ ЛОГИН</p>
-                <input type="password" name="password" id="inputPassword" class="login-input__password-input" autocomplete="current-password" required>
+                <label for="inputPassword" hidden>Password</label>
+                <input type="password" name="password" id="inputPassword" class="login-input__password-input" autocomplete="current-password" placeholder="ПАРОЛЬ" required>
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-                <p class="login-input__password-require">ВВЕДИТЕ ПАРОЛЬ</p>
-                <p class="login-input__password-validation">ПАРОЛЬ ДОЛЖЕН СОДЕРЖАТЬ НЕ МЕНЕЕ 8 СИМВОЛОВ</p>                  
+                <p class="login-input__password-require">ВВЕДИТЕ ПАРОЛЬ</p>           
                 <div class="login-input__button">
                     <a class="Register" href="/signup">Регистрация</a> 
-                    <button class="LogIn"/>Вход</button>
+                    <button class="LogIn">Вход</button>
                 </div>
             </form>    
         </div>

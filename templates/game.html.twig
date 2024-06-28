@@ -1,6 +1,6 @@
 {% extends "base.html.twig" %}
-{% block style %}game.css{% endblock %}
-{% block script %}game.js{% endblock %}
+{% block style %}<link rel="stylesheet" href="css/game.css"/>{% endblock %}
+{% block script %}<script src="js/game.js"></script>{% endblock %}
 {% block content %}
 <body>
    <main class="main">
@@ -19,6 +19,7 @@
                 <img class="figure"  src="" alt="figure">
             </div>
         </div>
+        <p class="game__score">228</p>
    </main>
 </body>
 </html>
