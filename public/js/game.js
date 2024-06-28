@@ -212,11 +212,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
     }
 
     function checkPosition(x, y, matrix) {
-        for (let i = 0; i < matrix[0].length; i++) {
+        for (let i = 0; i < matrix.length; i++) {
             for (let j = 0; j < matrix[0].length; j++) {
                 if (matrix[i][j]) {
                     let color = playField[y + i][x + j];
-                    if (10 < color && color < 20 || 30 < color) {
+                    if (10 < color && color <= 20 || 30 < color) {
                         return false;
                     }
                 }
@@ -263,9 +263,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
     function createShadow(figure) {
         let pos = getBottomPosition(figure);
+        console.log(pos);
         for (let i = 0; i < figure.matrix.length; i++) {
             for (let j = 0; j < figure.matrix[i].length; j++) {
-                if (playField[pos.y + i][pos.x + j] === 0 && figure.matrix[i][j] !== 0) {
+                if (pos.y + i < BOARD_HEIGHT && playField[pos.y + i][pos.x + j] === 0 && figure.matrix[i][j] !== 0) {
                     playField[pos.y + i][pos.x + j] = figure.matrix[i][j] + 20;
                 }
             }
@@ -274,7 +275,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
     function getBottomPosition(figure) {
         let i = 1;
-        for (; checkPosition(figure.x, figure.y + i, figure.matrix); i++);
+        for (; checkPosition(figure.x, figure.y + i, figure.matrix); i++) console.log(checkPosition(figure.x, figure.y + i, figure.matrix), figure.x, figure.y + i, figure.matrix, i);
         return { x: figure.x, y: figure.y + i - 1 }
     }
 
@@ -344,7 +345,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
                 }
             }
         }
-        clearFigure({ matrix: figure.matrix, ...getBottomPosition(figure) })
+        clearFigure({matrix: figure.matrix, ...getBottomPosition(figure)})
         if (playTime * nitro >= tiktime) {
             playTime = 0;
             if (checkPosition(figure.x, figure.y + 1, figure.matrix))
