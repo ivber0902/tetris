@@ -77,11 +77,8 @@ const INTERFACE = new Interface(
     document.querySelector(".game__level"),
 );
 
+let player = new Player(INTERFACE, GAME.figuresQueueSize);
 const canvas = document.getElementById('game');
 const field = canvas.getContext('2d');
 canvas.width = INTERFACE.field.width;
 canvas.height = INTERFACE.field.height;
-
-let player = new Player(INTERFACE, GAME.figuresQueueSize);
-
-window.addEventListener("DOMContentLoaded", () => GAME.init());

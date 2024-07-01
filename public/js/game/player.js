@@ -18,6 +18,7 @@ class Player {
         this.buffer = null;
         this.interface = interface_;
         this.figuresQueueSize = figuresQueueSize;
+        this.isShifter = true;
         this.isActive = true;
     }
 
@@ -78,6 +79,8 @@ class Player {
         this.nextFigures[this.figuresQueueSize - 1] = this.getRandomFigure(figures);
 
         this.updateInterface();
+
+        this.isShifter = true;
     }
 
     update() {
@@ -191,10 +194,12 @@ class Player {
 
     clearRow() {
         let cleared = 0;
-        for (let row = 19; row > 0; row--) {
+        let fieldHeight = this.field.length;
+        for (let row = fieldHeight - 1; row > 0; row--) {
             if (this.field[row].every(element => element > 10)) {
                 cleared++;
-                for (let j = 0; j < 10; j++) {
+                let rowLength = this.field[row].length;
+                for (let j = 0; j < rowLength; j++) {
                     for (let i = row; i > 0; i--) {
                         this.field[i][j] = this.field[i - 1][j];
                     }
@@ -264,6 +269,7 @@ class Player {
         }
         music.playbackRate = 0.7 + this.lvl * 0.05;
     }
+    
     checkPosition(x, y, matrix) {
         for (let i = 0; i < matrix.length; i++) {
             for (let j = 0; j < matrix[0].length; j++) {
@@ -347,9 +353,13 @@ class Player {
         });
     }
 
+    updateSize(game){
+        this.interface.updateSize(game);
+    }
+
     addBufferListener() {
         document.addEventListener('keyup', (e) => {
-            if (e.code === 'ShiftLeft') {
+            if (e.code === 'ShiftLeft' && this.isShifter) {
                 this.clearFigure(this.currentFigure);
                 this.clearShadow(this.currentFigure);
                 let figure = this.currentFigure;
@@ -359,6 +369,7 @@ class Player {
                 this.currentFigure.matrix = figures[this.currentFigure.id].matrix;
                 this.currentFigure.x = this.getStartX();
                 this.currentFigure.y = 0;
+                this.isShifter = false;
             }
         });
     }
