@@ -28,7 +28,8 @@ class Player {
             figure.matrix,
             figure.image,
             figure.block,
-            figure.shadow
+            figure.shadow,
+            randomIndex
         );
     }
 
@@ -95,7 +96,6 @@ class Player {
     }
 
     getStartX() {
-        console.log(Math.floor((this.field[0].length - this.currentFigure.matrix[0].length) / 2), this.field[0].length - this.currentFigure.matrix[0].length);
         return 3
     }
 
@@ -264,19 +264,19 @@ class Player {
     addPositionListeners() {
         document.addEventListener('keydown', (e) => {
             switch (e.code) {
-                case 'ArrowLeft':
+                case 'ArrowLeft', 'KeyA':
                     this.move.left = this.checkPosition(this.currentFigure.x - 1, this.currentFigure.y, this.currentFigure.matrix) ? 1 : 0;
                     break;
-                case 'ArrowRight':
+                case 'ArrowRight', 'KeyD':
                     this.move.right = this.checkPosition(this.currentFigure.x + 1, this.currentFigure.y, this.currentFigure.matrix) ? 1 : 0;
                     break;
                 case 'Space':
                     this.move.set = 1;
                     break;
-                case 'ArrowDown':
+                case 'ArrowDown', 'KeyS':
                     this.nitro = 4;
                     break;
-                case 'ArrowUp':
+                case 'ArrowUp', 'KeyW':
                     let rotated = this.rotateFigure(this.currentFigure.matrix);
 
                     if (this.checkPosition(this.currentFigure.x, this.currentFigure.y, rotated)) {
@@ -288,7 +288,7 @@ class Player {
             }
         });
         document.addEventListener('keyup', (e) => {
-            if (e.code === 'ArrowDown') {
+            if (e.code === 'ArrowDown' || e.code === 'KeyS') {
                 this.nitro = 1;
             }
         });
@@ -303,6 +303,7 @@ class Player {
                 this.currentFigure = this.buffer;
                 this.buffer = figure;
                 this.interface.buffer.src = this.buffer.image.src;
+                this.currentFigure.matrix = figures[this.currentFigure.id].matrix;
                 this.currentFigure.x = this.getStartX();
                 this.currentFigure.y = 0;
             }

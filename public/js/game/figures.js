@@ -85,6 +85,7 @@ class Figure {
         image = new Image(),
         block = new Image(),
         shadow = new Image(),
+        id = 0,
     ) {
         this.matrix = matrix.map(row => row.slice());
         this.image = image;
@@ -92,5 +93,6 @@ class Figure {
         this.shadow = shadow;
         this.x = 0;
         this.y = 0;
+        this.id = id
     }
 }
