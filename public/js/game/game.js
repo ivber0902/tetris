@@ -1,7 +1,6 @@
 let GAME = {
     width: 10,
     height: 20,
-    tickTime: 36,
     playTime: 0,
     figuresQueueSize: 4,
     init() {
@@ -23,19 +22,19 @@ let GAME = {
         figures.forEach((figure) => {
                 figure.image.addEventListener('load', () => {
                     counter++;
-                    if (counter === figures.length * 2) {
+                    if (counter === figures.length * 3) {
                         func()
                     }
                 })
                 figure.block.addEventListener('load', () => {
                     counter++;
-                    if (counter === figures.length * 2) {
+                    if (counter === figures.length * 3) {
                         func()
                     }
                 })
-                figure.block.addEventListener('load', () => {
+                figure.shadow.addEventListener('load', () => {
                     counter++;
-                    if (counter === figures.length * 2) {
+                    if (counter === figures.length * 3) {
                         func()
                     }
                 })
@@ -51,9 +50,10 @@ let GAME = {
         if (player.isActive) {
             player.drawField(this.width, this.height);
             document.querySelector('.game__score').innerHTML = player.score;
-            if (this.playTime * player.nitro >= this.tickTime) {
+            if (this.playTime * player.nitro >= player.tickTime) {
                 this.playTime = 0;
                 player.update();
+                console.log('realy', player.tickTime)
             }
 
             player.updatePosition();

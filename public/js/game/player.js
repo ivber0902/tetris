@@ -3,6 +3,9 @@ class Player {
         this.score = 0;
         this.field = [];
         this.nitro = 1;
+        this.lvl = 0;
+        this.tickTime = 48;
+        this.lines = 0;
         this.move = {
             down: 1,
             left: 0,
@@ -91,7 +94,7 @@ class Player {
                 return;
             }
         } else
-        this.moveDown();
+            this.moveDown();
         this.clearRow();
     }
 
@@ -207,14 +210,57 @@ class Player {
                 this.score += 700;
                 break;
             case 4:
-                this.score += 1000;
+                this.score += 1500;
                 break;
             default:
                 break;
         }
+        this.lines += cleared;
+        if (this.lines >= 8) {
+            this.lvl += Math.floor(this.lines / 8);
+            this.lines = this.lines % 8;
+            this.updateLvl();
+            console.log(this.tickTime, this.lvl)
+        }
         return cleared;
     }
 
+    updateLvl() {
+        switch (this.lvl) {
+            case 0: this.tickTime = 48; break;
+            case 1: this.tickTime = 43; break;
+            case 2: this.tickTime = 38; break;
+            case 3: this.tickTime = 33; break;
+            case 4: this.tickTime = 28; break;
+            case 5: this.tickTime = 23; break;
+            case 6: this.tickTime = 18; break;
+            case 7: this.tickTime = 13; break;
+            case 8: this.tickTime = 8; break;
+            case 9: this.tickTime = 6; break;
+            case 10:
+            case 11:
+            case 12: this.tickTime = 5; break;
+            case 13:
+            case 14:
+            case 15: this.tickTime = 4; break;
+            case 16:
+            case 17:
+            case 18: this.tickTime = 3; break;
+            case 19:
+            case 20:
+            case 21:
+            case 22:
+            case 23:
+            case 24:
+            case 25:
+            case 26:
+            case 27:
+            case 28: this.tickTime = 2; break;
+    }
+    if (this.lvl >= 29) {
+        this.tickTime = 1;
+    }
+    }
     checkPosition(x, y, matrix) {
         for (let i = 0; i < matrix.length; i++) {
             for (let j = 0; j < matrix[0].length; j++) {
@@ -269,18 +315,18 @@ class Player {
                     this.move.left = this.checkPosition(this.currentFigure.x - 1, this.currentFigure.y, this.currentFigure.matrix) ? 1 : 0;
                     break;
                 case 'ArrowRight':
-                    case 'KeyD':
+                case 'KeyD':
                     this.move.right = this.checkPosition(this.currentFigure.x + 1, this.currentFigure.y, this.currentFigure.matrix) ? 1 : 0;
                     break;
                 case 'Space':
                     this.move.set = 1;
                     break;
                 case 'ArrowDown':
-                    case 'KeyS':
+                case 'KeyS':
                     this.nitro = 4;
                     break;
                 case 'ArrowUp':
-                    case 'KeyW':
+                case 'KeyW':
                     let rotated = this.rotateFigure(this.currentFigure.matrix);
 
                     if (this.checkPosition(this.currentFigure.x, this.currentFigure.y, rotated)) {
@@ -312,17 +358,5 @@ class Player {
                 this.currentFigure.y = 0;
             }
         });
-    }
-}
-
-class Interface {
-    constructor(blockSize, buffer, viewNextFigures, game) {
-        this.blockSize = blockSize;
-        this.buffer = buffer;
-        this.viewNextFigures = viewNextFigures;
-        this.field = {
-            width: game.width * this.blockSize,
-            height: game.height * this.blockSize,
-        }
     }
 }
