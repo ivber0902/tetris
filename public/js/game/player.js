@@ -78,7 +78,6 @@ class Player {
 
     update() {
         this.clearShadow(this.currentFigure);
-        this.moveDown();
         if (!this.checkPosition(this.currentFigure.x, this.currentFigure.y + 1, this.currentFigure.matrix)) {
             this.insertToField(true);
             this.nextFigure();
@@ -91,7 +90,8 @@ class Player {
                 gameEnd(this.score);
                 return;
             }
-        }
+        } else
+        this.moveDown();
         this.clearRow();
     }
 

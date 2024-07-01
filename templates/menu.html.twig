@@ -6,10 +6,10 @@
 {% block content %}
     <div class="bg">
         <div class="header">
-            <img src="images/settings.png" alt="settings" class="settings">
-            <img src="images/logo.png" alt="logo" class="logo">
+            <img src="/images/settings.png" alt="settings" class="settings">
+            <img src="/images/logo.png" alt="logo" class="logo">
             <div class="profile">
-                <p class="profile__nickname">{{user.login}}</p>
+                <p class="profile__nickname">{{user.login ?? 'Славянин'}}</p>
                 <img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
             </div>
         </div>
