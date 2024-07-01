@@ -15,6 +15,9 @@ let GAME = {
         player.initFigures();
         player.initEventListeners();
         player.updateInterface();
+
+
+        music.play();
         this.onLoadImages(() => this.play());
     },
     onLoadImages(func) {
@@ -67,7 +70,7 @@ music.addEventListener('ended', function() {
     this.currentTime = 0;
     this.play();
 }, false);
-music.play();
+
 const INTERFACE = new Interface(
     34,
     document.querySelector(".buffer__figure"),
