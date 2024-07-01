@@ -53,7 +53,7 @@ class Player {
         }
     }
 
-    insertToField(fix= false) {
+    insertToField(fix = false) {
         this.createShadow(this.currentFigure);
 
         for (let i = 0; i < this.currentFigure.matrix.length; i++) {
@@ -247,7 +247,7 @@ class Player {
     }
 
     clearShadow(figure) {
-        this.clearFigure({matrix: figure.matrix, ...this.getBottomPosition(figure)});
+        this.clearFigure({ matrix: figure.matrix, ...this.getBottomPosition(figure) });
     }
 
     getBottomPosition(figure) {
@@ -264,19 +264,23 @@ class Player {
     addPositionListeners() {
         document.addEventListener('keydown', (e) => {
             switch (e.code) {
-                case 'ArrowLeft', 'KeyA':
+                case 'ArrowLeft':
+                case 'KeyA':
                     this.move.left = this.checkPosition(this.currentFigure.x - 1, this.currentFigure.y, this.currentFigure.matrix) ? 1 : 0;
                     break;
-                case 'ArrowRight', 'KeyD':
+                case 'ArrowRight':
+                    case 'KeyD':
                     this.move.right = this.checkPosition(this.currentFigure.x + 1, this.currentFigure.y, this.currentFigure.matrix) ? 1 : 0;
                     break;
                 case 'Space':
                     this.move.set = 1;
                     break;
-                case 'ArrowDown', 'KeyS':
+                case 'ArrowDown':
+                    case 'KeyS':
                     this.nitro = 4;
                     break;
-                case 'ArrowUp', 'KeyW':
+                case 'ArrowUp':
+                    case 'KeyW':
                     let rotated = this.rotateFigure(this.currentFigure.matrix);
 
                     if (this.checkPosition(this.currentFigure.x, this.currentFigure.y, rotated)) {
@@ -317,8 +321,8 @@ class Interface {
         this.buffer = buffer;
         this.viewNextFigures = viewNextFigures;
         this.field = {
-            width: game.width*this.blockSize,
-            height: game.height*this.blockSize,
+            width: game.width * this.blockSize,
+            height: game.height * this.blockSize,
         }
     }
 }
