@@ -11,6 +11,13 @@ class Interface {
         this._level = level;
     }
 
+    updateSize(game) {
+        this.field = {
+            width: game.width * this.blockSize,
+            height: game.height * this.blockSize,
+        }
+    }
+
     set score(val) {
         if (val !== undefined) {
             this._score.textContent = val;
