@@ -50,10 +50,7 @@ let GAME = {
 
         if (player.isActive) {
             player.drawField(this.width, this.height);
-            field.font="40px serif";
-            field.fillStyle = 'white';
-            field.fillText("score: " + player.score, 10, 80);
-
+            document.querySelector('.game__score').innerHTML = player.score;
             if (this.playTime * player.nitro >= this.tickTime) {
                 this.playTime = 0;
                 player.update();
