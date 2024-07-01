@@ -4,6 +4,7 @@
     padding: 0;
     margin: 0;
     text-decoration: none;
+    user-select: none;
 }
 
 .main
@@ -57,7 +58,8 @@
     align-items: center;
 }
 
-.game__score
+.game__score,
+.game__level
 {
     color: white;
     text-align: center;

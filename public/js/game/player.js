@@ -4,6 +4,7 @@ class Player {
         this.field = [];
         this.nitro = 1;
         this.lvl = 0;
+        music.playbackRate = 0.7;
         this.tickTime = 48;
         this.lines = 0;
         this.move = {
@@ -112,7 +113,7 @@ class Player {
     updatePosition() {
         this.clearShadow(this.currentFigure);
         this.updateHorizontalPosition();
-        this.updateVerticalPosition();
+        this.setFigure();
         this.insertToField();
     }
 
@@ -124,7 +125,7 @@ class Player {
         }
     }
 
-    updateVerticalPosition() {
+    setFigure() {
         if (this.move.set) {
             let pos = this.getBottomPosition(this.currentFigure);
             this.currentFigure.x = pos.x;
@@ -138,6 +139,8 @@ class Player {
         for (let i = 0; i < this.figuresQueueSize; i++) {
             this.interface.viewNextFigures[i].src = this.nextFigures[i].image.src;
         }
+        this.interface.score = this.score;
+        this.interface.level = this.lvl;
     }
 
     drawField(width, height) {
@@ -220,7 +223,6 @@ class Player {
             this.lvl += Math.floor(this.lines / 8);
             this.lines = this.lines % 8;
             this.updateLvl();
-            console.log(this.tickTime, this.lvl)
         }
         return cleared;
     }
@@ -256,10 +258,11 @@ class Player {
             case 26:
             case 27:
             case 28: this.tickTime = 2; break;
-    }
-    if (this.lvl >= 29) {
-        this.tickTime = 1;
-    }
+        }
+        if (this.lvl >= 29) {
+            this.tickTime = 1;
+        }
+        music.playbackRate = 0.7 + this.lvl * 0.05;
     }
     checkPosition(x, y, matrix) {
         for (let i = 0; i < matrix.length; i++) {

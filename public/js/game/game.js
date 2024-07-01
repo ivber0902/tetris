@@ -53,7 +53,6 @@ let GAME = {
             if (this.playTime * player.nitro >= player.tickTime) {
                 this.playTime = 0;
                 player.update();
-                console.log('realy', player.tickTime)
             }
 
             player.updatePosition();
@@ -63,12 +62,19 @@ let GAME = {
         requestAnimationFrame(() => this.play());
     }
 }
-
+let music = new Audio("/audio/Korobeiniki.wav");
+music.addEventListener('ended', function() {
+    this.currentTime = 0;
+    this.play();
+}, false);
+music.play();
 const INTERFACE = new Interface(
     34,
     document.querySelector(".buffer__figure"),
     document.querySelectorAll(".figure"),
-    GAME
+    GAME,
+    document.querySelector(".game__score"),
+    document.querySelector(".game__level"),
 );
 
 const canvas = document.getElementById('game');
