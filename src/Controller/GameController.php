@@ -39,7 +39,7 @@ class GameController extends AbstractController
 
     public function game(): Response
     {
-        return $this->render('game.html.twig');
+        return $this->render('multiplayer.html.twig');
     }
 
     public function loginPage(): Response

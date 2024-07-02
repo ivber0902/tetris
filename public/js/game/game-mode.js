@@ -2,17 +2,17 @@ let gameModes = [
     {
         width: 10,
         height: 20,
-        background: '/images/fields/standart.png',
+        background: '/images/fields/multiplayer/standart.png',
     },
     {
         width: 15,
         height: 20,
-        background: '/images/fields/medium.png',
+        background: '/images/fields/multiplayer/medium.png',
     },
     {
         width: 20,
         height: 20,
-        background: '/images/fields/large.png',
+        background: '/images/fields/multiplayer/large.png',
     },
 ];
 
