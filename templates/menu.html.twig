@@ -9,8 +9,12 @@
             <img src="/images/settings.png" alt="settings" class="settings">
             <img src="/images/logo.png" alt="logo" class="logo">
             <div class="profile">
-                <p class="profile__nickname">{{user.login ?? 'Славянин'}}</p>
-                <img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
+                <a href="/{{user.login ?? 'signup'}}">
+                    <div class="profile">
+                        <p class="profile__nickname">{{user.login ?? 'Славянин'}}</p>
+                        <img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
+                    </div>          
+                </a>
             </div>
         </div>
         <div class="menu">
