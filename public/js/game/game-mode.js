@@ -2,17 +2,14 @@ let gameModes = [
     {
         width: 10,
         height: 20,
-        background: '/images/fields/multiplayer/standart.png',
     },
     {
         width: 15,
         height: 20,
-        background: '/images/fields/multiplayer/medium.png',
     },
     {
         width: 20,
         height: 20,
-        background: '/images/fields/multiplayer/large.png',
     },
 ];
 
@@ -32,7 +29,6 @@ window.addEventListener("DOMContentLoaded", () => {
             player.updateSize(GAME);
             canvas.width = player.interface.field.width;
             canvas.height = player.interface.field.height;
-            canvas.style.backgroundImage = `url(${btn.background})`
             
             menu.remove();
             document.querySelector(".wrapper-game").classList.add("started");

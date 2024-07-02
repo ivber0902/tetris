@@ -11,6 +11,7 @@ let GAME = {
             figure.shadow.src = `/images/shadow/${images[i]}.png`;
             i++
         });
+        blockField.src = '/images/blocks/bg.png';
         player.initField(this.width, this.height);
         player.initFigures();
         player.initEventListeners();
@@ -25,24 +26,30 @@ let GAME = {
         figures.forEach((figure) => {
                 figure.image.addEventListener('load', () => {
                     counter++;
-                    if (counter === figures.length * 3) {
+                    if (counter === figures.length * 3 + 1) {
                         func()
                     }
                 })
                 figure.block.addEventListener('load', () => {
                     counter++;
-                    if (counter === figures.length * 3) {
+                    if (counter === figures.length * 3 + 1) {
                         func()
                     }
                 })
                 figure.shadow.addEventListener('load', () => {
                     counter++;
-                    if (counter === figures.length * 3) {
+                    if (counter === figures.length * 3 + 1) {
                         func()
                     }
                 })
             }
-        )
+        );
+        blockField.addEventListener('load', () => {
+            counter++;
+            if (counter === figures.length * 3 + 1) {
+                func()
+            }
+        })
     },
     clear(ctx) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
