@@ -8,12 +8,14 @@
         <div class="header">
             <img src="/images/settings.png" alt="settings" class="settings">
             <img src="/images/logo.png" alt="logo" class="logo">
-                <a href="/{{user.login ?? 'signup'}}">
+            <div class="profile">
+                <a href="{{(user.login ?? null) ? path("profile", {login: user.login}) : path('register') }}">
                     <div class="profile">
                         <p class="profile__nickname">{{user.login ?? 'Славянин'}}</p>
                         <img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
                     </div>          
                 </a>
+            </div>
         </div>
         <div class="menu">
             <div class="link play-solo-bg" onclick="window.location.href = '/game'">
