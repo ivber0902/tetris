@@ -23,6 +23,9 @@ game:
     path: /game
     controller: App\Controller\GameController::game
 
+profile:
+    path: /profile/{login}
+    controller: App\Controller\PlayerController::profile
 
 # api
 api_register:

@@ -8,6 +8,7 @@ use App\Service\UserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PlayerController extends AbstractController
 {
@@ -16,6 +17,18 @@ class PlayerController extends AbstractController
         private readonly UserService   $userService,
     )
     {
+    }
+
+    public function profile(string $login): Response
+    {
+        $user = $this->userService->findUserByLogin($login);
+        if ($user !== null) {
+            return $this->render('profile.html.twig', [
+                "login" => $login,
+                "player" => $user->getPlayer(),
+            ]);
+        }
+        throw new NotFoundHttpException();
     }
 
     public function updateStatistics(Request $request): Response
