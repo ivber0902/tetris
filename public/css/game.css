@@ -29,6 +29,14 @@
     display: none;
     align-items: flex-start;
     justify-content: flex-start;
+    flex-direction: column;
+}
+
+.wrapper-field
+{
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
 }
 
 .wrapper-game.started {
@@ -104,11 +112,29 @@
     flex-direction: column;
 }
 
-.game__score,
-.game__level
+.game__score, .game__level, .title-level, .title-score
 {
     color: white;
     text-align: center;
     padding-top: 10px;
     font: 800 22px/22px "Russo One", sans-serif;
+}
+
+.title-level
+{
+    padding-left: 20px;
+}
+
+.title-level, .title-score
+{
+    padding-right: 10px;
+    text-transform: uppercase;
+}
+
+.score-wrapper
+{
+    padding-top: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
