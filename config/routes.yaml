@@ -26,6 +26,10 @@ game:
 profile:
     path: /profile/{login}
     controller: App\Controller\PlayerController::profile
+multiplayer:
+    path: /multiplayer
+    methods: GET
+    controller: App\Controller\GameController::multiplayer
 
 # api
 api_register:
