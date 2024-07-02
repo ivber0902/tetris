@@ -148,23 +148,30 @@ class Player {
 
     drawField(width, height) {
         for (let row = 0; row < height; row++) {
-            for (let col = 0; col < width; col++) {
-                if (this.field[row][col]) {
-                    if (this.field[row][col] - 1 >= 20)
-                        field.drawImage(
-                            figures[(this.field[row][col] - 1) % 10].shadow,
-                            col * this.interface.blockSize,
-                            row * this.interface.blockSize,
-                            this.interface.blockSize, this.interface.blockSize
-                        );
-                    else
-                        field.drawImage(
-                            figures[(this.field[row][col] - 1) % 10].block,
-                            col * this.interface.blockSize,
-                            row * this.interface.blockSize,
-                            this.interface.blockSize,
-                            this.interface.blockSize
-                        );
+            for (let col = 0; col < width; col++) {   
+                if (this.field[row][col] - 1 >= 20)
+                    field.drawImage(
+                        figures[(this.field[row][col] - 1) % 10].shadow,
+                        col * this.interface.blockSize,
+                        row * this.interface.blockSize,
+                        this.interface.blockSize, this.interface.blockSize
+                    )
+                else if(this.field[row][col] === 0){
+                    field.drawImage(
+                        blockField,
+                        col * this.interface.blockSize,
+                        row * this.interface.blockSize,
+                        this.interface.blockSize,
+                        this.interface.blockSize
+                    )             
+                }else{
+                    field.drawImage(
+                        figures[(this.field[row][col] - 1) % 10].block,
+                        col * this.interface.blockSize,
+                        row * this.interface.blockSize,
+                        this.interface.blockSize,
+                        this.interface.blockSize
+                    );
                 }
             }
         }
