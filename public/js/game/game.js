@@ -1,7 +1,6 @@
 let GAME = {
     width: 10,
     height: 20,
-    tickTime: 36,
     playTime: 0,
     figuresQueueSize: 4,
     init() {
@@ -16,6 +15,9 @@ let GAME = {
         player.initFigures();
         player.initEventListeners();
         player.updateInterface();
+
+
+        music.play();
         this.onLoadImages(() => this.play());
     },
     onLoadImages(func) {
@@ -23,19 +25,19 @@ let GAME = {
         figures.forEach((figure) => {
                 figure.image.addEventListener('load', () => {
                     counter++;
-                    if (counter === figures.length * 2) {
+                    if (counter === figures.length * 3) {
                         func()
                     }
                 })
                 figure.block.addEventListener('load', () => {
                     counter++;
-                    if (counter === figures.length * 2) {
+                    if (counter === figures.length * 3) {
                         func()
                     }
                 })
-                figure.block.addEventListener('load', () => {
+                figure.shadow.addEventListener('load', () => {
                     counter++;
-                    if (counter === figures.length * 2) {
+                    if (counter === figures.length * 3) {
                         func()
                     }
                 })
@@ -51,7 +53,7 @@ let GAME = {
         if (player.isActive) {
             player.drawField(this.width, this.height);
             document.querySelector('.game__score').innerHTML = player.score;
-            if (this.playTime * player.nitro >= this.tickTime) {
+            if (this.playTime * player.nitro >= player.tickTime) {
                 this.playTime = 0;
                 player.update();
             }
@@ -63,19 +65,23 @@ let GAME = {
         requestAnimationFrame(() => this.play());
     }
 }
+let music = new Audio("/audio/Korobeiniki.wav");
+music.addEventListener('ended', function() {
+    this.currentTime = 0;
+    this.play();
+}, false);
 
 const INTERFACE = new Interface(
     34,
     document.querySelector(".buffer__figure"),
     document.querySelectorAll(".figure"),
-    GAME
+    GAME,
+    document.querySelector(".game__score"),
+    document.querySelector(".game__level"),
 );
 
+let player = new Player(INTERFACE, GAME.figuresQueueSize);
 const canvas = document.getElementById('game');
 const field = canvas.getContext('2d');
 canvas.width = INTERFACE.field.width;
 canvas.height = INTERFACE.field.height;
-
-let player = new Player(INTERFACE, GAME.figuresQueueSize);
-
-window.addEventListener("DOMContentLoaded", () => GAME.init());
