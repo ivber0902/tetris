@@ -20,6 +20,8 @@ let GAME = {
         player.initEventListeners();
         player.updateInterface();
         INTERFACE.initMusic();
+    },
+    start() {
         this.onLoadImages(() => this.play());
     },
     onLoadImages(func) {
@@ -66,10 +68,8 @@ let GAME = {
             updateTime -= this.playTime;
             updateTime -= this.useT;
             if (updateTime * player.nitro >= player.tickTime) {
-                let downCount = Math.floor(updateTime * player.nitro / player.tickTime);
                 this.useT += updateTime;
-                for (let i = 0; i < downCount; i++)
-                    player.update();
+                player.update();
             }
 
             player.updatePosition();

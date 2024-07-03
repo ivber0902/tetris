@@ -39,3 +39,4 @@ otherField.forEach((elem)=>{
 })
 
 GAME.init()
+GAME.start()
