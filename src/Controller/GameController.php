@@ -41,6 +41,22 @@ class GameController extends AbstractController
     {
         return $this->render('game.html.twig');
     }
+    public function selectMode(): Response
+    {
+        return $this->render('select-mode.html.twig');
+    }
+    public function selectClassicMode(): Response
+    {
+        return $this->render('select-classic-mode.html.twig');
+    }
+    public function selectSoloMode(): Response
+    {
+        return $this->render('select-solo-mode.html.twig');
+    }
+    public function about(): Response
+    {
+        return $this->render('select-solo-mode.html.twig');
+    }
 
     public function multiplayer(): Response
     {

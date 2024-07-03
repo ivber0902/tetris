@@ -11,5 +11,5 @@
 /var/
 /.env
 /vendor/
-/.idea
+*/.idea
 /.vscode/

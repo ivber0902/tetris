@@ -1,0 +1,62 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	multiplayer mode
+{% endblock %}
+{% block style %}
+	<link rel="stylesheet" href="/css/select.css"/>
+{% endblock %}
+{% block content %}
+	<div class="bg bg_dark">
+		<div class="header">
+			<img src="/images/settings.png" alt="settings" class="settings"/>
+			<img src="/images/logo.png" alt="logo" class="logo"/>
+			<div class="profile">
+				<a href="/{{ user.login ?? 'signup' }}">
+					<div class="profile">
+						<p class="profile__nickname">
+							{{ user.login ?? 'Славянин' }}
+						</p>
+						<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar"/>
+					</div>
+				</a>
+			</div>
+		</div>
+		<div class="select">
+			<a href="/menu">
+				<div class="back">
+					<h1 class="back__button">
+						НАЗАД
+					</h1>
+				</div>
+			</a>
+			<div class="links">
+				<a href="/game" class="link custom link_with-image">
+					<div class="img-placeholder">
+						<img src="/images/custom.png" alt="custom" class="link__image">
+					</div>
+					<div class="link__text">
+						<h1 class="link__title custom__title">
+							СОЗДАТЬ ЛОББИ
+						</h1>
+						<p class="link__subtitle custom__subtitle">
+							КАСТОМИЗИРУЙ ИГРУ И СРАЗИСЬ С ДРУЗЬЯМИ
+						</p>
+					</div>
+				</a>
+				<a href="/game" class="link listing link_with-image">
+					<div class="img-placeholder">
+						<img src="/images/listing.png" alt="listing" class="link__image">
+					</div>
+					<div class="link__text">
+						<h1 class="link__title listing__title">
+							ВОЙТИ В ЛОББИ
+						</h1>
+						<p class="link__subtitle listing__subtitle">СРАЗИСЬ С ДРУЗЬЯМИ НА ИХ ПРАВИЛАХ
+						</p>
+					</div>
+				</a>
+			</div>
+		</div>
+	</div>
+{% endblock %}
