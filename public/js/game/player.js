@@ -6,6 +6,7 @@ class Player {
         this.lvl = 0;
         this.tickTime = 0;
         this.lines = 0;
+        this.figureCount = 0;
         this.move = {
             down: 1,
             left: 0,
@@ -91,13 +92,16 @@ class Player {
             if (this.checkPosition(startX, 0, this.currentFigure.matrix)) {
                 this.currentFigure.x = startX;
                 this.currentFigure.y = 0;
+                this.figureCount += 1;
             } else {
                 this.isActive = false;
                 gameEnd(this.score);
                 return;
-            }
-        } else
+            }  
+                    
+        } else{                       
             this.moveDown();
+        }
         this.clearRow();
     }
 
@@ -229,6 +233,12 @@ class Player {
                 row++;
             }
         }
+        this.lines += cleared;
+        if (this.figureCount >= 20) {
+            this.lvl += Math.floor(this.figureCount / 20);
+            this.figureCount = this.figureCount % 20;
+            this.updateLvl();
+        }
         switch (cleared) {
             case 1:
                 this.score += 100 * this.lvl;
@@ -244,12 +254,6 @@ class Player {
                 break;
             default:
                 break;
-        }
-        this.lines += cleared;
-        if (this.lines >= 8) {
-            this.lvl += Math.floor(this.lines / 8);
-            this.lines = this.lines % 8;
-            this.updateLvl();
         }
         return cleared;
     }
