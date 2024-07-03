@@ -89,6 +89,8 @@ let figures = [
     },
 ];
 
+let blockField = new Image()
+
 class Figure {
     constructor(
         matrix,

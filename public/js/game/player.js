@@ -49,7 +49,7 @@ class Player {
 
     initFigures() {
         this.currentFigure = this.getRandomFigure(figures);
-        this.currentFigure.x = this.getStartX();
+        this.currentFigure.x = this.getStartX(this.currentFigure);
         this.buffer = this.getRandomFigure(figures);
         this.interface.buffer.src = this.buffer.image.src;
         this.nextFigures = [];
@@ -88,7 +88,7 @@ class Player {
         if (!this.checkPosition(this.currentFigure.x, this.currentFigure.y + 1, this.currentFigure.matrix)) {
             this.insertToField(true);
             this.nextFigure();
-            let startX = this.getStartX();          
+            let startX = this.getStartX(this.currentFigure);
             if (this.checkPosition(startX, 0, this.currentFigure.matrix)) {
                 this.currentFigure.x = startX;
                 this.currentFigure.y = 0;
@@ -104,8 +104,8 @@ class Player {
         this.clearRow();
     }
 
-    getStartX() {
-        return 3
+    getStartX(figure) {
+        return Math.floor((this.field[0].length - Math.max(...figure.matrix.map(row => row.length))) / 2);
     }
 
     moveDown() {
@@ -150,23 +150,30 @@ class Player {
 
     drawField(width, height) {
         for (let row = 0; row < height; row++) {
-            for (let col = 0; col < width; col++) {
-                if (this.field[row][col]) {
-                    if (this.field[row][col] - 1 >= 20)
-                        field.drawImage(
-                            figures[(this.field[row][col] - 1) % 10].shadow,
-                            col * this.interface.blockSize,
-                            row * this.interface.blockSize,
-                            this.interface.blockSize, this.interface.blockSize
-                        );
-                    else
-                        field.drawImage(
-                            figures[(this.field[row][col] - 1) % 10].block,
-                            col * this.interface.blockSize,
-                            row * this.interface.blockSize,
-                            this.interface.blockSize,
-                            this.interface.blockSize
-                        );
+            for (let col = 0; col < width; col++) {   
+                if (this.field[row][col] - 1 >= 20)
+                    field.drawImage(
+                        figures[(this.field[row][col] - 1) % 10].shadow,
+                        col * this.interface.blockSize,
+                        row * this.interface.blockSize,
+                        this.interface.blockSize, this.interface.blockSize
+                    )
+                else if(this.field[row][col] === 0){
+                    field.drawImage(
+                        blockField,
+                        col * this.interface.blockSize,
+                        row * this.interface.blockSize,
+                        this.interface.blockSize,
+                        this.interface.blockSize
+                    )             
+                }else{
+                    field.drawImage(
+                        figures[(this.field[row][col] - 1) % 10].block,
+                        col * this.interface.blockSize,
+                        row * this.interface.blockSize,
+                        this.interface.blockSize,
+                        this.interface.blockSize
+                    );
                 }
             }
         }
@@ -369,7 +376,7 @@ class Player {
                 this.buffer = figure;
                 this.interface.buffer.src = this.buffer.image.src;
                 this.currentFigure.matrix = figures[this.currentFigure.id].matrix;
-                this.currentFigure.x = this.getStartX();
+                this.currentFigure.x = this.getStartX(this.currentFigure);
                 this.currentFigure.y = 0;
                 this.isShifter = false;
             }

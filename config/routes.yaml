@@ -13,9 +13,25 @@ logout:
     path: /logout
     controller: App\Controller\SecurityController::logout
 
+lobby:
+    path: /lobby
+    controller: App\Controller\GameController::lobby
+
 menu:
     path: /menu
     controller: App\Controller\GameController::menu
+select_mode:
+    path: /select_mode
+    controller: App\Controller\GameController::selectMode
+select_classic_mode:
+    path: /select_classic_mode
+    controller: App\Controller\GameController::selectClassicMode
+select_solo_mode:
+    path: /select_solo_mode
+    controller: App\Controller\GameController::selectSoloMode
+about:
+    path: /about
+    controller: App\Controller\GameController::about
 game_over:
     path: /game_over
     controller: App\Controller\GameController::gameOver
@@ -23,6 +39,13 @@ game:
     path: /game
     controller: App\Controller\GameController::game
 
+profile:
+    path: /profile/{login}
+    controller: App\Controller\PlayerController::profile
+multiplayer:
+    path: /multiplayer
+    methods: GET
+    controller: App\Controller\GameController::multiplayer
 
 lobby:
     path: /lobby

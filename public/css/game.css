@@ -7,6 +7,12 @@
     user-select: none;
 }
 
+#game
+{
+    padding: 0 3px 3px 3px;
+    background-color: white;
+}
+
 .main
 {
     width: 100%;
@@ -27,6 +33,14 @@
 .wrapper-game
 {
     display: none;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.wrapper-field
+{
+    display: flex;
     align-items: flex-start;
     justify-content: flex-start;
 }
@@ -73,10 +87,9 @@
 
 .game__buffer
 {
-    width: 171px;
+    width: 167px;
     height: 134px;
     box-sizing: border-box;
-    padding: 0 2px 2px 3px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -104,11 +117,29 @@
     flex-direction: column;
 }
 
-.game__score,
-.game__level
+.game__score, .game__level, .title-level, .title-score
 {
     color: white;
     text-align: center;
     padding-top: 10px;
     font: 800 22px/22px "Russo One", sans-serif;
+}
+
+.title-level
+{
+    padding-left: 20px;
+}
+
+.title-level, .title-score
+{
+    padding-right: 10px;
+    text-transform: uppercase;
+}
+
+.score-wrapper
+{
+    padding-top: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }

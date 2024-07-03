@@ -7,26 +7,33 @@
    <main class="main">
         <img class="logo" src="/images/logo.svg" alt="logo">
         <div class="wrapper-game">
-            <div class="game__buffer"> 
-                <p class="title">Буффер</p>
-                <div class="buffer-wrapper">
-                    <img class="buffer__figure" src="" alt="figure">
+            <div class="wrapper-field">
+                <div class="game__buffer"> 
+                    <p class="title">Буффер</p>
+                    <div class="buffer-wrapper">
+                        <img class="buffer__figure" src="" alt="figure">
+                    </div>
                 </div>
+                <canvas id="game">
+                </canvas>
+                <div class="next__figure">
+                    <p class="title">Следующие</p>
+                    <div class="wrapper-figures">
+                        <img class="figure"  src="" alt="figure">
+                        <img class="figure"  src="" alt="figure">
+                        <img class="figure"  src="" alt="figure">
+                        <img class="figure"  src="" alt="figure">               
+                    </div>
+                </div>     
             </div>
-            <canvas id="game">
-                
-            </canvas>
-            <div class="next__figure">
-                <p class="title">Следующие</p>
-                <div class="wrapper-figures">
-                    <img class="figure"  src="" alt="figure">
-                    <img class="figure"  src="" alt="figure">
-                    <img class="figure"  src="" alt="figure">
-                    <img class="figure"  src="" alt="figure">               
-                </div>
-
+            <div class="score-wrapper">
+                <p class="title-score">счет:</p>
+                <p class="game__score"></p>
+                <p class="title-level">уровень:</p>
+                <p class="game__level"></p>
             </div>
         </div>
+
         <p class="game__score"></p>
         <p class="game__level"></p>
    </main>
