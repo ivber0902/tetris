@@ -11,6 +11,6 @@
 /var/
 /.env
 /vendor/
-*/.idea
+*/.idea/
 /.vscode/
 */node_modules/

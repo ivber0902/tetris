@@ -12,7 +12,7 @@ var upgrader = websocket.Upgrader{
 }
 
 func main() {
-	http.HandleFunc("/connect", ConnectToLobbyHandler)
+	http.HandleFunc("/lobby", ConnectToLobbyHandler)
 
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
