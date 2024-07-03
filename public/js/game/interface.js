@@ -13,8 +13,7 @@ class Interface {
     }
     initMusic() {
         this.music.playbackRate = 0.7;
-        this.music.addEventListener('load', () => {
-        this.music.play();});
+        this.music.addEventListener('load', () => this.music.play());
         this.music.addEventListener('ended', function () {
             this.currentTime = 0;
             this.play();

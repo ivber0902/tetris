@@ -45,6 +45,7 @@ class Player {
                 this.field[line][column] = 0;
             }
         }
+        this.drawField(width, height)
     }
 
     initFigures() {
@@ -244,16 +245,16 @@ class Player {
         }
         switch (cleared) {
             case 1:
-                this.score += 100 * this.lvl;
+                this.score += 100 * Math.max(1, this.lvl);
                 break;
             case 2:
-                this.score += 300 * this.lvl;
+                this.score += 300 * Math.max(1, this.lvl);
                 break;
             case 3:
-                this.score += 700 * this.lvl;
+                this.score += 700 * Math.max(1, this.lvl);
                 break;
             case 4:
-                this.score += 1500 * this.lvl;
+                this.score += 1500 * Math.max(1, this.lvl);
                 break;
             default:
                 break;
