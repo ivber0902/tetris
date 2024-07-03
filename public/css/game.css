@@ -9,7 +9,8 @@
 
 #game
 {
-    background-size: 100% 100%;
+    padding: 0 3px 3px 3px;
+    background-color: white;
 }
 
 .main
@@ -86,10 +87,9 @@
 
 .game__buffer
 {
-    width: 171px;
+    width: 167px;
     height: 134px;
     box-sizing: border-box;
-    padding: 0 2px 2px 3px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
