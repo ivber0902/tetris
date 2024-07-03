@@ -6,6 +6,8 @@
     font-weight: 400;
     font-size: 32px;
     color: #fff;  
+    text-transform: uppercase;
+    text-decoration: none;
 }
 
 .bg {
