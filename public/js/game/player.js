@@ -82,9 +82,7 @@ class Player {
 
         this.isShifter = true;
     }
-
-    update() {
-        this.clearShadow(this.currentFigure);
+    needStop() {
         if (!this.checkPosition(this.currentFigure.x, this.currentFigure.y + 1, this.currentFigure.matrix)) {
             this.insertToField(true);
             this.nextFigure();
@@ -96,10 +94,15 @@ class Player {
             } else {
                 this.isActive = false;
                 gameEnd(this.score);
-                return;
+                return true;
             }  
                     
-        } else{                       
+        }
+        return false;
+    }
+    update() {
+        this.clearShadow(this.currentFigure);
+        if (!this.needStop()) {
             this.moveDown();
         }
         this.clearRow();
