@@ -1,0 +1,12 @@
+{
+  "players": [],
+  "settings": {
+    "music": "/audio/Korobeiniki.wav",
+    "background": "/images/bg.png",
+    "difficulty": 1,
+    "play_field": {
+      "width": 10,
+      "height": 20
+    }
+  }
+}

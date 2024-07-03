@@ -4,8 +4,7 @@ class Player {
         this.field = [];
         this.nitro = 1;
         this.lvl = 0;
-        music.playbackRate = 0.7;
-        this.tickTime = 48;
+        this.tickTime = 0;
         this.lines = 0;
         this.move = {
             down: 1,
@@ -148,7 +147,7 @@ class Player {
 
     drawField(width, height) {
         for (let row = 0; row < height; row++) {
-            for (let col = 0; col < width; col++) {   
+            for (let col = 0; col < width; col++) {
                 if (this.field[row][col] - 1 >= 20)
                     field.drawImage(
                         figures[(this.field[row][col] - 1) % 10].shadow,
@@ -156,15 +155,15 @@ class Player {
                         row * this.interface.blockSize,
                         this.interface.blockSize, this.interface.blockSize
                     )
-                else if(this.field[row][col] === 0){
+                else if (this.field[row][col] === 0) {
                     field.drawImage(
                         blockField,
                         col * this.interface.blockSize,
                         row * this.interface.blockSize,
                         this.interface.blockSize,
                         this.interface.blockSize
-                    )             
-                }else{
+                    )
+                } else {
                     field.drawImage(
                         figures[(this.field[row][col] - 1) % 10].block,
                         col * this.interface.blockSize,
@@ -232,16 +231,16 @@ class Player {
         }
         switch (cleared) {
             case 1:
-                this.score += 100;
+                this.score += 100 * this.lvl;
                 break;
             case 2:
-                this.score += 300;
+                this.score += 300 * this.lvl;
                 break;
             case 3:
-                this.score += 700;
+                this.score += 700 * this.lvl;
                 break;
             case 4:
-                this.score += 1500;
+                this.score += 1500 * this.lvl;
                 break;
             default:
                 break;
@@ -257,25 +256,25 @@ class Player {
 
     updateLvl() {
         switch (this.lvl) {
-            case 0: this.tickTime = 48; break;
-            case 1: this.tickTime = 43; break;
-            case 2: this.tickTime = 38; break;
-            case 3: this.tickTime = 33; break;
-            case 4: this.tickTime = 28; break;
-            case 5: this.tickTime = 23; break;
-            case 6: this.tickTime = 18; break;
-            case 7: this.tickTime = 13; break;
-            case 8: this.tickTime = 8; break;
-            case 9: this.tickTime = 6; break;
+            case 0: this.tickTime = 15974 / this.field.length; break;
+            case 1: this.tickTime = 14310 / this.field.length; break;
+            case 2: this.tickTime = 12646 / this.field.length; break;
+            case 3: this.tickTime = 10982 / this.field.length; break;
+            case 4: this.tickTime = 9318 / this.field.length; break;
+            case 5: this.tickTime = 7654 / this.field.length; break;
+            case 6: this.tickTime = 5990 / this.field.length; break;
+            case 7: this.tickTime = 4326 / this.field.length; break;
+            case 8: this.tickTime = 2662 / this.field.length; break;
+            case 9: this.tickTime = 1997 / this.field.length; break;
             case 10:
             case 11:
-            case 12: this.tickTime = 5; break;
+            case 12: this.tickTime = 1664 / this.field.length; break;
             case 13:
             case 14:
-            case 15: this.tickTime = 4; break;
+            case 15: this.tickTime = 1331 / this.field.length; break;
             case 16:
             case 17:
-            case 18: this.tickTime = 3; break;
+            case 18: this.tickTime = 998 / this.field.length; break;
             case 19:
             case 20:
             case 21:
@@ -285,14 +284,14 @@ class Player {
             case 25:
             case 26:
             case 27:
-            case 28: this.tickTime = 2; break;
+            case 28: this.tickTime = 666 / this.field.length; break;
         }
         if (this.lvl >= 29) {
-            this.tickTime = 1;
+            this.tickTime = 333 / this.field.length;
         }
-        music.playbackRate = 0.7 + this.lvl * 0.05;
+        this.interface.music.playbackRate = 0.7 + this.lvl * 0.05;
     }
-    
+
     checkPosition(x, y, matrix) {
         for (let i = 0; i < matrix.length; i++) {
             for (let j = 0; j < matrix[0].length; j++) {
@@ -376,7 +375,7 @@ class Player {
         });
     }
 
-    updateSize(game){
+    updateSize(game) {
         this.interface.updateSize(game);
     }
 
