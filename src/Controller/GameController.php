@@ -59,7 +59,7 @@ class GameController extends AbstractController
     }
     public function about(): Response
     {
-        return $this->render('select-solo-mode.html.twig');
+        return $this->render('about.html.twig');
     }
 
     public function multiplayer(): Response
