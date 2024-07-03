@@ -4,17 +4,18 @@
     text-decoration: none;
     font-family: "Russo One", sans-serif;
     font-weight: 400;
+    user-select: none;
 }
 
 .bg {
     height: 100vh;
-    background: url("../images/bg.png") no-repeat;
+    background: url(/images/bg.png) no-repeat;
     background-size: cover;
 
 }
 
 .bg_dark {
-    background: url("../images/dark-bg.png") no-repeat;
+    background: url(/images/dark-bg.png) no-repeat;
     background-size: cover;
 
 }
@@ -67,7 +68,7 @@
 }
 
 .link {
-    width: calc(100% - 18px);
+    width: calc(100% - 21px);
     display: flex;
     flex-direction: row;
     padding: 9px;
@@ -78,6 +79,7 @@
 }
 
 .link_with-image {
+    width: calc(100% - 12px);
     padding: 0 0 0 9px;
 }
 
