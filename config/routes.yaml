@@ -13,9 +13,6 @@ logout:
     path: /logout
     controller: App\Controller\SecurityController::logout
 
-lobby:
-    path: /lobby
-    controller: App\Controller\GameController::lobby
 
 menu:
     path: /menu

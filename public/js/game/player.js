@@ -7,6 +7,8 @@ class Player {
         music.playbackRate = 0.7;
         this.tickTime = 48;
         this.lines = 0;
+        this.figureCount = 0;
+        this.scoreMultiplier = 1;
         this.move = {
             down: 1,
             left: 0,
@@ -92,6 +94,7 @@ class Player {
             if (this.checkPosition(startX, 0, this.currentFigure.matrix)) {
                 this.currentFigure.x = startX;
                 this.currentFigure.y = 0;
+                this.figureCount += 1;
             } else {
                 this.isActive = false;
                 gameEnd(this.score);
@@ -216,52 +219,52 @@ class Player {
                 row++;
             }
         }
+        this.lines += cleared;
+        if (this.figureCount >= 20) {
+            this.lvl += Math.floor(this.figureCount / 20);
+            this.figureCount = this.figureCount % 20;
+            this.updateLvl();
+        }
         switch (cleared) {
             case 1:
-                this.score += 100;
+                this.score += 100 * this.scoreMultiplier;
                 break;
             case 2:
-                this.score += 300;
+                this.score += 300 * this.scoreMultiplier;
                 break;
             case 3:
-                this.score += 700;
+                this.score += 700 * this.scoreMultiplier;
                 break;
             case 4:
-                this.score += 1500;
+                this.score += 1500 * this.scoreMultiplier;
                 break;
             default:
                 break;
-        }
-        this.lines += cleared;
-        if (this.lines >= 8) {
-            this.lvl += Math.floor(this.lines / 8);
-            this.lines = this.lines % 8;
-            this.updateLvl();
         }
         return cleared;
     }
 
     updateLvl() {
         switch (this.lvl) {
-            case 0: this.tickTime = 48; break;
+            case 0: {this.tickTime = 48; this.scoreMultiplier = 1.1} break;
             case 1: this.tickTime = 43; break;
-            case 2: this.tickTime = 38; break;
+            case 2: this.tickTime = 38; this.scoreMultiplier = 1.2; break;
             case 3: this.tickTime = 33; break;
-            case 4: this.tickTime = 28; break;
+            case 4: this.tickTime = 28; this.scoreMultiplier = 1.3; break;
             case 5: this.tickTime = 23; break;
             case 6: this.tickTime = 18; break;
-            case 7: this.tickTime = 13; break;
+            case 7: this.tickTime = 13; this.scoreMultiplier = 1.4; break;
             case 8: this.tickTime = 8; break;
-            case 9: this.tickTime = 6; break;
+            case 9: this.tickTime = 6; this.scoreMultiplier = 1,5; break;
             case 10:
             case 11:
-            case 12: this.tickTime = 5; break;
+            case 12: this.tickTime = 5; this.scoreMultiplier = 1,6; break;
             case 13:
             case 14:
-            case 15: this.tickTime = 4; break;
+            case 15: this.tickTime = 4; this.scoreMultiplier = 1,7; break;
             case 16:
             case 17:
-            case 18: this.tickTime = 3; break;
+            case 18: this.tickTime = 3; this.scoreMultiplier = 1,8; break;
             case 19:
             case 20:
             case 21:
@@ -271,10 +274,11 @@ class Player {
             case 25:
             case 26:
             case 27:
-            case 28: this.tickTime = 2; break;
+            case 28: this.tickTime = 2; this.scoreMultiplier = 1,9; break;
         }
         if (this.lvl >= 29) {
             this.tickTime = 1;
+            this.scoreMultiplier = 2; 
         }
         music.playbackRate = 0.7 + this.lvl * 0.05;
     }

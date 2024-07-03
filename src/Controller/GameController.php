@@ -41,10 +41,6 @@ class GameController extends AbstractController
     {
         return $this->render('game.html.twig');
     }
-    public function lobby(): Response
-    {
-        return $this->render('lobby.html.twig');
-    }
     public function selectMode(): Response
     {
         return $this->render('select-mode.html.twig');
