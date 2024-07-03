@@ -8,7 +8,6 @@
 
 .bg {
     height: 100vh;
-    width: 100vw;
     background: url("../images/bg.png") no-repeat;
     background-size: cover;
 
@@ -16,6 +15,7 @@
 
 .bg_dark {
     background: url("../images/dark-bg.png") no-repeat;
+    background-size: cover;
 
 }
 
@@ -67,7 +67,7 @@
 }
 
 .link {
-    width: 100%;
+    width: calc(100% - 18px);
     display: flex;
     flex-direction: row;
     padding: 9px;
