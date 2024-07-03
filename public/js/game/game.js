@@ -1,7 +1,8 @@
-let GAME = {
+ let GAME = {
     width: 10,
     height: 20,
-    playTime: 0,
+    playTime: new Date(),
+    useT: 0,
     figuresQueueSize: 4,
     init() {
         let i = 0;
@@ -13,36 +14,35 @@ let GAME = {
         });
         blockField.src = '/images/blocks/bg.png';
         player.initField(this.width, this.height);
+        player.tickTime = 15974 / this.height;
         player.initFigures();
         player.initEventListeners();
         player.updateInterface();
-
-
-        music.play();
+        INTERFACE.initMusic();
         this.onLoadImages(() => this.play());
     },
     onLoadImages(func) {
         let counter = 0;
         figures.forEach((figure) => {
-                figure.image.addEventListener('load', () => {
-                    counter++;
-                    if (counter === figures.length * 3 + 1) {
-                        func()
-                    }
-                })
-                figure.block.addEventListener('load', () => {
-                    counter++;
-                    if (counter === figures.length * 3 + 1) {
-                        func()
-                    }
-                })
-                figure.shadow.addEventListener('load', () => {
-                    counter++;
-                    if (counter === figures.length * 3 + 1) {
-                        func()
-                    }
-                })
-            }
+            figure.image.addEventListener('load', () => {
+                counter++;
+                if (counter === figures.length * 3 + 1) {
+                    func()
+                }
+            })
+            figure.block.addEventListener('load', () => {
+                counter++;
+                if (counter === figures.length * 3 + 1) {
+                    func()
+                }
+            })
+            figure.shadow.addEventListener('load', () => {
+                counter++;
+                if (counter === figures.length * 3 + 1) {
+                    func()
+                }
+            })
+        }
         );
         blockField.addEventListener('load', () => {
             counter++;
@@ -60,23 +60,21 @@ let GAME = {
         if (player.isActive) {
             player.drawField(this.width, this.height);
             document.querySelector('.game__score').innerHTML = player.score;
-            if (this.playTime * player.nitro >= player.tickTime) {
-                this.playTime = 0;
-                player.update();
+            let updateTime = new Date();
+            updateTime -= this.playTime;
+            updateTime -= this.useT;
+            if (updateTime * player.nitro >= player.tickTime) {
+                let downCount = Math.floor(updateTime * player.nitro / player.tickTime);
+                this.useT += updateTime;
+                for (let i = 0; i < downCount; i++)
+                    player.update();
             }
 
             player.updatePosition();
         }
-
-        this.playTime++;
         requestAnimationFrame(() => this.play());
     }
 }
-let music = new Audio("/audio/Korobeiniki.wav");
-music.addEventListener('ended', function() {
-    this.currentTime = 0;
-    this.play();
-}, false);
 
 const INTERFACE = new Interface(
     34,
