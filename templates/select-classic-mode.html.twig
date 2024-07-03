@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="/css/select.css"/>
 {% endblock %}
 {% block content %}
+<body>
 	<div class="bg bg_dark">
 		<div class="header">
 			<img src="/images/settings.png" alt="settings" class="settings"/>
@@ -31,7 +32,7 @@
 				</div>
 			</a>
 			<div class="links">
-				<a href="/game" class="link">
+				<div class="link">
 					<div class="link__text">
 						<h1 class="link__title">
 							ХОЛОП
@@ -40,8 +41,8 @@
 							МАЛЕНЬКИЙ РАЗМЕР ПОЛЯ И МЕДЛЕННАЯ ИГРА
 						</p>
 					</div>
-				</a>
-				<a href="/game" class="link">
+				</div>
+				<div class="link">
 					<div class="link__text">
 						<h1 class="link__title">
 							КРЕСТЬЯНИН
@@ -50,8 +51,8 @@
 							КЛАССИЧЕСКИЕ РАЗМЕР ПОЛЯ И СКОРОСТЬ ИГРЫ
 						</p>
 					</div>
-				</a>
-				<a href="/game" class="link">
+				</div>
+				<div class="link">
 					<div class="link__text">
 						<h1 class="link__title">
 							БОЯРИН
@@ -60,8 +61,10 @@
 							БОЛЬШОЙ РАЗМЕР ПОЛЯ И БЫСТРАЯ ИГРА
 						</p>
 					</div>
-				</a>
+				</div>
 			</div>
 		</div>
 	</div>
+</body>
+	<script src="/js/game/game-mode.js"></script>
 {% endblock %}

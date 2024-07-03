@@ -32,7 +32,7 @@
 
 .wrapper-game
 {
-    display: none;
+    display: flex;
     align-items: flex-start;
     justify-content: flex-start;
     flex-direction: column;
@@ -43,28 +43,6 @@
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
-}
-
-.wrapper-game.started {
-    display: flex;
-}
-
-.game-mode-menu__button
-{
-    width: 100px;
-    height: 80px;
-}
-.game-mode-menu {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
-    background-color: #0006;
-    top: 0;
-    left: 0;
 }
 
 .title{
