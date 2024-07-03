@@ -16,10 +16,8 @@
                             <img class="buffer__figure" src="" alt="figure">
                         </div>
                     </div>
-                        <div class="border-game">
-                            <canvas id="game">    
-                            </canvas>
-                        </div>
+                    <canvas id="game">    
+                    </canvas>
                     <div class="next__figure">
                         <p class="title">Следующие</p>
                         <div class="wrapper-figures">
@@ -42,17 +40,17 @@
             <div class="palyers-list">
                 <div class="other-player">
                     <p class="player__username">Иван</p>
-                    <img class="player__field" src="/images/fields/other_player/large.png">
+                    <canvas class="other-field"></canvas>
                     <p class="player__score">200</p>
                 </div>
                 <div class="other-player">
                     <p class="player__username">Петр</p>
-                    <img class="player__field" src="/images/fields/other_player/large.png">
+                    <canvas class="other-field"></canvas>
                     <p class="player__score">200</p>
                 </div>
                 <div class="other-player">
                     <p class="player__username">Николай</p>
-                    <img class="player__field" src="/images/fields/other_player/large.png">
+                    <canvas class="other-field"></canvas>
                     <p class="player__score">200</p>
                 </div>
             </div>
@@ -66,4 +64,5 @@
 <script src="/js/game/figures.js"></script>
 <script src="/js/game/images.js"></script>
 <script src="/js/game/game.js"></script>
+<script src="/js/game/init-game.js"></script>
 {% endblock %}

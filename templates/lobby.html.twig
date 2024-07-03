@@ -4,7 +4,8 @@
 {% block style %}<link rel="stylesheet" href="/css/lobby.css"/>{% endblock %}
 {% block script %}<script src="/js/lobby.js"></script>{% endblock %}
 {% block content %}
-    <div class="bg">
+<body>
+     <div class="bg">
         <div class="header">
             <img src="/images/settings.png" alt="settings" class="set">
             <img src="/images/logo.png" alt="logo" class="logo">
@@ -52,6 +53,9 @@
                 <div class="settings__background">
                     <h1 class="settings__text">ЗАДНИЙ ФОН: </h1>
                 </div>
+                <button class="link">ХОЛОП</button>
+                <button class="link">КРЕСТЬЯНИН</button>
+                <button class="link">БОЯРИН</button>
             </div>
             <a href="/multiplayer">Начать игру</a>
         </div>
@@ -85,4 +89,6 @@
             </div>
         </div>
     </div>
+</body>
+<script src="/js/game/game-mode-multiplayer.js"></script>
 {% endblock %}

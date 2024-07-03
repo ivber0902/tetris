@@ -177,6 +177,22 @@ class Player {
         }
     }
 
+    drawOtherField(width, height) {
+        otherField.forEach((elem)=>{
+            elem.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+            for (let row = 0; row < height; row++){
+                for (let col = 0; col < width; col++){
+                    elem.getContext('2d').drawImage(
+                        blockField,
+                        col * this.interface.blockSize,
+                        row * this.interface.blockSize,
+                        this.interface.blockSize, this.interface.blockSize
+                    )
+                }
+            }
+        })
+    }
+
     rotateFigure(matrix) {
         let rotated = [];
 

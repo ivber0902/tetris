@@ -95,7 +95,10 @@
     flex-direction: column;
 }
 
-.game__score, .game__level, .title-level, .title-score
+.game__score, 
+.game__level, 
+.title-level, 
+.title-score
 {
     color: white;
     text-align: center;

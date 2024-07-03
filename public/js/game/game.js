@@ -4,6 +4,7 @@ let GAME = {
     playTime: 0,
     figuresQueueSize: 4,
     init() {
+
         let i = 0;
         figures.forEach((figure) => {
             figure.image.src = `/images/figures/${images[i]}.png`;
@@ -59,6 +60,7 @@ let GAME = {
 
         if (player.isActive) {
             player.drawField(this.width, this.height);
+            player.drawOtherField(this.width, this.height);
             document.querySelector('.game__score').innerHTML = player.score;
             if (this.playTime * player.nitro >= player.tickTime) {
                 this.playTime = 0;
