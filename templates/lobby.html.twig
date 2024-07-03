@@ -1,0 +1,87 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Lobby{% endblock %}
+{% block style %}<link rel="stylesheet" href="/css/lobby.css"/>{% endblock %}
+{% block script %}<script src="/js/lobby.js"></script>{% endblock %}
+{% block content %}
+    <div class="bg">
+        <div class="header">
+            <img src="/images/settings.png" alt="settings" class="set">
+            <img src="/images/logo.png" alt="logo" class="logo">
+            <div class="profile">
+                <p class="profile__nickname">{{user.login ?? 'Славянин'}}</p>
+                <img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
+            </div>
+        </div>
+        <div class="main">
+            <div class="players">
+                <div class="list-players">
+                    <div class="player">
+                        <p class="player__name">Никита</p>
+                        <img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
+                    </div>
+                    <div class="player">
+                        <p class="player__name">Иван</p>
+                        <img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
+                    </div>
+                    <div class="player">
+                        <p class="player__name">Елисей</p>
+                        <img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
+                    </div>
+                    <div class="player">
+                        <p class="player__name">Дима</p>
+                        <img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
+                    </div>
+                </div>
+            </div>
+            <div class="settings">
+                <h1 class="settings__header">НАСТРОЙКИ</h1>
+
+                <div class="settings__size">
+                    <h1 class="settings__text">РАЗМЕР ПОЛЯ: </h1>
+                    <h1 class="settings__text">ОГРОМНОЕ</h1>
+                </div>
+                <div class="settings__music">
+                    <h1 class="settings__text">МУЗЫКА: </h1>
+                    <h1 class="settings__text">КАРАБЕЙНИКИ</h1>
+                </div>
+                <div class="settings__complexity">
+                    <h1 class="settings__text">СЛОЖНОСТЬ: </h1>
+                    <h1 class="settings__text">КАК ПОЛЕ ВСПАХАТЬ</h1>
+                </div>
+                <div class="settings__background">
+                    <h1 class="settings__text">ЗАДНИЙ ФОН: </h1>
+                </div>
+            </div>
+        </div>
+        <div class="user-profile">
+            <div class="user-profile__header">
+                <div class="user-profile__player">
+                    <img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
+                    <p class="profile__nickname">{{user.login ?? 'Славянин'}}</p>
+                </div>
+                <div class="user-profile__exit">
+                    <button class="exit">Viyti</button>
+                    <a class="full-profile" href="/">Profile</a>
+                </div>  
+            </div>
+            <div class="statistics">
+                <div class="max-score">
+                    <p class="statistics__text">МАКСИМУМ ОЧКОВ</p>
+                    <div class="line"></div>
+                    <p>14100</p>
+                </div>
+                <div class="count-win">
+                    <p class="statistics__text">ВСЕГО ПОБЕД</p>
+                    <div class="line"></div>
+                    <p>11</p>
+                </div>
+                <div class="count-game">
+                    <p class="statistics__text">ВСЕГО ИГР</p>
+                    <div class="line"></div>
+                    <p>2</p>
+                </div>               
+            </div>
+        </div>
+    </div>
+{% endblock %}

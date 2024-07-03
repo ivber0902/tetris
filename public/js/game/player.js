@@ -88,7 +88,7 @@ class Player {
         if (!this.checkPosition(this.currentFigure.x, this.currentFigure.y + 1, this.currentFigure.matrix)) {
             this.insertToField(true);
             this.nextFigure();
-            let startX = this.getStartX();
+            let startX = this.getStartX();          
             if (this.checkPosition(startX, 0, this.currentFigure.matrix)) {
                 this.currentFigure.x = startX;
                 this.currentFigure.y = 0;
@@ -96,9 +96,11 @@ class Player {
                 this.isActive = false;
                 gameEnd(this.score);
                 return;
-            }
-        } else
+            }  
+                    
+        } else{                       
             this.moveDown();
+        }
         this.clearRow();
     }
 

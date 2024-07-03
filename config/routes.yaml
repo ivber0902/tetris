@@ -24,6 +24,10 @@ game:
     controller: App\Controller\GameController::game
 
 
+lobby:
+    path: /lobby
+    controller: App\Controller\GameController::lobby
+
 # api
 api_register:
     path: /api/register
