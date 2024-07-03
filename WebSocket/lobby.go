@@ -1,19 +1,16 @@
 package main
 
 type Lobby struct {
-	ID       int32         `bson:"_id"`
-	Players  []int32       `bson:"players"`
-	Settings LobbySettings `bson:"settings"`
-}
+	ID       int32   `bson:"_id"`
+	Players  []int32 `bson:"players" json:"players"`
+	Settings struct {
+		Music      string `bson:"music" json:"music"`
+		Background string `bson:"background" json:"background"`
+		Difficulty int8   `bson:"difficulty" json:"difficulty"`
 
-type LobbySettings struct {
-	PlayField  PlayField `bson:"play_field"`
-	Music      string    `bson:"music"`
-	Background string    `bson:"background"`
-	Difficulty int8      `bson:"difficulty"`
-}
-
-type PlayField struct {
-	Width  int `bson:"width"`
-	Height int `bson:"height"`
+		PlayField struct {
+			Width  int8 `bson:"width" json:"width"`
+			Height int8 `bson:"height" json:"height"`
+		} `bson:"play_field" json:"play_field"`
+	} `bson:"settings"`
 }
