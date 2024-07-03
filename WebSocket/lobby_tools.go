@@ -56,22 +56,13 @@ func ConnectToLobby(request ConnectionJSONRequest) error {
 }
 
 func CreateLobby(request ConnectionJSONRequest, lobbyTable *mongo.Collection) error {
-	log.Println("Creating lobby", request.LobbyID)
-
-	lobby, err := loadDefaultLobby()
-	if err != nil {
-		return err
-	}
-	lobby.ID = request.PlayerID
-	lobby.Players = append(lobby.Players, request.PlayerID)
-
-	_, err = lobbyTable.InsertOne(context.TODO(), lobby)
-	if err != nil {
-		return err
-	}
 	return nil
 }
 
 func UpdateLobby(request UpdateJSONRequest) error {
 	return nil
 }
+
+//func UpdateLobbyInfo(conn *websocket.Conn) error {
+//
+//}
