@@ -10,45 +10,53 @@
     text-decoration: none;
 }
 
-.bg {
+.bg 
+{
     height: 100vh;
     width: 100vw;
     background: url(/images/bg.png) no-repeat;
     background-size: cover;
 }
 
-.header {
+.header 
+{
     display: flex;
     justify-content: space-between;
     padding: 25px;
 
 }
-.logo {
+.logo 
+{
     margin-left: 212px;
 }
 
-.profile {
+.profile 
+{
     display: flex;
     height: 60px;
     flex-direction: row;
     align-items: center;
 }
 
-.profile__nickname {
+.profile__nickname 
+{
     margin: 10px;
 }
 
-.profile__avatar, .set {
+.profile__avatar, .set 
+{
     width: 40px;
     height: 40px;
     cursor: pointer;
 }
 
-.players{
+.players
+{
     margin-right: 68px;
 }
 
-.player{
+.player
+{
     padding-left: 5px;
     width: 376px;
     height: 59px;
@@ -59,13 +67,15 @@
     align-items: center;
 }
 
-.main{
+.main
+{
     display: flex;
     padding: 20px;
     align-items: center;
 }
 
-.settings{
+.settings
+{
     max-width: 1050px;
     width: 100%;
 }
@@ -96,7 +106,6 @@
     padding-right: 12px;
 }
 
-
 .settings__text-music, 
 .settings__text-size,
 .settings__text-difficulty,
@@ -111,7 +120,6 @@
     max-width: 100%;
     width: 100%;
     box-sizing: border-box;
-    
 }
 
 .line-settings
@@ -140,7 +148,8 @@
     padding-left: 10px;
 }
 
-.user-profile{
+.user-profile
+{
     display: none;  
     position: absolute;
     top: 50%;
@@ -152,7 +161,8 @@
     padding: 5px;
 }
 
-.user-profile__header{
+.user-profile__header
+{
     display: flex;
     align-items: center;
     margin-bottom: 25px;
@@ -160,12 +170,14 @@
     padding-right: 20px;
 }
 
-.user-profile__player{
+.user-profile__player
+{
     display: flex;
     align-items: center;
 }
 
-.exit, .full-profile{
+.exit, .full-profile
+{
     background-color: #0e250a;
     border: none;
     padding: 3px;
@@ -174,27 +186,32 @@
     text-decoration: none;
 }
 
-.user-profile__exit{
+.user-profile__exit
+{
     display: flex;
     align-items: center;
 }
 
 
-.statistics{
+.statistics
+{
     display: flex;
 }
 
-.max-score, .count-win, .count-game{
+.max-score, .count-win, .count-game
+{
     background-color: #0e250a;
     margin-right: 10px;
     text-align: center;
 }
 
-.statistics__text{
+.statistics__text
+{
     font-size: 28px;
 }
 
-.line{
+.line
+{
     height: 1px;
     background-color: #243e25;
 }
@@ -213,7 +230,8 @@
 }
 
 
-.menu__item {
+.menu__item 
+{
     width: 100%;
     margin-top: 8px;
     margin-bottom: 8px;
@@ -227,11 +245,13 @@
     border-bottom: 3px solid #0a080b;
 }
 
-.item__title {
+.item__title 
+{
     color: #dac8e7;
 }
 
-.item__subtitle {
+.item__subtitle 
+{
     color: #7c6b88;
 }
 
