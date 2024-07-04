@@ -19,7 +19,6 @@ ws.onmessage = (msg) => {
             console.log(login);
         }
     }
-    
 }
 
 ws.onopen = () => {
