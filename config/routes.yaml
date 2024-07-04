@@ -61,3 +61,8 @@ api_update_statistics:
     path: /api/statistics
     methods: POST
     controller: App\Controller\PlayerController::updateStatistics
+
+api_found_user:
+    path: /api/found
+    methods: POST
+    controller: App\Controller\UserController::foundUser
