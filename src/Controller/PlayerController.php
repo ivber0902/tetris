@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class PlayerController extends AbstractController
 {
@@ -49,5 +50,28 @@ class PlayerController extends AbstractController
             );
         }
         return new Response("Hello");
+    }
+
+    public function getPlayerApi()
+    {
+        $securityUser = $this->getUser();
+        if ($securityUser === null) {
+            return $this->json([], Response::HTTP_UNAUTHORIZED);
+        }
+        $user = $this->userService->findUser($securityUser->getId());
+        $player = $user->getPlayer();
+        return $this->json([
+            "id" => $player->getId(),
+            ""
+        ], Response::HTTP_OK);
+    }
+
+    public function getUserApi(int $id): Response
+    {
+        $user = $this->userService->findUserByPlayerId($id);
+        return $this->json([
+            "id" => $user->getId(),
+            "login" => $user->getLogin(),
+        ], Response::HTTP_OK);
     }
 }

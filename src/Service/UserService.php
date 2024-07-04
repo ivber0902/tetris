@@ -48,6 +48,11 @@ class UserService {
         return $this->userRepository->findByLogin($login);
     }
 
+    public function findUserByPlayerId(int $playerId): ?User
+    {
+        return $this->userRepository->findByPlayerId($playerId);
+    }
+
     public function deleteUser(User $user): void
     {
         $this->playerService->deletePlayer($user->getPlayer());
