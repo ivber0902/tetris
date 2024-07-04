@@ -48,6 +48,12 @@
     width: 40px;
     height: 40px;
     cursor: pointer;
+    padding-right: 15px;
+}
+
+.player__name
+{
+    padding-left: 10px;
 }
 
 .players
