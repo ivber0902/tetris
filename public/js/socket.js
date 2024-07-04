@@ -1,27 +1,33 @@
-const connection = new WebSocket("ws://localhost:9000");
-let a = 1;
-// если соединение успешно установлено
-connection.onopen = (event) => {  
+let ws = new WebSocket("ws://127.0.0.1:8080/lobby");
+let playerId = parseInt(document.querySelector('.player_id').value);
 
-    console.log("Hello METANIT.COM");
+
+
+ws.onmessage = (msg) => {
+    console.log(JSON.parse(msg.data));
+    let data = JSON.parse(msg.data);
+    for (let i = 0; i < data.players.length ; i++) {
+        let id = data.players[i];
+        foundUser(id).then(() => {});
+
+        async function foundUser(id) {
+            let response = await fetch('/api/player/' + id + '/user', {
+                method: 'GET'
+            });
+            let user = await response.json();
+            let login = user.login;
+            console.log(login);
+        }
+    }
     
-};
-// если возникла ошибка
-connection.onerror = (error) => {
-    console.log(`WebSocket Error: ${error}`);
-};
-// если соединение закрыто
-connection.onclose = (event) => {
-    console.log("Connection closed");
-};
-// получаем ответ сервера
-connection.onmessage = (event) =>{ 
-    console.log("Server response:", event.data);
-};
-connection.onmessage = (event) =>{ 
-    document.querySelector('.players__count').innerHTML = event.data;
-    let count = event.data;
-    connection.send("her");
+}
+
+ws.onopen = () => {
+    ws.send(JSON.stringify({
+        "type": "connect",
+        "connection": {
+            "player_id": playerId
+    }}));
 };
 
 

@@ -35,4 +35,8 @@ class UserRepository
     public function findByLogin(string $login): ?User {
         return $this->repository->findOneBy(['login' => $login]);
     }
+
+    public function findByPlayerId(int $playerId): ?User {
+        return $this->repository->findOneBy(['playerId' => $playerId]);
+    }
 }

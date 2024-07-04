@@ -36,7 +36,6 @@ class GameController extends AbstractController
             'maxScore' => $player->getMaxScore(),
         ]);
     }
-
     public function game(): Response
     {
         return $this->render('game.html.twig');
@@ -69,6 +68,8 @@ class GameController extends AbstractController
     public function lobby(): Response
     {
         $securityUser = $this->getUser();
-        return $this->render('lobby.html.twig', ["user" => $securityUser]);
+        $user = $this->userService->findUser($securityUser->getId());
+        return $this->render('lobby.html.twig', ["user" => $user]);
+
     }
 }

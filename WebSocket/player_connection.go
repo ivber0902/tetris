@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"github.com/gorilla/websocket"
 	"log"
 )
@@ -22,7 +23,21 @@ func (player *PlayerConnection) readLoop() {
 	for {
 		err := player.conn.ReadJSON(&request)
 		if err != nil {
-			log.Println("JSON reading error during connection:", err)
+			switch err := err.(type) {
+			case *websocket.CloseError:
+				switch err.Code {
+				case websocket.CloseNormalClosure,
+					websocket.CloseGoingAway,
+					websocket.CloseNoStatusReceived:
+					log.Printf("Web socket closed by client: %s", err)
+					return
+				}
+			case *json.SyntaxError:
+				log.Println("JSON Unmarshal error:", err)
+			case error:
+				log.Println("JSON Reading error:", err)
+			}
+
 		} else if request.Type == UpdateRequestType {
 			player.lobby.info = &request.Updates
 			player.lobby.update <- player.lobby.info
