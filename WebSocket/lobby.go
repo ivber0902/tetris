@@ -4,11 +4,12 @@ import (
 	"context"
 	"encoding/json"
 	"go.mongodb.org/mongo-driver/bson"
+	"log"
 	"os"
 )
 
 type Lobby struct {
-	ID       int32         `bson:"_id"`
+	ID       string        `bson:"_id"`
 	Players  []int32       `bson:"players,omitempty" json:"players,omitempty"`
 	Settings LobbySettings `bson:"settings,omitempty" json:"settings,omitempty"`
 }
@@ -26,9 +27,8 @@ type LobbyPlayFieldSettings struct {
 	Height int8 `bson:"height,omitempty" json:"height,omitempty"`
 }
 
-func (lobby *Lobby) Init(id int32) {
-	lobby.ID = id
-	lobby.Players = []int32{id}
+func (lobby *Lobby) Init(lobbyID string) {
+	lobby.ID = lobbyID
 }
 
 func (lobby *Lobby) SetDefault() error {
@@ -67,6 +67,7 @@ func (lobby *Lobby) Update() error {
 
 func (lobby *Lobby) AddPlayer(playerID int32) error {
 	lobbyTable := DB.Collection("lobby")
+	log.Println("Add player", playerID)
 
 	for _, player := range lobby.Players {
 		if player == playerID {
@@ -110,7 +111,7 @@ func (lobby *Lobby) RemovePlayer(playerID int32) error {
 	return err
 }
 
-func (lobby *Lobby) Find(id int32) error {
+func (lobby *Lobby) Find(id string) error {
 	lobbyTable := DB.Collection("lobby")
 	err := lobbyTable.FindOne(context.TODO(), bson.M{"_id": id}).Decode(lobby)
 	return err

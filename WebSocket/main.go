@@ -1,45 +1,63 @@
 package main
 
 import (
-	"github.com/gorilla/websocket"
+	"fmt"
 	"log"
+	"net"
 	"net/http"
+	"strings"
 )
 
-var upgrader = websocket.Upgrader{
-	CheckOrigin: func(r *http.Request) bool {
-		return true
-	},
-}
+var server Server
 
 func main() {
-	//http.HandleFunc("/lobby", ConnectToLobbyHandler)
-	//
-	//err := http.ListenAndServe(":8080", nil)
-	//if err != nil {
-	//	panic(err)
-	//}
-	log.Println("Starting server...")
 	err := ConnectToDatabase()
-	log.Println("Database connected")
-	if err != nil {
-		panic(err)
-	}
-	var lobby Lobby
-
-	err = lobby.SetDefault()
-	if err != nil {
-		panic(err)
-	}
-	err = lobby.Find(15)
-	if err != nil {
-		return
-	}
-	err = lobby.RemovePlayer(34)
 	if err != nil {
 		panic(err)
 	}
 
-	log.Println(lobby)
+	server.Lobbies = make(map[string]*LobbyConnection)
+	http.HandleFunc("/lobby", func(w http.ResponseWriter, r *http.Request) {
+		PlayerIP, err := getPlayerIP(r)
+		if err != nil {
+			log.Println(err)
+			return
+		}
+		server.HandleConnection(w, r, PlayerIP)
+	})
 
+	err = http.ListenAndServe(":8080", nil)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func getPlayerIP(r *http.Request) (string, error) {
+	//Get IP from the X-REAL-IP header
+	ip := r.Header.Get("X-REAL-IP")
+	netIP := net.ParseIP(ip)
+	if netIP != nil {
+		return ip, nil
+	}
+
+	//Get IP from X-FORWARDED-FOR header
+	ips := r.Header.Get("X-FORWARDED-FOR")
+	splitIps := strings.Split(ips, ",")
+	for _, ip := range splitIps {
+		netIP := net.ParseIP(ip)
+		if netIP != nil {
+			return ip, nil
+		}
+	}
+
+	//Get IP from RemoteAddr
+	ip, _, err := net.SplitHostPort(r.RemoteAddr)
+	if err != nil {
+		return "", err
+	}
+	netIP = net.ParseIP(ip)
+	if netIP != nil {
+		return ip, nil
+	}
+	return "", fmt.Errorf("No valid ip found")
 }
