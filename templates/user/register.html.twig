@@ -11,14 +11,17 @@
         <div class="login">
             <p class="login__title">добро пожаловать в славянский тетрис!</p>
             {{ form_start(form, { 'attr' : { 'class': 'login-input' }})}}
+            <label for="register_user_input_login" hidden>Login</label>
             {{ form_widget(form.login, { 'attr' : { 'class': 'login-input__username-input', 'placeholder': 'логин'}})}}
             <p class="login-input__username-validation">неправильный формат логина</p>
             <p class="login-input__username-require">введите логин</p>
             <p class="login-input__username-employment">такое имя уже существует</p>
+            <label for="register_user_input_password" hidden>Password</label>
             {{ form_widget(form.password, { 'attr' : { 'class': 'login-input__password-input', 'placeholder': 'пароль'}})}}
             <p class="login-input__password-require">введите пароль</p>
             <p class="login-input__password-validation">пароль должен содержать не менее 8 символов</p>
-            <input class="login-input__password-again" type="password" placeholder="повторите пароль">
+            <label for="again-password" hidden>AgainPassword</label>
+            <input class="login-input__password-again" id="again-password" type="password" placeholder="повторите пароль">
             <p class="login-input__again-require">введите пароль</p>
             <p class="login-input__again-validation">пароль должен содержать не менее 8 символов</p>
             <p class="login-input__again-identical">пароли должны должны быть одинаковыми</p>

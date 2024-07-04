@@ -159,3 +159,22 @@ function open(e)
     const profile = document.querySelector('.user-profile');
     profile.style.display = 'inline';
 }
+
+function createPlayer(name) {
+    const player = document.createElement('div');
+    player.classList.add('player');
+    
+    const playerName = document.createElement('p');
+    playerName.classList.add('player__name');
+    playerName.textContent = name;
+    
+    const playerAvatar = document.createElement('img');
+    playerAvatar.src = "/images/avatar-placeholder.png";
+    playerAvatar.alt = "avatar";
+    playerAvatar.classList.add('profile__avatar');
+    
+    player.appendChild(playerName);
+    player.appendChild(playerAvatar);
+    
+    return player;
+    }

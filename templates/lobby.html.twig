@@ -2,7 +2,9 @@
 
 {% block title %}Lobby{% endblock %}
 {% block style %}<link rel="stylesheet" href="/css/lobby.css"/>{% endblock %}
-{% block script %}<script src="/js/lobby.js"></script>{% endblock %}
+{% block script %}
+    <script src="/js/lobby.js"></script>
+{% endblock %}
 {% block content %}
 <body>
      <div class="bg">
@@ -19,27 +21,10 @@
         <div class="main">
             <div class="players">
                 <div class="list-players">
-                    <div class="player">
-                        <p class="player__name">никита</p>
-                        <img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
-                    </div>
-                    <div class="player">
-                        <p class="player__name">иван</p>
-                        <img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
-                    </div>
-                    <div class="player">
-                        <p class="player__name">елисей</p>
-                        <img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
-                    </div>
-                    <div class="player">
-                        <p class="player__name">дима</p>
-                        <img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
-                    </div>
                 </div>
             </div>
             <div class="settings">
                 <p class="settings__header">настройки</p>
-
                 <div class="settings__size">
                     <p class="settings__text">размер поля: </p>
                     <div class="setting">
@@ -80,9 +65,6 @@
                         <hr class="line-settings">
                     </div>
                 </div>
-                {# <button class="link">холоп</button>
-                <button class="link">крестьянин</button>
-                <button class="link">боярин</button> #}
             </div>
             <a href="/multiplayer">начать игру</a>
         </div>
@@ -121,6 +103,5 @@
         </div>
     </div>
 </body>
-<script src="/js/socket.js"></script>
-<script src="/js/game/game-mode-multiplayer.js"></script>
+ <script src="/js/socket.js"></script>
 {% endblock %}
