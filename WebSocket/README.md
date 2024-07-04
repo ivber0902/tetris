@@ -30,9 +30,7 @@
 ```json
 {
   "type": "update",
-  "connection": {
-    "player_id": 1
-  }
+  "update": // JSON лобби
 }
 ```
 
