@@ -36,7 +36,6 @@ class GameController extends AbstractController
             'maxScore' => $player->getMaxScore(),
         ]);
     }
-
     public function game(): Response
     {
         return $this->render('game.html.twig');

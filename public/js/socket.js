@@ -5,6 +5,21 @@ let playerId = parseInt(document.querySelector('.player_id').value);
 
 ws.onmessage = (msg) => {
     console.log(JSON.parse(msg.data));
+    let data = JSON.parse(msg.data);
+    for (let i = 0; i < data.players.length ; i++) {
+        let id = data.players[i];
+        foundUser(id).then(() => {});
+
+        async function foundUser(id) {
+            let response = await fetch('/api/player/' + id + '/user', {
+                method: 'GET'
+            });
+            let user = await response.json();
+            let login = user.login;
+            console.log(login);
+        }
+    }
+    
 }
 
 ws.onopen = () => {
