@@ -66,7 +66,7 @@ func (lobby *Lobby) Update() error {
 }
 
 func (lobby *Lobby) AddPlayer(playerID int32) error {
-	lobbyTable := DB.Collection("lobby")
+	//lobbyTable := DB.Collection("lobby")
 	log.Println("Add player", playerID)
 
 	for _, player := range lobby.Players {
@@ -75,18 +75,19 @@ func (lobby *Lobby) AddPlayer(playerID int32) error {
 		}
 	}
 
-	_, err := lobbyTable.UpdateOne(
-		context.TODO(),
-		bson.M{"_id": lobby.ID},
-		bson.M{"$set": bson.M{"players": append(lobby.Players, playerID)}},
-	)
-	if err != nil {
-		return err
-	}
+	//_, err := lobbyTable.UpdateOne(
+	//	context.TODO(),
+	//	bson.M{"_id": lobby.ID},
+	//	bson.M{"$set": bson.M{"players": append(lobby.Players, playerID)}},
+	//)
+	//if err != nil {
+	//	return err
+	//}
+	//
+	//err = lobby.Find(lobby.ID)
 
-	err = lobby.Find(lobby.ID)
-
-	return err
+	lobby.Players = append(lobby.Players, playerID)
+	return nil
 }
 
 func (lobby *Lobby) RemovePlayer(playerID int32) error {

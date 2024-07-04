@@ -11,11 +11,6 @@ import (
 var server Server
 
 func main() {
-	err := ConnectToDatabase()
-	if err != nil {
-		panic(err)
-	}
-
 	server.Lobbies = make(map[string]*LobbyConnection)
 	http.HandleFunc("/lobby", func(w http.ResponseWriter, r *http.Request) {
 		PlayerIP, err := getPlayerIP(r)
@@ -26,7 +21,7 @@ func main() {
 		server.HandleConnection(w, r, PlayerIP)
 	})
 
-	err = http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
 		panic(err)
 	}
