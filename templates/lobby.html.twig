@@ -11,6 +11,8 @@
             <img src="/images/logo.png" alt="logo" class="logo">
             <div class="profile">
                 <p class="profile__nickname">{{user.login ?? 'славянин'}}</p>
+                <p class="profile__nickname">{{user.playerId ?? 'her'}}</p>
+                <input class="player_id" type="hidden" value="{{ user.playerId }}" >
                 <img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
             </div>
         </div>
