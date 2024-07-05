@@ -1,31 +1,33 @@
-*{
+* {
     margin: 0;
     padding: 0;
     font-family: "Russo One", sans-serif;
     text-decoration: none;
     text-transform: uppercase;
 }
-body{
+
+body 
+{
     max-width: 100%;
     max-height: 100%;
     background-image: url(/images/bg.png);
-    background-size: cover;  
+    background-size: cover;
 }
 
-.main
+.main 
 {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.logo
+.logo 
 {
     padding-top: 50px;
     padding-bottom: 250px;
 }
 
-.login
+.login 
 {
     border-radius: 10px;
     box-sizing: border-box;
@@ -34,21 +36,23 @@ body{
     padding: 21px 25px;
 }
 
-.login-input
+.login-input 
 {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.login__title
+.login__title 
 {
     font-size: 32px;
     margin: 0 auto 15px;
     width: 850px;
 }
 
-.login-input__username-input, .login-input__password-input, .login-input__password-again
+.login-input__username-input,
+.login-input__password-input,
+.login-input__password-again 
 {
     border: none;
     box-sizing: border-box;
@@ -62,24 +66,26 @@ body{
     margin-bottom: 19px;
 }
 
-.login-input__username-input:not(:placeholder-shown), .login-input__password-input:not(:placeholder-shown), .login-input__password-again:not(:placeholder-shown)
+.login-input__username-input:not(:placeholder-shown),
+.login-input__password-input:not(:placeholder-shown),
+.login-input__password-again:not(:placeholder-shown) 
 {
-    background:#4b4a4a;
-    color: white;   
+    background: #4b4a4a;
+    color: white;
 }
 
-.viewPass
+.viewPass 
 {
     display: none;
 }
 
-.login-input__button
+.login-input__button 
 {
     display: flex;
     gap: 25px;
 }
 
-.Register
+.Register 
 {
     width: 450px;
     padding: 15px 0;
@@ -93,7 +99,7 @@ body{
     border: none;
 }
 
-.LogIn
+.LogIn 
 {
     width: 375px;
     padding: 11px 0;
@@ -105,7 +111,15 @@ body{
     border-radius: 5px;
 }
 
-.login-input__password-require, .login-input__username-employment, .login-input__password-validation, .login-input__again-require, .login-input__again-validation, .login-input__again-identical, .login-input__username-validation, .login-input__username-require, .login-input__username-employment
+.login-input__password-require,
+.login-input__username-employment,
+.login-input__password-validation,
+.login-input__again-require,
+.login-input__again-validation,
+.login-input__again-identical,
+.login-input__username-validation,
+.login-input__username-require,
+.login-input__username-employment 
 {
     font: 400 12px/16px "Russo One", sans-serif;
     text-align: left;
