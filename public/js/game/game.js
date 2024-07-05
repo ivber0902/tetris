@@ -2,10 +2,8 @@ let GAME = {
     width: localStorage.Gamewidth,
     height: localStorage.Gameheight,
     playTime: new Date(),
-    useT: 0,
     figuresQueueSize: 4,
-    init() {
-
+    init(player, ui) {
         let i = 0;
         figures.forEach((figure) => {
             figure.image.src = `/images/figures/${images[i]}.png`;
@@ -18,11 +16,25 @@ let GAME = {
         player.tickTime = 15974 / this.height;
         player.initFigures();
         player.initEventListeners();
-        player.updateInterface();
-        INTERFACE.initMusic();
+        player.updateUI();
+        ui.initMusic();
     },
-    start() {
-        this.onLoadImages(() => this.play());
+    start(player, field, ui) {
+        this.onLoadImages(() => { this.drawDowncount(player, field, ui, 3, 1, () => { this.play(player); }) });
+    },
+    drawDowncount(player, field, ui, fromIndex, toIndex, func) {
+        if (fromIndex >= toIndex) {
+            setTimeout(() => {
+                this.clear(field);
+                player.drawField(this.width, this.height);
+                field.fillStyle = "white";
+                field.font = "96px Russo One";
+                field.fillText(fromIndex, ui.field.width / 2 - 36, ui.field.height / 2);
+                this.drawDowncount(player, field, ui, fromIndex - 1, 1, func);
+            }, 1000);
+        } else {
+            setTimeout(() => { func() }, 1000);
+        }
     },
     onLoadImages(func) {
         let counter = 0;
@@ -57,24 +69,22 @@ let GAME = {
     clear(ctx) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     },
-    play() {
-        this.clear(field);
+    play(player) {
 
         if (player.isActive) {
+            this.clear(field);
             player.drawField(this.width, this.height);
             player.drawOtherField(this.width, this.height);
             document.querySelector('.game__score').innerHTML = player.score;
             let updateTime = new Date();
             updateTime -= this.playTime;
-            updateTime -= this.useT;
             if (updateTime * player.nitro >= player.tickTime) {
-                this.useT += updateTime;
+                this.playTime = new Date;
                 player.update();
             }
 
             player.updatePosition();
         }
-        requestAnimationFrame(() => this.play());
+        requestAnimationFrame(() => this.play(player));
     }
 }
-
