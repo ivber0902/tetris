@@ -68,8 +68,13 @@ class GameController extends AbstractController
     public function lobby(): Response
     {
         $securityUser = $this->getUser();
-        $user = $this->userService->findUser($securityUser->getId());
-        return $this->render('lobby.html.twig', ["user" => $user]);
+        if ($securityUser){
+            $user = $this->userService->findUser($securityUser->getId());
+            return $this->render('lobby.html.twig', ["user" => $user]);
+        }
+        else{
+            return $this->redirectToRoute('login');
+        }
 
     }
 }
