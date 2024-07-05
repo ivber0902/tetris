@@ -10,6 +10,7 @@ let ws = new WebSocket(wsUrl);
 let playerId = parseInt(document.querySelector('.player_id').value);
 let listPlayers = document.querySelector('.list-players');
 let lobbyLink = document.querySelector('.lobby-link').innerHTML;
+let player = document.querySelector('.profile__playerId');
 
 
 ws.onmessage = (msg) => {  
@@ -18,6 +19,11 @@ ws.onmessage = (msg) => {
     let data = JSON.parse(msg.data);
     if (data.id) {
         document.querySelector('.lobby-link').innerHTML = lobbyLink + '?lobby=' + data.id;
+    }
+    if (playerId === data.players[0])
+    {
+        console.log('you are host');
+        player.style.display = 'none';
     }
     for (let i = 0; i < data.players.length ; i++) {
         let id = data.players[i];
