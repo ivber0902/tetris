@@ -17,6 +17,7 @@ ws.onmessage = (msg) => {
     
     console.log(JSON.parse(msg.data));
     let data = JSON.parse(msg.data);
+    conaole.log(data);
     if (data.id) {
         document.querySelector('.lobby-link').innerHTML = lobbyLink + '?lobby=' + data.id;
     }
