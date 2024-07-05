@@ -163,18 +163,27 @@ function open(e)
 function createPlayer(name) {
     const player = document.createElement('div');
     player.classList.add('player');
-    
+
     const playerName = document.createElement('p');
     playerName.classList.add('player__name');
     playerName.textContent = name;
-    
+
     const playerAvatar = document.createElement('img');
     playerAvatar.src = "/images/avatar-placeholder.png";
     playerAvatar.alt = "avatar";
     playerAvatar.classList.add('profile__avatar');
-    
+    const playerButton = document.createElement('button');
+    playerButton.type = 'button';
+    playerButton.classList.add('player__button');
+    playerButton.textContent = 'KILL'; 
+
+    const avatarContainer = document.createElement('div');
+    avatarContainer.classList.add('avatar__container');
+    avatarContainer.appendChild(playerAvatar);
+    avatarContainer.appendChild(playerButton);
+
     player.appendChild(playerName);
-    player.appendChild(playerAvatar);
-    
+    player.appendChild(avatarContainer);
+
     return player;
-    }
+}
