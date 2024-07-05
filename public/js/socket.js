@@ -12,14 +12,16 @@ let listPlayers = document.querySelector('.list-players');
 let lobbyLink = document.querySelector('.lobby-link').innerHTML;
 let player = document.querySelector('.profile__playerId');
 
+function changeSetting(inSet, outSet){
+    outSet = inSet
+}
 
 ws.onmessage = (msg) => {  
-    
-    console.log(JSON.parse(msg.data));
     let data = JSON.parse(msg.data);
-    conaole.log(data);
+    console.log('настройки поля', data)
     if (data.id) {
         document.querySelector('.lobby-link').innerHTML = lobbyLink + '?lobby=' + data.id;
+        settingLobby.id = data.id;
     }
     if (playerId === data.players[0])
     {
@@ -29,6 +31,9 @@ ws.onmessage = (msg) => {
     deleteMenuItem(listPlayers);
     for (let i = 0; i < data.players.length ; i++) {
         let id = data.players[i];
+        if(!settingLobby.players.includes(id)){
+            settingLobby.players.push(id)
+        }
         foundUser(id).then(() => {});
         async function foundUser(id) {
             let response = await fetch('/api/player/' + id + '/user', {
@@ -49,3 +54,11 @@ ws.onopen = () => {
             "player_id": playerId
     }}));
 };
+
+function sendLobbySettings(settingLobby){
+    console.log(settingLobby, 'her')
+    ws.send(JSON.stringify({
+        "type": "update",
+        "updates": settingLobby
+    }));
+} 
