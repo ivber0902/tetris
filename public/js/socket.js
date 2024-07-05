@@ -25,6 +25,7 @@ ws.onmessage = (msg) => {
         console.log('you are host');
         player.style.display = 'none';
     }
+    deleteMenuItem(listPlayers);
     for (let i = 0; i < data.players.length ; i++) {
         let id = data.players[i];
         foundUser(id).then(() => {});
