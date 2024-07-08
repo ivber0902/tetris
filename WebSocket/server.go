@@ -24,7 +24,10 @@ func (server *Server) HandleConnection(w http.ResponseWriter, r *http.Request, c
 	}
 
 	lobbyID := r.URL.Query().Get("lobby")
+
+	log.Println(clientIP, lobbyID)
 	lobby, ok := server.Lobbies[lobbyID]
+	log.Println(ok)
 	if !ok {
 		lobby = newLobbyConnection(clientIP)
 		server.Lobbies[lobby.id] = lobby
@@ -32,29 +35,20 @@ func (server *Server) HandleConnection(w http.ResponseWriter, r *http.Request, c
 	}
 	log.Println("Created new player")
 
-	if func() bool {
-		log.Println("Checking if lobby", lobbyID, "is ready")
-		for player := range lobby.players {
-			log.Println(player)
-			if clientIP == player.ip {
-				log.Println("Player is already connected")
-				close(player.send)
-				player.conn = conn
-				player.send = make(chan *Lobby)
-				return false
-			}
+	for player := range lobby.players {
+		if clientIP == player.ip {
+			delete(lobby.players, player)
 		}
-		return true
-	}() {
-		player := &PlayerConnection{
-			lobby: lobby,
-			conn:  conn,
-			send:  make(chan *Lobby),
-			ip:    clientIP,
-		}
-		lobby.connect <- player
-
-		go player.readLoop()
-		go player.writeLoop()
 	}
+
+	player := &PlayerConnection{
+		lobby: lobby,
+		conn:  conn,
+		send:  make(chan *Lobby),
+		ip:    clientIP,
+	}
+	lobby.connect <- player
+
+	go player.readLoop()
+	go player.writeLoop()
 }
