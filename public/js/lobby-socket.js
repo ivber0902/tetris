@@ -25,11 +25,13 @@ let buttons;
 let functionKickPlayer;
 let settingLobby;
 addEventListener("DOMContentLoaded", () => {
-    functionKickPlayer = function KickPlayer(players){ 
+    functionKickPlayer = function KickPlayer(playerId, players){ 
         for (let i = 1; i < players.length; i++) { 
             if (buttons[i]){
                 buttons[i].addEventListener('click', ()=>{
                     console.log('playerId = ' + players[i])
+                    let kickId = players[i]
+                    disconnectPlayer(playerId, kickId)
                 })  
             }
         }
@@ -69,14 +71,10 @@ ws.onmessage = (msg) => {
         document.querySelector('.lobby-link').innerHTML = '';
         settingLobby.id = data.id;
     }
-    if (window.location.href === lobbyLink){
-        history.pushState(null, null, '?lobby=' + data.id);
-    }
     if (window.location.href === lobbyLink) {
         history.pushState(null, null, "?lobby=" + data.id)
     }
     deleteMenuItem(listPlayers);
-
     async function foundUser(id) {
         let response = await fetch('/api/player/' + id + '/user', {
             method: 'GET'
@@ -101,8 +99,6 @@ ws.onmessage = (msg) => {
         buttons = document.querySelectorAll('.player__button');      
         functionKickPlayer(playerId, data.players);
         if (playerId === data.players[0]) {
-            console.log(buttons);
-            console.log('you are host');
             selectSize.style.pointerEvents = 'auto';
             selectMusic.style.pointerEvents = 'auto';
             selectDifficulty.style.pointerEvents = 'auto';
