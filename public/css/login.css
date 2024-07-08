@@ -44,8 +44,7 @@ body
     margin-bottom: 15px;
 }
 
-.login-input__username-input, 
-.login-input__password-input
+.login-input__username-input
 {
     border: none;
     box-sizing: border-box;
@@ -59,14 +58,32 @@ body
     margin-bottom: 19px;
 }
 
+.login-input__password-input {
+    border: none;
+    box-sizing: border-box;
+    padding-left: 15px;
+    border-radius: 5px;
+    width: 850px;
+    height: 50px;
+    background: #222;
+    font-family: "Russo One", sans-serif;
+    font-size: 32px;
+    margin-bottom: 19px;
+    padding-bottom: 5px;
+}
+.login-input__password-input::placeholder {
+    padding-bottom: 0;
+
+}
 .login-input__username-input:not(:placeholder-shown), 
 .login-input__password-input:not(:placeholder-shown)
 {
-    background:#4b4a4a;
     color: white;       
 }
 
-.viewPass{
+
+
+.view-pass{
     display: none;
 }
 
@@ -76,7 +93,7 @@ body
     gap: 25px;
 }
 
-.Register
+.register
 {
     width: 375px;
     padding: 15px 0;
@@ -88,10 +105,13 @@ body
     border-radius: 5px;
 }
 
-.LogIn
+::placeholder {
+    color: #FFFFFF;
+  }
+.login-button
 {
     width: 450px;
-    padding: 11px 0;
+    padding: 15px 0;
     text-align: center;
     background-color: #1E48FF;
     color: #FFFFFF;

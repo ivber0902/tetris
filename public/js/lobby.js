@@ -19,7 +19,7 @@ let settings = {
     size: [
         {
             title: "холоп",
-            description: "маленький размер поля и медленная игра",
+            description: "маленький размер поля",
             value:
             {
                 width: 5,
@@ -28,7 +28,7 @@ let settings = {
         },
         {
             title: "крестьянин",
-            description: "классические размер поля и скорость игры",
+            description: "классические размер поля",
             value:
             {
                 width: 10,
@@ -37,7 +37,7 @@ let settings = {
         },
         {
             title: "боярин",
-            description: "большой размер поля и быстрая игра",
+            description: "большой размер поля",
             value:
             {
                 width: 15,
@@ -48,7 +48,7 @@ let settings = {
     difficulty: [
         {
             title: "легко",
-            description: "игра для нубов",
+            description: "игра для холопов",
             value: 1
         },
         {
@@ -74,8 +74,8 @@ let settings = {
             value: "https://example.com/track1"
         },
         {
-            title: "IOошкар-Ола",
-            description: "йон йошкар-олы",
+            title: "IOшкар-Ола",
+            description: "Фон Йошкар-Олы",
             value: "https://example.com/track1"
         }
     ],

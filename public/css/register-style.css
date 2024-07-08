@@ -40,7 +40,6 @@ body
 {
     display: flex;
     flex-direction: column;
-    align-items: center;
 }
 
 .login__title 
@@ -70,11 +69,12 @@ body
 .login-input__password-input:not(:placeholder-shown),
 .login-input__password-again:not(:placeholder-shown) 
 {
-    background: #4b4a4a;
     color: white;
 }
-
-.viewPass 
+::placeholder {
+    color: #FFFFFF;
+  }
+.view-pass 
 {
     display: none;
 }
@@ -85,7 +85,7 @@ body
     gap: 25px;
 }
 
-.Register 
+.register 
 {
     width: 450px;
     padding: 15px 0;
@@ -99,10 +99,10 @@ body
     border: none;
 }
 
-.LogIn 
+.login-button 
 {
     width: 375px;
-    padding: 11px 0;
+    padding: 15px 0;
     text-align: center;
     background-color: #AAAAAA;
     color: #000000;
