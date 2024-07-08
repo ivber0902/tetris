@@ -107,7 +107,7 @@ addEventListener("DOMContentLoaded", (event) => {
     let inputSize = document.getElementById('size');
     let inputMusic = document.getElementById('music');
     let inputBg = document.getElementById('bg');
-    let inputDifficulty = document.getElementById('difficulty');
+    let inputDifficulty = document.getElementById('difficulty');     
 
     listSettings.addEventListener('click', ()=>{
         listSettings.style.display = "none";
@@ -156,9 +156,7 @@ addEventListener("DOMContentLoaded", (event) => {
             })
         })
     }
-
 });
-
 
 function deleteMenuItem(menu) {
     while (menu.firstChild) {
