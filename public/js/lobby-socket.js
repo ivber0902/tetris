@@ -23,7 +23,7 @@ let triangle = document.querySelectorAll(".triangle");
 let startGame = document.querySelector(".start-game");
 let buttons;
 let functionKickPlayer;
-
+let settingLobby;
 addEventListener("DOMContentLoaded", (event) => {   
     functionKickPlayer = function KickPlayer(players){ 
         for (let i = 1; i < players.length; i++) { 
@@ -42,8 +42,22 @@ function changeSetting(inSet, outSet){
     outSet = inSet
 }
 
-ws.onmessage = (msg) => {  
+ws.onmessage = (msg) => {
+
     let data = JSON.parse(msg.data);
+    settingLobby = {
+        id: "",
+        players: [],
+        settings: {
+            music: data.settings.music,
+            background: data.settings.background,
+            difficulty: data.settings.difficulty,
+            play_field: {
+                width: data.settings.play_field.width,
+                height: data.settings.play_field.height,
+            }
+        }
+    }
         inputSize.innerHTML = settings.size.find(item => item.value.width == data.settings.play_field.width).title
         inputMusic.innerHTML = settings.music.find(item => item.value == data.settings.music).title
         inputBg.innerHTML = settings.bg.find(item => item.value == data.settings.background).title

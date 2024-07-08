@@ -82,19 +82,7 @@ let settings = {
     ],
 }
 
-let settingLobby = {
-    id: "",
-    players: [],
-    settings: {
-      music: "/audio/Korobeiniki.wav",
-      background: "/images/bg.png",
-      difficulty: 1,
-      play_field: {
-        width: 10,
-        height: 20
-      }
-    }
-}
+
 
 addEventListener("DOMContentLoaded", (event) => {
     document.querySelector(".exit").addEventListener("click", (e) => close(e));
