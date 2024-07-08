@@ -23,6 +23,8 @@ func (server *Server) HandleConnection(w http.ResponseWriter, r *http.Request, c
 		return
 	}
 
+	log.Println("Connect", clientIP)
+
 	lobbyID := r.URL.Query().Get("lobby")
 
 	log.Println(clientIP, lobbyID)
