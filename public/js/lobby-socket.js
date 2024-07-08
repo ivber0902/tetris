@@ -58,16 +58,19 @@ ws.onmessage = (msg) => {
             }
         }
     }
-        inputSize.innerHTML = settings.size.find(item => item.value.width == data.settings.play_field.width).title
-        inputMusic.innerHTML = settings.music.find(item => item.value == data.settings.music).title
-        inputBg.innerHTML = settings.bg.find(item => item.value == data.settings.background).title
-        inputDifficulty.innerHTML = settings.difficulty.find(item => item.value == data.settings.difficulty).title
+    inputSize.innerHTML = settings.size.find(item => item.value.width == data.settings.play_field.width).title
+    inputMusic.innerHTML = settings.music.find(item => item.value == data.settings.music).title
+    inputBg.innerHTML = settings.bg.find(item => item.value == data.settings.background).title
+    inputDifficulty.innerHTML = settings.difficulty.find(item => item.value == data.settings.difficulty).title
 
     console.log('настройки поля', data)
     if (data.id) {
         console.log(lobbyLink + '?lobby=' + data.id)
         document.querySelector('.lobby-link').innerHTML = '';
         settingLobby.id = data.id;
+    }
+    if (window.location.href === lobbyLink) {
+        history.pushState(null, null, "?lobby=" + data.id)
     }
     deleteMenuItem(listPlayers);
 
