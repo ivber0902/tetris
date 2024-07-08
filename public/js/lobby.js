@@ -83,7 +83,6 @@ let settings = {
 }
 
 
-
 addEventListener("DOMContentLoaded", () => {
     document.querySelector(".exit").addEventListener("click", (e) => close(e));
     document.querySelector(".profile__avatar").addEventListener("click", (e) => open(e));
