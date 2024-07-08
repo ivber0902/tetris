@@ -35,9 +35,15 @@ about:
 game_over:
     path: /game_over
     controller: App\Controller\GameController::gameOver
+blitz_game_over:
+    path: /blitz_game_over
+    controller: App\Controller\GameController::blitzGameOver
 game:
     path: /game
     controller: App\Controller\GameController::game
+blitz:
+    path: /blitz
+    controller: App\Controller\GameController::blitz
 
 profile:
     path: /profile/{login}

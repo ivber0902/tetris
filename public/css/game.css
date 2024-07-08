@@ -99,7 +99,9 @@
 .game__score, 
 .game__level, 
 .title-level, 
-.title-score
+.title-score,
+.title-time,
+.game__time
 {
     color: white;
     text-align: center;
@@ -107,21 +109,23 @@
     font: 800 22px/22px "Russo One", sans-serif;
 }
 
-.title-level
+.title-level, .title-time, .title-score
 {
-    padding-left: 20px;
-}
-
-.title-level, .title-score
-{
-    padding-right: 10px;
+    padding-left: 10px;
     text-transform: uppercase;
 }
-
 .score-wrapper
 {
     padding-top: 10px;
     width: 100%;
     display: flex;
     justify-content: center;
+    flex-direction: column;
+}
+.score-value-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
 }

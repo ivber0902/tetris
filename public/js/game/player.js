@@ -7,6 +7,7 @@ class Player {
         this.tickTime = 0;
         this.lines = 0;
         this.figureCount = 0;
+        this.mode = 'classic';
         this.move = {
             down: 1,
             left: 0,
@@ -93,7 +94,10 @@ class Player {
                 this.figureCount += 1;
             } else {
                 this.isActive = false;
-                gameEnd(this.score);
+                if (this.mode === 'blitz') {
+                    GAME.blitzGameEnd(this.score)
+                } else
+                    gameEnd(this.score);
                 return true;
             }
 
@@ -148,8 +152,6 @@ class Player {
         for (let i = 0; i < this.figuresQueueSize; i++) {
             this.ui.viewNextFigures[i].src = this.nextFigures[i].image.src;
         }
-        this.ui.score = this.score;
-        this.ui.level = this.lvl;
     }
 
     drawField(width, height) {
@@ -260,7 +262,7 @@ class Player {
         }
         return cleared;
     }
-
+    z
     updateLvl() {
         switch (this.lvl) {
             case 0: this.tickTime = 15974 / this.field.length; break;
@@ -392,9 +394,9 @@ class Player {
         document.addEventListener('keydown', (e) => {
             if (e.code === 'KeyP') {
                 if (!this.isActive) {
-                    GAME.drawDowncount(this, field, this.ui, 3, 1, () => {this.isActive = !this.isActive;})
+                    GAME.drawDowncount(this, field, this.ui, 3, 1, () => { this.isActive = !this.isActive; })
                 } else
-                this.isActive = !this.isActive;
+                    this.isActive = !this.isActive;
             }
         });
     }

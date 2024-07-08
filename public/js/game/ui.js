@@ -1,5 +1,5 @@
 class UI {
-    constructor(blockSize, buffer, viewNextFigures, game, score, level) {
+    constructor(blockSize, buffer, viewNextFigures, game, score, level, time) {
         this.blockSize = blockSize;
         this.buffer = buffer;
         this.viewNextFigures = viewNextFigures;
@@ -9,6 +9,7 @@ class UI {
         }
         this._score = score;
         this._level = level;
+        this._time = time;
         this.music = new Audio("/audio/Korobeiniki.wav");
     }
     initMusic() {
@@ -39,6 +40,15 @@ class UI {
     set level(val) {
         if (val !== undefined) {
             this._level.textContent = val;
+        }
+    }
+
+    set time(val) {
+        if (val !== undefined) {
+            this._time.textContent =
+                + 1-Math.floor(val / 1000 / 60)
+                + ':' + '0'.repeat(2 - (60 - Math.floor(val / 1000 % 60)).toString().length)
+                + (60 - Math.floor(val / 1000) % 60)
         }
     }
 }
