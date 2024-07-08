@@ -271,6 +271,12 @@
     text-transform: none;
 }
 
+.avatar__container{
+    display: flex;
+    align-items: center;
+    padding-right: 5px;
+}
+
 .player__button{
     background-color: #1a161d;
     font-size: 16px;

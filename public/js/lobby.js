@@ -3,61 +3,96 @@ let settings = {
         {
         title: "эхо во тьме",
         description: "мистическая и загадочная композиция, в которой звуки эха на фоне темноты создают атмосферу напряжения и тайны.",
-        link: "https://example.com/track1"
+        value: "https://example.com/track1"
         },
         {
         title: "лунный вальс",
         description: "Романтичная и нежная мелодия, напоминающая танец под лунным светом. Идеальный трек для вечернего романтического настроения.",
-        link: "https://example.com/track2"
+        value: "https://example.com/track2"
         },
         {
         title: "путешествие во времени",
         description: "эпическая и кинематографичная музыка, создающая ощущение путешествия сквозь временные измерения и пространство.",
-        link: "https://example.com/track3"
+        value: "https://example.com/track3"
         },
     ],
     size: [
         {
             title: "холоп",
-            description: "маленький размер поля и медленная игра"
+            description: "маленький размер поля и медленная игра",
+            value:
+            {
+                width: 5,
+                height: 20
+            }
         },
         {
             title: "крестьянин",
-            description: "классические размер поля и скорость игры"
+            description: "классические размер поля и скорость игры",
+            value:
+            {
+                width: 10,
+                height: 20
+            }
         },
         {
             title: "боярин",
-            description: "большой размер поля и быстрая игра"
+            description: "большой размер поля и быстрая игра",
+            value:
+            {
+                width: 15,
+                height: 20
+            }
         }
     ],
     difficulty: [
         {
             title: "легко",
-            description: "игра для нубов"
+            description: "игра для нубов",
+            value: 1
         },
         {
             title: "средний",
-            description: "ты уже что-то можешь"
+            description: "ты уже что-то можешь",
+            value: 2
         },
         {
             title: "имбоссссибл",
-            description: "ты просто гений тетриса"
+            description: "ты просто гений тетриса",
+            value: 3
         }
     ],
     bg: [
         {
-            title: "ispring",
-            description: "Фон компании Ispting"
+            title: "ISPRING",
+            description: "Фон компании Ispting",
+            value: "https://example.com/track1"
         },
         {
-            title: "политех",
-            description: "Фон первого корпуса"
+            title: "Pолитех",
+            description: "Фон первого корпуса",
+            value: "https://example.com/track1"
         },
         {
-            title: "йошкар-Ола",
-            description: "йон йошкар-олы"
+            title: "IOошкар-Ола",
+            description: "йон йошкар-олы",
+            value: "https://example.com/track1"
         }
     ],
+}
+
+let settingLobby = {
+    id: "",
+    players: [],
+    settings: {
+      music: "/audio/Korobeiniki.wav",
+      background: "/images/bg.png",
+      difficulty: 1,
+      play_field: {
+        width: 10,
+        height: 20
+      }
+    }
 }
 
 addEventListener("DOMContentLoaded", (event) => {
@@ -72,7 +107,7 @@ addEventListener("DOMContentLoaded", (event) => {
     let inputSize = document.getElementById('size');
     let inputMusic = document.getElementById('music');
     let inputBg = document.getElementById('bg');
-    let inputDifficulty = document.getElementById('difficulty');
+    let inputDifficulty = document.getElementById('difficulty');     
 
     listSettings.addEventListener('click', ()=>{
         listSettings.style.display = "none";
@@ -84,44 +119,44 @@ addEventListener("DOMContentLoaded", (event) => {
         settings.size.forEach((size)=>{
             menu.appendChild(createMenuItem(size.title, size.description));
         })
-        ChoiseSetting(settings.size, inputSize);
+        ChoiseSetting(settings.size, inputSize, "play_field");
     })
     selectMusic.addEventListener('click', (e)=>{
         listSettings.style.display = "flex"
         settings.music.forEach((sound)=>{
             menu.appendChild(createMenuItem(sound.title, sound.description));
         })
-        ChoiseSetting(settings.music, inputMusic);
+        ChoiseSetting(settings.music, inputMusic, "music");
     })
     selectDifficulty.addEventListener('click', (e)=>{
         listSettings.style.display = "flex"
         settings.difficulty.forEach((difficulty)=>{
             menu.appendChild(createMenuItem(difficulty.title, difficulty.description));
         })
-        ChoiseSetting(settings.difficulty, inputDifficulty);
+        ChoiseSetting(settings.difficulty, inputDifficulty, "difficulty");
     })
     selectBg.addEventListener('click', (e)=>{
         listSettings.style.display = "flex"
         settings.bg.forEach((bg)=>{
             menu.appendChild(createMenuItem(bg.title, bg.description));
         })
-        ChoiseSetting(settings.bg, inputBg);
+        ChoiseSetting(settings.bg, inputBg, 'background');
     })
 
-    function ChoiseSetting(elem, input)
-{
-    let settings = document.querySelectorAll('.menu__item');
-    settings.forEach((btn, index)=>{
-        btn.addEventListener('click', ()=>{
-            listSettings.style.display = "none"
-            input.innerHTML = elem[index].title
-            deleteMenuItem(menu)
+    function ChoiseSetting(elem, input, param)
+    {
+        let settings = document.querySelectorAll('.menu__item');
+        settings.forEach((btn, index)=>{
+            btn.addEventListener('click', ()=>{
+                listSettings.style.display = "none"
+                input.innerHTML = elem[index].title   
+                inputForm = elem[index].value
+                settingLobby.settings[param] = inputForm;
+                sendLobbySettings(settingLobby)
+            })
         })
-    })
-}
-
+    }
 });
-
 
 function deleteMenuItem(menu) {
     while (menu.firstChild) {
@@ -163,18 +198,27 @@ function open(e)
 function createPlayer(name) {
     const player = document.createElement('div');
     player.classList.add('player');
-    
+
     const playerName = document.createElement('p');
     playerName.classList.add('player__name');
     playerName.textContent = name;
-    
+
     const playerAvatar = document.createElement('img');
     playerAvatar.src = "/images/avatar-placeholder.png";
     playerAvatar.alt = "avatar";
     playerAvatar.classList.add('profile__avatar');
-    
+    const playerButton = document.createElement('button');
+    playerButton.type = 'button';
+    playerButton.classList.add('player__button');
+    playerButton.textContent = 'KILL'; 
+
+    const avatarContainer = document.createElement('div');
+    avatarContainer.classList.add('avatar__container');
+    avatarContainer.appendChild(playerAvatar);
+    avatarContainer.appendChild(playerButton);
+
     player.appendChild(playerName);
-    player.appendChild(playerAvatar);
-    
+    player.appendChild(avatarContainer);
+
     return player;
-    }
+}

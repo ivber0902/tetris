@@ -1,5 +1,5 @@
 class Player {
-    constructor(interface_, figuresQueueSize) {
+    constructor(ui_, figuresQueueSize) {
         this.score = 0;
         this.field = [];
         this.nitro = 1;
@@ -16,7 +16,7 @@ class Player {
         this.currentFigure = null;
         this.nextFigures = null;
         this.buffer = null;
-        this.interface = interface_;
+        this.ui = ui_;
         this.figuresQueueSize = figuresQueueSize;
         this.isShifter = true;
         this.isActive = true;
@@ -52,7 +52,7 @@ class Player {
         this.currentFigure = this.getRandomFigure(figures);
         this.currentFigure.x = this.getStartX(this.currentFigure);
         this.buffer = this.getRandomFigure(figures);
-        this.interface.buffer.src = this.buffer.image.src;
+        this.ui.buffer.src = this.buffer.image.src;
         this.nextFigures = [];
         for (let i = 0; i < this.figuresQueueSize; i++) {
             this.nextFigures[i] = this.getRandomFigure(figures);
@@ -79,7 +79,7 @@ class Player {
 
         this.nextFigures[this.figuresQueueSize - 1] = this.getRandomFigure(figures);
 
-        this.updateInterface();
+        this.updateUI();
 
         this.isShifter = true;
     }
@@ -96,8 +96,8 @@ class Player {
                 this.isActive = false;
                 gameEnd(this.score);
                 return true;
-            }  
-                    
+            }
+
         }
         return false;
     }
@@ -145,12 +145,12 @@ class Player {
         }
     }
 
-    updateInterface() {
+    updateUI() {
         for (let i = 0; i < this.figuresQueueSize; i++) {
-            this.interface.viewNextFigures[i].src = this.nextFigures[i].image.src;
+            this.ui.viewNextFigures[i].src = this.nextFigures[i].image.src;
         }
-        this.interface.score = this.score;
-        this.interface.level = this.lvl;
+        this.ui.score = this.score;
+        this.ui.level = this.lvl;
     }
 
     drawField(width, height) {
@@ -159,25 +159,25 @@ class Player {
                 if (this.field[row][col] - 1 >= 20)
                     field.drawImage(
                         figures[(this.field[row][col] - 1) % 10].shadow,
-                        col * this.interface.blockSize,
-                        row * this.interface.blockSize,
-                        this.interface.blockSize, this.interface.blockSize
+                        col * this.ui.blockSize,
+                        row * this.ui.blockSize,
+                        this.ui.blockSize, this.ui.blockSize
                     )
                 else if (this.field[row][col] === 0) {
                     field.drawImage(
                         blockField,
-                        col * this.interface.blockSize,
-                        row * this.interface.blockSize,
-                        this.interface.blockSize,
-                        this.interface.blockSize
+                        col * this.ui.blockSize,
+                        row * this.ui.blockSize,
+                        this.ui.blockSize,
+                        this.ui.blockSize
                     )
                 } else {
                     field.drawImage(
                         figures[(this.field[row][col] - 1) % 10].block,
-                        col * this.interface.blockSize,
-                        row * this.interface.blockSize,
-                        this.interface.blockSize,
-                        this.interface.blockSize
+                        col * this.ui.blockSize,
+                        row * this.ui.blockSize,
+                        this.ui.blockSize,
+                        this.ui.blockSize
                     );
                 }
             }
@@ -185,15 +185,15 @@ class Player {
     }
 
     drawOtherField(width, height) {
-        otherField.forEach((elem)=>{
+        otherField.forEach((elem) => {
             elem.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
-            for (let row = 0; row < height; row++){
-                for (let col = 0; col < width; col++){
+            for (let row = 0; row < height; row++) {
+                for (let col = 0; col < width; col++) {
                     elem.getContext('2d').drawImage(
                         blockField,
-                        col * this.interface.blockSize,
-                        row * this.interface.blockSize,
-                        this.interface.blockSize, this.interface.blockSize
+                        col * this.ui.blockSize,
+                        row * this.ui.blockSize,
+                        this.ui.blockSize, this.ui.blockSize
                     )
                 }
             }
@@ -297,7 +297,7 @@ class Player {
         if (this.lvl >= 29) {
             this.tickTime = 333 / this.field.length;
         }
-        this.interface.music.playbackRate = 0.7 + this.lvl * 0.05;
+        this.ui.music.playbackRate = 0.7 + this.lvl * 0.05;
     }
 
     checkPosition(x, y, matrix) {
@@ -344,58 +344,71 @@ class Player {
     initEventListeners() {
         this.addBufferListener();
         this.addPositionListeners();
+        this.addPauseListener();
     }
 
     addPositionListeners() {
         document.addEventListener('keydown', (e) => {
-            switch (e.code) {
-                case 'ArrowLeft':
-                case 'KeyA':
-                    this.move.left = this.checkPosition(this.currentFigure.x - 1, this.currentFigure.y, this.currentFigure.matrix) ? 1 : 0;
-                    break;
-                case 'ArrowRight':
-                case 'KeyD':
-                    this.move.right = this.checkPosition(this.currentFigure.x + 1, this.currentFigure.y, this.currentFigure.matrix) ? 1 : 0;
-                    break;
-                case 'Space':
-                    this.move.set = 1;
-                    break;
-                case 'ArrowDown':
-                case 'KeyS':
-                    this.nitro = 4;
-                    break;
-                case 'ArrowUp':
-                case 'KeyW':
-                    let rotated = this.rotateFigure(this.currentFigure.matrix);
+            if (this.isActive)
+                switch (e.code) {
+                    case 'ArrowLeft':
+                    case 'KeyA':
+                        this.move.left = this.checkPosition(this.currentFigure.x - 1, this.currentFigure.y, this.currentFigure.matrix) ? 1 : 0;
+                        break;
+                    case 'ArrowRight':
+                    case 'KeyD':
+                        this.move.right = this.checkPosition(this.currentFigure.x + 1, this.currentFigure.y, this.currentFigure.matrix) ? 1 : 0;
+                        break;
+                    case 'Space':
+                        this.move.set = 1;
+                        break;
+                    case 'ArrowDown':
+                    case 'KeyS':
+                        this.nitro = 4;
+                        break;
+                    case 'ArrowUp':
+                    case 'KeyW':
+                        let rotated = this.rotateFigure(this.currentFigure.matrix);
 
-                    if (this.checkPosition(this.currentFigure.x, this.currentFigure.y, rotated)) {
-                        this.clearFigure(this.currentFigure);
-                        this.clearShadow(this.currentFigure);
-                        this.currentFigure.matrix = rotated;
-                    }
-                    break;
-            }
+                        if (this.checkPosition(this.currentFigure.x, this.currentFigure.y, rotated)) {
+                            this.clearFigure(this.currentFigure);
+                            this.clearShadow(this.currentFigure);
+                            this.currentFigure.matrix = rotated;
+                        }
+                        break;
+                }
         });
-        document.addEventListener('keyup', (e) => {
-            if (e.code === 'ArrowDown' || e.code === 'KeyS') {
-                this.nitro = 1;
-            }
-        });
+        if (this.isActive)
+            document.addEventListener('keyup', (e) => {
+                if (e.code === 'ArrowDown' || e.code === 'KeyS') {
+                    this.nitro = 1;
+                }
+            });
     }
 
     updateSize(game) {
-        this.interface.updateSize(game);
+        this.ui.updateSize(game);
+    }
+    addPauseListener() {
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'KeyP') {
+                if (!this.isActive) {
+                    GAME.drawDowncount(this, field, this.ui, 3, 1, () => {this.isActive = !this.isActive;})
+                } else
+                this.isActive = !this.isActive;
+            }
+        });
     }
 
     addBufferListener() {
         document.addEventListener('keyup', (e) => {
-            if (e.code === 'ShiftLeft' && this.isShifter) {
+            if (this.isActive && e.code === 'ShiftLeft' && this.isShifter) {
                 this.clearFigure(this.currentFigure);
                 this.clearShadow(this.currentFigure);
                 let figure = this.currentFigure;
                 this.currentFigure = this.buffer;
                 this.buffer = figure;
-                this.interface.buffer.src = this.buffer.image.src;
+                this.ui.buffer.src = this.buffer.image.src;
                 this.currentFigure.matrix = figures[this.currentFigure.id].matrix;
                 this.currentFigure.x = this.getStartX(this.currentFigure);
                 this.currentFigure.y = 0;

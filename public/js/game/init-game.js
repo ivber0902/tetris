@@ -1,10 +1,4 @@
-let music = new Audio("/audio/Korobeiniki.wav");
-music.addEventListener('ended', function() {
-    this.currentTime = 0;
-    this.play();
-}, false);
-
-const INTERFACE = new Interface(
+const ui = new UI(
     34,
     document.querySelector(".buffer__figure"),
     document.querySelectorAll(".figure"),
@@ -13,21 +7,21 @@ const INTERFACE = new Interface(
     document.querySelector(".game__level"),
 );
 
-let player = new Player(INTERFACE, GAME.figuresQueueSize);
+let player = new Player(ui, GAME.figuresQueueSize);
 const canvas = document.getElementById('game');
 const field = canvas.getContext('2d');
 let otherField = document.querySelectorAll('.other-field')
 
-canvas.width = INTERFACE.field.width;
-canvas.height = INTERFACE.field.height;
+canvas.width = ui.field.width;
+canvas.height = ui.field.height;
 
-otherField.forEach((elem)=>{
-    elem.width = INTERFACE.field.width;
-    elem.height = INTERFACE.field.height;
-    switch(INTERFACE.field.width / INTERFACE.blockSize){
+otherField.forEach((elem) => {
+    elem.width = ui.field.width;
+    elem.height = ui.field.height;
+    switch (ui.field.width / ui.blockSize) {
         case 7:
             elem.style.maxHeight = "480px";
-            document.querySelector('.palyers-list'). style.paddingRight = '100px'
+            document.querySelector('.palyers-list').style.paddingRight = '100px'
             break
         case 10:
             elem.style.maxHeight = "400px";
@@ -38,5 +32,5 @@ otherField.forEach((elem)=>{
     }
 })
 
-GAME.init()
-GAME.start()
+GAME.init(player, ui)
+GAME.start(player, field, ui)
