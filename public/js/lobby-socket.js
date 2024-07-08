@@ -23,6 +23,10 @@ let triangle = document.querySelectorAll(".triangle");
 let startGame = document.querySelector(".start-game");
 let buttons;
 let functionKickPlayer;
+let players;
+let player;
+let found;
+let playersName;
 let settingLobby = {
     id: "",
     players: [],
@@ -71,15 +75,23 @@ ws.onmessage = (msg) => {
     if (window.location.href === lobbyLink) {
         history.pushState(null, null, "?lobby=" + data.id)
     }
-    deleteMenuItem(listPlayers);
-
     async function foundUser(id) {
         let response = await fetch('/api/player/' + id + '/user', {
             method: 'GET'
         });
         let user = await response.json();
         let login = user.login;
-        listPlayers.appendChild(createPlayer(login));
+        player = createPlayer(login);
+        players = listPlayers.querySelectorAll(".player__name");
+        found = false
+        players.forEach((elem)=>{
+            if( elem.textContent === login){
+                found = true
+            }
+        })
+        if(!(found)){
+            listPlayers.appendChild(player)
+        }
     }
 
     async function processPlayers(data) {
