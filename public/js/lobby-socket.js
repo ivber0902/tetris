@@ -55,6 +55,9 @@ ws.onmessage = (msg) => {
         document.querySelector('.lobby-link').innerHTML = '';
         settingLobby.id = data.id;
     }
+    if (window.location.href === lobbyLink){
+        history.pushState(null, null, '?lobby=' + data.id);
+    }
     deleteMenuItem(listPlayers);
 
     async function foundUser(id) {
@@ -79,7 +82,7 @@ ws.onmessage = (msg) => {
     (async () => {
         await processPlayers(data);
         buttons = document.querySelectorAll('.player__button');      
-        functionKickPlayer(data.players);
+        functionKickPlayer(playerId, data.players);
         if (playerId === data.players[0]) {
             console.log(buttons);
             console.log('you are host');
@@ -118,4 +121,8 @@ function sendLobbySettings(settingLobby){
         "type": "update",
         "updates": settingLobby
     }));
-} 
+}
+
+function disconnectPlayer(playerId, kickId){
+    console.log(playerId, 'her', kickId);
+}
