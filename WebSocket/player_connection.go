@@ -63,6 +63,11 @@ func (player *PlayerConnection) readLoop() {
 					player.lobby.disconnect <- player
 					player.lobby.update <- player.lobby.info
 				}
+			case GameRunRequestType:
+				if player.ip == player.lobby.hostIP {
+					player.lobby.info.GameRun = true
+					player.lobby.update <- player.lobby.info
+				}
 			}
 		}
 	}
