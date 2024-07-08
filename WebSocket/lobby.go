@@ -9,6 +9,7 @@ type Lobby struct {
 	ID       string        `bson:"_id" json:"id"`
 	Players  []int32       `bson:"players,omitempty" json:"players,omitempty"`
 	Settings LobbySettings `bson:"settings,omitempty" json:"settings,omitempty"`
+	GameRun  bool          `bson:"game_run,omitempty" json:"game_run,omitempty"`
 }
 
 type LobbySettings struct {
