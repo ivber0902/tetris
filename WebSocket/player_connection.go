@@ -10,12 +10,13 @@ type PlayerConnection struct {
 	conn  *websocket.Conn
 	send  chan *Lobby
 	lobby *LobbyConnection
+	ip    string
 }
 
 func (player *PlayerConnection) readLoop() {
 	defer func() {
-		player.lobby.disconnect <- player
 		player.conn.Close()
+		log.Println("READ: Web socket closed by client")
 	}()
 
 	var request UpdateJSONRequest
@@ -38,17 +39,21 @@ func (player *PlayerConnection) readLoop() {
 				log.Println("JSON Reading error:", err)
 			}
 
-		} else if request.Type == UpdateRequestType {
-			player.lobby.info = &request.Updates
-			player.lobby.update <- player.lobby.info
 		} else if request.Type == GetRequestType {
 			player.lobby.update <- player.lobby.info
+		} else if request.Type == UpdateRequestType {
+			if player.ip == player.lobby.hostIP {
+				player.lobby.info = &request.Updates
+				player.lobby.update <- player.lobby.info
+			}
 		} else if request.Type == ConnectRequestType {
 			if id := request.Connection.PlayerID; id != 0 {
-				err := player.lobby.info.AddPlayer(id)
-				if err != nil {
-					log.Println("Error connect player to lobby:", err)
-				}
+				player.lobby.info.AddPlayer(id)
+				player.lobby.update <- player.lobby.info
+			}
+		} else if request.Type == DisconnectRequestType {
+			if player.ip == player.lobby.hostIP && request.Connection.PlayerID != 0 {
+				player.lobby.disconnect <- player
 				player.lobby.update <- player.lobby.info
 			}
 		}
@@ -56,7 +61,10 @@ func (player *PlayerConnection) readLoop() {
 }
 
 func (player *PlayerConnection) writeLoop() {
-	defer player.conn.Close()
+	defer func() {
+		player.conn.Close()
+		log.Println("WRITE: Web socket closed by client")
+	}()
 	for {
 		select {
 		case updatedLobby, ok := <-player.send:

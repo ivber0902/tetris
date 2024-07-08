@@ -1,10 +1,7 @@
 package main
 
 import (
-	"context"
 	"encoding/json"
-	"go.mongodb.org/mongo-driver/bson"
-	"log"
 	"os"
 )
 
@@ -49,77 +46,20 @@ func (lobby *Lobby) SetDefault() error {
 	return err
 }
 
-func (lobby *Lobby) Insert() error {
-	lobbyTable := DB.Collection("lobby")
-	_, err := lobbyTable.InsertOne(context.TODO(), lobby)
-	return err
-}
-
-func (lobby *Lobby) Update() error {
-	lobbyTable := DB.Collection("lobby")
-	_, err := lobbyTable.ReplaceOne(
-		context.TODO(),
-		bson.M{"_id": lobby.ID},
-		lobby,
-	)
-	return err
-}
-
-func (lobby *Lobby) AddPlayer(playerID int32) error {
-	//lobbyTable := DB.Collection("lobby")
-	log.Println("Add player", playerID)
-
+func (lobby *Lobby) AddPlayer(playerID int32) {
 	for _, player := range lobby.Players {
 		if player == playerID {
-			return nil
+			return
 		}
 	}
-
-	//_, err := lobbyTable.UpdateOne(
-	//	context.TODO(),
-	//	bson.M{"_id": lobby.ID},
-	//	bson.M{"$set": bson.M{"players": append(lobby.Players, playerID)}},
-	//)
-	//if err != nil {
-	//	return err
-	//}
-	//
-	//err = lobby.Find(lobby.ID)
 
 	lobby.Players = append(lobby.Players, playerID)
-	return nil
 }
 
-func (lobby *Lobby) RemovePlayer(playerID int32) error {
-	lobbyTable := DB.Collection("lobby")
-
+func (lobby *Lobby) RemovePlayer(playerID int32) {
 	for i, player := range lobby.Players {
 		if player == playerID {
-			_, err := lobbyTable.UpdateOne(
-				context.TODO(),
-				bson.M{"_id": lobby.ID},
-				bson.M{"$set": bson.M{"players": append(lobby.Players[:i], lobby.Players[i+1:]...)}},
-			)
-			if err != nil {
-				return err
-			}
-			break
+			lobby.Players = append(lobby.Players[:i], lobby.Players[i+1:]...)
 		}
 	}
-
-	err := lobby.Find(lobby.ID)
-
-	return err
-}
-
-func (lobby *Lobby) Find(id string) error {
-	lobbyTable := DB.Collection("lobby")
-	err := lobbyTable.FindOne(context.TODO(), bson.M{"_id": id}).Decode(lobby)
-	return err
-}
-
-func (lobby *Lobby) Delete() error {
-	lobbyTable := DB.Collection("lobby")
-	_, err := lobbyTable.DeleteOne(context.TODO(), bson.M{"_id": lobby.ID})
-	return err
 }
