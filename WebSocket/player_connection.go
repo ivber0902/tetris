@@ -59,9 +59,11 @@ func (player *PlayerConnection) readLoop() {
 				}
 			case DisconnectRequestType:
 				if id := request.Connection.PlayerID; player.ip == player.lobby.hostIP && id != 0 {
-					player.lobby.info.RemovePlayer(id)
-					player.lobby.disconnect <- player
-					player.lobby.update <- player.lobby.info
+					if disconnectedPlayer := player.lobby.getPlayerByID(id); disconnectedPlayer != nil {
+						player.lobby.info.RemovePlayer(id)
+						player.lobby.disconnect <- disconnectedPlayer
+						player.lobby.update <- player.lobby.info
+					}
 				}
 			case GameRunRequestType:
 				if player.ip == player.lobby.hostIP {

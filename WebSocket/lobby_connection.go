@@ -50,3 +50,12 @@ func (lobby *LobbyConnection) Init() {
 		}
 	}
 }
+
+func (lobby *LobbyConnection) getPlayerByID(id int32) *PlayerConnection {
+	for player := range lobby.players {
+		if player.id == id {
+			return player
+		}
+	}
+	return nil
+}
