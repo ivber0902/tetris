@@ -1,9 +1,10 @@
+
 let settings = {
     music: [
         {
-        title: "эхо во тьме",
+        title: "Корабейники",
         description: "мистическая и загадочная композиция, в которой звуки эха на фоне темноты создают атмосферу напряжения и тайны.",
-        value: "https://example.com/track1"
+        value: "/audio/Korobeiniki.wav"
         },
         {
         title: "лунный вальс",
@@ -66,7 +67,7 @@ let settings = {
         {
             title: "ISPRING",
             description: "Фон компании Ispting",
-            value: "https://example.com/track1"
+            value: "/images/bg.png"
         },
         {
             title: "Pолитех",
@@ -104,11 +105,6 @@ addEventListener("DOMContentLoaded", (event) => {
     let selectBg = document.querySelector(".settings__background")
     let listSettings = document.querySelector('.list-settings');
     let menu = document.querySelector('.menu');
-    let inputSize = document.getElementById('size');
-    let inputMusic = document.getElementById('music');
-    let inputBg = document.getElementById('bg');
-    let inputDifficulty = document.getElementById('difficulty');     
-
     listSettings.addEventListener('click', ()=>{
         listSettings.style.display = "none";
         deleteMenuItem(menu)
@@ -149,7 +145,6 @@ addEventListener("DOMContentLoaded", (event) => {
         settings.forEach((btn, index)=>{
             btn.addEventListener('click', ()=>{
                 listSettings.style.display = "none"
-                input.innerHTML = elem[index].title   
                 inputForm = elem[index].value
                 settingLobby.settings[param] = inputForm;
                 sendLobbySettings(settingLobby)

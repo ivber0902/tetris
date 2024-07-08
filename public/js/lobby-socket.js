@@ -1,6 +1,11 @@
 const urlParams = new URLSearchParams(window.location.search);
 const lobbyId = urlParams.get('lobby');
 
+let inputSize = document.getElementById('size');
+let inputMusic = document.getElementById('music');
+let inputBg = document.getElementById('bg');
+let inputDifficulty = document.getElementById('difficulty');    
+
 let wsUrl = "ws://127.0.0.1:8080/lobby";
 if (lobbyId) {
     wsUrl += "?lobby=" + lobbyId;
@@ -38,8 +43,12 @@ function changeSetting(inSet, outSet){
 
 ws.onmessage = (msg) => {  
     let data = JSON.parse(msg.data);
+        inputSize.innerHTML = settings.size.find(item => item.value.width == data.settings.play_field.width).title
+        inputMusic.innerHTML = settings.music.find(item => item.value == data.settings.music).title
+        inputBg.innerHTML = settings.bg.find(item => item.value == data.settings.background).title
+        inputDifficulty.innerHTML = settings.difficulty.find(item => item.value == data.settings.difficulty).title
+
     console.log('настройки поля', data)
-    
     if (data.id) {
         console.log(lobbyLink + '?lobby=' + data.id)
         document.querySelector('.lobby-link').innerHTML = '';
