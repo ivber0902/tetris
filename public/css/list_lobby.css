@@ -1,0 +1,151 @@
+* {
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    user-select: none;
+    font-family: "Russo One", sans-serif;
+    font-weight: 400;
+    font-size: 32px;
+    color: #fff;  
+    text-transform: uppercase;
+}
+
+.bg 
+{
+    min-height: 100vh;
+    height: 100%;
+    background: url(/images/bg.png) no-repeat;
+    background-size: cover;
+}
+
+.bg_dark 
+{
+    background: url(/images/dark-bg.png) no-repeat;
+    background-size: cover;
+}
+
+.settings 
+{
+    width: 40px;
+    height: 40px;
+}
+
+.header 
+{
+    display: flex;
+    justify-content: space-between;
+    padding: 25px;
+}
+
+.logo 
+{
+    margin-left: 212px;
+}
+
+.profile 
+{
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.profile__nickname 
+{
+    font-size: 32px;
+    color: #fff;
+    margin: 10px;
+}
+
+.profile__avatar 
+{
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.link__image 
+{
+    height: 55%;
+}
+
+.menu__item 
+{
+    width: 100%;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    box-sizing: border-box;
+    padding: 9px;
+    display: flex;
+    flex-direction: column;
+    background-color: #1a161d;
+    border-top: 3px solid #453351;
+    border-left: 3px solid #392e40;
+    border-bottom: 3px solid #0a080b;
+}
+
+.item__title 
+{
+    color: #dac8e7;
+}
+
+.item__subtitle 
+{
+    color: #7c6b88;
+}
+
+.menu
+{
+    width: 80%;
+    margin: 0 0 0 auto;
+}
+
+.list-title
+{
+    padding-top: 50px;
+    font-size: 50px;
+    text-align: center;
+}
+
+.join-title
+{
+    padding-top: 30px;
+    padding-bottom: 30px;
+    text-align: center;
+}
+
+.join-lobby
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.join
+{
+    border: none;
+    box-sizing: border-box;
+    padding-left: 15px;
+    border-radius: 5px;
+    width: 850px;
+    height: 50px;
+    background: #222;
+    font-family: "Russo One", sans-serif;
+    font-size: 32px;
+    margin-bottom: 19px;
+}
+
+.join-button
+{
+    width: 450px;
+    padding: 15px 0;
+    text-align: center;
+    background-color: #1E48FF;
+    color: #FFFFFF;
+    font-size: 32px;
+    font-weight: 800;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+}
