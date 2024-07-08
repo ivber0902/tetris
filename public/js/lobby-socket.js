@@ -1,4 +1,5 @@
 const urlParams = new URLSearchParams(window.location.search);
+const host = window.location.hostname;
 const lobbyId = urlParams.get('lobby');
 
 let inputSize = document.getElementById('size');
@@ -6,14 +7,14 @@ let inputMusic = document.getElementById('music');
 let inputBg = document.getElementById('bg');
 let inputDifficulty = document.getElementById('difficulty');    
 
-let wsUrl = "ws://127.0.0.1:8080/lobby";
+let wsUrl = "ws://" + host + ":8080/lobby";
 if (lobbyId) {
     wsUrl += "?lobby=" + lobbyId;
 }
 let ws = new WebSocket(wsUrl);
 let playerId = parseInt(document.querySelector('.player_id').value);
 let listPlayers = document.querySelector('.list-players');
-let lobbyLink = document.querySelector('.lobby-link').innerHTML;
+let lobbyLink = "http://" + window.location.host + "/lobby";
 let selectSize = document.querySelector(".settings__size");
 let selectMusic = document.querySelector(".settings__music")
 let selectDifficulty = document.querySelector(".settings__complexity")
@@ -22,7 +23,7 @@ let triangle = document.querySelectorAll(".triangle");
 let startGame = document.querySelector(".start-game");
 let buttons;
 let functionKickPlayer;
-
+let settingLobby;
 addEventListener("DOMContentLoaded", (event) => {   
     functionKickPlayer = function KickPlayer(players){ 
         for (let i = 1; i < players.length; i++) { 
@@ -41,8 +42,22 @@ function changeSetting(inSet, outSet){
     outSet = inSet
 }
 
-ws.onmessage = (msg) => {  
+ws.onmessage = (msg) => {
+
     let data = JSON.parse(msg.data);
+    settingLobby = {
+        id: "",
+        players: [],
+        settings: {
+            music: data.settings.music,
+            background: data.settings.background,
+            difficulty: data.settings.difficulty,
+            play_field: {
+                width: data.settings.play_field.width,
+                height: data.settings.play_field.height,
+            }
+        }
+    }
         inputSize.innerHTML = settings.size.find(item => item.value.width == data.settings.play_field.width).title
         inputMusic.innerHTML = settings.music.find(item => item.value == data.settings.music).title
         inputBg.innerHTML = settings.bg.find(item => item.value == data.settings.background).title
