@@ -1,14 +1,15 @@
 const urlParams = new URLSearchParams(window.location.search);
+const host = window.location.hostname;
 const lobbyId = urlParams.get('lobby');
 
-let wsUrl = "ws://127.0.0.1:8080/lobby";
+let wsUrl = "ws://" + host + ":8080/lobby";
 if (lobbyId) {
     wsUrl += "?lobby=" + lobbyId;
 }
 let ws = new WebSocket(wsUrl);
 let playerId = parseInt(document.querySelector('.player_id').value);
 let listPlayers = document.querySelector('.list-players');
-let lobbyLink = document.querySelector('.lobby-link').innerHTML;
+let lobbyLink = "http://" + window.location.host + "/lobby";
 let selectSize = document.querySelector(".settings__size");
 let selectMusic = document.querySelector(".settings__music")
 let selectDifficulty = document.querySelector(".settings__complexity")
