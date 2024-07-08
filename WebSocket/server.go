@@ -37,11 +37,11 @@ func (server *Server) HandleConnection(w http.ResponseWriter, r *http.Request, c
 	}
 	log.Println("Created new player")
 
-	for player := range lobby.players {
-		if clientIP == player.ip {
-			delete(lobby.players, player)
-		}
-	}
+	// for player := range lobby.players {
+	// 	if clientIP == player.ip {
+	// 		delete(lobby.players, player)
+	// 	}
+	// }
 
 	player := &PlayerConnection{
 		lobby: lobby,
