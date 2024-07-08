@@ -43,6 +43,9 @@ class GameController extends AbstractController
     public function selectMode(): Response
     {
         $securityUser = $this->getUser();
+        if ($securityUser === null) {
+            return $this->redirectToRoute('login');
+        }
         return $this->render('select-mode.html.twig', ["user" => $securityUser]);
     }
     public function selectClassicMode(): Response
@@ -71,13 +74,10 @@ class GameController extends AbstractController
     public function lobby(): Response
     {
         $securityUser = $this->getUser();
-        if ($securityUser){
-            $user = $this->userService->findUser($securityUser->getId());
-            return $this->render('lobby.html.twig', ["user" => $user]);
-        }
-        else{
+        if ($securityUser === null) {
             return $this->redirectToRoute('login');
         }
-
+        $user = $this->userService->findUser($securityUser->getId());
+        return $this->render('lobby.html.twig', ["user" => $user]);
     }
 }
