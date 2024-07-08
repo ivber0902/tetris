@@ -20,7 +20,7 @@ let selectMusic = document.querySelector(".settings__music")
 let selectDifficulty = document.querySelector(".settings__complexity")
 let selectBg = document.querySelector(".settings__background");
 let triangle = document.querySelectorAll(".triangle");
-let startGame = document.querySelector(".start-game");
+let startGameButton = document.querySelector(".start-game")
 let buttons;
 let functionKickPlayer;
 let players;
@@ -52,7 +52,12 @@ addEventListener("DOMContentLoaded", () => {
     }
 })
 
-
+startGameButton.addEventListener('click', ()=>{
+    ws.send(JSON.stringify({
+        "type": "update",
+        "updates": settingLobby
+    }));
+})
 
 function changeSetting(inSet, outSet){
     outSet = inSet
@@ -91,6 +96,9 @@ ws.onmessage = (msg) => {
         })
         if(!(found)){
             listPlayers.appendChild(player)
+        }
+        if(players.length === 4){
+            window.location.href = '/multiplayer'
         }
     }
 
@@ -142,7 +150,6 @@ ws.onopen = () => {
 };
 
 function sendLobbySettings(settingLobby){
-    console.log('hello world')
     ws.send(JSON.stringify({
         "type": "update",
         "updates": settingLobby
