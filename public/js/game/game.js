@@ -20,7 +20,9 @@ let GAME = {
         ui.initMusic();
     },
     start(player, field, ui) {
-        this.onLoadImages(() => { this.drawDowncount(player, field, ui, 3, 1, () => { this.play(player); }) });
+        this.onLoadImages(() => {
+            this.drawDowncount(player, field, ui, 3, 1, () => { this.play(player); })
+        });
     },
     drawDowncount(player, field, ui, fromIndex, toIndex, func) {
         if (fromIndex >= toIndex) {

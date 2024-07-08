@@ -39,8 +39,10 @@ function changeSetting(inSet, outSet){
 ws.onmessage = (msg) => {  
     let data = JSON.parse(msg.data);
     console.log('настройки поля', data)
+    
     if (data.id) {
-        document.querySelector('.lobby-link').innerHTML = lobbyLink + '?lobby=' + data.id;
+        console.log(lobbyLink + '?lobby=' + data.id)
+        document.querySelector('.lobby-link').innerHTML = '';
         settingLobby.id = data.id;
     }
     deleteMenuItem(listPlayers);
@@ -102,7 +104,6 @@ ws.onopen = () => {
 };
 
 function sendLobbySettings(settingLobby){
-    console.log(settingLobby, 'her')
     ws.send(JSON.stringify({
         "type": "update",
         "updates": settingLobby

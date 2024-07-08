@@ -10,11 +10,14 @@ const ui = new UI(
 let player = new Player(ui, GAME.figuresQueueSize);
 const canvas = document.getElementById('game');
 const field = canvas.getContext('2d');
+
+
 let otherField = document.querySelectorAll('.other-field')
 
 canvas.width = ui.field.width;
 canvas.height = ui.field.height;
-
+field.fillStyle = 'black';
+field.fillRect(0, 0, ui.field.width, ui.field.height);
 otherField.forEach((elem) => {
     elem.width = ui.field.width;
     elem.height = ui.field.height;

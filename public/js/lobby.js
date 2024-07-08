@@ -210,7 +210,7 @@ function createPlayer(name) {
     const playerButton = document.createElement('button');
     playerButton.type = 'button';
     playerButton.classList.add('player__button');
-    playerButton.textContent = 'KILL'; 
+    playerButton.textContent = 'ВЫГНАТЬ'; 
 
     const avatarContainer = document.createElement('div');
     avatarContainer.classList.add('avatar__container');
