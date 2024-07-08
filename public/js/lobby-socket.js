@@ -47,14 +47,11 @@ ws.onmessage = (msg) => {
         inputMusic.innerHTML = settings.music.find(item => item.value == data.settings.music).title
         inputBg.innerHTML = settings.bg.find(item => item.value == data.settings.background).title
         inputDifficulty.innerHTML = settings.difficulty.find(item => item.value == data.settings.difficulty).title
-
-    console.log('настройки поля', data)
     if (data.id) {
         console.log(lobbyLink + '?lobby=' + data.id)
         document.querySelector('.lobby-link').innerHTML = '';
         settingLobby.id = data.id;
     }
-    deleteMenuItem(listPlayers);
 
     async function foundUser(id) {
         let response = await fetch('/api/player/' + id + '/user', {
@@ -62,7 +59,9 @@ ws.onmessage = (msg) => {
         });
         let user = await response.json();
         let login = user.login;
-        listPlayers.appendChild(createPlayer(login));
+        let player = createPlayer(login)
+        if(player )
+        listPlayers.appendChild();
     }
 
     async function processPlayers(data) {
