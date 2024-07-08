@@ -109,7 +109,7 @@ class Player {
     }
 
     getStartX(figure) {
-        return Math.floor((this.field[0].length - Math.max(...figure.matrix.map(row => row.length))) / 2);
+         return Math.floor((this.field[0].length - Math.max(...figure.matrix.map(row => row.length))) / 2);
     }
 
     moveDown() {

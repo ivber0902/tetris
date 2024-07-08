@@ -92,6 +92,9 @@ ws.onmessage = (msg) => {
         if(!(found)){
             listPlayers.appendChild(player)
         }
+        if(players.length === 4){
+            window.location.href = '/multiplayer'
+        }
     }
 
     async function processPlayers(data) {
