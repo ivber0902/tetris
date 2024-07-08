@@ -41,11 +41,13 @@ let settingLobby = {
     }
 }
 addEventListener("DOMContentLoaded", () => {
-    functionKickPlayer = function KickPlayer(players){ 
+    functionKickPlayer = function KickPlayer(playerId, players){ 
         for (let i = 1; i < players.length; i++) { 
             if (buttons[i]){
                 buttons[i].addEventListener('click', ()=>{
                     console.log('playerId = ' + players[i])
+                    let kickId = players[i]
+                    disconnectPlayer(playerId, kickId)
                 })  
             }
         }
@@ -82,6 +84,7 @@ ws.onmessage = (msg) => {
     if (window.location.href === lobbyLink) {
         history.pushState(null, null, "?lobby=" + data.id)
     }
+    deleteMenuItem(listPlayers);
     async function foundUser(id) {
         let response = await fetch('/api/player/' + id + '/user', {
             method: 'GET'
@@ -117,10 +120,8 @@ ws.onmessage = (msg) => {
     (async () => {
         await processPlayers(data);
         buttons = document.querySelectorAll('.player__button');      
-        functionKickPlayer(data.players);
+        functionKickPlayer(playerId, data.players);
         if (playerId === data.players[0]) {
-            console.log(buttons);
-            console.log('you are host');
             selectSize.style.pointerEvents = 'auto';
             selectMusic.style.pointerEvents = 'auto';
             selectDifficulty.style.pointerEvents = 'auto';
@@ -149,11 +150,23 @@ ws.onopen = () => {
         "connection": {
             "player_id": playerId
     }}));
-};
+}
 
 function sendLobbySettings(settingLobby){
     ws.send(JSON.stringify({
         "type": "update",
         "updates": settingLobby
     }));
-} 
+}
+
+function disconnectPlayer(playerId, kickId){
+    ws.send(JSON.stringify({
+        "type": "disconnect",
+        "connection": {
+            "player_id": kickId       
+    }}));  
+}
+
+ws.onclose = () => {
+    window.location.href = "/menu"
+}
