@@ -82,21 +82,9 @@ let settings = {
     ],
 }
 
-let settingLobby = {
-    id: "",
-    players: [],
-    settings: {
-      music: "/audio/Korobeiniki.wav",
-      background: "/images/bg.png",
-      difficulty: 1,
-      play_field: {
-        width: 10,
-        height: 20
-      }
-    }
-}
 
-addEventListener("DOMContentLoaded", (event) => {
+
+addEventListener("DOMContentLoaded", () => {
     document.querySelector(".exit").addEventListener("click", (e) => close(e));
     document.querySelector(".profile__avatar").addEventListener("click", (e) => open(e));
     let selectSize = document.querySelector(".settings__size")
@@ -110,28 +98,28 @@ addEventListener("DOMContentLoaded", (event) => {
         deleteMenuItem(menu)
     })
 
-    selectSize.addEventListener('click', (e)=>{
+    selectSize.addEventListener('click', ()=>{
         listSettings.style.display = "flex"
         settings.size.forEach((size)=>{
             menu.appendChild(createMenuItem(size.title, size.description));
         })
         ChoiseSetting(settings.size, inputSize, "play_field");
     })
-    selectMusic.addEventListener('click', (e)=>{
+    selectMusic.addEventListener('click', ()=>{
         listSettings.style.display = "flex"
         settings.music.forEach((sound)=>{
             menu.appendChild(createMenuItem(sound.title, sound.description));
         })
         ChoiseSetting(settings.music, inputMusic, "music");
     })
-    selectDifficulty.addEventListener('click', (e)=>{
+    selectDifficulty.addEventListener('click', ()=>{
         listSettings.style.display = "flex"
         settings.difficulty.forEach((difficulty)=>{
             menu.appendChild(createMenuItem(difficulty.title, difficulty.description));
         })
         ChoiseSetting(settings.difficulty, inputDifficulty, "difficulty");
     })
-    selectBg.addEventListener('click', (e)=>{
+    selectBg.addEventListener('click', ()=>{
         listSettings.style.display = "flex"
         settings.bg.forEach((bg)=>{
             menu.appendChild(createMenuItem(bg.title, bg.description));
@@ -145,8 +133,7 @@ addEventListener("DOMContentLoaded", (event) => {
         settings.forEach((btn, index)=>{
             btn.addEventListener('click', ()=>{
                 listSettings.style.display = "none"
-                inputForm = elem[index].value
-                settingLobby.settings[param] = inputForm;
+                settingLobby.settings[param] = elem[index].value;
                 sendLobbySettings(settingLobby)
             })
         })
@@ -178,13 +165,13 @@ function createMenuItem(title, subtitle) {
     return div;
 }
 
-function close(e)
+function close()
 {
     const profile = document.querySelector('.user-profile');
     profile.style.display = 'none';
 }
 
-function open(e)
+function open()
 {
     const profile = document.querySelector('.user-profile');
     profile.style.display = 'inline';

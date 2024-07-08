@@ -23,8 +23,8 @@ let triangle = document.querySelectorAll(".triangle");
 let startGame = document.querySelector(".start-game");
 let buttons;
 let functionKickPlayer;
-
-addEventListener("DOMContentLoaded", (event) => {   
+let settingLobby;
+addEventListener("DOMContentLoaded", () => {
     functionKickPlayer = function KickPlayer(players){ 
         for (let i = 1; i < players.length; i++) { 
             if (buttons[i]){
@@ -42,12 +42,26 @@ function changeSetting(inSet, outSet){
     outSet = inSet
 }
 
-ws.onmessage = (msg) => {  
+ws.onmessage = (msg) => {
+
     let data = JSON.parse(msg.data);
-        inputSize.innerHTML = settings.size.find(item => item.value.width == data.settings.play_field.width).title
-        inputMusic.innerHTML = settings.music.find(item => item.value == data.settings.music).title
-        inputBg.innerHTML = settings.bg.find(item => item.value == data.settings.background).title
-        inputDifficulty.innerHTML = settings.difficulty.find(item => item.value == data.settings.difficulty).title
+    settingLobby = {
+        id: "",
+        players: [],
+        settings: {
+            music: data.settings.music,
+            background: data.settings.background,
+            difficulty: data.settings.difficulty,
+            play_field: {
+                width: data.settings.play_field.width,
+                height: data.settings.play_field.height,
+            }
+        }
+    }
+    inputSize.innerHTML = settings.size.find(item => item.value.width === data.settings.play_field.width).title
+    inputMusic.innerHTML = settings.music.find(item => item.value === data.settings.music).title
+    inputBg.innerHTML = settings.bg.find(item => item.value === data.settings.background).title
+    inputDifficulty.innerHTML = settings.difficulty.find(item => item.value === data.settings.difficulty).title
 
     console.log('настройки поля', data)
     if (data.id) {
@@ -57,6 +71,9 @@ ws.onmessage = (msg) => {
     }
     if (window.location.href === lobbyLink){
         history.pushState(null, null, '?lobby=' + data.id);
+    }
+    if (window.location.href === lobbyLink) {
+        history.pushState(null, null, "?lobby=" + data.id)
     }
     deleteMenuItem(listPlayers);
 

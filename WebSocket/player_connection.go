@@ -33,10 +33,12 @@ func (player *PlayerConnection) readLoop() {
 					log.Printf("Web socket closed by client: %s", err)
 					return
 				}
+
 			case *json.SyntaxError:
 				log.Println("JSON Unmarshal error:", err)
 			case error:
 				log.Println("JSON Reading error:", err)
+				return
 			}
 
 		} else if request.Type == GetRequestType {

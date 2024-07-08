@@ -21,7 +21,7 @@ func main() {
 		server.HandleConnection(w, r, PlayerIP)
 	})
 
-	err := http.ListenAndServe("0.0.0.0:8080", nil)
+	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
 		panic(err)
 	}
@@ -54,5 +54,5 @@ func getPlayerIP(r *http.Request) (string, error) {
 	if netIP != nil {
 		return ip, nil
 	}
-	return "", fmt.Errorf("No valid ip found")
+	return "", fmt.Errorf("no valid ip found")
 }
