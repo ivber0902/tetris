@@ -11,6 +11,7 @@ type PlayerConnection struct {
 	send  chan *Lobby
 	lobby *LobbyConnection
 	ip    string
+	id    int32
 }
 
 func (player *PlayerConnection) readLoop() {
@@ -41,22 +42,27 @@ func (player *PlayerConnection) readLoop() {
 				return
 			}
 
-		} else if request.Type == GetRequestType {
-			player.lobby.update <- player.lobby.info
-		} else if request.Type == UpdateRequestType {
-			if player.ip == player.lobby.hostIP {
-				player.lobby.info = &request.Updates
+		} else {
+			switch request.Type {
+			case GetRequestType:
 				player.lobby.update <- player.lobby.info
-			}
-		} else if request.Type == ConnectRequestType {
-			if id := request.Connection.PlayerID; id != 0 {
-				player.lobby.info.AddPlayer(id)
-				player.lobby.update <- player.lobby.info
-			}
-		} else if request.Type == DisconnectRequestType {
-			if player.ip == player.lobby.hostIP && request.Connection.PlayerID != 0 {
-				player.lobby.disconnect <- player
-				player.lobby.update <- player.lobby.info
+			case UpdateRequestType:
+				if player.ip == player.lobby.hostIP {
+					player.lobby.info = &request.Updates
+					player.lobby.update <- player.lobby.info
+				}
+			case ConnectRequestType:
+				if id := request.Connection.PlayerID; id != 0 {
+					player.lobby.info.AddPlayer(id)
+					player.id = id
+					player.lobby.update <- player.lobby.info
+				}
+			case DisconnectRequestType:
+				if id := request.Connection.PlayerID; player.ip == player.lobby.hostIP && id != 0 {
+					player.lobby.info.RemovePlayer(id)
+					player.lobby.disconnect <- player
+					player.lobby.update <- player.lobby.info
+				}
 			}
 		}
 	}
