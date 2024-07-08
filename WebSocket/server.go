@@ -13,7 +13,8 @@ var upgrader = websocket.Upgrader{
 }
 
 type Server struct {
-	Lobbies map[string]*LobbyConnection
+	Lobbies   map[string]*LobbyConnection
+	LobbyList LobbyList
 }
 
 func (server *Server) HandleConnection(w http.ResponseWriter, r *http.Request, clientIP string) {
@@ -34,6 +35,8 @@ func (server *Server) HandleConnection(w http.ResponseWriter, r *http.Request, c
 		lobby = newLobbyConnection(clientIP)
 		server.Lobbies[lobby.id] = lobby
 		go lobby.Init()
+
+		server.LobbyList.new <- lobby.info
 	}
 	log.Println("Created new player")
 
@@ -53,4 +56,19 @@ func (server *Server) HandleConnection(w http.ResponseWriter, r *http.Request, c
 
 	go player.readLoop()
 	go player.writeLoop()
+}
+
+func (server *Server) ListLobbiesHandler(w http.ResponseWriter, r *http.Request) {
+	conn, err := upgrader.Upgrade(w, r, nil)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	server.LobbyList.AddConnection(conn)
+
+	for _, lobby := range server.Lobbies {
+		conn.WriteJSON(lobby)
+	}
+
+	go server.LobbyList.ListenConnection(conn)
 }
