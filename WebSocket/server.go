@@ -31,13 +31,30 @@ func (server *Server) HandleConnection(w http.ResponseWriter, r *http.Request, c
 		go lobby.Init()
 	}
 	log.Println("Created new player")
-	player := &PlayerConnection{
-		lobby: lobby,
-		conn:  conn,
-		send:  make(chan *Lobby),
-	}
-	lobby.connect <- player
 
-	go player.readLoop()
-	go player.writeLoop()
+	if func() bool {
+		log.Println("Checking if lobby", lobbyID, "is ready")
+		for player := range lobby.players {
+			log.Println(player)
+			if clientIP == player.ip {
+				log.Println("Player is already connected")
+				close(player.send)
+				player.conn = conn
+				player.send = make(chan *Lobby)
+				return false
+			}
+		}
+		return true
+	}() {
+		player := &PlayerConnection{
+			lobby: lobby,
+			conn:  conn,
+			send:  make(chan *Lobby),
+			ip:    clientIP,
+		}
+		lobby.connect <- player
+
+		go player.readLoop()
+		go player.writeLoop()
+	}
 }

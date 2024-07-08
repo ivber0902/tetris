@@ -7,10 +7,11 @@ type UpdateJSONRequest struct {
 }
 
 const (
-	CreateRequestType  = "create"
-	ConnectRequestType = "connect"
-	UpdateRequestType  = "update"
-	GetRequestType     = "get"
+	CreateRequestType     = "create"
+	ConnectRequestType    = "connect"
+	UpdateRequestType     = "update"
+	GetRequestType        = "get"
+	DisconnectRequestType = "disconnect"
 )
 
 type ConnectionJSONRequest struct {
