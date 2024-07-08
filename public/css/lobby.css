@@ -48,7 +48,7 @@
     width: 40px;
     height: 40px;
     cursor: pointer;
-    padding-right: 15px;
+    padding: 15px;
 }
 
 .player__name
@@ -75,21 +75,17 @@
 
 .main
 {
+    margin-top: 215px;
     display: flex;
     padding: 20px;
     align-items: center;
+    justify-content: space-around;
 }
 
 .settings
 {
     max-width: 1050px;
     width: 100%;
-}
-
-.settings__header
-{
-    text-align: center;
-    margin-bottom: 215px;
 }
 .settings__text
 {
@@ -191,7 +187,6 @@
     margin-right: 3px;
     text-decoration: none;
 }
-
 .user-profile__exit
 {
     display: flex;

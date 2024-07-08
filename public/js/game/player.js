@@ -45,7 +45,6 @@ class Player {
                 this.field[line][column] = 0;
             }
         }
-        this.drawField(width, height)
     }
 
     initFigures() {

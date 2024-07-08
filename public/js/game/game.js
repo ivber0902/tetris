@@ -20,13 +20,16 @@ let GAME = {
         ui.initMusic();
     },
     start(player, field, ui) {
-        this.onLoadImages(() => { this.drawDowncount(player, field, ui, 3, 1, () => { this.play(player); }) });
+        this.onLoadImages(() => {
+            this.drawDowncount(player, field, ui, 3, 1, () => { this.play(player); })
+        });
     },
     drawDowncount(player, field, ui, fromIndex, toIndex, func) {
         if (fromIndex >= toIndex) {
             setTimeout(() => {
                 this.clear(field);
                 player.drawField(this.width, this.height);
+                player.drawOtherField(this.width, this.height);
                 field.fillStyle = "white";
                 field.font = "96px Russo One";
                 field.fillText(fromIndex, ui.field.width / 2 - 36, ui.field.height / 2);

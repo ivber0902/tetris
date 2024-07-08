@@ -12,7 +12,12 @@ class UI {
         this.music = new Audio("/audio/Korobeiniki.wav");
     }
     initMusic() {
-        this.music.playbackRate = 0.7;
+        this.music.oncanplaythrough = function () {
+            document.addEventListener('click', function () {
+                ui.music.playbackRate = 0.7;
+                ui.music.play();
+            }, 1)
+        }
         this.music.addEventListener('ended', function () {
             this.currentTime = 0;
             this.play();

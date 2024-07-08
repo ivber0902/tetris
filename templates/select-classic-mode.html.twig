@@ -13,12 +13,10 @@
 			<img src="/images/settings.png" alt="settings" class="settings"/>
 			<img src="/images/logo.png" alt="logo" class="logo"/>
 			<div class="profile">
-				<a href="/{{ user.login ?? 'signup' }}">
+				<a href="{{(user.login ?? null) ? path("profile", {login: user.login}) : path('register') }}">
 					<div class="profile">
-						<p class="profile__nickname">
-							{{ user.login ?? 'славянин' }}
-						</p>
-						<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar"/>
+						<p class="profile__nickname">{{user.login ?? 'славянин'}}</p>
+						<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
 					</div>
 				</a>
 			</div>

@@ -1,14 +1,20 @@
 const urlParams = new URLSearchParams(window.location.search);
+const host = window.location.hostname;
 const lobbyId = urlParams.get('lobby');
 
-let wsUrl = "ws://127.0.0.1:8080/lobby";
+let inputSize = document.getElementById('size');
+let inputMusic = document.getElementById('music');
+let inputBg = document.getElementById('bg');
+let inputDifficulty = document.getElementById('difficulty');    
+
+let wsUrl = "ws://" + host + ":8080/lobby";
 if (lobbyId) {
     wsUrl += "?lobby=" + lobbyId;
 }
 let ws = new WebSocket(wsUrl);
 let playerId = parseInt(document.querySelector('.player_id').value);
 let listPlayers = document.querySelector('.list-players');
-let lobbyLink = document.querySelector('.lobby-link').innerHTML;
+let lobbyLink = "http://" + window.location.host + "/lobby";
 let selectSize = document.querySelector(".settings__size");
 let selectMusic = document.querySelector(".settings__music")
 let selectDifficulty = document.querySelector(".settings__complexity")
@@ -38,12 +44,17 @@ function changeSetting(inSet, outSet){
 
 ws.onmessage = (msg) => {  
     let data = JSON.parse(msg.data);
+        inputSize.innerHTML = settings.size.find(item => item.value.width == data.settings.play_field.width).title
+        inputMusic.innerHTML = settings.music.find(item => item.value == data.settings.music).title
+        inputBg.innerHTML = settings.bg.find(item => item.value == data.settings.background).title
+        inputDifficulty.innerHTML = settings.difficulty.find(item => item.value == data.settings.difficulty).title
+
     console.log('настройки поля', data)
     if (data.id) {
-        document.querySelector('.lobby-link').innerHTML = lobbyLink + '?lobby=' + data.id;
+        console.log(lobbyLink + '?lobby=' + data.id)
+        document.querySelector('.lobby-link').innerHTML = '';
         settingLobby.id = data.id;
     }
-    
     deleteMenuItem(listPlayers);
 
     async function foundUser(id) {
@@ -103,7 +114,6 @@ ws.onopen = () => {
 };
 
 function sendLobbySettings(settingLobby){
-    console.log(settingLobby, 'her')
     ws.send(JSON.stringify({
         "type": "update",
         "updates": settingLobby

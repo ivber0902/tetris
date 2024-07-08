@@ -1,5 +1,5 @@
 addEventListener("DOMContentLoaded", (event) => {
-    document.querySelector(".Register").addEventListener("click", e => {
+    document.querySelector(".register").addEventListener("click", e => {
         e.preventDefault();
         Validation()}
     );

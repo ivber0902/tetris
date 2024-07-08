@@ -1,9 +1,10 @@
+
 let settings = {
     music: [
         {
-        title: "эхо во тьме",
+        title: "Корабейники",
         description: "мистическая и загадочная композиция, в которой звуки эха на фоне темноты создают атмосферу напряжения и тайны.",
-        value: "https://example.com/track1"
+        value: "/audio/Korobeiniki.wav"
         },
         {
         title: "лунный вальс",
@@ -19,7 +20,7 @@ let settings = {
     size: [
         {
             title: "холоп",
-            description: "маленький размер поля и медленная игра",
+            description: "маленький размер поля",
             value:
             {
                 width: 5,
@@ -28,7 +29,7 @@ let settings = {
         },
         {
             title: "крестьянин",
-            description: "классические размер поля и скорость игры",
+            description: "классические размер поля",
             value:
             {
                 width: 10,
@@ -37,7 +38,7 @@ let settings = {
         },
         {
             title: "боярин",
-            description: "большой размер поля и быстрая игра",
+            description: "большой размер поля",
             value:
             {
                 width: 15,
@@ -48,7 +49,7 @@ let settings = {
     difficulty: [
         {
             title: "легко",
-            description: "игра для нубов",
+            description: "игра для холопов",
             value: 1
         },
         {
@@ -66,7 +67,7 @@ let settings = {
         {
             title: "ISPRING",
             description: "Фон компании Ispting",
-            value: "https://example.com/track1"
+            value: "/images/bg.png"
         },
         {
             title: "Pолитех",
@@ -74,8 +75,8 @@ let settings = {
             value: "https://example.com/track1"
         },
         {
-            title: "IOошкар-Ола",
-            description: "йон йошкар-олы",
+            title: "IOшкар-Ола",
+            description: "Фон Йошкар-Олы",
             value: "https://example.com/track1"
         }
     ],
@@ -104,11 +105,6 @@ addEventListener("DOMContentLoaded", (event) => {
     let selectBg = document.querySelector(".settings__background")
     let listSettings = document.querySelector('.list-settings');
     let menu = document.querySelector('.menu');
-    let inputSize = document.getElementById('size');
-    let inputMusic = document.getElementById('music');
-    let inputBg = document.getElementById('bg');
-    let inputDifficulty = document.getElementById('difficulty');     
-
     listSettings.addEventListener('click', ()=>{
         listSettings.style.display = "none";
         deleteMenuItem(menu)
@@ -149,7 +145,6 @@ addEventListener("DOMContentLoaded", (event) => {
         settings.forEach((btn, index)=>{
             btn.addEventListener('click', ()=>{
                 listSettings.style.display = "none"
-                input.innerHTML = elem[index].title   
                 inputForm = elem[index].value
                 settingLobby.settings[param] = inputForm;
                 sendLobbySettings(settingLobby)
@@ -210,7 +205,7 @@ function createPlayer(name) {
     const playerButton = document.createElement('button');
     playerButton.type = 'button';
     playerButton.classList.add('player__button');
-    playerButton.textContent = 'KILL'; 
+    playerButton.textContent = 'ВЫГНАТЬ'; 
 
     const avatarContainer = document.createElement('div');
     avatarContainer.classList.add('avatar__container');
