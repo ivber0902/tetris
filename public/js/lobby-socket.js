@@ -152,4 +152,10 @@ function sendLobbySettings(settingLobby){
 
 function disconnectPlayer(playerId, kickId){
     console.log(playerId, 'her', kickId);
+    ws.send(JSON.stringify({
+        "type": "disconnect",
+        "connection": {
+          "player_id": kickId
+        }
+      }));  
 }
