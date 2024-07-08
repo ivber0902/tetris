@@ -27,6 +27,7 @@ let GAME = {
             setTimeout(() => {
                 this.clear(field);
                 player.drawField(this.width, this.height);
+                player.drawOtherField(this.width, this.height);
                 field.fillStyle = "white";
                 field.font = "96px Russo One";
                 field.fillText(fromIndex, ui.field.width / 2 - 36, ui.field.height / 2);

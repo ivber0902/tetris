@@ -1,5 +1,5 @@
 addEventListener("DOMContentLoaded", (event) => {
-    document.querySelector(".LogIn").addEventListener("click", (e) => Validation(e));
+    document.querySelector(".login-button").addEventListener("click", (e) => Validation(e));
 });
 
 

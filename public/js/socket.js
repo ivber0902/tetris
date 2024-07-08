@@ -14,6 +14,7 @@ let selectMusic = document.querySelector(".settings__music")
 let selectDifficulty = document.querySelector(".settings__complexity")
 let selectBg = document.querySelector(".settings__background");
 let triangle = document.querySelectorAll(".triangle");
+let startGame = document.querySelector(".start-game");
 
 function changeSetting(inSet, outSet){
     outSet = inSet
@@ -45,6 +46,11 @@ ws.onmessage = (msg) => {
     if (playerId === data.players[0])
     {
         console.log('you are host');
+        selectSize.style.pointerEvents = 'auto';
+        selectMusic.style.pointerEvents = 'auto';
+        selectDifficulty.style.pointerEvents = 'auto';
+        selectBg.style.pointerEvents = 'auto';
+        startGame.style.display = 'flex';
     }
     else
     {
@@ -52,6 +58,7 @@ ws.onmessage = (msg) => {
         selectMusic.style.pointerEvents = 'none';
         selectDifficulty.style.pointerEvents = 'none';
         selectBg.style.pointerEvents = 'none';
+        startGame.style.display = 'none';
         for (let i = 0; i < triangle.length ; i++) 
         {
             triangle[i].style.display = 'none'
