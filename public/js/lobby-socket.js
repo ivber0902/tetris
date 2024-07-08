@@ -20,7 +20,7 @@ let selectMusic = document.querySelector(".settings__music")
 let selectDifficulty = document.querySelector(".settings__complexity")
 let selectBg = document.querySelector(".settings__background");
 let triangle = document.querySelectorAll(".triangle");
-let startGameButton = document.querySelector(".start-game")
+let startGame = document.querySelector(".start-game")
 let buttons;
 let functionKickPlayer;
 let players;
@@ -54,10 +54,9 @@ addEventListener("DOMContentLoaded", () => {
     }
 })
 
-startGameButton.addEventListener('click', ()=>{
+startGame.addEventListener('click', ()=>{
     ws.send(JSON.stringify({
-        "type": "update",
-        "updates": settingLobby
+        "type": "run",
     }));
 })
 
@@ -68,6 +67,9 @@ function changeSetting(inSet, outSet){
 ws.onmessage = (msg) => {
     console.log('hello hello')
     let data = JSON.parse(msg.data);
+    if(data.game_run){
+        window.location.href = "/multiplayer"
+    }
     inputSize.innerHTML = settings.size.find(item => item.value.width === data.settings.play_field.width).title
     inputMusic.innerHTML = settings.music.find(item => item.value === data.settings.music).title
     inputBg.innerHTML = settings.bg.find(item => item.value === data.settings.background).title
