@@ -26,7 +26,6 @@ ws.onmessage = (msg) => {
         document.querySelector('.lobby-link').innerHTML = lobbyLink + '?lobby=' + data.id;
         settingLobby.id = data.id;
     }
-    
     deleteMenuItem(listPlayers);
     for (let i = 0; i < data.players.length; i++) {
         let id = data.players[i];
