@@ -150,7 +150,7 @@ ws.onopen = () => {
         "connection": {
             "player_id": playerId
     }}));
-};
+}
 
 function sendLobbySettings(settingLobby){
     ws.send(JSON.stringify({
@@ -164,7 +164,10 @@ function disconnectPlayer(playerId, kickId){
     ws.send(JSON.stringify({
         "type": "disconnect",
         "connection": {
-          "player_id": kickId
-        }
-      }));  
+            "player_id": kickId       
+    }}));  
+}
+
+ws.onclose = () => {
+    window.location.href = "/menu"
 }
