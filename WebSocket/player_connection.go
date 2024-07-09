@@ -20,7 +20,7 @@ func (player *PlayerConnection) readLoop() {
 	defer func() {
 		player.conn.Close()
 		player.isOpen = false
-		log.Printf("Player %d (IP=%s) reading: Web socket closed", player.id, player.ip)
+		log.Printf("Player %d (IP: %s) reading: Web socket closed", player.id, player.ip)
 
 		go player.waitConnection()
 	}()
@@ -36,13 +36,13 @@ func (player *PlayerConnection) readLoop() {
 				case websocket.CloseNormalClosure,
 					websocket.CloseGoingAway,
 					websocket.CloseNoStatusReceived:
-					log.Printf("Web socket closed by client: %s", err)
+					log.Printf("Player %d (IP: %s) reading: Web socket closed by client", player.id, player.ip)
 					return
 				}
 			case *json.SyntaxError:
-				log.Println("JSON Unmarshal error:", err)
+				log.Printf("Player %d (IP: %s) reading: JSON Unmarshal error: %v", player.id, player.ip, err)
 			case error:
-				log.Println("JSON Reading error:", err)
+				log.Printf("Player %d (IP: %s) reading: JSON reading error: %v", player.id, player.ip, err)
 				return
 			}
 
@@ -50,22 +50,27 @@ func (player *PlayerConnection) readLoop() {
 			switch request.Type {
 			case GetRequestType:
 				player.lobby.update <- player.lobby.info
+				log.Printf("Player %d (IP: %s) reading: got lobby info %s", player.id, player.ip, player.lobby.id)
 			case UpdateRequestType:
 				if player.ip == player.lobby.hostIP {
 					player.lobby.info = &request.Updates
 					player.lobby.update <- player.lobby.info
+					log.Printf("Player %d (IP: %s) reading: host update lobby info %s", player.id, player.ip, player.lobby.id)
 				}
 			case ConnectRequestType:
 				if id := request.Connection.PlayerID; id != 0 {
 					player.lobby.info.AddPlayer(id)
 					player.id = id
 					player.lobby.update <- player.lobby.info
+
+					log.Printf("Player %d (IP: %s) reading: connect to lobby %s", player.id, player.ip, player.lobby.id)
 				}
 			case DisconnectRequestType:
 				if id := request.Connection.PlayerID; player.ip == player.lobby.hostIP && id != 0 {
 					if disconnectedPlayer := player.lobby.getPlayerByID(id); disconnectedPlayer != nil {
 						player.lobby.disconnect <- disconnectedPlayer
-						player.lobby.update <- player.lobby.info
+
+						log.Printf("Player %d (IP: %s) reading: disconnect from lobby %s", player.id, player.ip, player.lobby.id)
 					}
 				}
 			case GameRunRequestType:
@@ -81,7 +86,7 @@ func (player *PlayerConnection) readLoop() {
 func (player *PlayerConnection) writeLoop() {
 	defer func() {
 		player.conn.Close()
-		log.Println("WRITE: Web socket closed by client")
+		log.Printf("Player %d (IP: %s) writing: Web socket closed by client", player.id, player.ip)
 	}()
 	for {
 		select {
@@ -96,12 +101,14 @@ func (player *PlayerConnection) writeLoop() {
 }
 
 func (player *PlayerConnection) waitConnection() {
+	log.Printf("Player %d (IP: %s) waiting for connection to lobby %s", player.id, player.ip, player.lobby.id)
 	connectTimer := time.After(15 * time.Second)
 
 	for !player.isOpen {
 		select {
 		case <-connectTimer:
 			player.lobby.disconnect <- player
+			log.Printf("Player %d (IP: %s) disconnected after waiting", player.id, player.ip)
 			return
 		default:
 			time.Sleep(1 * time.Second)

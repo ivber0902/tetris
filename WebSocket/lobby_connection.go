@@ -44,27 +44,33 @@ func (lobby *LobbyConnection) Init() {
 		select {
 		case player := <-lobby.connect:
 			lobby.players[player] = true
+			log.Printf("LobbyConnection: Player %d (IP: %s) connected to lobby %s Host IP: %s", player.id, player.ip, lobby.id, lobby.hostIP)
+
 		case player := <-lobby.disconnect:
 			if _, ok := lobby.players[player]; ok {
 				lobby.info.RemovePlayer(player.id)
 				delete(lobby.players, player)
 				close(player.send)
 				player.conn.Close()
-
 				if player.ip == lobby.hostIP {
-					log.Println("Disconnect Lobby")
+					log.Printf("LobbyConnection: Lobby %s removed", lobby.id)
 					lobby.Remove()
 					return
 				}
 
-				lobby.update <- lobby.info
+				go func() {
+					lobby.update <- lobby.info
+				}()
+				log.Printf("LobbyConnection: Player %d (IP: %s) disconnected from lobby %s Host IP: %s", player.id, player.ip, lobby.id, lobby.hostIP)
 			}
+
 		case updatedLobby := <-lobby.update:
 			for player := range lobby.players {
 				select {
 				case player.send <- updatedLobby:
 				}
 			}
+
 		}
 
 	}

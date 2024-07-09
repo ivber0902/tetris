@@ -32,8 +32,8 @@ func (l *LobbyList) Init() {
 }
 
 func (l *LobbyList) Listen() {
+	log.Println("Start LobbyList listening")
 	for {
-		log.Println("Listening lobby")
 		select {
 		case lobby, ok := <-l.new:
 			if !ok {
@@ -50,6 +50,7 @@ func (l *LobbyList) Listen() {
 					Lobby: lobby,
 				})
 			}
+			log.Printf("LobbyList: new lobby %s", lobby.ID)
 		case lobby, ok := <-l.update:
 			if ok {
 				for conn := range l.conn {
@@ -58,20 +59,22 @@ func (l *LobbyList) Listen() {
 						Lobby: lobby,
 					})
 				}
+				log.Printf("LobbyList: update lobby %s", lobby.ID)
 			}
 		case lobby, ok := <-l.remove:
-			for i := range l.list {
-				if l.list[i] == lobby {
-					l.list = append(l.list[:i], l.list[i+1:]...)
-				}
-			}
 			if ok {
+				for i := range l.list {
+					if l.list[i] == lobby {
+						l.list = append(l.list[:i], l.list[i+1:]...)
+					}
+				}
 				for conn := range l.conn {
 					conn.WriteJSON(LobbyListUpdateMessage{
 						Type:  RemoveLobbyListUpdateMessage,
 						Lobby: lobby,
 					})
 				}
+				log.Printf("LobbyList: remove lobby %s", lobby.ID)
 			}
 		}
 	}
