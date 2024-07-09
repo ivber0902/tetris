@@ -176,7 +176,7 @@ function open()
     profile.style.display = 'inline';
 }
 
-function createPlayer(name) {
+function createPlayer(name, hiddenValue) {
     const player = document.createElement('div');
     player.classList.add('player');
 
@@ -198,8 +198,13 @@ function createPlayer(name) {
     avatarContainer.appendChild(playerAvatar);
     avatarContainer.appendChild(playerButton);
 
+    const hiddenInput = document.createElement('input');
+    hiddenInput.type = 'hidden';
+    hiddenInput.value = hiddenValue;
+    hiddenInput.classList.add('player__hidden-input');
+
     player.appendChild(playerName);
     player.appendChild(avatarContainer);
-
+    player.appendChild(hiddenInput);
     return player;
 }
