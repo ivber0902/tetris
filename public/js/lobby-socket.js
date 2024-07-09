@@ -29,6 +29,7 @@ let playersBlock;
 let found;
 let foundId;
 let playersName;
+let startGameFlag = false;
 let settingLobby = {
     id: "",
     players: [],
@@ -57,6 +58,7 @@ addEventListener("DOMContentLoaded", () => {
 })
 
 startGame.addEventListener('click', ()=>{
+    startGameFlag = true;
     ws.send(JSON.stringify({
         "type": "run",
     }));
@@ -67,7 +69,6 @@ function changeSetting(inSet, outSet){
 }
 
 ws.onmessage = (msg) => {
-    console.log('hello hello')
     let data = JSON.parse(msg.data);
     if(data.game_run){
         window.location.href = "/multiplayer?lobby=" + data.id;
@@ -186,9 +187,9 @@ function disconnectPlayer(kickId){
     }}));  
 }
 
-ws.onclose = (msg) => {
-    let data = JSON.parse(msg.data);
-    if(!data.game_run){
+ws.onclose = () => {
+    console.log(startGameFlag, 'флаг выхода')
+    if(!(startGameFlag)){
         window.location.href = "/menu"
     }
 }
