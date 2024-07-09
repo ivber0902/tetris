@@ -2,7 +2,6 @@ const host = window.location.hostname;
 let wsUrl = "ws://" + host + ":8080/lobby/list";
 let ws = new WebSocket(wsUrl);
 let listLobby = document.querySelector('.menu')
-let login
 
 ws.onopen = () => {
     ws.send("get");
@@ -16,19 +15,21 @@ ws.onmessage = (msg) => {
             method: 'GET'
         });
         let user = await response.json();
-        login = user.login;
+        let login = user.login;
         if(link){
+            //лобби окончательно обновилось, берем данные из бд и ЗАМЕНЯЕМ 
             let title = link.querySelector('.item__title');
             let subtitle = link.querySelector('.item__subtitle');
             title.innerHTML = `Лобби пользователя "${login}"`
             subtitle.innerHTML = `Участников ${data.lobby.players.length}/4`;
         }
         else{
+            //лобби после перезагрузки, берем данные из бд и СОЗДАЕМ
             listLobby.appendChild(createLobbyLink(login, data.lobby.players.length, data.lobby.id))
         }     
     }
     if (data.type === "new"){
-        listLobby.appendChild(createLobbyLink('her', '5', data.lobby.id))
+        listLobby.appendChild(createLobbyLink('Славянин', '0', data.lobby.id))
     }
     if (data.type ==="update"){
         let link = document.querySelector(`a[href^="/lobby?lobby=${data.lobby.id}"]`);
