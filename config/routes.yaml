@@ -20,12 +20,12 @@ lobby:
 menu:
     path: /menu
     controller: App\Controller\GameController::menu
-select_mode:
-    path: /select_mode
-    controller: App\Controller\GameController::selectMode
+select_multiplayer_mode:
+    path: /select_multiplayer_mode
+    controller: App\Controller\GameController::selectMultiplayerMode
 select_classic_mode:
     path: /select_classic_mode
-    controller: App\Controller\GameController::selectClassicMode
+    controller: App\Controller\GameController::selectDif
 select_solo_mode:
     path: /select_solo_mode
     controller: App\Controller\GameController::selectSoloMode
