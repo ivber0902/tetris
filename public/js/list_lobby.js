@@ -35,4 +35,3 @@ function createLobbyLink(title, countPlayers, idLobby) {
 
     return linkLobby;
  }
-
