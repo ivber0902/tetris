@@ -1,6 +1,9 @@
 package main
 
-import "github.com/google/uuid"
+import (
+	"github.com/google/uuid"
+	"log"
+)
 
 type LobbyConnection struct {
 	id         string
@@ -10,9 +13,10 @@ type LobbyConnection struct {
 	disconnect chan *PlayerConnection
 	update     chan *Lobby
 	hostIP     string
+	server     *Server
 }
 
-func newLobbyConnection(hostIP string) *LobbyConnection {
+func newLobbyConnection(server *Server, hostIP string) *LobbyConnection {
 	lobbyID := uuid.New()
 	var lobbyModel Lobby
 	err := lobbyModel.SetDefault()
@@ -28,11 +32,17 @@ func newLobbyConnection(hostIP string) *LobbyConnection {
 		disconnect: make(chan *PlayerConnection),
 		update:     make(chan *Lobby),
 		hostIP:     hostIP,
+		server:     server,
 	}
 }
 
 func (lobby *LobbyConnection) Init() {
 	for {
+		go func() {
+			log.Println("Update lobby")
+			server.LobbyList.update <- lobby.info
+			log.Println("lobby updated")
+		}()
 		select {
 		case player := <-lobby.connect:
 			lobby.players[player] = true
@@ -48,6 +58,7 @@ func (lobby *LobbyConnection) Init() {
 				}
 			}
 		}
+
 	}
 }
 
