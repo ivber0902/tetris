@@ -32,7 +32,7 @@ let settingLobby = {
     players: [],
     settings: {
         music: "/audio/Korobeiniki.wav",
-        background: "/images/bg.png",
+        background: "/images/backgrounds/bg.png",
         difficulty: 1,
         play_field: {
             width: 10,
@@ -68,7 +68,7 @@ ws.onmessage = (msg) => {
     console.log('hello hello')
     let data = JSON.parse(msg.data);
     if(data.game_run){
-        window.location.href = "/multiplayer"
+        window.location.href = "/multiplayer?lobby=" + data.id
     }
     inputSize.innerHTML = settings.size.find(item => item.value.width === data.settings.play_field.width).title
     inputMusic.innerHTML = settings.music.find(item => item.value === data.settings.music).title
@@ -80,6 +80,7 @@ ws.onmessage = (msg) => {
         console.log(lobbyLink + '?lobby=' + data.id)
         document.querySelector('.lobby-link').innerHTML = '';
         settingLobby.id = data.id;
+        
     }
     if (window.location.href === lobbyLink) {
         history.pushState(null, null, "?lobby=" + data.id)
@@ -101,9 +102,6 @@ ws.onmessage = (msg) => {
         })
         if(!(found)){
             listPlayers.appendChild(player)
-        }
-        if(players.length === 4){
-            window.location.href = '/multiplayer'
         }
     }
 
