@@ -91,7 +91,9 @@
 .title-level,
 .title-score,
 .title-time,
-.game__time {
+.game__time,
+.title-lines,
+.game__lines {
     color: white;
     text-align: center;
     padding-top: 10px;
@@ -100,7 +102,8 @@
 
 .title-level,
 .title-time,
-.title-score {
+.title-score,
+.title-lines {
     padding-left: 10px;
     text-transform: uppercase;
 }

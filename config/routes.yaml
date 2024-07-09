@@ -41,7 +41,9 @@ game:
 blitz:
     path: /blitz
     controller: App\Controller\GameController::blitz
-
+l40:
+    path: /l40
+    controller: App\Controller\GameController::l40
 profile:
     path: /profile/{login}
     controller: App\Controller\PlayerController::profile

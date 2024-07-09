@@ -44,6 +44,10 @@ class GameController extends AbstractController
     {
         return $this->render('blitz.html.twig');
     }
+    public function l40(): Response
+    {
+        return $this->render('l40.html.twig');
+    }
     public function selectMultiplayerMode(): Response
     {
         $securityUser = $this->getUser();
