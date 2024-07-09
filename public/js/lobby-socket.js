@@ -25,7 +25,9 @@ let buttons;
 let functionKickPlayer;
 let players;
 let player;
+let playersBlock;
 let found;
+let foundId;
 let playersName;
 let settingLobby = {
     id: "",
@@ -41,13 +43,13 @@ let settingLobby = {
     }
 }
 addEventListener("DOMContentLoaded", () => {
-    functionKickPlayer = function KickPlayer(playerId, players){ 
+    functionKickPlayer = function KickPlayer(players){ 
         for (let i = 1; i < players.length; i++) { 
             if (buttons[i]){
                 buttons[i].addEventListener('click', ()=>{
                     console.log('playerId = ' + players[i])
                     let kickId = players[i]
-                    disconnectPlayer(playerId, kickId)
+                    disconnectPlayer(kickId)
                 })  
             }
         }
@@ -80,8 +82,7 @@ ws.onmessage = (msg) => {
     if (data.id) {
         console.log(lobbyLink + '?lobby=' + data.id)
         document.querySelector('.lobby-link').innerHTML = '';
-        settingLobby.id = data.id;
-        
+        settingLobby.id = data.id;    
     }
     if (window.location.href === lobbyLink) {
         history.pushState(null, null, "?lobby=" + data.id)
@@ -92,16 +93,36 @@ ws.onmessage = (msg) => {
         });
         let user = await response.json();
         let login = user.login;
-        player = createPlayer(login);
+        player = createPlayer(login, id);
         players = listPlayers.querySelectorAll(".player__name");
+        playersid = listPlayers.querySelectorAll('.player');
+        console.log(playersid)
         found = false
+        foundId = false
         players.forEach((elem)=>{
             if( elem.textContent === login){
                 found = true
             }
         })
+        for (let i = 0; i < players.length; i++) {
+            let her = playersid[i].querySelector('.player__hidden-input').value
+            for (let j = 0; j < data.players.length; j++) {
+                console.log(her, data.players[j])
+                if (her == data.players[j]){
+                    foundId = true
+                }
+                console.log(foundId)
+            }
+            if(!(foundId)){
+                listPlayers.removeChild(playersid[i])
+            }
+            foundId = false
+        }
         if(!(found)){
             listPlayers.appendChild(player)
+        }
+        if(players.length === 4){
+            window.location.href = '/multiplayer'
         }
     }
 
@@ -118,7 +139,7 @@ ws.onmessage = (msg) => {
     (async () => {
         await processPlayers(data);
         buttons = document.querySelectorAll('.player__button');      
-        functionKickPlayer(playerId, data.players);
+        functionKickPlayer(data.players);
         if (playerId === data.players[0]) {
             selectSize.style.pointerEvents = 'auto';
             selectMusic.style.pointerEvents = 'auto';
@@ -157,7 +178,7 @@ function sendLobbySettings(settingLobby){
     }));
 }
 
-function disconnectPlayer(playerId, kickId){
+function disconnectPlayer(kickId){
     ws.send(JSON.stringify({
         "type": "disconnect",
         "connection": {
