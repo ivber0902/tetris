@@ -25,8 +25,11 @@ let buttons;
 let functionKickPlayer;
 let players;
 let player;
+let playersBlock;
 let found;
+let foundId;
 let playersName;
+let startGameFlag = false;
 let settingLobby = {
     id: "",
     players: [],
@@ -41,13 +44,13 @@ let settingLobby = {
     }
 }
 addEventListener("DOMContentLoaded", () => {
-    functionKickPlayer = function KickPlayer(playerId, players){ 
+    functionKickPlayer = function KickPlayer(players){ 
         for (let i = 1; i < players.length; i++) { 
             if (buttons[i]){
                 buttons[i].addEventListener('click', ()=>{
                     console.log('playerId = ' + players[i])
                     let kickId = players[i]
-                    disconnectPlayer(playerId, kickId)
+                    disconnectPlayer(kickId)
                 })  
             }
         }
@@ -55,6 +58,7 @@ addEventListener("DOMContentLoaded", () => {
 })
 
 startGame.addEventListener('click', ()=>{
+    startGameFlag = true;
     ws.send(JSON.stringify({
         "type": "run",
     }));
@@ -65,11 +69,11 @@ function changeSetting(inSet, outSet){
 }
 
 ws.onmessage = (msg) => {
-    console.log('hello hello')
     let data = JSON.parse(msg.data);
     if(data.game_run){
-        window.location.href = "/multiplayer"
+        window.location.href = "/multiplayer?lobby=" + data.id;
     }
+    console.log(data)
     inputSize.innerHTML = settings.size.find(item => item.value.width === data.settings.play_field.width).title
     inputMusic.innerHTML = settings.music.find(item => item.value === data.settings.music).title
     inputBg.innerHTML = settings.bg.find(item => item.value === data.settings.background).title
@@ -79,26 +83,42 @@ ws.onmessage = (msg) => {
     if (data.id) {
         console.log(lobbyLink + '?lobby=' + data.id)
         document.querySelector('.lobby-link').innerHTML = '';
-        settingLobby.id = data.id;
+        settingLobby.id = data.id;    
     }
     if (window.location.href === lobbyLink) {
         history.pushState(null, null, "?lobby=" + data.id)
     }
-    deleteMenuItem(listPlayers);
     async function foundUser(id) {
         let response = await fetch('/api/player/' + id + '/user', {
             method: 'GET'
         });
         let user = await response.json();
         let login = user.login;
-        player = createPlayer(login);
+        player = createPlayer(login, id);
         players = listPlayers.querySelectorAll(".player__name");
+        playersid = listPlayers.querySelectorAll('.player');
+        console.log(playersid)
         found = false
+        foundId = false
         players.forEach((elem)=>{
             if( elem.textContent === login){
                 found = true
             }
         })
+        for (let i = 0; i < players.length; i++) {
+            let her = playersid[i].querySelector('.player__hidden-input').value
+            for (let j = 0; j < data.players.length; j++) {
+                console.log(her, data.players[j])
+                if (her == data.players[j]){
+                    foundId = true
+                }
+                console.log(foundId)
+            }
+            if(!(foundId)){
+                listPlayers.removeChild(playersid[i])
+            }
+            foundId = false
+        }
         if(!(found)){
             listPlayers.appendChild(player)
         }
@@ -120,7 +140,7 @@ ws.onmessage = (msg) => {
     (async () => {
         await processPlayers(data);
         buttons = document.querySelectorAll('.player__button');      
-        functionKickPlayer(playerId, data.players);
+        functionKickPlayer(data.players);
         if (playerId === data.players[0]) {
             selectSize.style.pointerEvents = 'auto';
             selectMusic.style.pointerEvents = 'auto';
@@ -159,7 +179,7 @@ function sendLobbySettings(settingLobby){
     }));
 }
 
-function disconnectPlayer(playerId, kickId){
+function disconnectPlayer(kickId){
     ws.send(JSON.stringify({
         "type": "disconnect",
         "connection": {
@@ -168,5 +188,8 @@ function disconnectPlayer(playerId, kickId){
 }
 
 ws.onclose = () => {
-    window.location.href = "/menu"
+    console.log(startGameFlag, 'флаг выхода')
+    if(!(startGameFlag)){
+        window.location.href = "/menu"
+    }
 }

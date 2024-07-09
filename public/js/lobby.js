@@ -7,14 +7,14 @@ let settings = {
         value: "/audio/Korobeiniki.wav"
         },
         {
-        title: "лунный вальс",
+        title: "Калинка",
         description: "Романтичная и нежная мелодия, напоминающая танец под лунным светом. Идеальный трек для вечернего романтического настроения.",
-        value: "https://example.com/track2"
+        value: "/audio/kalinka.mp3"
         },
         {
-        title: "путешествие во времени",
+        title: "Stop narcotics",
         description: "эпическая и кинематографичная музыка, создающая ощущение путешествия сквозь временные измерения и пространство.",
-        value: "https://example.com/track3"
+        value: "/audio/stop_narcotics.mp3"
         },
     ],
     size: [
@@ -55,12 +55,12 @@ let settings = {
         {
             title: "средний",
             description: "ты уже что-то можешь",
-            value: 2
+            value: 5
         },
         {
             title: "имбоссссибл",
             description: "ты просто гений тетриса",
-            value: 3
+            value: 10
         }
     ],
     bg: [
@@ -70,14 +70,14 @@ let settings = {
             value: "/images/bg.png"
         },
         {
-            title: "Pолитех",
-            description: "Фон первого корпуса",
-            value: "https://example.com/track1"
+            title: "Йошкар-Ола",
+            description: "Фон Йошкар-Олы",
+            value: "/images/backgrounds/io.jpg"
         },
         {
-            title: "IOшкар-Ола",
-            description: "Фон Йошкар-Олы",
-            value: "https://example.com/track1"
+            title: "Тетрис",
+            description: "Кубики тетриса",
+            value: "/images/backgrounds/square.jpg"
         }
     ],
 }
@@ -176,7 +176,7 @@ function open()
     profile.style.display = 'inline';
 }
 
-function createPlayer(name) {
+function createPlayer(name, hiddenValue) {
     const player = document.createElement('div');
     player.classList.add('player');
 
@@ -198,8 +198,13 @@ function createPlayer(name) {
     avatarContainer.appendChild(playerAvatar);
     avatarContainer.appendChild(playerButton);
 
+    const hiddenInput = document.createElement('input');
+    hiddenInput.type = 'hidden';
+    hiddenInput.value = hiddenValue;
+    hiddenInput.classList.add('player__hidden-input');
+
     player.appendChild(playerName);
     player.appendChild(avatarContainer);
-
+    player.appendChild(hiddenInput);
     return player;
 }
