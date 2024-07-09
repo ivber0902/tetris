@@ -88,15 +88,37 @@
 
 ```json
 {
-  "ID": "dc301596-1fde-469a-991f-de8df780ccb5",
-  "players": [123],
-  "settings": {
-    "music": "/audio/Korobeiniki.wav",
-    "background": "/images/bg.png",
-    "difficulty": 1,
-    "play_field": {
-      "width": 10,
-      "height": 20
+  "type": "new",
+  "lobby": {
+    "ID": "dc301596-1fde-469a-991f-de8df780ccb5",
+    "players": [123],
+    "settings": {
+      "music": "/audio/Korobeiniki.wav",
+      "background": "/images/bg.png",
+      "difficulty": 1,
+      "play_field": {
+        "width": 10,
+        "height": 20
+      }
+    }
+  }
+}
+```
+а при каждом новом лобби с сервера будет приходить данный JSON
+```json
+{
+  "type": "update",
+  "lobby": {
+    "ID": "dc301596-1fde-469a-991f-de8df780ccb5",
+    "players": [123, 456],
+    "settings": {
+      "music": "/audio/Korobeiniki.wav",
+      "background": "/images/bg.png",
+      "difficulty": 1,
+      "play_field": {
+        "width": 10,
+        "height": 20
+      }
     }
   }
 }
