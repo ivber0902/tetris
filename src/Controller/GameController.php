@@ -65,7 +65,14 @@ class GameController extends AbstractController
 
     public function multiplayer(): Response
     {
-        return $this->render('multiplayer.html.twig');
+        $securityUser = $this->getUser();
+        if ($securityUser){
+            $user = $this->userService->findUser($securityUser->getId());
+            return $this->render('multiplayer.html.twig', ["user" => $user]);
+        }
+        else{
+            return $this->redirectToRoute('login');
+        }
     }
     public function join(): Response
     {

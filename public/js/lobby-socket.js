@@ -32,7 +32,7 @@ let settingLobby = {
     players: [],
     settings: {
         music: "/audio/Korobeiniki.wav",
-        background: "/images/backgrounds/bg.png",
+        background: "/images/bg.png",
         difficulty: 1,
         play_field: {
             width: 10,
@@ -70,6 +70,7 @@ ws.onmessage = (msg) => {
     if(data.game_run){
         window.location.href = "/multiplayer?lobby=" + data.id
     }
+    console.log(data)
     inputSize.innerHTML = settings.size.find(item => item.value.width === data.settings.play_field.width).title
     inputMusic.innerHTML = settings.music.find(item => item.value === data.settings.music).title
     inputBg.innerHTML = settings.bg.find(item => item.value === data.settings.background).title
@@ -85,7 +86,6 @@ ws.onmessage = (msg) => {
     if (window.location.href === lobbyLink) {
         history.pushState(null, null, "?lobby=" + data.id)
     }
-    deleteMenuItem(listPlayers);
     async function foundUser(id) {
         let response = await fetch('/api/player/' + id + '/user', {
             method: 'GET'

@@ -1,6 +1,8 @@
 const host = window.location.hostname;
 let params = new URLSearchParams(document.location.search);
 let lobbyId = params.get('lobby');
+let playerField = document.querySelector('.wrapper-main-field');
+let otherPlayers =  document.querySelectorAll('.player__username')
 let player;
 let otherField;
 const canvas = document.getElementById('game');
@@ -31,13 +33,22 @@ const ui = new UI(
 
 ws.onmessage = (msg) => {
     let data = JSON.parse(msg.data);
-    console.log(data)
+    let players = data.players;
+    players.forEach((id)=>{
+        foundUser(id).then((player)=>{
+            if(id === playerField.id){
+                playerField.querySelector('.player_name').textContent = player.login
+            }else{
+                otherPlayers[0].textContent = player.login
+            }          
+        })
+
+    })
     document.querySelector('.main').style.backgroundImage = `url(${data.settings.background})`
     GAME.width = data.settings.play_field.width;
     GAME.height = data.settings.play_field.height;
     ui.music = new Audio(data.settings.music)
     player = new Player(ui, GAME.figuresQueueSize);
-
     player.lvl = data.settings.difficulty;
     otherField = document.querySelectorAll('.other-field');
     canvas.width = ui.field.width;
@@ -60,7 +71,15 @@ ws.onmessage = (msg) => {
                 break
         }
     })
-
     GAME.init(player, ui)
     GAME.start(player, field, ui)
+}
+
+async function foundUser(id)
+{
+    let response = await fetch('/api/player/' + id + '/user', {
+        method: 'GET'
+    });
+    let user = await response.json();
+    return user
 }
