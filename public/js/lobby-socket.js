@@ -68,7 +68,7 @@ ws.onmessage = (msg) => {
     console.log('hello hello')
     let data = JSON.parse(msg.data);
     if(data.game_run){
-        window.location.href = "/multiplayer?lobby=" + data.id
+        window.location.href = "/multiplayer?lobby=" + data.id;
     }
     console.log(data)
     inputSize.innerHTML = settings.size.find(item => item.value.width === data.settings.play_field.width).title
@@ -165,6 +165,9 @@ function disconnectPlayer(playerId, kickId){
     }}));  
 }
 
-ws.onclose = () => {
-    window.location.href = "/menu"
+ws.onclose = (msg) => {
+    let data = JSON.parse(msg.data);
+    if(!data.game_run){
+        window.location.href = "/menu"
+    }
 }

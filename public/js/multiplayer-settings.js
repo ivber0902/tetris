@@ -22,24 +22,17 @@ ws.onopen = () => {
 }
 
 
-const ui = new UI(
-    34,
-    document.querySelector(".buffer__figure"),
-    document.querySelectorAll(".figure"),
-    GAME,
-    document.querySelector(".game__score"),
-    document.querySelector(".game__level"),
-);
-
 ws.onmessage = (msg) => {
     let data = JSON.parse(msg.data);
     let players = data.players;
+    let i = 0;
     players.forEach((id)=>{
         foundUser(id).then((player)=>{
-            if(id === playerField.id){
+            if(id === parseInt(playerField.id)){
                 playerField.querySelector('.player_name').textContent = player.login
             }else{
-                otherPlayers[0].textContent = player.login
+                otherPlayers[i].textContent = player.login
+                i++
             }          
         })
 
@@ -47,6 +40,14 @@ ws.onmessage = (msg) => {
     document.querySelector('.main').style.backgroundImage = `url(${data.settings.background})`
     GAME.width = data.settings.play_field.width;
     GAME.height = data.settings.play_field.height;
+    const ui = new UI(
+        34,
+        document.querySelector(".buffer__figure"),
+        document.querySelectorAll(".figure"),
+        GAME,
+        document.querySelector(".game__score"),
+        document.querySelector(".game__level"),
+    );
     ui.music = new Audio(data.settings.music)
     player = new Player(ui, GAME.figuresQueueSize);
     player.lvl = data.settings.difficulty;
