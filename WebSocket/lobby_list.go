@@ -9,6 +9,7 @@ type LobbyList struct {
 	conn   map[*websocket.Conn]bool
 	new    chan *Lobby
 	update chan *Lobby
+	remove chan *Lobby
 	list   []*Lobby
 }
 
@@ -17,10 +18,17 @@ type LobbyListUpdateMessage struct {
 	Lobby *Lobby `json:"lobby"`
 }
 
+const (
+	NewLobbyListUpdateMessage    = "new"
+	UpdateLobbyListUpdateMessage = "update"
+	RemoveLobbyListUpdateMessage = "remove"
+)
+
 func (l *LobbyList) Init() {
 	l.conn = make(map[*websocket.Conn]bool)
 	l.new = make(chan *Lobby)
-	l.update = make(chan *Lobby, 1024)
+	l.update = make(chan *Lobby)
+	l.remove = make(chan *Lobby)
 }
 
 func (l *LobbyList) Listen() {
@@ -28,7 +36,6 @@ func (l *LobbyList) Listen() {
 		log.Println("Listening lobby")
 		select {
 		case lobby, ok := <-l.new:
-			log.Println("New lobby: ", lobby)
 			if !ok {
 				for conn := range l.conn {
 					conn.WriteMessage(websocket.CloseMessage, []byte{})
@@ -39,7 +46,7 @@ func (l *LobbyList) Listen() {
 			l.list = append(l.list, lobby)
 			for conn := range l.conn {
 				conn.WriteJSON(LobbyListUpdateMessage{
-					Type:  "new",
+					Type:  NewLobbyListUpdateMessage,
 					Lobby: lobby,
 				})
 			}
@@ -47,7 +54,21 @@ func (l *LobbyList) Listen() {
 			if ok {
 				for conn := range l.conn {
 					conn.WriteJSON(LobbyListUpdateMessage{
-						Type:  "update",
+						Type:  UpdateLobbyListUpdateMessage,
+						Lobby: lobby,
+					})
+				}
+			}
+		case lobby, ok := <-l.remove:
+			for i := range l.list {
+				if l.list[i] == lobby {
+					l.list = append(l.list[:i], l.list[i+1:]...)
+				}
+			}
+			if ok {
+				for conn := range l.conn {
+					conn.WriteJSON(LobbyListUpdateMessage{
+						Type:  RemoveLobbyListUpdateMessage,
 						Lobby: lobby,
 					})
 				}
@@ -85,7 +106,7 @@ func (l *LobbyList) ListenConnection(conn *websocket.Conn) {
 func (l *LobbyList) SendAll(conn *websocket.Conn) {
 	for _, lobby := range l.list {
 		conn.WriteJSON(LobbyListUpdateMessage{
-			Type:  "update",
+			Type:  UpdateLobbyListUpdateMessage,
 			Lobby: lobby,
 		})
 	}

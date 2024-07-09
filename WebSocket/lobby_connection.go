@@ -39,17 +39,25 @@ func newLobbyConnection(server *Server, hostIP string) *LobbyConnection {
 func (lobby *LobbyConnection) Init() {
 	for {
 		go func() {
-			log.Println("Update lobby")
-			server.LobbyList.update <- lobby.info
-			log.Println("lobby updated")
+			lobby.server.LobbyList.update <- lobby.info
 		}()
 		select {
 		case player := <-lobby.connect:
 			lobby.players[player] = true
 		case player := <-lobby.disconnect:
 			if _, ok := lobby.players[player]; ok {
+				lobby.info.RemovePlayer(player.id)
 				delete(lobby.players, player)
 				close(player.send)
+				player.conn.Close()
+
+				if player.ip == lobby.hostIP {
+					log.Println("Disconnect Lobby")
+					lobby.Remove()
+					return
+				}
+
+				lobby.update <- lobby.info
 			}
 		case updatedLobby := <-lobby.update:
 			for player := range lobby.players {
@@ -60,6 +68,15 @@ func (lobby *LobbyConnection) Init() {
 		}
 
 	}
+}
+
+func (lobby *LobbyConnection) Remove() {
+	lobby.server.LobbyList.remove <- lobby.info
+
+	for player := range lobby.players {
+		player.conn.Close()
+	}
+	delete(lobby.server.Lobbies, lobby.id)
 }
 
 func (lobby *LobbyConnection) getPlayerByID(id int32) *PlayerConnection {

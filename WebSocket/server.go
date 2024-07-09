@@ -40,17 +40,25 @@ func (server *Server) HandleConnection(w http.ResponseWriter, r *http.Request, c
 	}
 	log.Println("Created new player")
 
-	// for player := range lobby.players {
-	// 	if clientIP == player.ip {
-	// 		delete(lobby.players, player)
-	// 	}
-	// }
+	for player := range lobby.players {
+		if clientIP == player.ip {
+			player.conn.Close()
+			player.conn = conn
+			player.send = make(chan *Lobby)
+			player.isOpen = true
+
+			go player.readLoop()
+			go player.writeLoop()
+			return
+		}
+	}
 
 	player := &PlayerConnection{
-		lobby: lobby,
-		conn:  conn,
-		send:  make(chan *Lobby),
-		ip:    clientIP,
+		lobby:  lobby,
+		conn:   conn,
+		send:   make(chan *Lobby),
+		ip:     clientIP,
+		isOpen: true,
 	}
 	lobby.connect <- player
 
