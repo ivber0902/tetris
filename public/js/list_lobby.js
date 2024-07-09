@@ -1,6 +1,5 @@
 let buttonJoin = document.querySelector('.join-button')
 let idLobby = document.querySelector('.join')
-let listLobby = document.querySelector('.menu')
 
 // const lobbyId = urlParams.get('lobby');
 // let wsUrl = "ws://" + host + ":8080/lobby";
