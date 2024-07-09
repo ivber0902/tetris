@@ -1,5 +1,4 @@
-*
-{
+* {
     border: none;
     padding: 0;
     margin: 0;
@@ -8,14 +7,12 @@
     text-transform: uppercase;
 }
 
-#game
-{
+#game {
     padding: 0 3px 3px 3px;
     background-color: white;
 }
 
-.main
-{
+.main {
     width: 100%;
     height: 100vh;
     background-image: url(/images/bg.png);
@@ -26,27 +23,24 @@
     flex-direction: column;
 }
 
-.logo
-{
+.logo {
     padding-bottom: 85px;
 }
 
-.wrapper-game
-{
+.wrapper-game {
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
     flex-direction: column;
 }
 
-.wrapper-field
-{
+.wrapper-field {
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
 }
 
-.title{
+.title {
     font: 800 20px/20px "Russo One", sans-serif;
     background-color: white;
     padding: 5px 0;
@@ -55,8 +49,7 @@
     text-transform: uppercase;
 }
 
-.buffer-wrapper
-{
+.buffer-wrapper {
     width: 100%;
     height: 100%;
     display: flex;
@@ -64,8 +57,7 @@
     justify-content: center;
 }
 
-.game__buffer
-{
+.game__buffer {
     width: 167px;
     height: 134px;
     box-sizing: border-box;
@@ -76,16 +68,14 @@
     background-image: url(/images/buffer.png);
 }
 
-.next__figure
-{
+.next__figure {
     width: 172px;
     height: 539px;
     background-image: url(/images/next_figures.png);
     background-size: 100% 100%;
 }
 
-.wrapper-figures
-{
+.wrapper-figures {
     width: 100%;
     height: 511px;
     padding: 50px 0;
@@ -96,32 +86,33 @@
     flex-direction: column;
 }
 
-.game__score, 
-.game__level, 
-.title-level, 
+.game__score,
+.game__level,
+.title-level,
 .title-score,
 .title-time,
-.game__time
-{
+.game__time {
     color: white;
     text-align: center;
     padding-top: 10px;
     font: 800 22px/22px "Russo One", sans-serif;
 }
 
-.title-level, .title-time, .title-score
-{
+.title-level,
+.title-time,
+.title-score {
     padding-left: 10px;
     text-transform: uppercase;
 }
-.score-wrapper
-{
+
+.score-wrapper {
     padding-top: 10px;
     width: 100%;
     display: flex;
     justify-content: center;
     flex-direction: column;
 }
+
 .score-value-wrapper {
     display: flex;
     flex-direction: row;

@@ -36,22 +36,6 @@ class GameController extends AbstractController
             'maxScore' => $player->getMaxScore(),
         ]);
     }
-    public function blitzGameOver(Request $request): Response
-    {
-        $securityUser = $this->getUser();
-        if ($securityUser === null) {
-            return $this->render('blitz-game-over.html.twig', [
-                'lastScore' => $request->get('score', '0'),
-                'maxScore' => $request->get('score', '0'),
-            ]);
-        }
-        $user = $this->userService->findUser($securityUser->getId());
-        $player = $user->getPlayer();
-        return $this->render('blitz-game-over.html.twig', [
-            'lastScore' => $player->getLastScore(),
-            'maxScore' => $player->getMaxScore(),
-        ]);
-    }
     public function game(): Response
     {
         return $this->render('game.html.twig');

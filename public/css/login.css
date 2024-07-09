@@ -1,5 +1,4 @@
-*
-{
+* {
     margin: 0;
     padding: 0;
     font-family: "Russo One", sans-serif;
@@ -7,29 +6,25 @@
     text-transform: uppercase;
 }
 
-body
-{
+body {
     max-width: 100%;
     max-height: 100%;
     background-image: url(/images/bg.png);
-    background-size: cover;  
+    background-size: cover;
 }
 
-.logo
-{
+.logo {
     padding-top: 50px;
 }
 
-.title
-{
+.title {
     width: 100%;
     display: flex;
     justify-content: center;
     margin-bottom: 15%;
 }
 
-.login
-{
+.login {
     box-sizing: border-box;
     background-color: white;
     margin: 0 auto;
@@ -38,14 +33,12 @@ body
     border-radius: 10px;
 }
 
-.login__title
-{
+.login__title {
     font-size: 32px;
     margin-bottom: 15px;
 }
 
-.login-input__username-input
-{
+.login-input__username-input {
     border: none;
     box-sizing: border-box;
     padding-left: 15px;
@@ -71,30 +64,29 @@ body
     margin-bottom: 19px;
     padding-bottom: 5px;
 }
+
 .login-input__password-input::placeholder {
     padding-bottom: 0;
 
 }
-.login-input__username-input:not(:placeholder-shown), 
-.login-input__password-input:not(:placeholder-shown)
-{
-    color: white;       
+
+.login-input__username-input:not(:placeholder-shown),
+.login-input__password-input:not(:placeholder-shown) {
+    color: white;
 }
 
 
 
-.view-pass{
+.view-pass {
     display: none;
 }
 
-.login-input__button
-{
+.login-input__button {
     display: flex;
     gap: 25px;
 }
 
-.register
-{
+.register {
     width: 375px;
     padding: 15px 0;
     text-align: center;
@@ -107,9 +99,9 @@ body
 
 ::placeholder {
     color: #FFFFFF;
-  }
-.login-button
-{
+}
+
+.login-button {
     width: 450px;
     padding: 15px 0;
     text-align: center;
@@ -122,18 +114,16 @@ body
     border: none;
 }
 
-.login-input__password-require, 
-.login-input__username-validation, 
-.login-input__username-require
-{
+.login-input__password-require,
+.login-input__username-validation,
+.login-input__username-require {
     font: 400 12px/16px "Russo One", sans-serif;
     text-align: left;
     color: rgba(232, 105, 97, 1);
     display: none;
 }
 
-.login-input__username-error
-{
+.login-input__username-error {
     font: 400 12px/16px "Russo One", sans-serif;
     text-align: left;
     color: rgba(232, 105, 97, 1);

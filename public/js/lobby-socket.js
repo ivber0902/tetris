@@ -18,13 +18,13 @@ let startGame = document.querySelector(".start-game");
 let buttons;
 let functionKickPlayer;
 
-addEventListener("DOMContentLoaded", (event) => {   
-    functionKickPlayer = function KickPlayer(players){ 
-        for (let i = 1; i < players.length; i++) { 
-            if (buttons[i]){
-                buttons[i].addEventListener('click', ()=>{
+addEventListener("DOMContentLoaded", (event) => {
+    functionKickPlayer = function KickPlayer(players) {
+        for (let i = 1; i < players.length; i++) {
+            if (buttons[i]) {
+                buttons[i].addEventListener('click', () => {
                     console.log('playerId = ' + players[i])
-                })  
+                })
             }
         }
     }
@@ -32,14 +32,14 @@ addEventListener("DOMContentLoaded", (event) => {
 
 
 
-function changeSetting(inSet, outSet){
+function changeSetting(inSet, outSet) {
     outSet = inSet
 }
 
-ws.onmessage = (msg) => {  
+ws.onmessage = (msg) => {
     let data = JSON.parse(msg.data);
     console.log('настройки поля', data)
-    
+
     if (data.id) {
         console.log(lobbyLink + '?lobby=' + data.id)
         document.querySelector('.lobby-link').innerHTML = '';
@@ -68,7 +68,7 @@ ws.onmessage = (msg) => {
     }
     (async () => {
         await processPlayers(data);
-        buttons = document.querySelectorAll('.player__button');      
+        buttons = document.querySelectorAll('.player__button');
         functionKickPlayer(data.players);
         if (playerId === data.players[0]) {
             console.log(buttons);
@@ -91,7 +91,7 @@ ws.onmessage = (msg) => {
             for (let i = 0; i < buttons.length; i++) {
                 buttons[i].style.display = 'none';
             }
-        }        
+        }
     })();
 }
 
@@ -100,10 +100,11 @@ ws.onopen = () => {
         "type": "connect",
         "connection": {
             "player_id": playerId
-    }}));
+        }
+    }));
 };
 
-function sendLobbySettings(settingLobby){
+function sendLobbySettings(settingLobby) {
     ws.send(JSON.stringify({
         "type": "update",
         "updates": settingLobby

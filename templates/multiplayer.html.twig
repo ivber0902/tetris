@@ -1,68 +1,69 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Multiplayer{% endblock %}
-{% block style %}<link rel="stylesheet" href="/css/multiplayer.css"/>{% endblock %}
+{% block title %}Multiplayer
+{% endblock %}
+{% block style %}<link rel="stylesheet" href="/css/multiplayer.css"/>
+{% endblock %}
 {% block content %}
-<body>
-<main class="main">
-        <img class="logo" src="/images/logo.png" alt="logo">
-        <div class="wrapper-game">
-            <div class="wrapper-main-field">
-                <p class="player_name">никита</p>
-                <div class="main-field">
-                    <div class="game__buffer"> 
-                        <p class="title">буффер</p>
-                        <div class="buffer-wrapper">
-                            <img class="buffer__figure" src="" alt="figure">
-                        </div>
-                    </div>
-                    <canvas id="game">    
-                    </canvas>
-                    <div class="next__figure">
-                        <p class="title">следующие</p>
-                        <div class="wrapper-figures">
-                            <img class="figure"  src="" alt="figure">
-                            <img class="figure"  src="" alt="figure">
-                            <img class="figure"  src="" alt="figure">
-                            <img class="figure"  src="" alt="figure">               
-                        </div>
-                    </div>
-                </div>
-                <div class="wrapper-field">    
-                    <div class="score-wrapper">
-                        <p class="title-score">счет:</p>
-                        <p class="game__score"></p>
-                        <p class="title-level">уровень:</p>
-                        <p class="game__level"></p>
-                    </div>
-                </div>
-            </div>
-            <div class="palyers-list">
-                <div class="other-player">
-                    <p class="player__username">иван</p>
-                    <canvas class="other-field"></canvas>
-                    <p class="player__score">200</p>
-                </div>
-                <div class="other-player">
-                    <p class="player__username">петр</p>
-                    <canvas class="other-field"></canvas>
-                    <p class="player__score">200</p>
-                </div>
-                <div class="other-player">
-                    <p class="player__username">николай</p>
-                    <canvas class="other-field"></canvas>
-                    <p class="player__score">200</p>
-                </div>
-            </div>
-        </div>
-    </main>
-</body>
-<script src="/js/game/game-mode.js"></script>
-<script src="/js/game/game-end.js"></script>
-<script src="/js/game/player.js"></script>
-<script src="/js/game/ui.js"></script>
-<script src="/js/game/figures.js"></script>
-<script src="/js/game/images.js"></script>
-<script src="/js/game/game.js"></script>
-<script src="/js/game/init-game.js"></script>
+	<body>
+		<main class="main">
+			<img class="logo" src="/images/logo.png" alt="logo">
+			<div class="wrapper-game">
+				<div class="wrapper-main-field">
+					<p class="player_name">никита</p>
+					<div class="main-field">
+						<div class="game__buffer">
+							<p class="title">буффер</p>
+							<div class="buffer-wrapper">
+								<img class="buffer__figure" src="" alt="figure">
+							</div>
+						</div>
+						<canvas id="game"></canvas>
+						<div class="next__figure">
+							<p class="title">следующие</p>
+							<div class="wrapper-figures">
+								<img class="figure" src="" alt="figure">
+								<img class="figure" src="" alt="figure">
+								<img class="figure" src="" alt="figure">
+								<img class="figure" src="" alt="figure">
+							</div>
+						</div>
+					</div>
+					<div class="wrapper-field">
+						<div class="score-wrapper">
+							<p class="title-score">счет:</p>
+							<p class="game__score"></p>
+							<p class="title-level">уровень:</p>
+							<p class="game__level"></p>
+						</div>
+					</div>
+				</div>
+				<div class="palyers-list">
+					<div class="other-player">
+						<p class="player__username">иван</p>
+						<canvas class="other-field"></canvas>
+						<p class="player__score">200</p>
+					</div>
+					<div class="other-player">
+						<p class="player__username">петр</p>
+						<canvas class="other-field"></canvas>
+						<p class="player__score">200</p>
+					</div>
+					<div class="other-player">
+						<p class="player__username">николай</p>
+						<canvas class="other-field"></canvas>
+						<p class="player__score">200</p>
+					</div>
+				</div>
+			</div>
+		</main>
+	</body>
+	<script src="/js/game/game-mode-multiplayer.js"></script>
+	<script src="/js/game/game-end.js"></script>
+	<script src="/js/game/player.js"></script>
+	<script src="/js/game/ui.js"></script>
+	<script src="/js/game/figures.js"></script>
+	<script src="/js/game/images.js"></script>
+	<script src="/js/game/game.js"></script>
+	<script src="/js/game/init-game.js"></script>
 {% endblock %}

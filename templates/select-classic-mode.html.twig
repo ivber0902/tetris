@@ -6,63 +6,65 @@
 {% block style %}
 	<link rel="stylesheet" href="/css/select.css"/>
 {% endblock %}
+{% block script %}
+	<script src="/js/game/game-mode.js"></script>
+{% endblock %}
 {% block content %}
-<body>
-	<div class="bg bg_dark">
-		<div class="header">
-			<img src="/images/settings.png" alt="settings" class="settings"/>
-			<img src="/images/logo.png" alt="logo" class="logo"/>
-			<div class="profile">
-				<a href="{{(user.login ?? null) ? path("profile", {login: user.login}) : path('register') }}">
-					<div class="profile">
-						<p class="profile__nickname">{{user.login ?? 'славянин'}}</p>
-						<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
+	<body>
+		<div class="bg bg_dark">
+			<div class="header">
+				<img src="/images/settings.png" alt="settings" class="settings"/>
+				<img src="/images/logo.png" alt="logo" class="logo"/>
+				<div class="profile">
+					<a href="{{(user.login ?? null) ? path("profile", {login: user.login}) : path('register') }}">
+						<div class="profile">
+							<p class="profile__nickname">{{user.login ?? 'славянин'}}</p>
+							<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
+						</div>
+					</a>
+				</div>
+			</div>
+			<div class="select">
+				<a href="/menu">
+					<div class="back">
+						<h1 class="back__button">
+							назад
+						</h1>
 					</div>
 				</a>
-			</div>
-		</div>
-		<div class="select">
-			<a href="/menu">
-				<div class="back">
-					<h1 class="back__button">
-						назад
-					</h1>
-				</div>
-			</a>
-			<div class="links">
-				<div class="link">
-					<div class="link__text">
-						<h1 class="link__title">
-							холоп
-						</h1>
-						<p class="link__subtitle">
-							маленький размер поля
-						</p>
+				<div class="links">
+					<div class="link">
+						<div class="link__text">
+							<h1 class="link__title">
+								холоп
+							</h1>
+							<p class="link__subtitle">
+								маленький размер поля
+							</p>
+						</div>
 					</div>
-				</div>
-				<div class="link">
-					<div class="link__text">
-						<h1 class="link__title">
-							крестьянин
-						</h1>
-						<p class="link__subtitle">
-							классический размер поля
-						</p>
+					<div class="link">
+						<div class="link__text">
+							<h1 class="link__title">
+								крестьянин
+							</h1>
+							<p class="link__subtitle">
+								классический размер поля
+							</p>
+						</div>
 					</div>
-				</div>
-				<div class="link">
-					<div class="link__text">
-						<h1 class="link__title">
-							боярин
-						</h1>
-						<p class="link__subtitle">
-							большой размер поля
-						</p>
+					<div class="link">
+						<div class="link__text">
+							<h1 class="link__title">
+								боярин
+							</h1>
+							<p class="link__subtitle">
+								большой размер поля
+							</p>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-</body>
-	<script src="/js/game/game-mode.js"></script>
+	</body>
 {% endblock %}

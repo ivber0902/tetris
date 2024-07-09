@@ -74,6 +74,8 @@ let GAME = {
     },
     play(player) {
 
+        player.ui.score = player.score;
+        player.ui.level = player.lvl;
         if (player.isActive) {
             this.clear(field);
             player.drawField(this.width, this.height);
@@ -87,7 +89,7 @@ let GAME = {
             }
 
             player.updatePosition();
+            requestAnimationFrame(() => this.play(player));
         }
-        requestAnimationFrame(() => this.play(player));
     }
 }

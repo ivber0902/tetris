@@ -11,11 +11,11 @@ let BOSS = [
 let figures = [
     {
         matrix:
-        [
-            [0, 0, 1],
-            [0, 0, 1],
-            [0, 1, 1]
-        ],
+            [
+                [0, 0, 1],
+                [0, 0, 1],
+                [0, 1, 1]
+            ],
         image: new Image(),
         block: new Image(),
         shadow: new Image(),

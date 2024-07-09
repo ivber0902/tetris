@@ -47,8 +47,8 @@ class UI {
         if (val !== undefined) {
             this._time.textContent =
                 + 1-Math.floor(val / 1000 / 60)
-                + ':' + '0'.repeat(2 - (60 - Math.floor(val / 1000 % 60)).toString().length)
-                + (60 - Math.floor(val / 1000) % 60)
+                + ':' + '0'.repeat(2 - (59 - Math.floor(val / 1000 % 60)).toString().length)
+                + (59 - Math.floor(val / 1000) % 60)
         }
     }
 }

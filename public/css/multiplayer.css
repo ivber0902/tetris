@@ -1,28 +1,24 @@
-*
-{
+* {
     margin: 0;
     padding: 0;
     text-decoration: none;
     text-transform: uppercase;
 }
 
-#game
-{
+#game {
     max-height: 683px;
     padding: 0 3px 3px 3px;
     background-color: white;
 }
 
-.other-field
-{
+.other-field {
     padding: 0 3px 3px 3px;
     background-color: white;
     margin-top: 10px;
     margin-bottom: 10px;
 }
 
-.main   
-{
+.main {
     width: 100%;
     height: 100vh;
     background-image: url(/images/bg.png);
@@ -32,31 +28,28 @@
     justify-content: flex-start;
 }
 
-.logo
-{
+.logo {
     padding-top: 50px;
     padding-bottom: 40px;
 }
 
-.main-field-wrapper
-{
+.main-field-wrapper {
     padding-top: 80px;
 }
-.main-field
-{
+
+.main-field {
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
 }
 
-.wrapper-field
-{
+.wrapper-field {
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
 }
 
-.title{
+.title {
     font: 800 20px/20px "Russo One", sans-serif;
     background-color: white;
     padding: 5px 0;
@@ -65,8 +58,7 @@
     text-transform: uppercase;
 }
 
-.buffer-wrapper
-{
+.buffer-wrapper {
     width: 100%;
     height: 100%;
     display: flex;
@@ -74,8 +66,7 @@
     justify-content: center;
 }
 
-.game__buffer
-{
+.game__buffer {
     width: 167px;
     height: 134px;
     box-sizing: border-box;
@@ -86,16 +77,14 @@
     background-image: url(/images/buffer.png);
 }
 
-.next__figure
-{
+.next__figure {
     width: 172px;
     height: 539px;
     background-image: url(/images/next_figures.png);
     background-size: 100% 100%;
 }
 
-.wrapper-figures
-{
+.wrapper-figures {
     width: 100%;
     height: 511px;
     padding: 50px 0;
@@ -107,13 +96,12 @@
 }
 
 
-.border-game
-{
+.border-game {
     padding: 0 1px 1px 1px;
     background-color: white;
 }
-.wrapper-figures
-{
+
+.wrapper-figures {
     width: 100%;
     height: 511px;
     padding: 50px 0;
@@ -124,18 +112,16 @@
     flex-direction: column;
 }
 
-.wrapper-game
-{
+.wrapper-game {
     display: flex;
-    align-items: flex-start ;
+    align-items: flex-start;
     justify-content: space-between;
     width: 100%;
     box-sizing: border-box;
     padding: 0 85px;
 }
 
-.palyers-list
-{
+.palyers-list {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -144,34 +130,30 @@
     gap: 0 13%;
 }
 
-.other-player
-{
+.other-player {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.player__score, 
-.player__username
-{
+.player__score,
+.player__username {
     color: white;
     text-align: center;
     font: 800 22px/22px "Russo One", sans-serif;
 }
 
-.player__field
-{
+.player__field {
     padding: 0 1px 1px 1px;
     background-color: white;
 }
 
-.game__score, 
-.game__level, 
-.title-score, 
-.title-level, 
-.player_name
-{
+.game__score,
+.game__level,
+.title-score,
+.title-level,
+.player_name {
     color: white;
     text-align: center;
     padding-top: 10px;
@@ -179,19 +161,17 @@
     font: 800 22px/22px "Russo One", sans-serif;
 }
 
-.title-level
-{
+.title-level {
     padding-left: 20px;
 }
 
-.title-level, .title-score
-{
+.title-level,
+.title-score {
     padding-right: 10px;
     text-transform: uppercase;
 }
 
-.score-wrapper
-{
+.score-wrapper {
     width: 100%;
     display: flex;
     justify-content: center;

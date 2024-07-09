@@ -83,8 +83,8 @@ let GAME = {
             if (nowTime - this.startTime >= 2 * 60 * 1000) {
                 player.isActive = false;
                 this.blitzGameEnd(player.score);
-            } else 
-            this.clear(field);
+            } else
+                this.clear(field);
             player.drawField(this.width, this.height);
             player.drawOtherField(this.width, this.height);
             document.querySelector('.game__score').innerHTML = player.score;
@@ -100,12 +100,12 @@ let GAME = {
         }
 
     },
-     blitzGameEnd(score) {
+    blitzGameEnd(score) {
         localStorage.Gamewidth = 10;
         localStorage.Gameheight = 20;
-        this.blitzSendResult(score).then(() => {});
+        this.blitzSendResult(score).then(() => { });
     },
-    
+
     async blitzSendResult(score) {
         let response = await fetch('/api/statistics', {
             method: 'POST',
