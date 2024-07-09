@@ -66,9 +66,5 @@ func (server *Server) ListLobbiesHandler(w http.ResponseWriter, r *http.Request)
 	}
 	server.LobbyList.AddConnection(conn)
 
-	for _, lobby := range server.Lobbies {
-		conn.WriteJSON(lobby)
-	}
-
 	go server.LobbyList.ListenConnection(conn)
 }
