@@ -12,6 +12,7 @@ var server Server
 
 func main() {
 	server.Lobbies = make(map[string]*LobbyConnection)
+	server.LobbyList.Init()
 	go server.LobbyList.Listen()
 	http.HandleFunc("/lobby", func(w http.ResponseWriter, r *http.Request) {
 		PlayerIP, err := getPlayerIP(r)

@@ -32,7 +32,7 @@ func (server *Server) HandleConnection(w http.ResponseWriter, r *http.Request, c
 	lobby, ok := server.Lobbies[lobbyID]
 	log.Println(ok)
 	if !ok {
-		lobby = newLobbyConnection(clientIP)
+		lobby = newLobbyConnection(server, clientIP)
 		server.Lobbies[lobby.id] = lobby
 		go lobby.Init()
 
