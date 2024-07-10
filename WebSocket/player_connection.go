@@ -1,6 +1,7 @@
 package main
 
 import (
+	"WebSocket/lobby"
 	"encoding/json"
 	"github.com/gorilla/websocket"
 	"log"
@@ -9,7 +10,7 @@ import (
 
 type PlayerConnection struct {
 	conn   *websocket.Conn
-	send   chan *Lobby
+	send   chan *lobby.Lobby
 	lobby  *LobbyConnection
 	ip     string
 	id     int32

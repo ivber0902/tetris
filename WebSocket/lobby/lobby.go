@@ -1,4 +1,4 @@
-package main
+package lobby
 
 import (
 	"encoding/json"
@@ -6,21 +6,21 @@ import (
 )
 
 type Lobby struct {
-	ID       string        `bson:"_id" json:"id"`
-	Players  []int32       `bson:"players,omitempty" json:"players,omitempty"`
-	Settings LobbySettings `bson:"settings,omitempty" json:"settings,omitempty"`
-	GameRun  bool          `bson:"game_run,omitempty" json:"game_run,omitempty"`
+	ID       string   `bson:"_id" json:"id"`
+	Players  []int32  `bson:"players,omitempty" json:"players,omitempty"`
+	Settings Settings `bson:"settings,omitempty" json:"settings,omitempty"`
+	GameRun  bool     `bson:"game_run,omitempty" json:"game_run,omitempty"`
 }
 
-type LobbySettings struct {
+type Settings struct {
 	Music      string `bson:"music,omitempty" json:"music,omitempty"`
 	Background string `bson:"background,omitempty" json:"background,omitempty"`
 	Difficulty int8   `bson:"difficulty,omitempty" json:"difficulty,omitempty"`
 
-	PlayField LobbyPlayFieldSettings `bson:"play_field,omitempty" json:"play_field,omitempty"`
+	PlayField PlayFieldSettings `bson:"play_field,omitempty" json:"play_field,omitempty"`
 }
 
-type LobbyPlayFieldSettings struct {
+type PlayFieldSettings struct {
 	Width  int8 `bson:"width,omitempty" json:"width,omitempty"`
 	Height int8 `bson:"height,omitempty" json:"height,omitempty"`
 }

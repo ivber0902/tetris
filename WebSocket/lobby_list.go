@@ -1,21 +1,22 @@
 package main
 
 import (
+	"WebSocket/lobby"
 	"github.com/gorilla/websocket"
 	"log"
 )
 
 type LobbyList struct {
 	conn   map[*websocket.Conn]bool
-	new    chan *Lobby
-	update chan *Lobby
-	remove chan *Lobby
-	list   []*Lobby
+	new    chan *lobby.Lobby
+	update chan *lobby.Lobby
+	remove chan *lobby.Lobby
+	list   []*lobby.Lobby
 }
 
 type LobbyListUpdateMessage struct {
-	Type  string `json:"type"`
-	Lobby *Lobby `json:"lobby"`
+	Type  string       `json:"type"`
+	Lobby *lobby.Lobby `json:"lobby"`
 }
 
 const (
@@ -26,9 +27,9 @@ const (
 
 func (l *LobbyList) Init() {
 	l.conn = make(map[*websocket.Conn]bool)
-	l.new = make(chan *Lobby)
-	l.update = make(chan *Lobby)
-	l.remove = make(chan *Lobby)
+	l.new = make(chan *lobby.Lobby)
+	l.update = make(chan *lobby.Lobby)
+	l.remove = make(chan *lobby.Lobby)
 }
 
 func (l *LobbyList) Listen() {
