@@ -1,7 +1,9 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Lobby{% endblock %}
-{% block style %}<link rel="stylesheet" href="/css/lobby.css"/>{% endblock %}
+{% block title %}Lobby
+{% endblock %}
+{% block style %}<link rel="stylesheet" href="/css/lobby.css"/><link rel="stylesheet" href="/css/mini-profile.css"/>
+{% endblock %}
 {% block content %}
 <body>
      <div class="bg">
@@ -64,35 +66,7 @@
             </div>
             <button class="start-game">начать игру</button>
         </div>
-        <div class="user-profile">
-            <div class="user-profile__header">
-                <div class="user-profile__player">
-                    <img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
-                    <p class="profile__nickname">{{user.login ?? 'славянин'}}</p>
-                </div>
-                <div class="user-profile__exit">
-                    <button class="exit">Exit</button>
-                    <a class="full-profile" href="/">Profile</a>
-                </div>  
-            </div>
-            <div class="statistics">
-                <div class="max-score">
-                    <p class="statistics__text">максимум очков</p>
-                    <div class="line"></div>
-                    <p>{{player.maxScore ?? '0'}}</p>
-                </div>
-                <div class="count-win">
-                    <p class="statistics__text">всего побед</p>
-                    <div class="line"></div>
-                    <p>{{player.winCount ?? '0'}}</p>
-                </div>
-                <div class="count-game">
-                    <p class="statistics__text">всего игр</p>
-                    <div class="line"></div>
-                    <p>{{player.gameCount ?? '0'}}</p>
-                </div>               
-            </div>
-        </div>
+        {% include 'mini-profile.html.twig' %}
         <div class="list-settings">
             <div class="menu">
             </div>

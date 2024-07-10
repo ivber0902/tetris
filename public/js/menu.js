@@ -1,5 +1,8 @@
 const urlParams = new URLSearchParams(window.location.search);
 const reason = urlParams.get("reason");
 if(reason){
-    alert("Вы были отключены от сервера")
+    const url = new URL(window.location);
+    url.searchParams.delete('reason');
+    window.history.replaceState({}, '', url);
+    alert("Вы были отключены от сервера")   
 }

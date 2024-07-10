@@ -150,6 +150,7 @@ ws.onmessage = (msg) => {
 }
 
 ws.onclose = () => {
+    let reason = "kicked"
     if(!runGame)
-         window.location.href = "/menu"
+         window.location.href = `/menu?reason=${reason}`
 }
