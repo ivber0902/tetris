@@ -96,7 +96,7 @@ ws.onmessage = (msg) => {
         let login = user.login;
         player = createPlayer(login, id);
         players = listPlayers.querySelectorAll(".player__name");
-        playersid = listPlayers.querySelectorAll('.player');
+        let playersid = listPlayers.querySelectorAll('.player');
         console.log(playersid)
         found = false
         foundId = false
@@ -132,7 +132,7 @@ ws.onmessage = (msg) => {
             if (!settingLobby.players.includes(id)) {
                 settingLobby.players.push(id);
             }
-            await foundUser(id);
+            await foundUser(id );
         });
 
         await Promise.all(playerPromises);
