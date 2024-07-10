@@ -10,7 +10,7 @@
             <img src="/images/logo.png" alt="logo" class="logo">
             <div class="profile">
                 <p class="profile__nickname">{{user.login ?? 'славянин'}}</p>
-                <p class="profile__playerId">{{user.playerId ?? 'her'}}</p>
+                <p class="profile__playerId">{{user.playerId ?? '0'}}</p>
                 <input class="player_id" type="hidden" value="{{ user.playerId }}" >
                 <img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
             </div>
@@ -79,17 +79,17 @@
                 <div class="max-score">
                     <p class="statistics__text">максимум очков</p>
                     <div class="line"></div>
-                    <p>{{player.maxScore ?? 'her'}}</p>
+                    <p>{{player.maxScore ?? '0'}}</p>
                 </div>
                 <div class="count-win">
                     <p class="statistics__text">всего побед</p>
                     <div class="line"></div>
-                    <p>{{player.winCount ?? 'her'}}</p>
+                    <p>{{player.winCount ?? '0'}}</p>
                 </div>
                 <div class="count-game">
                     <p class="statistics__text">всего игр</p>
                     <div class="line"></div>
-                    <p>{{player.gameCount ?? 'her'}}</p>
+                    <p>{{player.gameCount ?? '0'}}</p>
                 </div>               
             </div>
         </div>
@@ -99,6 +99,6 @@
         </div>
     </div>
 </body>
-<script src="/js/lobby.js"></script>
+ <script src="/js/lobby.js"></script>
  <script src="/js/lobby-socket.js"></script>
 {% endblock %}

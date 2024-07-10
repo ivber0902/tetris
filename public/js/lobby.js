@@ -82,7 +82,7 @@ let settings = {
     ],
 }
 
-let selectSize = document.querySelector(".settings__size")
+    let selectSize = document.querySelector(".settings__size")
     let selectMusic = document.querySelector(".settings__music")
     let selectDifficulty = document.querySelector(".settings__complexity")
     let selectBg = document.querySelector(".settings__background")
@@ -102,28 +102,28 @@ addEventListener("DOMContentLoaded", () => {
         settings.size.forEach((size) => {
             menu.appendChild(createMenuItem(size.title, size.description));
         })
-        ChoiseSetting(settings.size, inputSize, "play_field");
+        ChoiseSetting(settings.size, viewInputSize, "play_field");
     })
     selectMusic.addEventListener('click', ()=>{
         listSettings.style.display = "flex"
         settings.music.forEach((sound) => {
             menu.appendChild(createMenuItem(sound.title, sound.description));
         })
-        ChoiseSetting(settings.music, inputMusic, "music");
+        ChoiseSetting(settings.music, viewInputMusic, "music");
     })
     selectDifficulty.addEventListener('click', ()=>{
         listSettings.style.display = "flex"
         settings.difficulty.forEach((difficulty) => {
             menu.appendChild(createMenuItem(difficulty.title, difficulty.description));
         })
-        ChoiseSetting(settings.difficulty, inputDifficulty, "difficulty");
+        ChoiseSetting(settings.difficulty, viewInputDifficulty, "difficulty");
     })
     selectBg.addEventListener('click', ()=>{
         listSettings.style.display = "flex"
         settings.bg.forEach((bg) => {
             menu.appendChild(createMenuItem(bg.title, bg.description));
         })
-        ChoiseSetting(settings.bg, inputBg, 'background');
+        ChoiseSetting(settings.bg, viewInputBg, 'background');
     })
 
     function ChoiseSetting(elem, input, param) {

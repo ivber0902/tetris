@@ -13,13 +13,6 @@ let triangle = document.querySelectorAll(".triangle");
 let startGame = document.querySelector(".start-game");
 let runGame = false;
 
-let wsUrl = "ws://" + host + ":8080/lobby";
-if (lobbyId) {
-    wsUrl += "?lobby=" + lobbyId;
-}
-
-let ws = new WebSocket(wsUrl);
-
 let settingLobby = {
     id: "",
     players: [],
@@ -33,6 +26,13 @@ let settingLobby = {
         }
     }
 }
+
+let wsUrl = "ws://" + host + ":8080/lobby";
+if (lobbyId) {
+    wsUrl += "?lobby=" + lobbyId;
+}
+
+let ws = new WebSocket(wsUrl);
 
 
 startGame.addEventListener('click', () => {
@@ -105,9 +105,10 @@ ws.onopen = () => {
 
 ws.onmessage = (msg) => {
     let data = JSON.parse(msg.data);
+    console.log(data)
     if (data.game_run)
         {
-            runGame = true
+            runGame = true;
             window.location.href = "/multiplayer?lobby=" + data.id;
         }
     updateView(data);
@@ -126,7 +127,8 @@ ws.onmessage = (msg) => {
         let newPlayer;
         if(!found){
             let createKickButton = false
-            if(userId === data.players[0] && data.players.indexOf(joinPlayerId) !== 0)
+            settingLobby.players.push(joinPlayerId)
+             if(userId === data.players[0] && data.players.indexOf(joinPlayerId) !== 0)
                 createKickButton = true;
             newPlayer = createPlayer(joinPlayerId, createKickButton);
             listPlayers.appendChild(newPlayer);
@@ -141,5 +143,5 @@ ws.onmessage = (msg) => {
 
 ws.onclose = () => {
     if(!runGame)
-        window.location.href = "/menu"
+         window.location.href = "/menu"
 }
