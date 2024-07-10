@@ -1,9 +1,11 @@
 package main
 
+import "WebSocket/lobby"
+
 type UpdateJSONRequest struct {
 	Type       string                `json:"type"`
 	Connection ConnectionJSONRequest `json:"connection"`
-	Updates    Lobby                 `json:"updates,omitempty"`
+	Updates    lobby.Lobby           `json:"updates,omitempty"`
 }
 
 const (

@@ -1,24 +1,28 @@
 package main
 
 import (
+	"WebSocket/lobby"
 	"github.com/google/uuid"
 	"log"
 )
 
+// TODO вынести в отдельный модуль
+// TODO удаление лобби через канал
+
 type LobbyConnection struct {
 	id         string
-	info       *Lobby
+	info       *lobby.Lobby
 	players    map[*PlayerConnection]bool
 	connect    chan *PlayerConnection
 	disconnect chan *PlayerConnection
-	update     chan *Lobby
+	update     chan *lobby.Lobby
 	hostIP     string
 	server     *Server
 }
 
 func newLobbyConnection(server *Server, hostIP string) *LobbyConnection {
 	lobbyID := uuid.New()
-	var lobbyModel Lobby
+	var lobbyModel lobby.Lobby
 	err := lobbyModel.SetDefault()
 	if err != nil {
 		return nil
@@ -30,7 +34,7 @@ func newLobbyConnection(server *Server, hostIP string) *LobbyConnection {
 		players:    map[*PlayerConnection]bool{},
 		connect:    make(chan *PlayerConnection),
 		disconnect: make(chan *PlayerConnection),
-		update:     make(chan *Lobby),
+		update:     make(chan *lobby.Lobby),
 		hostIP:     hostIP,
 		server:     server,
 	}

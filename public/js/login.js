@@ -3,10 +3,9 @@ addEventListener("DOMContentLoaded", (event) => {
 });
 
 
-function Validation(e)
-{
+function Validation(e) {
     e.preventDefault();
-    let successfull = true; 
+    let successfull = true;
     const form = document.querySelector('.login-input');
     const usernameInput = document.querySelector('.login-input__username-input').value;
     const passwordInput = document.querySelector('.login-input__password-input').value;
@@ -17,25 +16,21 @@ function Validation(e)
     const passwordRequire = document.querySelector('.login-input__password-require');
     const username = element.value;
 
-    if (usernameInput === '')
-    {
+    if (usernameInput === '') {
         successfull = false;
         usernameError.style.display = 'none';
         usernameRequire.style.display = 'flex';
         usernameRequire.style.marginBottom = '10px';
         element.style.marginBottom = '5px';
     }
-    else
-    {
+    else {
         usernameRequire.style.display = 'none';
-        if (validateUsername(username))
-        {
+        if (validateUsername(username)) {
             console.log('hahahha');
             usernameError.style.display = 'none';
             element.style.marginBottom = '10px';
-        } 
-        else 
-        {
+        }
+        else {
             successfull = false;
             usernameError.style.display = 'flex';
             usernameError.style.marginBottom = '10px';
@@ -43,24 +38,21 @@ function Validation(e)
         }
     }
 
-    if (passwordInput === '')
-    {
+    if (passwordInput === '') {
         successfull = false;
         passwordRequire.style.display = 'flex';
         passwordRequire.style.marginBottom = '10px';
         password.style.marginBottom = '5px';
     }
-    else
-    {
-        passwordRequire.style.display = 'none'; 
+    else {
+        passwordRequire.style.display = 'none';
     }
-    if(successfull){
+    if (successfull) {
         form.submit();
     }
-    function validateUsername(username) 
-    {
+    function validateUsername(username) {
         const re = /^[а-яА-Я0-9_]+$/;
         return re.test(username);
     }
-    
+
 }

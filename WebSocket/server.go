@@ -1,6 +1,7 @@
 package main
 
 import (
+	lobby2 "WebSocket/lobby"
 	"github.com/gorilla/websocket"
 	"log"
 	"net/http"
@@ -15,6 +16,7 @@ var upgrader = websocket.Upgrader{
 type Server struct {
 	Lobbies   map[string]*LobbyConnection
 	LobbyList LobbyList
+	Games     map[string]*GameConnection
 }
 
 func (server *Server) HandleConnection(w http.ResponseWriter, r *http.Request, clientIP string) {
@@ -45,7 +47,7 @@ func (server *Server) HandleConnection(w http.ResponseWriter, r *http.Request, c
 		if clientIP == player.ip {
 			player.conn.Close()
 			player.conn = conn
-			player.send = make(chan *Lobby)
+			player.send = make(chan *lobby2.Lobby)
 			player.isOpen = true
 
 			go player.readLoop()
@@ -61,7 +63,7 @@ func (server *Server) HandleConnection(w http.ResponseWriter, r *http.Request, c
 	player := &PlayerConnection{
 		lobby:  lobby,
 		conn:   conn,
-		send:   make(chan *Lobby),
+		send:   make(chan *lobby2.Lobby),
 		ip:     clientIP,
 		isOpen: true,
 	}

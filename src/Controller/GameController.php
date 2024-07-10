@@ -45,15 +45,23 @@ class GameController extends AbstractController
     {
         return $this->render('game.html.twig');
     }
-    public function selectMode(): Response
+    public function blitz(): Response
+    {
+        return $this->render('blitz.html.twig');
+    }
+    public function l40(): Response
+    {
+        return $this->render('l40.html.twig');
+    }
+    public function selectMultiplayerMode(): Response
     {
         $securityUser = $this->getUser();
         if ($securityUser === null) {
             return $this->redirectToRoute('login');
         }
-        return $this->render('select-mode.html.twig', ["user" => $securityUser]);
+        return $this->render('select-multiplayer-mode.html.twig', ["user" => $securityUser]);
     }
-    public function selectClassicMode(): Response
+    public function selectDif(): Response
     {
         $securityUser = $this->getUser();
         return $this->render('select-classic-mode.html.twig', ["user" => $securityUser]);

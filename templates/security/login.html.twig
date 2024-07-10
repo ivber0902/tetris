@@ -1,37 +1,43 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in{% endblock %}
-{% block style %}<link rel="stylesheet" href="/css/login.css"/>{% endblock %}
-{% block script %}<script src="/js/login.js"></script>{% endblock %}
+{% block title %}Log in
+{% endblock %}
+{% block style %}<link rel="stylesheet" href="/css/login.css"/>
+{% endblock %}
+{% block script %}
+	<script src="/js/login.js"></script>
+{% endblock %}
 {% block content %}
-    <main class="main">
-        <div class="title">
-            <img class="logo" src="/images/logo.svg" alt="logo">
-        </div>
-        <div class="login">
-            <h1 class="login__title">добро пожаловать в славянский тетрис!</h1>
-            <form method="post" class="login-input">
-                {% if app.user %}
-                    <div class="mb-3">
-                        You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
-                    </div>
-                {% endif %}
-                {% if error %}
-                    <p class="login-input__username-error">неверный логин или пароль</p>
-                {% endif %}
-                <label for="inputLogin" hidden>Login</label>
-                <input type="text" value="{{ last_username }}" name="login" id="inputLogin" class="login-input__username-input" autocomplete="username" placeholder="логин" required autofocus>
-                <p class="login-input__username-validation">неправильный формат логина</p>
-                <p class="login-input__username-require">введите логин</p>
-                <label for="inputPassword" hidden>Password</label>
-                <input type="password" name="password" id="inputPassword" class="login-input__password-input" autocomplete="current-password" placeholder="пароль" required>
-                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-                <p class="login-input__password-require">введите пароль</p>           
-                <div class="login-input__button">
-                    <a class="register" href="/signup">регистрация</a> 
-                    <button class="login-button">вход</button>
-                </div>
-            </form>    
-        </div>
-    </main> 
+	<main class="main">
+		<div class="title">
+			<img class="logo" src="/images/logo.svg" alt="logo">
+		</div>
+		<div class="login">
+			<h1 class="login__title">добро пожаловать в славянский тетрис!</h1>
+			<form method="post" class="login-input">
+				{% if app.user %}
+					<div class="mb-3">
+						You are logged in as
+						{{ app.user.userIdentifier }},
+						<a href="{{ path('app_logout') }}">Logout</a>
+					</div>
+				{% endif %}
+				{% if error %}
+					<p class="login-input__username-error">неверный логин или пароль</p>
+				{% endif %}
+				<label for="inputLogin" hidden>Login</label>
+				<input type="text" value="{{ last_username }}" name="login" id="inputLogin" class="login-input__username-input" autocomplete="username" placeholder="логин" required autofocus>
+				<p class="login-input__username-validation">неправильный формат логина</p>
+				<p class="login-input__username-require">введите логин</p>
+				<label for="inputPassword" hidden>Password</label>
+				<input type="password" name="password" id="inputPassword" class="login-input__password-input" autocomplete="current-password" placeholder="пароль" required>
+				<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+				<p class="login-input__password-require">введите пароль</p>
+				<div class="login-input__button">
+					<a class="register" href="/signup">регистрация</a>
+					<button class="login-button">вход</button>
+				</div>
+			</form>
+		</div>
+	</main>
 {% endblock %}
