@@ -66,7 +66,12 @@ class GameController extends AbstractController
     public function selectDif(): Response
     {
         $securityUser = $this->getUser();
-        return $this->render('select-classic-mode.html.twig', ["user" => $securityUser]);
+        if($securityUser === null){
+            return $this->render('select-classic-mode.html.twig', ["user" => $securityUser]);
+        }
+        $user = $this->userService->findUser($securityUser->getId());
+        $player = $user->getPlayer();
+        return $this->render('select-classic-mode.html.twig', ["user" => $securityUser, "player" => $player]);
     }
     public function selectSoloMode(): Response
     {
