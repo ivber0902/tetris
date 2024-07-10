@@ -102,6 +102,13 @@ ws.onopen = () => {
     }));
 }
 
+function updatePlayers(data){
+    let lobbyMembers = listPlayers.querySelectorAll('.player')
+    lobbyMembers.forEach((elem)=>{
+        if(data.players.indexOf(parseInt(elem.id)) === -1)
+            document.getElementById(elem.id).remove()
+    })
+}
 
 ws.onmessage = (msg) => {
     let data = JSON.parse(msg.data);
@@ -112,6 +119,7 @@ ws.onmessage = (msg) => {
             window.location.href = "/multiplayer?lobby=" + data.id;
         }
     updateView(data);
+    updatePlayers(data);
     if(userId !== data.players[0])
         baningSettings()
     settingLobby.id = data.id;
