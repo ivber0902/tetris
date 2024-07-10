@@ -2,9 +2,6 @@
 
 {% block title %}Lobby{% endblock %}
 {% block style %}<link rel="stylesheet" href="/css/lobby.css"/>{% endblock %}
-{% block script %}
-    <script src="/js/lobby.js"></script>
-{% endblock %}
 {% block content %}
 <body>
      <div class="bg">
@@ -22,7 +19,6 @@
             <div class="players">
                 <div class="list-players">
                 </div>                
-                <p class="lobby-link">http://127.0.0.1:8000/lobby</p>
             </div>
             <div class="settings">
                 <div class="settings__size">
@@ -103,5 +99,6 @@
         </div>
     </div>
 </body>
+<script src="/js/lobby.js"></script>
  <script src="/js/lobby-socket.js"></script>
 {% endblock %}
