@@ -99,38 +99,37 @@ addEventListener("DOMContentLoaded", () => {
 
     selectSize.addEventListener('click', ()=>{
         listSettings.style.display = "flex"
-        settings.size.forEach((size)=>{
+        settings.size.forEach((size) => {
             menu.appendChild(createMenuItem(size.title, size.description));
         })
         ChoiseSetting(settings.size, inputSize, "play_field");
     })
     selectMusic.addEventListener('click', ()=>{
         listSettings.style.display = "flex"
-        settings.music.forEach((sound)=>{
+        settings.music.forEach((sound) => {
             menu.appendChild(createMenuItem(sound.title, sound.description));
         })
         ChoiseSetting(settings.music, inputMusic, "music");
     })
     selectDifficulty.addEventListener('click', ()=>{
         listSettings.style.display = "flex"
-        settings.difficulty.forEach((difficulty)=>{
+        settings.difficulty.forEach((difficulty) => {
             menu.appendChild(createMenuItem(difficulty.title, difficulty.description));
         })
         ChoiseSetting(settings.difficulty, inputDifficulty, "difficulty");
     })
     selectBg.addEventListener('click', ()=>{
         listSettings.style.display = "flex"
-        settings.bg.forEach((bg)=>{
+        settings.bg.forEach((bg) => {
             menu.appendChild(createMenuItem(bg.title, bg.description));
         })
         ChoiseSetting(settings.bg, inputBg, 'background');
     })
 
-    function ChoiseSetting(elem, input, param)
-    {
+    function ChoiseSetting(elem, input, param) {
         let settings = document.querySelectorAll('.menu__item');
-        settings.forEach((btn, index)=>{
-            btn.addEventListener('click', ()=>{
+        settings.forEach((btn, index) => {
+            btn.addEventListener('click', () => {
                 listSettings.style.display = "none"
                 settingLobby.settings[param] = elem[index].value;
                 sendLobbySettings(settingLobby)
@@ -142,7 +141,7 @@ addEventListener("DOMContentLoaded", () => {
 function deleteMenuItem(menu) {
     while (menu.firstChild) {
         menu.removeChild(menu.firstChild);
-      }
+    }
 }
 
 function createMenuItem(title, subtitle) {
@@ -191,7 +190,7 @@ function createPlayer(name, hiddenValue) {
     const playerButton = document.createElement('button');
     playerButton.type = 'button';
     playerButton.classList.add('player__button');
-    playerButton.textContent = 'ВЫГНАТЬ'; 
+    playerButton.textContent = 'ВЫГНАТЬ';
 
     const avatarContainer = document.createElement('div');
     avatarContainer.classList.add('avatar__container');

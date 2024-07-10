@@ -5,6 +5,8 @@ const ui = new UI(
     GAME,
     document.querySelector(".game__score"),
     document.querySelector(".game__level"),
+    document.querySelector(".game__time"),
+    document.querySelector(".game__lines"),
 );
 
 let player = new Player(ui, GAME.figuresQueueSize);

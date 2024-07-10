@@ -64,7 +64,7 @@ startGame.addEventListener('click', ()=>{
     }));
 })
 
-function changeSetting(inSet, outSet){
+function changeSetting(inSet, outSet) {
     outSet = inSet
 }
 
@@ -139,7 +139,7 @@ ws.onmessage = (msg) => {
     }
     (async () => {
         await processPlayers(data);
-        buttons = document.querySelectorAll('.player__button');      
+        buttons = document.querySelectorAll('.player__button');
         functionKickPlayer(data.players);
         if (playerId === data.players[0]) {
             selectSize.style.pointerEvents = 'auto';
@@ -160,7 +160,7 @@ ws.onmessage = (msg) => {
             for (let i = 0; i < buttons.length; i++) {
                 buttons[i].style.display = 'none';
             }
-        }        
+        }
     })();
 }
 
@@ -172,7 +172,7 @@ ws.onopen = () => {
     }}));
 }
 
-function sendLobbySettings(settingLobby){
+function sendLobbySettings(settingLobby) {
     ws.send(JSON.stringify({
         "type": "update",
         "updates": settingLobby

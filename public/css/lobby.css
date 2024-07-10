@@ -5,64 +5,57 @@
     font-family: "Russo One", sans-serif;
     font-weight: 400;
     font-size: 32px;
-    color: #fff;  
+    color: #fff;
     text-transform: uppercase;
     text-decoration: none;
 }
 
-.bg 
-{
+.bg {
     height: 100vh;
     width: 100vw;
     background: url(/images/bg.png) no-repeat;
     background-size: cover;
 }
 
-.header 
-{
+.header {
     display: flex;
     justify-content: space-between;
     padding: 25px;
 
 }
-.logo 
-{
+
+.logo {
     margin-left: 212px;
 }
 
-.profile 
-{
+.profile {
     display: flex;
     height: 60px;
     flex-direction: row;
     align-items: center;
 }
 
-.profile__nickname 
-{
+.profile__nickname {
     margin: 10px;
 }
 
-.profile__avatar, .set 
-{
+.profile__avatar,
+.set {
     width: 40px;
     height: 40px;
     cursor: pointer;
     padding: 15px;
 }
 
-.player__name
-{
+.player__name {
     padding-left: 10px;
 }
 
-.players
-{
+.players {
     margin-right: 68px;
 }
 
-.player
-{
+.player {
     padding-left: 5px;
     width: 376px;
     height: 59px;
@@ -73,8 +66,7 @@
     align-items: center;
 }
 
-.main
-{
+.main {
     margin-top: 215px;
     display: flex;
     padding: 20px;
@@ -82,60 +74,53 @@
     justify-content: space-around;
 }
 
-.settings
-{
+.settings {
     max-width: 1050px;
     width: 100%;
 }
-.settings__text
-{
+
+.settings__text {
     padding-right: 15px;
     white-space: nowrap;
 }
 
-.wrapper-setting
-{
+.wrapper-setting {
     display: flex;
     width: 100%;
     justify-content: space-between;
     align-items: center;
 }
 
-.triangle
-{
+.triangle {
     width: 17px;
     height: 17px;
     padding-right: 12px;
 }
 
-.settings__text-music, 
+.settings__text-music,
 .settings__text-size,
 .settings__text-difficulty,
 .settings__text-bg,
-.settings__text
-{
-    font-size: 26px; 
+.settings__text {
+    font-size: 26px;
 }
 
-.setting
-{
+.setting {
     max-width: 100%;
     width: 100%;
     box-sizing: border-box;
 }
 
-.line-settings
-{
+.line-settings {
     border: none;
-    background-color: #696969; 
-    height: 1px; 
+    background-color: #696969;
+    height: 1px;
 }
 
-.settings__size, 
-.settings__music, 
-.settings__complexity, 
-.settings__background
-{
+.settings__size,
+.settings__music,
+.settings__complexity,
+.settings__background {
     background-color: #141414;
     display: flex;
     align-items: center;
@@ -150,9 +135,8 @@
     padding-left: 10px;
 }
 
-.user-profile
-{
-    display: none;  
+.user-profile {
+    display: none;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -163,8 +147,7 @@
     padding: 5px;
 }
 
-.user-profile__header
-{
+.user-profile__header {
     display: flex;
     align-items: center;
     margin-bottom: 25px;
@@ -172,14 +155,13 @@
     padding-right: 20px;
 }
 
-.user-profile__player
-{
+.user-profile__player {
     display: flex;
     align-items: center;
 }
 
-.exit, .full-profile
-{
+.exit,
+.full-profile {
     background-color: #0e250a;
     border: none;
     padding: 3px;
@@ -187,38 +169,35 @@
     margin-right: 3px;
     text-decoration: none;
 }
-.user-profile__exit
-{
+
+.user-profile__exit {
     display: flex;
     align-items: center;
 }
 
 
-.statistics
-{
+.statistics {
     display: flex;
 }
 
-.max-score, .count-win, .count-game
-{
+.max-score,
+.count-win,
+.count-game {
     background-color: #0e250a;
     margin-right: 10px;
     text-align: center;
 }
 
-.statistics__text
-{
+.statistics__text {
     font-size: 28px;
 }
 
-.line
-{
+.line {
     height: 1px;
     background-color: #243e25;
 }
 
-.list-settings
-{
+.list-settings {
     position: absolute;
     top: 0;
     left: 0;
@@ -231,8 +210,7 @@
 }
 
 
-.menu__item 
-{
+.menu__item {
     width: 100%;
     margin-top: 8px;
     margin-bottom: 8px;
@@ -246,33 +224,30 @@
     border-bottom: 3px solid #0a080b;
 }
 
-.item__title 
-{
+.item__title {
     color: #dac8e7;
 }
 
-.item__subtitle 
-{
+.item__subtitle {
     color: #7c6b88;
 }
 
-.menu
-{
+.menu {
     width: 80%;
 }
 
-.lobby-link{
+.lobby-link {
     font-size: 16px;
     text-transform: none;
 }
 
-.avatar__container{
+.avatar__container {
     display: flex;
     align-items: center;
     padding-right: 5px;
 }
 
-.player__button{
+.player__button {
     background-color: #1a161d;
     font-size: 16px;
 }

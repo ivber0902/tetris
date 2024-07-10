@@ -1,5 +1,7 @@
 function gameEnd(score) {
-    sendResult(score).then(() => {});
+    localStorage.Gamewidth = 10;
+    localStorage.Gameheight = 20;
+    sendResult(score).then(() => { });
 }
 
 async function sendResult(score) {

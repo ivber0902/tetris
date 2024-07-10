@@ -22,12 +22,12 @@ join:
 menu:
     path: /menu
     controller: App\Controller\GameController::menu
-select_mode:
-    path: /select_mode
-    controller: App\Controller\GameController::selectMode
+select_multiplayer_mode:
+    path: /select_multiplayer_mode
+    controller: App\Controller\GameController::selectMultiplayerMode
 select_classic_mode:
     path: /select_classic_mode
-    controller: App\Controller\GameController::selectClassicMode
+    controller: App\Controller\GameController::selectDif
 select_solo_mode:
     path: /select_solo_mode
     controller: App\Controller\GameController::selectSoloMode
@@ -40,7 +40,12 @@ game_over:
 game:
     path: /game
     controller: App\Controller\GameController::game
-
+blitz:
+    path: /blitz
+    controller: App\Controller\GameController::blitz
+l40:
+    path: /l40
+    controller: App\Controller\GameController::l40
 profile:
     path: /profile/{login}
     controller: App\Controller\PlayerController::profile
