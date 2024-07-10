@@ -1,34 +1,42 @@
 package main
 
 import (
+	"WebSocket/lobby"
 	"github.com/gorilla/websocket"
 	"log"
 )
 
 type LobbyList struct {
 	conn   map[*websocket.Conn]bool
-	new    chan *Lobby
-	update chan *Lobby
-	list   []*Lobby
+	new    chan *lobby.Lobby
+	update chan *lobby.Lobby
+	remove chan *lobby.Lobby
+	list   []*lobby.Lobby
 }
 
 type LobbyListUpdateMessage struct {
-	Type  string `json:"type"`
-	Lobby *Lobby `json:"lobby"`
+	Type  string       `json:"type"`
+	Lobby *lobby.Lobby `json:"lobby"`
 }
+
+const (
+	NewLobbyListUpdateMessage    = "new"
+	UpdateLobbyListUpdateMessage = "update"
+	RemoveLobbyListUpdateMessage = "remove"
+)
 
 func (l *LobbyList) Init() {
 	l.conn = make(map[*websocket.Conn]bool)
-	l.new = make(chan *Lobby)
-	l.update = make(chan *Lobby, 1024)
+	l.new = make(chan *lobby.Lobby)
+	l.update = make(chan *lobby.Lobby)
+	l.remove = make(chan *lobby.Lobby)
 }
 
 func (l *LobbyList) Listen() {
+	log.Println("Start LobbyList listening")
 	for {
-		log.Println("Listening lobby")
 		select {
 		case lobby, ok := <-l.new:
-			log.Println("New lobby: ", lobby)
 			if !ok {
 				for conn := range l.conn {
 					conn.WriteMessage(websocket.CloseMessage, []byte{})
@@ -39,18 +47,35 @@ func (l *LobbyList) Listen() {
 			l.list = append(l.list, lobby)
 			for conn := range l.conn {
 				conn.WriteJSON(LobbyListUpdateMessage{
-					Type:  "new",
+					Type:  NewLobbyListUpdateMessage,
 					Lobby: lobby,
 				})
 			}
+			log.Printf("LobbyList: new lobby %s", lobby.ID)
 		case lobby, ok := <-l.update:
 			if ok {
 				for conn := range l.conn {
 					conn.WriteJSON(LobbyListUpdateMessage{
-						Type:  "update",
+						Type:  UpdateLobbyListUpdateMessage,
 						Lobby: lobby,
 					})
 				}
+				log.Printf("LobbyList: update lobby %s", lobby.ID)
+			}
+		case lobby, ok := <-l.remove:
+			if ok {
+				for i := range l.list {
+					if l.list[i] == lobby {
+						l.list = append(l.list[:i], l.list[i+1:]...)
+					}
+				}
+				for conn := range l.conn {
+					conn.WriteJSON(LobbyListUpdateMessage{
+						Type:  RemoveLobbyListUpdateMessage,
+						Lobby: lobby,
+					})
+				}
+				log.Printf("LobbyList: remove lobby %s", lobby.ID)
 			}
 		}
 	}
@@ -85,7 +110,7 @@ func (l *LobbyList) ListenConnection(conn *websocket.Conn) {
 func (l *LobbyList) SendAll(conn *websocket.Conn) {
 	for _, lobby := range l.list {
 		conn.WriteJSON(LobbyListUpdateMessage{
-			Type:  "update",
+			Type:  UpdateLobbyListUpdateMessage,
 			Lobby: lobby,
 		})
 	}

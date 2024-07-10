@@ -79,17 +79,17 @@
                 <div class="max-score">
                     <p class="statistics__text">максимум очков</p>
                     <div class="line"></div>
-                    <p>14100</p>
+                    <p>{{player.maxScore ?? 'her'}}</p>
                 </div>
                 <div class="count-win">
                     <p class="statistics__text">всего побед</p>
                     <div class="line"></div>
-                    <p>11</p>
+                    <p>{{player.winCount ?? 'her'}}</p>
                 </div>
                 <div class="count-game">
                     <p class="statistics__text">всего игр</p>
                     <div class="line"></div>
-                    <p>2</p>
+                    <p>{{player.gameCount ?? 'her'}}</p>
                 </div>               
             </div>
         </div>

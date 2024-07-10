@@ -1,6 +1,7 @@
 package main
 
 import (
+	lobby2 "WebSocket/lobby"
 	"github.com/gorilla/websocket"
 	"log"
 	"net/http"
@@ -15,16 +16,17 @@ var upgrader = websocket.Upgrader{
 type Server struct {
 	Lobbies   map[string]*LobbyConnection
 	LobbyList LobbyList
+	Games     map[string]*GameConnection
 }
 
 func (server *Server) HandleConnection(w http.ResponseWriter, r *http.Request, clientIP string) {
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
-		log.Println(err)
+		log.Println("Server HandleConnection:", err)
 		return
 	}
 
-	log.Println("Connect", clientIP)
+	log.Printf("Server HandleConnection: Connecting to %s....", clientIP)
 
 	lobbyID := r.URL.Query().Get("lobby")
 
@@ -37,20 +39,33 @@ func (server *Server) HandleConnection(w http.ResponseWriter, r *http.Request, c
 		go lobby.Init()
 
 		server.LobbyList.new <- lobby.info
-	}
-	log.Println("Created new player")
 
-	// for player := range lobby.players {
-	// 	if clientIP == player.ip {
-	// 		delete(lobby.players, player)
-	// 	}
-	// }
+		log.Printf("Server HandleConnection: Lobby %s created by player (IP: %s)", lobby.id, clientIP)
+	}
+
+	for player := range lobby.players {
+		if clientIP == player.ip {
+			player.conn.Close()
+			player.conn = conn
+			player.send = make(chan *lobby2.Lobby)
+			player.isOpen = true
+
+			go player.readLoop()
+			go player.writeLoop()
+
+			log.Printf("Server HandleConnection: Player %d (IP: %s) is reconnecting to the lobby %s", player.id, player.ip, lobby.id)
+			return
+		}
+	}
+
+	log.Printf("Server HandleConnection: Player (IP: %s) is joining the lobby %s", clientIP, lobby.id)
 
 	player := &PlayerConnection{
-		lobby: lobby,
-		conn:  conn,
-		send:  make(chan *Lobby),
-		ip:    clientIP,
+		lobby:  lobby,
+		conn:   conn,
+		send:   make(chan *lobby2.Lobby),
+		ip:     clientIP,
+		isOpen: true,
 	}
 	lobby.connect <- player
 

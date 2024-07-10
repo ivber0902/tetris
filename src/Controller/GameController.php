@@ -18,7 +18,12 @@ class GameController extends AbstractController
     public function menu(): Response
     {
         $securityUser = $this->getUser();
-        return $this->render('menu.html.twig', ["user" => $securityUser]);
+        if($securityUser === null){
+            return $this->render('menu.html.twig', ["user" => $securityUser]);
+        }
+        $user = $this->userService->findUser($securityUser->getId());
+        $player = $user->getPlayer();
+        return $this->render('menu.html.twig', ["user" => $securityUser, "player" => $player]);
     }
     public function gameOver(Request $request): Response
     {
@@ -40,15 +45,23 @@ class GameController extends AbstractController
     {
         return $this->render('game.html.twig');
     }
-    public function selectMode(): Response
+    public function blitz(): Response
+    {
+        return $this->render('blitz.html.twig');
+    }
+    public function l40(): Response
+    {
+        return $this->render('l40.html.twig');
+    }
+    public function selectMultiplayerMode(): Response
     {
         $securityUser = $this->getUser();
         if ($securityUser === null) {
             return $this->redirectToRoute('login');
         }
-        return $this->render('select-mode.html.twig', ["user" => $securityUser]);
+        return $this->render('select-multiplayer-mode.html.twig', ["user" => $securityUser]);
     }
-    public function selectClassicMode(): Response
+    public function selectDif(): Response
     {
         $securityUser = $this->getUser();
         return $this->render('select-classic-mode.html.twig', ["user" => $securityUser]);
@@ -96,6 +109,7 @@ class GameController extends AbstractController
             return $this->redirectToRoute('login');
         }
         $user = $this->userService->findUser($securityUser->getId());
-        return $this->render('lobby.html.twig', ["user" => $user]);
+        $player = $user->getPlayer();
+        return $this->render('lobby.html.twig', ["user" => $user, "player" => $player]);
     }
 }
