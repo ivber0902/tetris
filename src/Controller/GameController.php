@@ -18,7 +18,12 @@ class GameController extends AbstractController
     public function menu(): Response
     {
         $securityUser = $this->getUser();
-        return $this->render('menu.html.twig', ["user" => $securityUser]);
+        if($securityUser === null){
+            return $this->render('menu.html.twig', ["user" => $securityUser]);
+        }
+        $user = $this->userService->findUser($securityUser->getId());
+        $player = $user->getPlayer();
+        return $this->render('menu.html.twig', ["user" => $securityUser, "player" => $player]);
     }
     public function gameOver(Request $request): Response
     {
@@ -96,6 +101,7 @@ class GameController extends AbstractController
             return $this->redirectToRoute('login');
         }
         $user = $this->userService->findUser($securityUser->getId());
-        return $this->render('lobby.html.twig', ["user" => $user]);
+        $player = $user->getPlayer();
+        return $this->render('lobby.html.twig', ["user" => $user, "player" => $player]);
     }
 }
