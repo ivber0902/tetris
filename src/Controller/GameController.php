@@ -76,7 +76,12 @@ class GameController extends AbstractController
     public function selectSoloMode(): Response
     {
         $securityUser = $this->getUser();
-        return $this->render('select-solo-mode.html.twig', ["user" => $securityUser]);
+        if($securityUser === null){
+            return $this->render('select-solo-mode.html.twig', ["user" => $securityUser]);
+        }
+        $user = $this->userService->findUser($securityUser->getId());
+        $player = $user->getPlayer();
+        return $this->render('select-solo-mode.html.twig', ["user" => $securityUser, "player" => $player]);
     }
     public function about(): Response
     {

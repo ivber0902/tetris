@@ -6,7 +6,12 @@
         </div>
         <div class="user-profile__exit">
             <button class="exit">Exit</button>
-            <a class="full-profile" href="/">Profile</a>
+            {% if not user or not user.login %}
+                <a class="full-profile" href="/">Profile</a>
+            {% else %}
+                <a class="full-profile" href="/profile/{{user.login}}">Profile</a>
+            {% endif %}
+            
         </div>  
     </div>
     <div class="statistics">
