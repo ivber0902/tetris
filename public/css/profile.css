@@ -88,8 +88,15 @@
     white-space: nowrap
 }
 
+.wrapper{
+    max-width: 65%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
 .list-score {
-    width: 65%;
+    width: 100%;
     max-height: 745px;
     overflow-y: scroll;
 }
@@ -133,4 +140,25 @@
 .score__description {
     color: #7c6b88;
     font-size: 28px;
+}
+
+.back{
+    margin-top: 20px;
+    margin-right: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #242424;
+    border-top: 3px solid #3d3d3d;
+    border-right: 3px solid #181818;
+    border-bottom: 3px solid #0e0e0e;
+    box-shadow: 0 0 8px #000;
+    color: #c9c9c9;
+    max-width: 160px;
+} 
+
+.link_back{
+    padding: 8px;
+    font-size: 32px;
+    color: #fff;
 }

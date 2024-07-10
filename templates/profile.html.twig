@@ -26,40 +26,46 @@
                 </div>
             </div>
         </div>
-        <div class="list-score">
-            <div class="score">
-                <p class="score__title">Последний результат</p>
-                <p class="score__description">В последней игре ты набрад 1000 очков</p>
+        <div class="wrapper">
+            <div class="list-score">
+                <div class="score">
+                    <p class="score__title">Последний результат</p>
+                    <p class="score__description">В последней игре ты набрад 1000 очков</p>
+                </div>
+                <div class="score">
+                    <p class="score__title">Максимальный результат в одиночной игре</p>
+                    <p class="score__description">За самую лучшую игру в одиночном режиме ты набрал {{ player.maxScore }} очков</p>
+                </div>
+                <div class="score">
+                    <p class="score__title">Максимальный результат в онлайн игре</p>
+                    <p class="score__description">За самую лучшую игру в мультиплеерном режиме ты набрал 10000 очков</p>
+                </div>
+                <div class="score">
+                    <p class="score__title">Средний результат</p>
+                    <p class="score__description">В среднем за игру ты набираешт по {{ player.averageScore }} очков</p>
+                </div>
+                <div class="score">
+                    <p class="score__title">Общий результат</p>
+                    <p class="score__description">За все игры ты заработал {{ player.totalScore }} очков</p>
+                </div>
+                <div class="score">
+                    <p class="score__title">Режим "40 ЛИНИЙ"</p>
+                    <p class="score__description">Быстрее всего ты прощел этот режим за 1 минуту 45 секунд</p>
+                </div>
+                <div class="score">
+                    <p class="score__title">Режим "БЛИЦ"</p>
+                    <p class="score__description">Самое большое количество очков в этом режиме 3300</p>
+                </div>
+                <div class="score">
+                    <p class="score__title">Режим "БОСС"</p>
+                    <p class="score__description">Ты смог победить босса 17 раз</p>
+                </div>
             </div>
-            <div class="score">
-                <p class="score__title">Максимальный результат в одиночной игре</p>
-                <p class="score__description">За самую лучшую игру в одиночном режиме ты набрал {{ player.maxScore }} очков</p>
-            </div>
-            <div class="score">
-                <p class="score__title">Максимальный результат в онлайн игре</p>
-                <p class="score__description">За самую лучшую игру в мультиплеерном режиме ты набрал 10000 очков</p>
-            </div>
-            <div class="score">
-                <p class="score__title">Средний результат</p>
-                <p class="score__description">В среднем за игру ты набираешт по {{ player.averageScore }} очков</p>
-            </div>
-            <div class="score">
-                <p class="score__title">Общий результат</p>
-                <p class="score__description">За все игры ты заработал {{ player.totalScore }} очков</p>
-            </div>
-            <div class="score">
-                <p class="score__title">Режим "40 ЛИНИЙ"</p>
-                <p class="score__description">Быстрее всего ты прощел этот режим за 1 минуту 45 секунд</p>
-            </div>
-            <div class="score">
-                <p class="score__title">Режим "БЛИЦ"</p>
-                <p class="score__description">Самое большое количество очков в этом режиме 3300</p>
-            </div>
-            <div class="score">
-                <p class="score__title">Режим "БОСС"</p>
-                <p class="score__description">Ты смог победить босса 17 раз</p>
+            <div class="back">
+                <p class="link_back">Назад</p>
             </div>
         </div>
     </main>
 </body>
+<script src="/js/profile.js"></script>
 {% endblock%}
