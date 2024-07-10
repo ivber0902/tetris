@@ -56,10 +56,12 @@ class GameController extends AbstractController
     public function selectMultiplayerMode(): Response
     {
         $securityUser = $this->getUser();
-        if ($securityUser === null) {
-            return $this->redirectToRoute('login');
+        if($securityUser === null){
+            return $this->render('select-multiplayer-mode.html.twig', ["user" => $securityUser]);
         }
-        return $this->render('select-multiplayer-mode.html.twig', ["user" => $securityUser]);
+        $user = $this->userService->findUser($securityUser->getId());
+        $player = $user->getPlayer();
+        return $this->render('select-multiplayer-mode.html.twig', ["user" => $securityUser, "player" => $player]);
     }
     public function selectDif(): Response
     {

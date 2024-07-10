@@ -1,0 +1,29 @@
+<div class="user-profile">
+    <div class="user-profile__header">
+        <div class="user-profile__player">
+            <img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
+            <p class="profile__nickname">{{user.login ?? 'славянин'}}</p>
+        </div>
+        <div class="user-profile__exit">
+            <button class="exit">Exit</button>
+            <a class="full-profile" href="/">Profile</a>
+        </div>  
+    </div>
+    <div class="statistics">
+        <div class="max-score">
+            <p class="statistics__text">максимум очков</p>
+            <div class="line"></div>
+            <p>{{player.maxScore ?? 'her'}}</p>
+        </div>
+        <div class="count-win">
+            <p class="statistics__text">всего побед</p>
+            <div class="line"></div>
+            <p>{{player.winCount ?? 'her'}}</p>
+        </div>
+        <div class="count-game">
+            <p class="statistics__text">всего игр</p>
+            <div class="line"></div>
+            <p>{{player.gameCount ?? 'her'}}</p>
+        </div>               
+    </div>
+</div>
