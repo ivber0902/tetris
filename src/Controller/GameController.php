@@ -36,22 +36,6 @@ class GameController extends AbstractController
             'maxScore' => $player->getMaxScore(),
         ]);
     }
-    public function blitzGameOver(Request $request): Response
-    {
-        $securityUser = $this->getUser();
-        if ($securityUser === null) {
-            return $this->render('blitz-game-over.html.twig', [
-                'lastScore' => $request->get('score', '0'),
-                'maxScore' => $request->get('score', '0'),
-            ]);
-        }
-        $user = $this->userService->findUser($securityUser->getId());
-        $player = $user->getPlayer();
-        return $this->render('blitz-game-over.html.twig', [
-            'lastScore' => $player->getLastScore(),
-            'maxScore' => $player->getMaxScore(),
-        ]);
-    }
     public function game(): Response
     {
         return $this->render('game.html.twig');
@@ -60,15 +44,19 @@ class GameController extends AbstractController
     {
         return $this->render('blitz.html.twig');
     }
-    public function selectMode(): Response
+    public function l40(): Response
+    {
+        return $this->render('l40.html.twig');
+    }
+    public function selectMultiplayerMode(): Response
     {
         $securityUser = $this->getUser();
         if ($securityUser === null) {
             return $this->redirectToRoute('login');
         }
-        return $this->render('select-mode.html.twig', ["user" => $securityUser]);
+        return $this->render('select-multiplayer-mode.html.twig', ["user" => $securityUser]);
     }
-    public function selectClassicMode(): Response
+    public function selectDif(): Response
     {
         $securityUser = $this->getUser();
         return $this->render('select-classic-mode.html.twig', ["user" => $securityUser]);

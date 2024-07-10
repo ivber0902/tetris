@@ -3,6 +3,7 @@ let GAME = {
     height: localStorage.Gameheight,
     playTime: new Date(),
     startTime: new Date(),
+    stopTimer: false,
     figuresQueueSize: 4,
     init(player, ui) {
         let i = 0;
@@ -27,14 +28,10 @@ let GAME = {
         });
     },
     drawDowncount(player, field, ui, fromIndex, toIndex, func) {
+        player.num = fromIndex;
         if (fromIndex >= toIndex) {
             setTimeout(() => {
-                this.clear(field);
-                player.drawField(this.width, this.height);
-                player.drawOtherField(this.width, this.height);
-                field.fillStyle = "white";
-                field.font = "96px Russo One";
-                field.fillText(fromIndex, ui.field.width / 2 - 36, ui.field.height / 2);
+                player.drawNumber();
                 this.drawDowncount(player, field, ui, fromIndex - 1, 1, func);
             }, 1000);
         } else {
@@ -80,14 +77,16 @@ let GAME = {
         player.ui.time = new Date() - this.startTime;
         if (player.isActive) {
             let nowTime = new Date();
-            if (nowTime - this.startTime >= 2 * 60 * 1000) {
-                player.isActive = false;
-                this.blitzGameEnd(player.score);
-            } else 
+            if ((!this.stopTimer) && (nowTime - this.startTime >= (2 * 60 - 11) * 1000)) {
+                this.stopTimer = true;
+                this.drawDowncount(player, field, player.ui, 10, 1, () => {
+                    player.isActive = false;
+                    gameEnd(player.score)
+                })
+            }
             this.clear(field);
             player.drawField(this.width, this.height);
             player.drawOtherField(this.width, this.height);
-            document.querySelector('.game__score').innerHTML = player.score;
             let updateTime = new Date();
             updateTime -= this.playTime;
             if (updateTime * player.nitro >= player.tickTime) {
@@ -96,28 +95,11 @@ let GAME = {
             }
 
             player.updatePosition();
+            if (this.stopTimer) {
+                player.drawNumber()
+            }
             requestAnimationFrame(() => this.play(player));
         }
 
-    },
-     blitzGameEnd(score) {
-        localStorage.Gamewidth = 10;
-        localStorage.Gameheight = 20;
-        this.blitzSendResult(score).then(() => {});
-    },
-    
-    async blitzSendResult(score) {
-        let response = await fetch('/api/statistics', {
-            method: 'POST',
-            body: JSON.stringify({
-                score: score
-            })
-        });
-        console.log(response);
-        if (response.ok) {
-            window.location.href = '/blitz_game_over'
-        } else {
-            window.location.href = "/blitz_game_over?score=" + score;
-        }
     }
 }

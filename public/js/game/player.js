@@ -4,6 +4,7 @@ class Player {
         this.field = [];
         this.nitro = 1;
         this.lvl = 0;
+        this.num = 10;
         this.tickTime = 0;
         this.lines = 0;
         this.figureCount = 0;
@@ -94,10 +95,7 @@ class Player {
                 this.figureCount += 1;
             } else {
                 this.isActive = false;
-                if (this.mode === 'blitz') {
-                    GAME.blitzGameEnd(this.score)
-                } else
-                    gameEnd(this.score);
+                gameEnd(this.score);
                 return true;
             }
 
@@ -394,13 +392,21 @@ class Player {
         document.addEventListener('keydown', (e) => {
             if (e.code === 'KeyP') {
                 if (!this.isActive) {
-                    GAME.drawDowncount(this, field, this.ui, 3, 1, () => { this.isActive = !this.isActive; })
-                } else
-                    this.isActive = !this.isActive;
+                    GAME.drawDowncount(this, field, this.ui, 3, 1, () => { this.isActive = true; GAME.play(this) })
+                } else {
+                    this.isActive = false;
+                }
             }
         });
     }
-
+    drawNumber() {
+        field.clearRect(0, 0, canvas.width, canvas.height);
+        this.drawField(this.field[0].length, this.field.length);
+        this.drawOtherField(this.field[0].length, this.field.length);
+        field.fillStyle = "white";
+        field.font = "96px Russo One";
+        field.fillText(player.num, this.ui.field.width / 2 - 36, this.ui.field.height / 2);
+    }
     addBufferListener() {
         document.addEventListener('keyup', (e) => {
             if (this.isActive && e.code === 'ShiftLeft' && this.isShifter) {

@@ -29,29 +29,38 @@
 				</div>
 				<div class="score-wrapper">
 					<div class="score-value-wrapper">
-						<p class="title-score">счет: </p>
-						<p class="game__score"></p>
+						<p class="title-score">счет:
+						</p>
+						<p class="game__score">0</p>
 					</div>
 					<div class="score-value-wrapper">
-						<p class="title-level">уровень: </p>
-						<p class="game__level"></p>
+						<p class="title-level">уровень:
+						</p>
+						<p class="game__level">0</p>
 					</div>
 					<div class="score-value-wrapper">
-						<p class="title-time">время: </p>
-						<p class="game__time"></p>
+						<p class="title-lines">количество линий:
+						</p>
+						<p class="game__lines">0</p>
 					</div>
 				</div>
 			</div>
-
-			<p class="game__score"></p>
-			<p class="game__level"></p>
-			<p class="game__time"></p>
 		</main>
+		<div class="instruction">
+			<h1>инструкция</h1>
+			<p class="instruction__text">движения по сторонам - соответствующие стрелочки или клавиши "ф" и "в"</p>
+			<p class="instruction__text">ускорение падения - стрелочка вниз или кнопка "ы"</p>
+			<p class="instruction__text">моментальная установка - пробел</p>
+			<p class="instruction__text">поворот фигуры по часовой стрелке - клавиша "ц"</p>
+			<p class="instruction__text">использование буффера - левый шифт (фигуры поменяются местами, обратно можно будет поменять только следующую фигуру)</p>
+			<p class="instruction__text">пауза - клавиша "з"</p>
+		</div>
 	</body>
 	<script src="/js/game/player.js"></script>
 	<script src="/js/game/ui.js"></script>
 	<script src="/js/game/figures.js"></script>
 	<script src="/js/game/images.js"></script>
-	<script src="/js/game/blitz-game.js"></script>
-	<script src="/js/game/init-blitz-game.js"></script>
+	<script src="/js/game/l40-game.js"></script>
+	<script src="/js/game/init-game.js"></script>
+	<script src="/js/game/game-end.js"></script>
 {% endblock %}
