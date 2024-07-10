@@ -189,7 +189,8 @@ function disconnectPlayer(kickId){
 
 ws.onclose = () => {
     console.log(startGameFlag, 'флаг выхода')
+    let reason = "her"
     if(!(startGameFlag)){
-        window.location.href = "/menu"
+        window.location.href = `/menu?reason=${reason}`
     }
 }
