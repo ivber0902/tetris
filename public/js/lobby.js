@@ -82,15 +82,15 @@ let settings = {
     ],
 }
 
-
-addEventListener("DOMContentLoaded", () => {
-    document.querySelector(".exit").addEventListener("click", (e) => close(e));
-    document.querySelector(".profile__avatar").addEventListener("click", (e) => open(e));
     let selectSize = document.querySelector(".settings__size")
     let selectMusic = document.querySelector(".settings__music")
     let selectDifficulty = document.querySelector(".settings__complexity")
     let selectBg = document.querySelector(".settings__background")
     let listSettings = document.querySelector('.list-settings');
+
+addEventListener("DOMContentLoaded", () => {
+    document.querySelector(".exit").addEventListener("click", (e) => close(e));
+    document.querySelector(".profile__avatar").addEventListener("click", (e) => open(e));
     let menu = document.querySelector('.menu');
     listSettings.addEventListener('click', ()=>{
         listSettings.style.display = "none";
@@ -102,28 +102,28 @@ addEventListener("DOMContentLoaded", () => {
         settings.size.forEach((size) => {
             menu.appendChild(createMenuItem(size.title, size.description));
         })
-        ChoiseSetting(settings.size, inputSize, "play_field");
+        ChoiseSetting(settings.size, viewInputSize, "play_field");
     })
     selectMusic.addEventListener('click', ()=>{
         listSettings.style.display = "flex"
         settings.music.forEach((sound) => {
             menu.appendChild(createMenuItem(sound.title, sound.description));
         })
-        ChoiseSetting(settings.music, inputMusic, "music");
+        ChoiseSetting(settings.music, viewInputMusic, "music");
     })
     selectDifficulty.addEventListener('click', ()=>{
         listSettings.style.display = "flex"
         settings.difficulty.forEach((difficulty) => {
             menu.appendChild(createMenuItem(difficulty.title, difficulty.description));
         })
-        ChoiseSetting(settings.difficulty, inputDifficulty, "difficulty");
+        ChoiseSetting(settings.difficulty, viewInputDifficulty, "difficulty");
     })
     selectBg.addEventListener('click', ()=>{
         listSettings.style.display = "flex"
         settings.bg.forEach((bg) => {
             menu.appendChild(createMenuItem(bg.title, bg.description));
         })
-        ChoiseSetting(settings.bg, inputBg, 'background');
+        ChoiseSetting(settings.bg, viewInputBg, 'background');
     })
 
     function ChoiseSetting(elem, input, param) {
@@ -175,35 +175,39 @@ function open()
     profile.style.display = 'inline';
 }
 
-function createPlayer(name, hiddenValue) {
+function createPlayer(hiddenValue, createKickButton) {
     const player = document.createElement('div');
     player.classList.add('player');
+    player.setAttribute('id', hiddenValue)
 
     const playerName = document.createElement('p');
     playerName.classList.add('player__name');
-    playerName.textContent = name;
 
     const playerAvatar = document.createElement('img');
     playerAvatar.src = "/images/avatar-placeholder.png";
     playerAvatar.alt = "avatar";
     playerAvatar.classList.add('profile__avatar');
-    const playerButton = document.createElement('button');
-    playerButton.type = 'button';
-    playerButton.classList.add('player__button');
-    playerButton.textContent = 'ВЫГНАТЬ';
 
     const avatarContainer = document.createElement('div');
     avatarContainer.classList.add('avatar__container');
     avatarContainer.appendChild(playerAvatar);
-    avatarContainer.appendChild(playerButton);
 
     const hiddenInput = document.createElement('input');
     hiddenInput.type = 'hidden';
     hiddenInput.value = hiddenValue;
-    hiddenInput.classList.add('player__hidden-input');
+    hiddenInput.classList.add('player__hidden-id');
 
     player.appendChild(playerName);
     player.appendChild(avatarContainer);
     player.appendChild(hiddenInput);
+
+    if(createKickButton){
+        const playerButton = document.createElement('button');
+        playerButton.type = 'button';
+        playerButton.value = hiddenValue;
+        playerButton.classList.add('kick__button');
+        playerButton.textContent = 'ВЫГНАТЬ'; 
+        avatarContainer.appendChild(playerButton);
+    }
     return player;
 }
