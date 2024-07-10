@@ -18,6 +18,7 @@ let GAME = {
         player.initEventListeners();
         player.updateUI();
         ui.initMusic();
+        player.updateLvl()
     },
     start(player, field, ui) {
         this.onLoadImages(() => {

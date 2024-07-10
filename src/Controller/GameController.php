@@ -63,6 +63,9 @@ class GameController extends AbstractController
     public function selectMode(): Response
     {
         $securityUser = $this->getUser();
+        if ($securityUser === null) {
+            return $this->redirectToRoute('login');
+        }
         return $this->render('select-mode.html.twig', ["user" => $securityUser]);
     }
     public function selectClassicMode(): Response
@@ -82,7 +85,25 @@ class GameController extends AbstractController
 
     public function multiplayer(): Response
     {
-        return $this->render('multiplayer.html.twig');
+        $securityUser = $this->getUser();
+        if ($securityUser){
+            $user = $this->userService->findUser($securityUser->getId());
+            return $this->render('multiplayer.html.twig', ["user" => $user]);
+        }
+        else{
+            return $this->redirectToRoute('login');
+        }
+    }
+    public function join(): Response
+    {
+        $securityUser = $this->getUser();
+        if ($securityUser){
+            $user = $this->userService->findUser($securityUser->getId());
+            return $this->render('list_lobby.html.twig', ["user" => $user]);
+        }
+        else{
+            return $this->redirectToRoute('login');
+        }
     }
     public function loginPage(): Response
     {
@@ -91,13 +112,10 @@ class GameController extends AbstractController
     public function lobby(): Response
     {
         $securityUser = $this->getUser();
-        if ($securityUser){
-            $user = $this->userService->findUser($securityUser->getId());
-            return $this->render('lobby.html.twig', ["user" => $user]);
-        }
-        else{
+        if ($securityUser === null) {
             return $this->redirectToRoute('login');
         }
-
+        $user = $this->userService->findUser($securityUser->getId());
+        return $this->render('lobby.html.twig', ["user" => $user]);
     }
 }

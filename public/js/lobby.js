@@ -1,19 +1,20 @@
+
 let settings = {
     music: [
         {
-        title: "эхо во тьме",
+        title: "Корабейники",
         description: "мистическая и загадочная композиция, в которой звуки эха на фоне темноты создают атмосферу напряжения и тайны.",
-        value: "https://example.com/track1"
+        value: "/audio/Korobeiniki.wav"
         },
         {
-        title: "лунный вальс",
+        title: "Калинка",
         description: "Романтичная и нежная мелодия, напоминающая танец под лунным светом. Идеальный трек для вечернего романтического настроения.",
-        value: "https://example.com/track2"
+        value: "/audio/kalinka.mp3"
         },
         {
-        title: "путешествие во времени",
+        title: "Stop narcotics",
         description: "эпическая и кинематографичная музыка, создающая ощущение путешествия сквозь временные измерения и пространство.",
-        value: "https://example.com/track3"
+        value: "/audio/stop_narcotics.mp3"
         },
     ],
     size: [
@@ -54,48 +55,35 @@ let settings = {
         {
             title: "средний",
             description: "ты уже что-то можешь",
-            value: 2
+            value: 5
         },
         {
             title: "имбоссссибл",
             description: "ты просто гений тетриса",
-            value: 3
+            value: 10
         }
     ],
     bg: [
         {
             title: "ISPRING",
             description: "Фон компании Ispting",
-            value: "https://example.com/track1"
+            value: "/images/bg.png"
         },
         {
-            title: "Pолитех",
-            description: "Фон первого корпуса",
-            value: "https://example.com/track1"
-        },
-        {
-            title: "IOшкар-Ола",
+            title: "Йошкар-Ола",
             description: "Фон Йошкар-Олы",
-            value: "https://example.com/track1"
+            value: "/images/backgrounds/io.jpg"
+        },
+        {
+            title: "Тетрис",
+            description: "Кубики тетриса",
+            value: "/images/backgrounds/square.jpg"
         }
     ],
 }
 
-let settingLobby = {
-    id: "",
-    players: [],
-    settings: {
-      music: "/audio/Korobeiniki.wav",
-      background: "/images/bg.png",
-      difficulty: 1,
-      play_field: {
-        width: 10,
-        height: 20
-      }
-    }
-}
 
-addEventListener("DOMContentLoaded", (event) => {
+addEventListener("DOMContentLoaded", () => {
     document.querySelector(".exit").addEventListener("click", (e) => close(e));
     document.querySelector(".profile__avatar").addEventListener("click", (e) => open(e));
     let selectSize = document.querySelector(".settings__size")
@@ -104,38 +92,33 @@ addEventListener("DOMContentLoaded", (event) => {
     let selectBg = document.querySelector(".settings__background")
     let listSettings = document.querySelector('.list-settings');
     let menu = document.querySelector('.menu');
-    let inputSize = document.getElementById('size');
-    let inputMusic = document.getElementById('music');
-    let inputBg = document.getElementById('bg');
-    let inputDifficulty = document.getElementById('difficulty');     
-
     listSettings.addEventListener('click', ()=>{
         listSettings.style.display = "none";
         deleteMenuItem(menu)
     })
 
-    selectSize.addEventListener('click', (e)=>{
+    selectSize.addEventListener('click', ()=>{
         listSettings.style.display = "flex"
         settings.size.forEach((size)=>{
             menu.appendChild(createMenuItem(size.title, size.description));
         })
         ChoiseSetting(settings.size, inputSize, "play_field");
     })
-    selectMusic.addEventListener('click', (e)=>{
+    selectMusic.addEventListener('click', ()=>{
         listSettings.style.display = "flex"
         settings.music.forEach((sound)=>{
             menu.appendChild(createMenuItem(sound.title, sound.description));
         })
         ChoiseSetting(settings.music, inputMusic, "music");
     })
-    selectDifficulty.addEventListener('click', (e)=>{
+    selectDifficulty.addEventListener('click', ()=>{
         listSettings.style.display = "flex"
         settings.difficulty.forEach((difficulty)=>{
             menu.appendChild(createMenuItem(difficulty.title, difficulty.description));
         })
         ChoiseSetting(settings.difficulty, inputDifficulty, "difficulty");
     })
-    selectBg.addEventListener('click', (e)=>{
+    selectBg.addEventListener('click', ()=>{
         listSettings.style.display = "flex"
         settings.bg.forEach((bg)=>{
             menu.appendChild(createMenuItem(bg.title, bg.description));
@@ -149,9 +132,7 @@ addEventListener("DOMContentLoaded", (event) => {
         settings.forEach((btn, index)=>{
             btn.addEventListener('click', ()=>{
                 listSettings.style.display = "none"
-                input.innerHTML = elem[index].title   
-                inputForm = elem[index].value
-                settingLobby.settings[param] = inputForm;
+                settingLobby.settings[param] = elem[index].value;
                 sendLobbySettings(settingLobby)
             })
         })
@@ -183,19 +164,19 @@ function createMenuItem(title, subtitle) {
     return div;
 }
 
-function close(e)
+function close()
 {
     const profile = document.querySelector('.user-profile');
     profile.style.display = 'none';
 }
 
-function open(e)
+function open()
 {
     const profile = document.querySelector('.user-profile');
     profile.style.display = 'inline';
 }
 
-function createPlayer(name) {
+function createPlayer(name, hiddenValue) {
     const player = document.createElement('div');
     player.classList.add('player');
 
@@ -217,8 +198,13 @@ function createPlayer(name) {
     avatarContainer.appendChild(playerAvatar);
     avatarContainer.appendChild(playerButton);
 
+    const hiddenInput = document.createElement('input');
+    hiddenInput.type = 'hidden';
+    hiddenInput.value = hiddenValue;
+    hiddenInput.classList.add('player__hidden-input');
+
     player.appendChild(playerName);
     player.appendChild(avatarContainer);
-
+    player.appendChild(hiddenInput);
     return player;
 }

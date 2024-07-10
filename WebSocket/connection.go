@@ -12,6 +12,7 @@ const (
 	UpdateRequestType     = "update"
 	GetRequestType        = "get"
 	DisconnectRequestType = "disconnect"
+	GameRunRequestType    = "run"
 )
 
 type ConnectionJSONRequest struct {

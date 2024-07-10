@@ -1,59 +1,130 @@
 const urlParams = new URLSearchParams(window.location.search);
+const host = window.location.hostname;
 const lobbyId = urlParams.get('lobby');
 
-let wsUrl = "ws://127.0.0.1:8080/lobby";
+let inputSize = document.getElementById('size');
+let inputMusic = document.getElementById('music');
+let inputBg = document.getElementById('bg');
+let inputDifficulty = document.getElementById('difficulty');    
+
+let wsUrl = "ws://" + host + ":8080/lobby";
 if (lobbyId) {
     wsUrl += "?lobby=" + lobbyId;
 }
 let ws = new WebSocket(wsUrl);
 let playerId = parseInt(document.querySelector('.player_id').value);
 let listPlayers = document.querySelector('.list-players');
-let lobbyLink = document.querySelector('.lobby-link').innerHTML;
+let lobbyLink = "http://" + window.location.host + "/lobby";
 let selectSize = document.querySelector(".settings__size");
 let selectMusic = document.querySelector(".settings__music")
 let selectDifficulty = document.querySelector(".settings__complexity")
 let selectBg = document.querySelector(".settings__background");
 let triangle = document.querySelectorAll(".triangle");
-let startGame = document.querySelector(".start-game");
+let startGame = document.querySelector(".start-game")
 let buttons;
 let functionKickPlayer;
-
-addEventListener("DOMContentLoaded", (event) => {   
+let players;
+let player;
+let playersBlock;
+let found;
+let foundId;
+let playersName;
+let startGameFlag = false;
+let settingLobby = {
+    id: "",
+    players: [],
+    settings: {
+        music: "/audio/Korobeiniki.wav",
+        background: "/images/bg.png",
+        difficulty: 1,
+        play_field: {
+            width: 10,
+            height: 20,
+        }
+    }
+}
+addEventListener("DOMContentLoaded", () => {
     functionKickPlayer = function KickPlayer(players){ 
         for (let i = 1; i < players.length; i++) { 
             if (buttons[i]){
                 buttons[i].addEventListener('click', ()=>{
                     console.log('playerId = ' + players[i])
+                    let kickId = players[i]
+                    disconnectPlayer(kickId)
                 })  
             }
         }
     }
 })
 
-
+startGame.addEventListener('click', ()=>{
+    startGameFlag = true;
+    ws.send(JSON.stringify({
+        "type": "run",
+    }));
+})
 
 function changeSetting(inSet, outSet){
     outSet = inSet
 }
 
-ws.onmessage = (msg) => {  
+ws.onmessage = (msg) => {
     let data = JSON.parse(msg.data);
+    if(data.game_run){
+        window.location.href = "/multiplayer?lobby=" + data.id;
+    }
+    console.log(data)
+    inputSize.innerHTML = settings.size.find(item => item.value.width === data.settings.play_field.width).title
+    inputMusic.innerHTML = settings.music.find(item => item.value === data.settings.music).title
+    inputBg.innerHTML = settings.bg.find(item => item.value === data.settings.background).title
+    inputDifficulty.innerHTML = settings.difficulty.find(item => item.value === data.settings.difficulty).title
+
     console.log('настройки поля', data)
-    
     if (data.id) {
         console.log(lobbyLink + '?lobby=' + data.id)
         document.querySelector('.lobby-link').innerHTML = '';
-        settingLobby.id = data.id;
+        settingLobby.id = data.id;    
     }
-    deleteMenuItem(listPlayers);
-
+    if (window.location.href === lobbyLink) {
+        history.pushState(null, null, "?lobby=" + data.id)
+    }
     async function foundUser(id) {
         let response = await fetch('/api/player/' + id + '/user', {
             method: 'GET'
         });
         let user = await response.json();
         let login = user.login;
-        listPlayers.appendChild(createPlayer(login));
+        player = createPlayer(login, id);
+        players = listPlayers.querySelectorAll(".player__name");
+        playersid = listPlayers.querySelectorAll('.player');
+        console.log(playersid)
+        found = false
+        foundId = false
+        players.forEach((elem)=>{
+            if( elem.textContent === login){
+                found = true
+            }
+        })
+        for (let i = 0; i < players.length; i++) {
+            let her = playersid[i].querySelector('.player__hidden-input').value
+            for (let j = 0; j < data.players.length; j++) {
+                console.log(her, data.players[j])
+                if (her == data.players[j]){
+                    foundId = true
+                }
+                console.log(foundId)
+            }
+            if(!(foundId)){
+                listPlayers.removeChild(playersid[i])
+            }
+            foundId = false
+        }
+        if(!(found)){
+            listPlayers.appendChild(player)
+        }
+        if(players.length === 4){
+            window.location.href = '/multiplayer'
+        }
     }
 
     async function processPlayers(data) {
@@ -71,8 +142,6 @@ ws.onmessage = (msg) => {
         buttons = document.querySelectorAll('.player__button');      
         functionKickPlayer(data.players);
         if (playerId === data.players[0]) {
-            console.log(buttons);
-            console.log('you are host');
             selectSize.style.pointerEvents = 'auto';
             selectMusic.style.pointerEvents = 'auto';
             selectDifficulty.style.pointerEvents = 'auto';
@@ -101,11 +170,26 @@ ws.onopen = () => {
         "connection": {
             "player_id": playerId
     }}));
-};
+}
 
 function sendLobbySettings(settingLobby){
     ws.send(JSON.stringify({
         "type": "update",
         "updates": settingLobby
     }));
-} 
+}
+
+function disconnectPlayer(kickId){
+    ws.send(JSON.stringify({
+        "type": "disconnect",
+        "connection": {
+            "player_id": kickId       
+    }}));  
+}
+
+ws.onclose = () => {
+    console.log(startGameFlag, 'флаг выхода')
+    if(!(startGameFlag)){
+        window.location.href = "/menu"
+    }
+}

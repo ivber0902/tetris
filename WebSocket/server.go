@@ -13,7 +13,8 @@ var upgrader = websocket.Upgrader{
 }
 
 type Server struct {
-	Lobbies map[string]*LobbyConnection
+	Lobbies   map[string]*LobbyConnection
+	LobbyList LobbyList
 }
 
 func (server *Server) HandleConnection(w http.ResponseWriter, r *http.Request, clientIP string) {
@@ -23,38 +24,55 @@ func (server *Server) HandleConnection(w http.ResponseWriter, r *http.Request, c
 		return
 	}
 
+	log.Println("Connect", clientIP)
+
 	lobbyID := r.URL.Query().Get("lobby")
+
+	log.Println(clientIP, lobbyID)
 	lobby, ok := server.Lobbies[lobbyID]
+	log.Println(ok)
 	if !ok {
-		lobby = newLobbyConnection(clientIP)
+		lobby = newLobbyConnection(server, clientIP)
 		server.Lobbies[lobby.id] = lobby
 		go lobby.Init()
+
+		server.LobbyList.new <- lobby.info
 	}
 	log.Println("Created new player")
 
-	if func() bool {
-		log.Println("Checking if lobby", lobbyID, "is ready")
-		for player := range lobby.players {
-			log.Println(player)
-			if clientIP == player.ip {
-				log.Println("Player is already connected")
-				close(player.send)
-				player.conn = conn
-				player.send = make(chan *Lobby)
-				return false
-			}
-		}
-		return true
-	}() {
-		player := &PlayerConnection{
-			lobby: lobby,
-			conn:  conn,
-			send:  make(chan *Lobby),
-			ip:    clientIP,
-		}
-		lobby.connect <- player
+	for player := range lobby.players {
+		if clientIP == player.ip {
+			player.conn.Close()
+			player.conn = conn
+			player.send = make(chan *Lobby)
+			player.isOpen = true
 
-		go player.readLoop()
-		go player.writeLoop()
+			go player.readLoop()
+			go player.writeLoop()
+			return
+		}
 	}
+
+	player := &PlayerConnection{
+		lobby:  lobby,
+		conn:   conn,
+		send:   make(chan *Lobby),
+		ip:     clientIP,
+		isOpen: true,
+	}
+	lobby.connect <- player
+
+	go player.readLoop()
+	go player.writeLoop()
+}
+
+func (server *Server) ListLobbiesHandler(w http.ResponseWriter, r *http.Request) {
+	conn, err := upgrader.Upgrade(w, r, nil)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	server.LobbyList.AddConnection(conn)
+
+	go server.LobbyList.ListenConnection(conn)
 }

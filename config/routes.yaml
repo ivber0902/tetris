@@ -16,7 +16,9 @@ logout:
 lobby:
     path: /lobby
     controller: App\Controller\GameController::lobby
-
+join:
+    path: /join
+    controller: App\Controller\GameController::join
 menu:
     path: /menu
     controller: App\Controller\GameController::menu
