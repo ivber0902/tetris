@@ -139,7 +139,15 @@
   figures: [1, 2, 3, 4, 5],
   buffer: 3,
   score: 12345,
-  figure_count: 234
+  figure_count: 234,
+  current_figure: {
+    matrix: [],
+    pos: {
+      x: 3,
+      y: 1
+    }
+  },
+  game_over: false
 }
 ```
 
