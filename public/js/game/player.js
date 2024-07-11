@@ -194,20 +194,52 @@ class Player {
         }
     }
 
-    drawOtherField(width, height) {
-        otherField.forEach((elem) => {
-            elem.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
-            for (let row = 0; row < height; row++) {
-                for (let col = 0; col < width; col++) {
-                    elem.getContext('2d').drawImage(
-                        blockField,
+    drawOtherField(width, height, arrayField, canvasField) {
+        canvasField.clearRect(0, 0, canvas.width, canvas.height);
+        for (let row = 0; row < height; row++) {
+            for (let col = 0; col < width; col++) {
+                if (arrayField[row][col] - 1 >= 20)
+                    canvasField.drawImage(
+                        figures[(this.field[row][col] - 1) % 10].shadow,
                         col * this.ui.blockSize,
                         row * this.ui.blockSize,
                         this.ui.blockSize, this.ui.blockSize
                     )
+                else if (arrayField[row][col] === 0) {
+                    canvasField.drawImage(
+                        blockField,
+                        col * this.ui.blockSize,
+                        row * this.ui.blockSize,
+                        this.ui.blockSize,
+                        this.ui.blockSize
+                    )
+                } else {
+                    canvasField.drawImage(
+                        figures[(this.field[row][col] - 1) % 10].block,
+                        col * this.ui.blockSize,
+                        row * this.ui.blockSize,
+                        this.ui.blockSize,
+                        this.ui.blockSize
+                    );
                 }
             }
-        })
+        }
+
+
+
+        // otherField.forEach((elem) => {
+        //     elem.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+        //     for (let row = 0; row < height; row++) {
+        //         for (let col = 0; col < width; col++) {
+        //             elem.getContext('2d').drawImage(
+        //                 blockField,
+        //                 col * this.ui.blockSize,
+        //                 row * this.ui.blockSize,
+        //                 this.ui.blockSize, this.ui.blockSize
+        //             )
+        //         }
+        //     }
+        // })
     }
 
     rotateFigure(matrix) {
