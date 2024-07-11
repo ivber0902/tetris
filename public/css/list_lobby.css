@@ -3,6 +3,7 @@
     margin: 0;
     text-decoration: none;
     user-select: none;
+    border: none;
     font-family: "Russo One", sans-serif;
     font-weight: 400;
     font-size: 32px;
@@ -28,18 +29,20 @@
 {
     width: 40px;
     height: 40px;
+    display: none;
 }
 
-.header 
-{
+.header {
     display: flex;
-    justify-content: space-between;
+    justify-content: end;
     padding: 25px;
 }
 
-.logo 
-{
-    margin-left: 212px;
+.logo {
+    
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
 }
 
 .profile 
@@ -92,6 +95,7 @@
 .item__subtitle 
 {
     color: #7c6b88;
+    font-size: 16px;
 }
 
 .menu
@@ -121,7 +125,9 @@
     align-items: center;
     justify-content: center;
 }
-
+input {
+    outline:none;
+}
 .join
 {
     border: none;
@@ -129,7 +135,7 @@
     padding-left: 15px;
     border-radius: 5px;
     width: 850px;
-    height: 50px;
+    height: 69px;
     background: #222;
     font-family: "Russo One", sans-serif;
     font-size: 32px;

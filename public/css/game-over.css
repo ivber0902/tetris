@@ -5,6 +5,9 @@
     font-weight: 400;
     color: #9CCA95;
     text-transform: uppercase;
+    text-decoration: none;
+    user-select: none;
+    border: none;
 }
 
 .bg {

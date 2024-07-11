@@ -1,0 +1,162 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Russo One", sans-serif;
+    font-weight: 400;
+    color: #9CCA95;
+    text-transform: uppercase;
+    text-decoration: none;
+    user-select: none;
+    border: none;
+}
+
+.bg {
+    min-height: 100vh;
+    width: 100vw;
+    background: url(/images/bg.png) no-repeat;
+    background-size: cover;
+
+}
+.logo {
+    
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+.back {
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    background-color: #242424;
+    border-top: 3px solid #3d3d3d;
+    border-right: 3px solid #181818;
+    border-bottom: 3px solid #0e0e0e;
+    box-shadow: 0 0 8px #000;
+    color: #c9c9c9;
+}
+
+.back__button {
+    padding: 8px;
+    padding-left: 40px;
+}
+.profile {
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.profile__nickname {
+    font-size: 32px;
+    color: #fff;
+    margin: 10px;
+}
+
+.profile__avatar {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.settings {
+    width: 40px;
+    height: 40px;
+    display: none;
+}
+
+.header {
+    display: flex;
+    justify-content: end;
+    padding: 25px;
+}
+
+.link {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    background-color: #243e25;
+    border-top: 3px solid #45794f;
+    border-left: 3px solid #3d6242;
+    border-bottom: 3px solid #162419;
+    border-right: 3px solid #1d3220;
+    padding-right: 20px;
+    text-decoration: none;
+}
+.results-placeholder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.results {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 78%;
+    padding: 20px;
+    gap: 20px;
+}
+
+.result-title {
+    font-size: 32px;
+}
+.results__header {
+    background-color: #0F160D;
+    border-top: 3px solid #45794f;
+    border-left: 3px solid #3d6242;
+    border-bottom: 3px solid #162419;
+    border-right: 3px solid #1d3220;
+
+}
+.players {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
+}
+.player {
+    background-color: #243e25;
+    border-top: 3px solid #45794f;
+    border-left: 3px solid #3d6242;
+    border-bottom: 3px solid #162419;
+    border-right: 3px solid #1d3220;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    font-size: 32px;
+    width: 100%;
+}
+.player__number {
+    background-color: #0F160D;
+    width: 70px;
+    height: 100%;
+    padding: 5px 10px 5px 15px;
+    display: flex;
+    align-items: start;
+    justify-content: end;
+}
+.player__simbol {
+    margin-top:5px;
+    font-size: 24px;
+}
+.player__number {
+    font-size: 48px;
+}
+.player__info {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 10px 10px 5px;
+}
+.score {
+    font-size: 92px;
+    color: #E2FCDE;
+    background-color: #162113;
+    text-align: center;
+}

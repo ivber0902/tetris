@@ -305,30 +305,30 @@ class Player {
             }
         }
         this.lines += cleared;
-        if (this.figureCount >= 30) {
-            this.lvl += Math.floor(this.figureCount / 30);
-            this.figureCount = this.figureCount % 30;
+        if (this.figureCount >= 10) {
+            this.lvl += Math.floor(this.figureCount / 10);
+            this.figureCount = this.figureCount % 10;
             this.updateLvl();
         }
         switch (cleared) {
             case 1:
-                this.score += 100 * Math.max(1, this.lvl);
+                this.score += 1000 * Math.max(1, this.lvl);
                 break;
             case 2:
-                this.score += 300 * Math.max(1, this.lvl);
+                this.score += 3000 * Math.max(1, this.lvl);
                 break;
             case 3:
-                this.score += 700 * Math.max(1, this.lvl);
+                this.score += 7000 * Math.max(1, this.lvl);
                 break;
             case 4:
-                this.score += 1500 * Math.max(1, this.lvl);
+                this.score += 15000 * Math.max(1, this.lvl);
                 break;
             default:
                 break;
         }
         return cleared;
     }
-    z
+    
     updateLvl() {
         switch (this.lvl) {
             case 0: this.tickTime = 15974 / this.field.length; break;

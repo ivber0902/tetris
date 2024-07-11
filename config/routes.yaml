@@ -40,6 +40,9 @@ about:
 game_over:
     path: /game_over
     controller: App\Controller\GameController::gameOver
+game_over_multi:
+    path: /game_over_multi
+    controller: App\Controller\GameController::gameOverMulti
 game:
     path: /game
     controller: App\Controller\GameController::game

@@ -3,6 +3,8 @@
     padding: 0;
     font-family: "Russo One", sans-serif;
     text-decoration: none;
+    user-select: none;
+    border: none;
     text-transform: uppercase;
 }
 

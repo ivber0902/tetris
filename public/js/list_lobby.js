@@ -22,7 +22,7 @@ function createLobbyLink(title, countPlayers, idLobby) {
 
     let itemTitle = document.createElement('p');
     itemTitle.setAttribute('class', 'item__title');
-    itemTitle.textContent = `Лобби пользователя "${title}"`;
+    itemTitle.textContent = `Лобби пользователя ${title}`;
 
     let itemDescription = document.createElement('p');
     itemDescription.setAttribute('class', 'item__subtitle');

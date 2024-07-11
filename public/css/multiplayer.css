@@ -2,7 +2,12 @@
     margin: 0;
     padding: 0;
     text-decoration: none;
+    user-select: none;
+    border: none;
     text-transform: uppercase;
+    font-family: "Russo One", sans-serif;
+    font-weight: 400;
+    color: #fff;
 }
 
 #game {
@@ -30,10 +35,11 @@
 }
 
 .logo {
-    padding-top: 50px;
-    padding-bottom: 40px;
-}
-
+    
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+} 
 .main-field-wrapper {
     padding-top: 80px;
 }

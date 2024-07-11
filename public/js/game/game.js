@@ -86,10 +86,10 @@ let GAME = {
             updateTime -= this.playTime;
             if (updateTime * player.nitro >= player.tickTime) {
                 this.playTime = new Date;
-                player.update(player);
+                player.update();
             }
 
-            player.updatePosition(player.currentFigure);
+            player.updatePosition();
             requestAnimationFrame(() => this.play(player));
         }
     }

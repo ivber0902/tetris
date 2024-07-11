@@ -2,7 +2,6 @@
     border: none;
     padding: 0;
     margin: 0;
-
     font-family: "Russo One", sans-serif;
     font-weight: 400;
     font-size: 32px;
@@ -134,8 +133,8 @@
 }
 
 .instruction__text {
-    max-width: 250px;
-    font-size: 12px;
+    max-width: 350px;
+    font-size: 18px;
     margin-bottom: 10px;
 }
 .score-value-wrapper {

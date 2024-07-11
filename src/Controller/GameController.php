@@ -44,6 +44,10 @@ class GameController extends AbstractController
     {
         return $this->render('blitz.html.twig');
     }
+    public function gameOverMulti(): Response
+    {
+        return $this->render('game-over-multi.html.twig');
+    }
     public function koop(): Response
     {
         return $this->render('koop.html.twig');
