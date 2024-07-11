@@ -5,74 +5,77 @@
 {% block style %}<link rel="stylesheet" href="/css/lobby.css"/><link rel="stylesheet" href="/css/mini-profile.css"/>
 {% endblock %}
 {% block content %}
-<body>
-     <div class="bg">
-        <div class="header">
-            <img src="/images/settings.png" alt="settings" class="set">
-            <img src="/images/logo.png" alt="logo" class="logo">
-            <div class="profile">
-                <p class="profile__nickname">{{user.login ?? 'славянин'}}</p>
-                <p class="profile__playerId">{{user.playerId ?? '0'}}</p>
-                <input class="player_id" type="hidden" value="{{ user.playerId }}" >
-                <img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
-            </div>
-        </div>
-        <div class="main">
-            <div class="players">
-                <div class="list-players">
-                </div>                
-            </div>
-            <div class="settings">
-                <div class="settings__size">
-                    <p class="settings__text">размер поля: </p>
-                    <div class="setting">
-                        <div class="wrapper-setting">
-                           <p id="size" class="settings__text-size">крестьянин</p>
-                           <img class="triangle" src="/images/triangle.png">
-                        </div>
-                        <hr class="line-settings">
-                    </div>
-                </div>
-                <div class="settings__music">
-                    <p class="settings__text">музыка: </p>
-                    <div class="setting">
-                        <div class="wrapper-setting">
-                           <p id="music" class="settings__text-music">лунный вальс</p>
-                           <img class="triangle" src="/images/triangle.png">
-                        </div>
-                        <hr class="line-settings">
-                    </div>
-                </div>
-                <div class="settings__complexity">
-                    <p class="settings__text">сложность: </p>
-                    <div class="setting">
-                        <div class="wrapper-setting">
-                          <p id="difficulty" class="settings__text-difficulty">средний</p>
-                           <img class="triangle" src="/images/triangle.png">
-                        </div>
-                        <hr class="line-settings">
-                    </div>
-                </div>
-                <div class="settings__background">
-                    <p class="settings__text">задний фон: </p>
-                    <div class="setting">
-                        <div class="wrapper-setting">
-                           <p id="bg" class="settings__text-bg">ispring</p>
-                           <img class="triangle" src="/images/triangle.png">
-                        </div>
-                        <hr class="line-settings">
-                    </div>
-                </div>
-            </div>
-            <button class="start-game">начать игру</button>
-        </div>
-        {% include 'mini-profile.html.twig' %}
-        <div class="list-settings">
-            <div class="menu">
-            </div>
-        </div>
-    </div>
-</body>
- <script src="/js/lobby.js"></script>
- <script src="/js/lobby-socket.js"></script>
+	<body>
+		<div class="bg">
+			<div class="header">
+				<img src="/images/logo.png" alt="logo" class="logo">
+				<div class="profile">
+					<p class="profile__nickname">{{user.login ?? 'славянин'}}</p>
+					<p class="profile__playerId">{{user.playerId ?? '0'}}</p>
+					<input class="player_id" type="hidden" value="{{ user.playerId }}">
+					<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
+				</div>
+			</div>
+			<div class="main">
+				<div class="players">
+					<div class="list-players"></div>
+				</div>
+				<div class="settings">
+					<div class="settings__size">
+						<p class="settings__text">размер поля:
+						</p>
+						<div class="setting">
+							<div class="wrapper-setting">
+								<p id="size" class="settings__text-size">крестьянин</p>
+								<img class="triangle" src="/images/triangle.png">
+							</div>
+							<hr class="line-settings">
+						</div>
+					</div>
+					<div class="settings__music">
+						<p class="settings__text">музыка:
+						</p>
+						<div class="setting">
+							<div class="wrapper-setting">
+								<p id="music" class="settings__text-music">лунный вальс</p>
+								<img class="triangle" src="/images/triangle.png">
+							</div>
+							<hr class="line-settings">
+						</div>
+					</div>
+					<div class="settings__complexity">
+						<p class="settings__text">сложность:
+						</p>
+						<div class="setting">
+							<div class="wrapper-setting">
+								<p id="difficulty" class="settings__text-difficulty">средний</p>
+								<img class="triangle" src="/images/triangle.png">
+							</div>
+							<hr class="line-settings">
+						</div>
+					</div>
+					<div class="settings__background">
+						<p class="settings__text">задний фон:
+						</p>
+						<div class="setting">
+							<div class="wrapper-setting">
+								<p id="bg" class="settings__text-bg">ispring</p>
+								<img class="triangle" src="/images/triangle.png">
+							</div>
+							<hr class="line-settings">
+						</div>
+					</div>
+				</div>
+				<div class="start-game-panel">
+					<button class="start-game">начать игру</button>
+				</div>
+			</div>
+			{% include 'mini-profile.html.twig' %}
+			<div class="list-settings">
+				<div class="menu"></div>
+			</div>
+		</div>
+	</body>
+	<script src="/js/lobby.js"></script>
+	<script src="/js/lobby-socket.js"></script>
 {% endblock %}
