@@ -355,7 +355,7 @@ class Player {
         this.addBufferListener();
         this.addPositionListeners();
         this.addPauseListener();
-    }
+    }   
 
     addPositionListeners() {
         document.addEventListener('keydown', (e) => {
@@ -388,12 +388,16 @@ class Player {
                         break;
                 }
         });
-        if (this.isActive)
-            document.addEventListener('keyup', (e) => {
-                if (e.code === 'ArrowDown' || e.code === 'KeyS') {
-                    this.nitro = 1;
-                }
-            });
+        this.moveFigure()
+    }
+
+    moveFigure(){
+    if (this.isActive)
+        document.addEventListener('keyup', (e) => {
+            if (e.code === 'ArrowDown' || e.code === 'KeyS') {
+                this.nitro = 1;
+            }
+        });
     }
 
     updateSize(game) {
