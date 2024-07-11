@@ -10,7 +10,7 @@ import (
 
 type PlayerConnection struct {
 	conn   *websocket.Conn
-	send   chan *lobby.Lobby
+	send   chan *lobby.Info
 	lobby  *LobbyConnection
 	ip     string
 	id     int32
@@ -78,6 +78,7 @@ func (player *PlayerConnection) readLoop() {
 				if player.ip == player.lobby.hostIP {
 					player.lobby.info.GameRun = true
 					player.lobby.update <- player.lobby.info
+					player.lobby.run <- player.lobby
 				}
 			}
 		}

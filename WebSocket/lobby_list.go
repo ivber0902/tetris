@@ -8,15 +8,15 @@ import (
 
 type LobbyList struct {
 	conn   map[*websocket.Conn]bool
-	new    chan *lobby.Lobby
-	update chan *lobby.Lobby
-	remove chan *lobby.Lobby
-	list   []*lobby.Lobby
+	new    chan *lobby.Info
+	update chan *lobby.Info
+	remove chan *lobby.Info
+	list   []*lobby.Info
 }
 
 type LobbyListUpdateMessage struct {
-	Type  string       `json:"type"`
-	Lobby *lobby.Lobby `json:"lobby"`
+	Type  string      `json:"type"`
+	Lobby *lobby.Info `json:"lobby"`
 }
 
 const (
@@ -27,9 +27,9 @@ const (
 
 func (l *LobbyList) Init() {
 	l.conn = make(map[*websocket.Conn]bool)
-	l.new = make(chan *lobby.Lobby)
-	l.update = make(chan *lobby.Lobby)
-	l.remove = make(chan *lobby.Lobby)
+	l.new = make(chan *lobby.Info)
+	l.update = make(chan *lobby.Info)
+	l.remove = make(chan *lobby.Info)
 }
 
 func (l *LobbyList) Listen() {
@@ -67,6 +67,7 @@ func (l *LobbyList) Listen() {
 				for i := range l.list {
 					if l.list[i] == lobby {
 						l.list = append(l.list[:i], l.list[i+1:]...)
+						break
 					}
 				}
 				for conn := range l.conn {

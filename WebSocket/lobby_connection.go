@@ -11,18 +11,20 @@ import (
 
 type LobbyConnection struct {
 	id         string
-	info       *lobby.Lobby
+	info       *lobby.Info
 	players    map[*PlayerConnection]bool
 	connect    chan *PlayerConnection
 	disconnect chan *PlayerConnection
-	update     chan *lobby.Lobby
+	update     chan *lobby.Info
 	hostIP     string
-	server     *Server
+	remove     chan *LobbyConnection
+	updates    chan *lobby.Info
+	run        chan *LobbyConnection
 }
 
-func newLobbyConnection(server *Server, hostIP string) *LobbyConnection {
+func newLobbyConnection(hostIP string, updates chan *lobby.Info, remove, run chan *LobbyConnection) *LobbyConnection {
 	lobbyID := uuid.New()
-	var lobbyModel lobby.Lobby
+	var lobbyModel lobby.Info
 	err := lobbyModel.SetDefault()
 	if err != nil {
 		return nil
@@ -34,16 +36,18 @@ func newLobbyConnection(server *Server, hostIP string) *LobbyConnection {
 		players:    map[*PlayerConnection]bool{},
 		connect:    make(chan *PlayerConnection),
 		disconnect: make(chan *PlayerConnection),
-		update:     make(chan *lobby.Lobby),
+		update:     make(chan *lobby.Info),
 		hostIP:     hostIP,
-		server:     server,
+		remove:     remove,
+		updates:    updates,
+		run:        run,
 	}
 }
 
 func (lobby *LobbyConnection) Init() {
 	for {
 		go func() {
-			lobby.server.LobbyList.update <- lobby.info
+			lobby.updates <- lobby.info
 		}()
 		select {
 		case player := <-lobby.connect:
@@ -74,19 +78,17 @@ func (lobby *LobbyConnection) Init() {
 				case player.send <- updatedLobby:
 				}
 			}
-
 		}
 
 	}
 }
 
 func (lobby *LobbyConnection) Remove() {
-	lobby.server.LobbyList.remove <- lobby.info
+	lobby.remove <- lobby
 
 	for player := range lobby.players {
 		player.conn.Close()
 	}
-	delete(lobby.server.Lobbies, lobby.id)
 }
 
 func (lobby *LobbyConnection) getPlayerByID(id int32) *PlayerConnection {

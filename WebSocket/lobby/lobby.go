@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-type Lobby struct {
+type Info struct {
 	ID       string   `bson:"_id" json:"id"`
 	Players  []int32  `bson:"players,omitempty" json:"players,omitempty"`
 	Settings Settings `bson:"settings,omitempty" json:"settings,omitempty"`
@@ -25,11 +25,11 @@ type PlayFieldSettings struct {
 	Height int8 `bson:"height,omitempty" json:"height,omitempty"`
 }
 
-func (lobby *Lobby) Init(lobbyID string) {
+func (lobby *Info) Init(lobbyID string) {
 	lobby.ID = lobbyID
 }
 
-func (lobby *Lobby) SetDefault() error {
+func (lobby *Info) SetDefault() error {
 	file, err := os.Open("default-lobby.json")
 	if err != nil {
 		return err
@@ -47,7 +47,7 @@ func (lobby *Lobby) SetDefault() error {
 	return err
 }
 
-func (lobby *Lobby) AddPlayer(playerID int32) {
+func (lobby *Info) AddPlayer(playerID int32) {
 	for _, player := range lobby.Players {
 		if player == playerID {
 			return
@@ -57,7 +57,7 @@ func (lobby *Lobby) AddPlayer(playerID int32) {
 	lobby.Players = append(lobby.Players, playerID)
 }
 
-func (lobby *Lobby) RemovePlayer(playerID int32) {
+func (lobby *Info) RemovePlayer(playerID int32) {
 	for i, player := range lobby.Players {
 		if player == playerID {
 			lobby.Players = append(lobby.Players[:i], lobby.Players[i+1:]...)
