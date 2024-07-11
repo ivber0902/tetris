@@ -68,8 +68,10 @@ func (game *GameConnection) Init() {
 		select {
 		case updatedLobby := <-game.update:
 			for player := range game.players {
-				select {
-				case player.send <- updatedLobby:
+				if player.isOpen {
+					select {
+					case player.send <- updatedLobby:
+					}
 				}
 			}
 		case figure := <-game.newFigure:
