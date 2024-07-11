@@ -159,11 +159,18 @@
 }
 ```
 ## Обновление
-Запрос и ответ идентичны
+### Запрос
 ```json
 {
   "type": "update",
   "updates": // State
+}
+```
+### Ответ
+```json
+{
+  "type": "update",
+  "state": // State
 }
 ```
 
@@ -179,7 +186,7 @@
 ```json
 {
   "type": "update",
-  "updates": // State
+  "state": // State
 }
 ```
 
@@ -194,6 +201,6 @@
 ```json
 {
   "type": "update",
-  "updates": // State
+  "state": // State
 }
 ```
