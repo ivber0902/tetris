@@ -25,24 +25,28 @@
 				{% endif %}
 			</div>
 		</div>
-			<a href="/menu">
-				<div class="back">
-					<h1 class="back__button">
-						назад
-					</h1>
+		<div class="join-lobby">
+			<h2 class="join-title">Найти лобби по уникальному имени</h2>
+
+			<div class="row">
+				<a href="/select_multiplayer_mode">
+					<div class="back">
+						<h1 class="back__button">
+							назад
+						</h1>
+					</div>
+				</a>
+				<div class = "joinn">
+				<input type="string" id="join" class="join" name="join">
+				<button class="join-button">Войти в лобби</button>
 				</div>
-			</a>
-        <div class="join-lobby">
-            <h2 class="join-title">Найти лобби по уникальному имени<h2>
-            <input type="string" id="join" class="join" name="join">
-            <button class="join-button">Войти в лобби</button>
-        </div>
-        <h1 class="list-title">Список лобби<h1>
-		<div class="menu">
+			</div>
 		</div>
-		{% include 'mini-profile.html.twig' %}
-	</div>	
-    <script src="/js/list_lobby.js"></script>
-	<script src="/js/list_lobby-socket.js"></script>
-	<script src="/js/mini-profile.js"></script>
-{% endblock %}
+		<h1 class="list-title">Список лобби<h1>
+				<div class="menu"></div>
+				{% include 'mini-profile.html.twig' %}
+			</div>
+			<script src="/js/list_lobby.js"></script>
+			<script src="/js/list_lobby-socket.js"></script>
+			<script src="/js/mini-profile.js"></script>
+		{% endblock %}
