@@ -27,7 +27,7 @@ ws.onopen = () => {
 ws.onmessage = (msg) => {
     let data = JSON.parse(msg.data);
     if (data.type === "config"){
-        console.log(data.config)
+        console.log(data)
         GAME.width = data.config.settings.play_field.width;
         GAME.height = data.config.settings.play_field.height;
         document.querySelector('.main').style.backgroundImage = `url(${data.config.settings.background})`
@@ -39,6 +39,18 @@ ws.onmessage = (msg) => {
             document.querySelector(".game__score"),
             document.querySelector(".game__level"),
         );
+        let players = data.config.players;
+        let i = 0;
+        players.forEach((id)=>{
+            foundUser(id).then((player)=>{
+                if(id === parseInt(playerField.id)){
+                    playerField.querySelector('.player_name').textContent = player.login
+                }else{
+                    otherPlayers[i].textContent = player.login
+                    i++
+                }          
+            })
+        })
         ui.music = new Audio(data.config.settings.music)
         player = new Player(ui, GAME.figuresQueueSize);  
         player.lvl = data.config.settings.difficulty;
@@ -71,18 +83,7 @@ ws.onmessage = (msg) => {
     
     if (data.type === "update"){
         console.log(data)
-        // let players = data.state;
-        // let i = 0;
-        // players.forEach((id)=>{
-        //     foundUser(id).then((player)=>{
-        //         if(id === parseInt(playerField.id)){
-        //             playerField.querySelector('.player_name').textContent = player.login
-        //         }else{
-        //             otherPlayers[i].textContent = player.login
-        //             i++
-        //         }          
-        //     })
-        // })
+        
         player.buffer = player.getFigure(data.state.buffer);
         player.ui.buffer.src = player.buffer.image.src;
         player.currentFigure = player.getFigure(data.state.figures[0]);
