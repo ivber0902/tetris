@@ -2,6 +2,7 @@ const host = window.location.hostname;
 let params = new URLSearchParams(document.location.search);
 let wsUrl = "ws://" + host + ":8080/game?lobby=" + params.get('lobby');
 let ws = new WebSocket(wsUrl);
+let otherPlayersFields = []
 
 let player;
 let ui;
@@ -22,10 +23,15 @@ ws.onmessage = (msg) => {
         initMultiplayer(data)
     if(data.type === "update")
         {
+            if(data.state.id === 1)
+                otherPlayersFields[0] = data.state.play_field;
             console.log(data)
             if (data.state.id === parseInt(playerField.id))
                 {
-                    player.drawOtherField(10, 20, data.state.play_field, otherField[0].getContext('2d'))
+                    console.log(data.state.play_field)
+                    otherPlayersFields[1] = data.state.play_field;
+                    otherPlayersFields[2] = data.state.play_field;
+                    // player.drawOtherField(10, 20, player.field, otherField[0].getContext('2d'))
                     player.field = data.state.play_field;
                     player.buffer = player.getFigure(data.state.buffer);
                     player.ui.buffer.src = player.buffer.image.src;
