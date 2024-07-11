@@ -9,13 +9,14 @@ import (
 )
 
 type PlayerGameConnection struct {
-	conn   *websocket.Conn
-	send   chan *GameUpdateResponse
-	game   *GameConnection
-	ip     string
-	id     int32
-	isOpen bool
-	state  *game.Game
+	conn    *websocket.Conn
+	send    chan *GameUpdateResponse
+	game    *GameConnection
+	ip      string
+	id      int32
+	isOpen  bool
+	state   *game.Game
+	gameEnd chan *game.Game
 }
 
 func (player *PlayerGameConnection) readLoop() {
@@ -74,6 +75,13 @@ func (player *PlayerGameConnection) readLoop() {
 			case "set":
 				player.state.NextFigure()
 				player.send <- &GameUpdateResponse{
+					Type:  "update",
+					State: player.state,
+				}
+			case "game_over":
+				player.state.GameOver = true
+				player.gameEnd <- player.state
+				player.game.update <- &GameUpdateResponse{
 					Type:  "update",
 					State: player.state,
 				}

@@ -2,6 +2,7 @@ package main
 
 import (
 	"WebSocket/lobby"
+	"encoding/json"
 	"github.com/gorilla/websocket"
 	"log"
 	"net/http"
@@ -14,12 +15,15 @@ var upgrader = websocket.Upgrader{
 }
 
 type Server struct {
-	Lobbies       map[string]*LobbyConnection
-	LobbyList     LobbyList
-	Games         map[string]*GameConnection
-	OnLobbyRemove chan *LobbyConnection
-	OnLobbyUpdate chan *lobby.Info
-	OnGameRun     chan *LobbyConnection
+	Lobbies   map[string]*LobbyConnection
+	LobbyList LobbyList
+	Games     map[string]*GameConnection
+	On        struct {
+		LobbyRemove chan *LobbyConnection
+		LobbyUpdate chan *lobby.Info
+		GameRun     chan *LobbyConnection
+		GameRemove  chan *GameConnection
+	}
 }
 
 func (server *Server) HandleConnection(w http.ResponseWriter, r *http.Request, clientIP string) {
@@ -37,9 +41,9 @@ func (server *Server) HandleConnection(w http.ResponseWriter, r *http.Request, c
 	if !ok {
 		lobbyConn = newLobbyConnection(
 			clientIP,
-			server.OnLobbyUpdate,
-			server.OnLobbyRemove,
-			server.OnGameRun,
+			server.On.LobbyUpdate,
+			server.On.LobbyRemove,
+			server.On.GameRun,
 		)
 		server.Lobbies[lobbyConn.id] = lobbyConn
 		go lobbyConn.Init()
@@ -112,6 +116,7 @@ func (server *Server) HandleGameJoin(w http.ResponseWriter, r *http.Request, cli
 			player.conn = conn
 			player.send = make(chan *GameUpdateResponse)
 			player.isOpen = true
+			player.gameEnd = gameConn.gameEnd
 
 			go player.readLoop()
 			go player.writeLoop()
@@ -122,12 +127,31 @@ func (server *Server) HandleGameJoin(w http.ResponseWriter, r *http.Request, cli
 	}
 }
 
+func (server *Server) GameResultsHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "GET")
+
+	lobbyID := r.URL.Query().Get("lobby")
+
+	gameConn, ok := server.Games[lobbyID]
+	if !ok {
+		w.WriteHeader(http.StatusUnprocessableEntity)
+		return
+	}
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Set("Content-Type", "application/json")
+
+	json.NewEncoder(w).Encode(gameConn.results)
+	//w.WriteHeader(http.StatusOK)
+}
+
 func (server *Server) Init() {
 	server.Lobbies = make(map[string]*LobbyConnection)
 	server.Games = make(map[string]*GameConnection)
-	server.OnLobbyRemove = make(chan *LobbyConnection)
-	server.OnLobbyUpdate = make(chan *lobby.Info)
-	server.OnGameRun = make(chan *LobbyConnection)
+	server.On.LobbyRemove = make(chan *LobbyConnection)
+	server.On.LobbyUpdate = make(chan *lobby.Info)
+	server.On.GameRun = make(chan *LobbyConnection)
+	server.On.GameRemove = make(chan *GameConnection)
 
 	server.LobbyList.Init()
 	go server.LobbyList.Listen()
@@ -135,15 +159,17 @@ func (server *Server) Init() {
 	go func() {
 		for {
 			select {
-			case lobbyConn := <-server.OnLobbyRemove:
+			case lobbyConn := <-server.On.LobbyRemove:
 				delete(server.Lobbies, lobbyConn.id)
 				server.LobbyList.remove <- lobbyConn.info
-			case lobbyInfo := <-server.OnLobbyUpdate:
+			case lobbyInfo := <-server.On.LobbyUpdate:
 				server.LobbyList.update <- lobbyInfo
-			case lobbyConn := <-server.OnGameRun:
+			case lobbyConn := <-server.On.GameRun:
 				log.Printf("Lobby %s has ran", lobbyConn.id)
-				newGame := newGameConnection(lobbyConn)
+				newGame := newGameConnection(lobbyConn, server.On.GameRemove)
 				server.Games[newGame.id] = newGame
+			case gameConn := <-server.On.GameRemove:
+				delete(server.Games, gameConn.id)
 			}
 		}
 	}()

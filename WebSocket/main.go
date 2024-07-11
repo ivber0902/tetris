@@ -29,6 +29,7 @@ func main() {
 		}
 		server.HandleGameJoin(w, r, PlayerIP)
 	})
+	http.HandleFunc("/game/results", server.GameResultsHandler)
 
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
