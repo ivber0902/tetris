@@ -195,18 +195,19 @@ class Player {
     }
 
     drawOtherField(width, height, arrayField, canvasField) {
-        canvasField.clearRect(0, 0, canvas.width, canvas.height);
+        console.log(width, height, arrayField, canvasField)
+        otherField[0].getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
         for (let row = 0; row < height; row++) {
             for (let col = 0; col < width; col++) {
                 if (arrayField[row][col] - 1 >= 20)
-                    canvasField.drawImage(
+                    otherField[0].getContext('2d').drawImage(
                         figures[(this.field[row][col] - 1) % 10].shadow,
                         col * this.ui.blockSize,
                         row * this.ui.blockSize,
                         this.ui.blockSize, this.ui.blockSize
                     )
                 else if (arrayField[row][col] === 0) {
-                    canvasField.drawImage(
+                    otherField[0].getContext('2d').drawImage(
                         blockField,
                         col * this.ui.blockSize,
                         row * this.ui.blockSize,
@@ -214,7 +215,7 @@ class Player {
                         this.ui.blockSize
                     )
                 } else {
-                    canvasField.drawImage(
+                    otherField[0].getContext('2d').drawImage(
                         figures[(this.field[row][col] - 1) % 10].block,
                         col * this.ui.blockSize,
                         row * this.ui.blockSize,

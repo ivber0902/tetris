@@ -5,7 +5,6 @@ let ws = new WebSocket(wsUrl);
 
 let player;
 let ui;
-let otherField;
 let playerField = document.querySelector('.wrapper-main-field');
 let otherPlayers = document.querySelectorAll('.player__username')
 const canvas = document.getElementById('game');
