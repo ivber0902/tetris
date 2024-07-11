@@ -40,6 +40,17 @@ class Player {
         );
     }
 
+    getFigure(index) {
+        let figure = figures[index];
+        return new Figure(
+            figure.matrix,
+            figure.image,
+            figure.block,
+            figure.shadow,
+            index
+        );
+    }
+
     initField(width, height) {
         for (let line = 0; line < height; line++) {
             this.field[line] = [];

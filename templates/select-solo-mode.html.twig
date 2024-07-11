@@ -4,10 +4,10 @@
 	solo mode
 {% endblock %}
 {% block style %}
-	<link rel="stylesheet" href="/css/select.css"/>
+	<link rel="stylesheet" href="/css/select.css"/><link rel="stylesheet" href="/css/mini-profile.css"/>
 {% endblock %}
 {% block script %}
-	<script src="/js/game/game-mode-solo.js"></script>
+	<script src="/js/game/game-mode-solo.js"></script><script src="/js/mini-profile.js"></script>
 {% endblock %}
 {% block content %}
 	<div class="bg bg_dark">
@@ -15,14 +15,19 @@
 			<img src="/images/settings.png" alt="settings" class="settings"/>
 			<img src="/images/logo.png" alt="logo" class="logo"/>
 			<div class="profile">
-				<a href="/{{ user.login ?? 'signup' }}">
+				{% if not user or not user.login %}
+					<a href="{{ path('register') }}">
+						<div class="profile">
+							<p class="profile__nickname">{{user.login ?? 'славянин'}}</p>
+							<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
+						</div>
+					</a>
+				{% else %}
 					<div class="profile">
-						<p class="profile__nickname">
-							{{ user.login ?? 'славянин' }}
-						</p>
-						<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar"/>
+						<p class="profile__nickname">{{user.login ?? 'славянин'}}</p>
+						<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
 					</div>
-				</a>
+				{% endif %}
 			</div>
 		</div>
 		<div class="select">
@@ -88,5 +93,6 @@
 				</a>
 			</div>
 		</div>
+		{% include 'mini-profile.html.twig' %}
 	</div>
 {% endblock %}

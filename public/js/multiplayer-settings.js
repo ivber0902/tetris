@@ -13,6 +13,11 @@ if (lobbyId) {
     wsUrl += "?lobby=" + lobbyId;
 }
 
+let array = {
+    buffer: 1,
+    blocks : [6, 2, 3, 4, 5]
+}
+
 let ws = new WebSocket(wsUrl);
 
 ws.onopen = () => {
@@ -26,6 +31,7 @@ ws.onmessage = (msg) => {
     let data = JSON.parse(msg.data);
     let players = data.players;
     let i = 0;
+    console.log(array)
     players.forEach((id)=>{
         foundUser(id).then((player)=>{
             if(id === parseInt(playerField.id)){
@@ -48,8 +54,9 @@ ws.onmessage = (msg) => {
         document.querySelector(".game__score"),
         document.querySelector(".game__level"),
     );
+    
     ui.music = new Audio(data.settings.music)
-    player = new Player(ui, GAME.figuresQueueSize);
+    player = new Player(ui, GAME.figuresQueueSize);  
     player.lvl = data.settings.difficulty;
     otherField = document.querySelectorAll('.other-field');
     canvas.width = ui.field.width;
@@ -71,9 +78,19 @@ ws.onmessage = (msg) => {
                 elem.style.maxHeight = "320px";
                 break
         }
-    })
+    }) 
     GAME.init(player, ui)
+    player.buffer = player.getFigure(array.buffer);
+    player.ui.buffer.src = player.buffer.image.src;
+    player.currentFigure = player.getFigure(array.blocks[0]);
+    player.currentFigure.x = player.getStartX(player.currentFigure);
+    player.nextFigures = [];
+    for (let i = 0; i < player.figuresQueueSize; i++) {
+        player.nextFigures[i] = player.getFigure(array.blocks[i]);
+        player.ui.viewNextFigures[i].src = player.nextFigures[i].image.src;
+    }
     GAME.start(player, field, ui)
+    console.log(player.nextFigures)
 }
 
 async function foundUser(id)
