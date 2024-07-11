@@ -10,7 +10,7 @@ func New[T any]() *Queue[T] {
 	e := &Queue[T]{
 		reader: make(chan T),
 		writer: make(chan T),
-		buffer: make([]T, 1),
+		buffer: make([]T, 0),
 	}
 
 	go e.run()
