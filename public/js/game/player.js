@@ -62,7 +62,6 @@ class Player {
 
     insertToField(fix = false) {
         this.createShadow(this.currentFigure);
-
         for (let i = 0; i < this.currentFigure.matrix.length; i++) {
             for (let j = 0; j < this.currentFigure.matrix[i].length; j++) {
                 if (this.currentFigure.matrix[i][j])
@@ -111,7 +110,7 @@ class Player {
     }
 
     getStartX(figure) {
-         return Math.floor((this.field[0].length - Math.max(...figure.matrix.map(row => row.length))) / 2);
+        return Math.floor((this.field[0].length - Math.max(...figure.matrix.map(row => row.length))) / 2);
     }
 
     moveDown() {
@@ -424,3 +423,4 @@ class Player {
         });
     }
 }
+

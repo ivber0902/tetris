@@ -274,3 +274,17 @@
 .bot__subtitle {
     color: #51c063;
 }
+
+.koop {
+    background-color: #4f1818;
+    border-top: 3px solid #902d2d;
+    border-left: 3px solid #722222;
+    border-bottom: 3px solid #2f0d0d;
+}
+.koop__title {
+    color: #ff9c9c;
+}
+
+.koop__subtitle {
+    color: #b26565;
+}

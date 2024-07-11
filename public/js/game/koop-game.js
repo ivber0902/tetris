@@ -1,7 +1,8 @@
 let GAME = {
-    width: localStorage.Gamewidth,
-    height: localStorage.Gameheight,
-    playTime: new Date(),
+    width: 20,
+    height: 20,
+    playTime1: new Date(),
+    playTime2: new Date(),
     figuresQueueSize: 4,
     init(player, ui) {
         let i = 0;
@@ -18,7 +19,7 @@ let GAME = {
         player.initEventListeners();
         player.updateUI();
         ui.initMusic();
-        player.updateLvl()
+        player.updateLvl();
     },
     start(player, field, ui) {
         this.onLoadImages(() => {
@@ -30,7 +31,6 @@ let GAME = {
             setTimeout(() => {
                 this.clear(field);
                 player.drawField(this.width, this.height);
-                player.drawOtherField(this.width, this.height);
                 field.fillStyle = "white";
                 field.font = "96px Russo One";
                 field.fillText(fromIndex, ui.field.width / 2 - 36, ui.field.height / 2);
@@ -74,22 +74,24 @@ let GAME = {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     },
     play(player) {
-
         player.ui.score = player.score;
         player.ui.level = player.lvl;
         if (player.isActive) {
             this.clear(field);
             player.drawField(this.width, this.height);
-            player.drawOtherField(this.width, this.height);
-            document.querySelector('.game__score').innerHTML = player.score;
-            let updateTime = new Date();
-            updateTime -= this.playTime;
-            if (updateTime * player.nitro >= player.tickTime) {
-                this.playTime = new Date;
-                player.update(player);
+            let updateTime1 = new Date();
+            updateTime1 -= this.playTime1;
+            let updateTime2 = new Date();
+            updateTime2 -= this.playTime2;
+            if (updateTime1 * player.nitro >= player.tickTime) {
+                this.playTime1 = new Date;
+                player.update1();
             }
-
-            player.updatePosition(player.currentFigure);
+            if (updateTime2 * player.nitro2 >= player.tickTime) {
+                this.playTime2 = new Date;
+                player.update2();
+            }
+            player.updatePosition();
             requestAnimationFrame(() => this.play(player));
         }
     }

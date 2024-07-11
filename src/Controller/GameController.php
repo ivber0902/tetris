@@ -44,6 +44,10 @@ class GameController extends AbstractController
     {
         return $this->render('blitz.html.twig');
     }
+    public function koop(): Response
+    {
+        return $this->render('koop.html.twig');
+    }
     public function l40(): Response
     {
         return $this->render('l40.html.twig');
@@ -60,6 +64,11 @@ class GameController extends AbstractController
     {
         $securityUser = $this->getUser();
         return $this->render('select-classic-mode.html.twig', ["user" => $securityUser]);
+    }
+    public function selectKoop(): Response
+    {
+        $securityUser = $this->getUser();
+        return $this->render('select-koop-mode.html.twig', ["user" => $securityUser]);
     }
     public function selectSoloMode(): Response
     {
