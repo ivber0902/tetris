@@ -2,7 +2,7 @@
 let settings = {
     music: [
         {
-        title: "Корабейники",
+        title: "Корoбейники",
         description: "мистическая и загадочная композиция, в которой звуки эха на фоне темноты создают атмосферу напряжения и тайны.",
         value: "/audio/Korobeiniki.wav"
         },
@@ -70,7 +70,7 @@ let settings = {
             value: "/images/bg.png"
         },
         {
-            title: "Йошкар-Ола",
+            title: "IOшкар-Ола",
             description: "Фон Йошкар-Олы",
             value: "/images/backgrounds/io.jpg"
         },
