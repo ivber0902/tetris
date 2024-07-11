@@ -194,20 +194,53 @@ class Player {
         }
     }
 
-    drawOtherField(width, height) {
-        otherField.forEach((elem) => {
-            elem.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
-            for (let row = 0; row < height; row++) {
-                for (let col = 0; col < width; col++) {
-                    elem.getContext('2d').drawImage(
-                        blockField,
+    drawOtherField(width, height, arrayField, canvasField) {
+        console.log(width, height, arrayField, canvasField)
+        otherField[0].getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+        for (let row = 0; row < height; row++) {
+            for (let col = 0; col < width; col++) {
+                if (arrayField[row][col] - 1 >= 20)
+                    otherField[0].getContext('2d').drawImage(
+                        figures[(this.field[row][col] - 1) % 10].shadow,
                         col * this.ui.blockSize,
                         row * this.ui.blockSize,
                         this.ui.blockSize, this.ui.blockSize
                     )
+                else if (arrayField[row][col] === 0) {
+                    otherField[0].getContext('2d').drawImage(
+                        blockField,
+                        col * this.ui.blockSize,
+                        row * this.ui.blockSize,
+                        this.ui.blockSize,
+                        this.ui.blockSize
+                    )
+                } else {
+                    otherField[0].getContext('2d').drawImage(
+                        figures[(this.field[row][col] - 1) % 10].block,
+                        col * this.ui.blockSize,
+                        row * this.ui.blockSize,
+                        this.ui.blockSize,
+                        this.ui.blockSize
+                    );
                 }
             }
-        })
+        }
+
+
+
+        // otherField.forEach((elem) => {
+        //     elem.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+        //     for (let row = 0; row < height; row++) {
+        //         for (let col = 0; col < width; col++) {
+        //             elem.getContext('2d').drawImage(
+        //                 blockField,
+        //                 col * this.ui.blockSize,
+        //                 row * this.ui.blockSize,
+        //                 this.ui.blockSize, this.ui.blockSize
+        //             )
+        //         }
+        //     }
+        // })
     }
 
     rotateFigure(matrix) {
@@ -355,7 +388,7 @@ class Player {
         this.addBufferListener();
         this.addPositionListeners();
         this.addPauseListener();
-    }
+    }   
 
     addPositionListeners() {
         document.addEventListener('keydown', (e) => {
@@ -388,12 +421,16 @@ class Player {
                         break;
                 }
         });
-        if (this.isActive)
-            document.addEventListener('keyup', (e) => {
-                if (e.code === 'ArrowDown' || e.code === 'KeyS') {
-                    this.nitro = 1;
-                }
-            });
+        this.moveFigure()
+    }
+
+    moveFigure(){
+    if (this.isActive)
+        document.addEventListener('keyup', (e) => {
+            if (e.code === 'ArrowDown' || e.code === 'KeyS') {
+                this.nitro = 1;
+            }
+        });
     }
 
     updateSize(game) {
