@@ -1,24 +1,30 @@
 package main
 
 import (
+	"WebSocket/lobby"
 	"github.com/google/uuid"
 	"log"
 )
 
+// TODO вынести в отдельный модуль
+// TODO удаление лобби через канал
+
 type LobbyConnection struct {
 	id         string
-	info       *Lobby
+	info       *lobby.Info
 	players    map[*PlayerConnection]bool
 	connect    chan *PlayerConnection
 	disconnect chan *PlayerConnection
-	update     chan *Lobby
+	update     chan *lobby.Info
 	hostIP     string
-	server     *Server
+	remove     chan *LobbyConnection
+	updates    chan *lobby.Info
+	run        chan *LobbyConnection
 }
 
-func newLobbyConnection(server *Server, hostIP string) *LobbyConnection {
+func newLobbyConnection(hostIP string, updates chan *lobby.Info, remove, run chan *LobbyConnection) *LobbyConnection {
 	lobbyID := uuid.New()
-	var lobbyModel Lobby
+	var lobbyModel lobby.Info
 	err := lobbyModel.SetDefault()
 	if err != nil {
 		return nil
@@ -30,35 +36,42 @@ func newLobbyConnection(server *Server, hostIP string) *LobbyConnection {
 		players:    map[*PlayerConnection]bool{},
 		connect:    make(chan *PlayerConnection),
 		disconnect: make(chan *PlayerConnection),
-		update:     make(chan *Lobby),
+		update:     make(chan *lobby.Info),
 		hostIP:     hostIP,
-		server:     server,
+		remove:     remove,
+		updates:    updates,
+		run:        run,
 	}
 }
 
 func (lobby *LobbyConnection) Init() {
 	for {
 		go func() {
-			lobby.server.LobbyList.update <- lobby.info
+			lobby.updates <- lobby.info
 		}()
 		select {
 		case player := <-lobby.connect:
 			lobby.players[player] = true
+			log.Printf("LobbyConnection: Player %d (IP: %s) connected to lobby %s Host IP: %s", player.id, player.ip, lobby.id, lobby.hostIP)
+
 		case player := <-lobby.disconnect:
 			if _, ok := lobby.players[player]; ok {
 				lobby.info.RemovePlayer(player.id)
 				delete(lobby.players, player)
 				close(player.send)
 				player.conn.Close()
-
 				if player.ip == lobby.hostIP {
-					log.Println("Disconnect Lobby")
+					log.Printf("LobbyConnection: Lobby %s removed", lobby.id)
 					lobby.Remove()
 					return
 				}
 
-				lobby.update <- lobby.info
+				go func() {
+					lobby.update <- lobby.info
+				}()
+				log.Printf("LobbyConnection: Player %d (IP: %s) disconnected from lobby %s Host IP: %s", player.id, player.ip, lobby.id, lobby.hostIP)
 			}
+
 		case updatedLobby := <-lobby.update:
 			for player := range lobby.players {
 				select {
@@ -71,12 +84,11 @@ func (lobby *LobbyConnection) Init() {
 }
 
 func (lobby *LobbyConnection) Remove() {
-	lobby.server.LobbyList.remove <- lobby.info
+	lobby.remove <- lobby
 
 	for player := range lobby.players {
 		player.conn.Close()
 	}
-	delete(lobby.server.Lobbies, lobby.id)
 }
 
 func (lobby *LobbyConnection) getPlayerByID(id int32) *PlayerConnection {

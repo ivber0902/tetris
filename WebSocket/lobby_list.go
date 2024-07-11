@@ -1,21 +1,22 @@
 package main
 
 import (
+	"WebSocket/lobby"
 	"github.com/gorilla/websocket"
 	"log"
 )
 
 type LobbyList struct {
 	conn   map[*websocket.Conn]bool
-	new    chan *Lobby
-	update chan *Lobby
-	remove chan *Lobby
-	list   []*Lobby
+	new    chan *lobby.Info
+	update chan *lobby.Info
+	remove chan *lobby.Info
+	list   []*lobby.Info
 }
 
 type LobbyListUpdateMessage struct {
-	Type  string `json:"type"`
-	Lobby *Lobby `json:"lobby"`
+	Type  string      `json:"type"`
+	Lobby *lobby.Info `json:"lobby"`
 }
 
 const (
@@ -26,14 +27,14 @@ const (
 
 func (l *LobbyList) Init() {
 	l.conn = make(map[*websocket.Conn]bool)
-	l.new = make(chan *Lobby)
-	l.update = make(chan *Lobby)
-	l.remove = make(chan *Lobby)
+	l.new = make(chan *lobby.Info)
+	l.update = make(chan *lobby.Info)
+	l.remove = make(chan *lobby.Info)
 }
 
 func (l *LobbyList) Listen() {
+	log.Println("Start LobbyList listening")
 	for {
-		log.Println("Listening lobby")
 		select {
 		case lobby, ok := <-l.new:
 			if !ok {
@@ -50,6 +51,7 @@ func (l *LobbyList) Listen() {
 					Lobby: lobby,
 				})
 			}
+			log.Printf("LobbyList: new lobby %s", lobby.ID)
 		case lobby, ok := <-l.update:
 			if ok {
 				for conn := range l.conn {
@@ -58,20 +60,23 @@ func (l *LobbyList) Listen() {
 						Lobby: lobby,
 					})
 				}
+				log.Printf("LobbyList: update lobby %s", lobby.ID)
 			}
 		case lobby, ok := <-l.remove:
-			for i := range l.list {
-				if l.list[i] == lobby {
-					l.list = append(l.list[:i], l.list[i+1:]...)
-				}
-			}
 			if ok {
+				for i := range l.list {
+					if l.list[i] == lobby {
+						l.list = append(l.list[:i], l.list[i+1:]...)
+						break
+					}
+				}
 				for conn := range l.conn {
 					conn.WriteJSON(LobbyListUpdateMessage{
 						Type:  RemoveLobbyListUpdateMessage,
 						Lobby: lobby,
 					})
 				}
+				log.Printf("LobbyList: remove lobby %s", lobby.ID)
 			}
 		}
 	}

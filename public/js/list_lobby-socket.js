@@ -29,7 +29,13 @@ ws.onmessage = (msg) => {
         }     
     }
     if (data.type === "new"){
+        //лобби только пришло, игроков пока нет, кидаем пустые значения
         listLobby.appendChild(createLobbyLink('Славянин', '0', data.lobby.id))
+    }
+    if(data.type === "remove"){
+        //лобби удалено, по его айди ищем и убираем из верстки
+        let link = document.querySelector(`a[href^="/lobby?lobby=${data.lobby.id}"]`);
+        listLobby.removeChild(link)        
     }
     if (data.type ==="update"){
         let link = document.querySelector(`a[href^="/lobby?lobby=${data.lobby.id}"]`);

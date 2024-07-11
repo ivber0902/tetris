@@ -1,9 +1,20 @@
 package main
 
+import (
+	"WebSocket/game"
+	"WebSocket/lobby"
+)
+
 type UpdateJSONRequest struct {
 	Type       string                `json:"type"`
 	Connection ConnectionJSONRequest `json:"connection"`
-	Updates    Lobby                 `json:"updates,omitempty"`
+	Updates    lobby.Info            `json:"updates,omitempty"`
+}
+
+type UpdateGameJSONRequest struct {
+	Type       string                `json:"type"`
+	Connection ConnectionJSONRequest `json:"connection"`
+	Updates    game.Game             `json:"updates,omitempty"`
 }
 
 const (
