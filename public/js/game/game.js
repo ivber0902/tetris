@@ -22,7 +22,7 @@ let GAME = {
     },
     start(player, field, ui) {
         this.onLoadImages(() => {
-            this.drawDowncount(player, field, ui, 3, 1, () => { this.play(player); })
+            this.drawDowncount(player, field, ui, 0, 1, () => { this.play(player); })
         });
     },
     drawDowncount(player, field, ui, fromIndex, toIndex, func) {
@@ -30,7 +30,7 @@ let GAME = {
             setTimeout(() => {
                 this.clear(field);
                 player.drawField(this.width, this.height);
-                // player.drawOtherField(this.width, this.height, player.field, otherField[0].getContext('2d'));
+                // player.drawOtherField(this.width, this.height, otherPlayersFields);
                 field.fillStyle = "white";
                 field.font = "96px Russo One";
                 field.fillText(fromIndex, ui.field.width / 2 - 36, ui.field.height / 2);
@@ -80,7 +80,7 @@ let GAME = {
         if (player.isActive) {
             this.clear(field);
             player.drawField(this.width, this.height);
-            // player.drawOtherField(this.width, this.height, player.field, otherField[0].getContext('2d'));
+            player.drawOtherField(this.width, this.height, otherPlayersFields);
             document.querySelector('.game__score').innerHTML = player.score;
             let updateTime = new Date();
             updateTime -= this.playTime;
