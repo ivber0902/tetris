@@ -195,9 +195,7 @@ class Player {
     }
 
     drawOtherField(width, height, arrayFields) {
-        console.log(arrayFields)
         arrayFields.forEach((arrayField, index) => {
-            console.log(arrayField)
             let field = otherField[index].getContext('2d');
             field.clearRect(0, 0, otherField[index].width, otherField[index].height);
             for (let row = 0; row < height; row++) {

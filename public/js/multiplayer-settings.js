@@ -8,6 +8,8 @@ let player;
 let ui;
 let playerField = document.querySelector('.wrapper-main-field');
 let otherPlayers = document.querySelectorAll('.player__username')
+
+let started = false;
 const canvas = document.getElementById('game');
 const field = canvas.getContext('2d');
 
@@ -20,32 +22,63 @@ ws.onopen = () => {
 ws.onmessage = (msg) => {
     let data = JSON.parse(msg.data);
     if(data.type === "config")
-        initMultiplayer(data)
-    if(data.type === "update")
         {
-            if(data.state.id === 1)
-                otherPlayersFields[0] = data.state.play_field;
-            console.log(data)
+            initMultiplayer(data);
+            
+            ws.send(JSON.stringify({
+                "type": "all"
+            }));
+        }
+        
+    if(data.type === "update")
+        {   
             if (data.state.id === parseInt(playerField.id))
                 {
-                    console.log(data.state.play_field)
-                    otherPlayersFields[1] = data.state.play_field;
-                    otherPlayersFields[2] = data.state.play_field;
-                    // player.drawOtherField(10, 20, player.field, otherField[0].getContext('2d'))
-                    player.field = data.state.play_field;
+                    if(started){
+                        player.field = data.state.play_field;
+                        started = false
+                    }   
                     player.buffer = player.getFigure(data.state.buffer);
                     player.ui.buffer.src = player.buffer.image.src;
                     if(Object.keys(data.state.current_figure).length === 0)
                         {
                             player.currentFigure = player.getFigure(data.state.figures[0]);
                             player.currentFigure.x = player.getStartX(player.currentFigure);
-                        }      
+                        }   
                     for (let i = 0; i < data.state.figures.length - 1 ; i++) {
                         player.nextFigures[i] = player.getFigure(data.state.figures[i + 1]);
                         player.ui.viewNextFigures[i].src = player.nextFigures[i].image.src;
                     }    
                 }
+                else{
+                    otherPlayersFields[0] = data.state.play_field;
+                }
         }
+  
+}
+
+
+function sendField(){
+    state = {
+        id: parseInt(playerField.id),
+        play_field: player.field,
+        figures: [player.currentFigure.id, player.nextFigures[0].id, player.nextFigures[1].id, player.nextFigures[2].id, player.nextFigures[3].id],
+        buffer: player.buffer.id,
+        score: 12345,
+        figure_count: 234,
+        current_figure: {
+          matrix: player.currentFigure.matrix,
+          pos: {
+            x: player.currentFigure.x,
+            y: player.currentFigure.y
+          }
+        },
+        game_over: false
+      }
+    ws.send(JSON.stringify({
+        "type": "update",
+        "updates": state
+    }));
 }
 
 function initPlayertField(fieldParam){
@@ -85,10 +118,15 @@ function initMultiplayer(data){
     otherField = document.querySelectorAll('.other-field');
     initPlayertField(data.config.settings.play_field)
     initUI(data.config.settings)
-    // initAllPlayers(data.config.players)
+    initAllPlayers(data.config.players)
     player = new Player(ui, GAME.figuresQueueSize);
     player.lvl = data.config.settings.difficulty;
     player.nextFigures = []; 
+    player.moveDownDefault = player.moveDown;
+    player.moveDown = () => {
+        player.moveDownDefault();
+        sendField()
+    }  
     canvas.width = ui.field.width;
     canvas.height = ui.field.height;
     field.fillStyle = 'black';
@@ -111,9 +149,6 @@ function initMultiplayer(data){
     })
     GAME.init(player, ui)
     GAME.start(player, field, ui)
-    ws.send(JSON.stringify({
-        "type": "all"
-    }));
 }
 
 async function foundUser(id) {
