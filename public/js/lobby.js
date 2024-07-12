@@ -1,3 +1,4 @@
+localStorage.mode = 'm';
 let settings = {
     music: [
         {

@@ -118,8 +118,7 @@ class GameController extends AbstractController
         if ($securityUser){
             $user = $this->userService->findUser($securityUser->getId());
             return $this->render('list_lobby.html.twig', ["user" => $user]);
-        }
-        else{
+        } else {
             return $this->redirectToRoute('login');
         }
     }

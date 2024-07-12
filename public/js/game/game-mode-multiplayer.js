@@ -1,4 +1,5 @@
 window.addEventListener("DOMContentLoaded", () => {
+  localStorage.mode = 'm';
   let arrMode = document.querySelectorAll('.link');
   arrMode.forEach((btn, index) => {
     btn.addEventListener('click', () => {

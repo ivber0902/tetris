@@ -124,8 +124,8 @@ function initMultiplayer(data){
     player.nextFigures = []; 
     player.moveDownDefault = player.moveDown;
     player.moveDown = () => {
-        player.moveDownDefault();
         sendField()
+        player.moveDownDefault();
     }  
     canvas.width = ui.field.width;
     canvas.height = ui.field.height;
@@ -148,7 +148,8 @@ function initMultiplayer(data){
         }
     })
     GAME.init(player, ui)
-    GAME.start(player, field, ui)
+    GAME.start(player, field, ui, () => {})
+
 }
 
 async function foundUser(id) {

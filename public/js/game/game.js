@@ -20,9 +20,9 @@ let GAME = {
         ui.initMusic();
         player.updateLvl()
     },
-    start(player, field, ui) {
+    start(player, field, ui, func =() => {}) {
         this.onLoadImages(() => {
-            this.drawDowncount(player, field, ui, 0, 1, () => { this.play(player); })
+            this.drawDowncount(player, field, ui, 3, 1, () => { this.play(player, func); })
         });
     },
     drawDowncount(player, field, ui, fromIndex, toIndex, func) {
@@ -70,17 +70,14 @@ let GAME = {
             }
         })
     },
-    clear(ctx) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-    },
-    play(player) {
-
+    play(player, func = () => {}) {
         player.ui.score = player.score;
         player.ui.level = player.lvl;
         if (player.isActive) {
             this.clear(field);
             player.drawField(this.width, this.height);
-            player.drawOtherField(this.width, this.height, otherPlayersFields);
+            console.log(localStorage.mode, localStorage.mode === 'm')
+            if (localStorage.mode === 'm') player.drawOtherField(this.width, this.height, otherPlayersFields)
             document.querySelector('.game__score').innerHTML = player.score;
             let updateTime = new Date();
             updateTime -= this.playTime;
@@ -90,7 +87,10 @@ let GAME = {
             }
 
             player.updatePosition();
-            requestAnimationFrame(() => this.play(player));
+            requestAnimationFrame(() => this.play(player, func));
         }
+    },
+    clear(ctx) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
 }

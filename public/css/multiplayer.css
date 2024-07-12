@@ -39,7 +39,8 @@
     position: absolute;
     left: 50%;
     transform: translate(-50%, 0);
-} 
+    padding: 50px 0 40px 0;
+}
 .main-field-wrapper {
     padding-top: 80px;
 }
@@ -125,7 +126,7 @@
     justify-content: space-between;
     width: 100%;
     box-sizing: border-box;
-    padding: 0 85px;
+    padding: 240px 85px 0;
 }
 
 .palyers-list {

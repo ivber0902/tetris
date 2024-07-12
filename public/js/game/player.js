@@ -260,7 +260,7 @@ class Player {
             if (this.field[row].every(element => element > 10)) {
                 cleared++;
                 let rowLength = this.field[row].length;
-                for (let j = 0; j < rowLength; j++) {
+                for (let j  = 0; j < rowLength; j++) {
                     for (let i = row; i > 0; i--) {
                         this.field[i][j] = this.field[i - 1][j];
                     }

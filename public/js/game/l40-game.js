@@ -22,9 +22,9 @@ let GAME = {
         player.updateUI(this);
         ui.initMusic();
     },
-    start(player, field, ui) {
+    start(player, field, ui, func =() => {}) {
         this.onLoadImages(() => {
-            this.drawDowncount(player, field, ui, 3, 1, () => { this.startTime = new Date(); this.play(player); })
+            this.drawDowncount(player, field, ui, 3, 1, () => { this.startTime = new Date(); this.play(player, func); })
         });
     },
     drawDowncount(player, field, ui, fromIndex, toIndex, func) {
@@ -71,7 +71,7 @@ let GAME = {
     clear(ctx) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     },
-    play(player) {
+    play(player, func =() => {}) {
         player.ui.score = player.score;
         player.ui.level = player.lvl;
         player.ui.lines = player.lines;
@@ -82,7 +82,7 @@ let GAME = {
         if (player.isActive) {
             this.clear(field);
             player.drawField(this.width, this.height);
-            player.drawOtherField(this.width, this.height);
+            func();
             let updateTime = new Date();
             updateTime -= this.playTime;
             if (updateTime * player.nitro >= player.tickTime) {
