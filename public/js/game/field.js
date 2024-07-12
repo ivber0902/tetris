@@ -62,12 +62,14 @@ class Field {
     drawField(ctx, blockSize) {
         for (let h = 0; h < this.height; h++) {
             for (let w = 0; w < this.width; w++) {
-                let drawingImage = drawingImage = figures[(this.matrix[h][w] - 1) % 10].block;
+                let drawingImage
                 if (this.matrix[h][w] - 1 >= 20)
                     drawingImage = figures[(this.matrix[h][w] - 1) % 10].shadow
                 else
                     if (this.matrix[h][w] === 0)
                         drawingImage = blockField;
+                    else
+                      drawingImage = figures[(this.matrix[h][w] - 1) % 10].block;
                 ctx.drawImage(
                     drawingImage,
                     w * blockSize,
@@ -126,7 +128,7 @@ class Field {
     createShadow(figure) {
         let pos = this.getBottomPosition(figure);
         for (let h = 0; h < figure.matrix.length; h++) {
-            for (let w = 0; w < figure.matrix[i].length; w++) {
+            for (let w = 0; w < figure.matrix[h].length; w++) {
                 if (
                     pos.y + h < this.height
                     && this.matrix[pos.y + h][pos.x + w] === 0
@@ -141,17 +143,26 @@ class Field {
     }
 
     getBottomPosition(figure) {
-        for (let i = 0; this.checkPosition(figure.x, figure.y + i, figure.matrix); i++);
-        return { x: figure.x, y: figure.y + i - 1 } //check -1
+        let i = 1;
+        for (; this.checkPosition(figure.x, figure.y + i, figure.matrix);) i++;
+        return { x: figure.x, y: figure.y + i - 1 }
     }
     rotateFigure(figure) {
-        let rotated = figure.rotateMatrix(figure.matrix);
+        let rotated = rotateMatrix(figure.matrix);
         if (this.checkPosition(figure.x, figure.y, rotated)) {
             this.clearFigure(figure);
             this.clearShadow(figure);
             figure.matrix = rotated;
             this.insertFigure(figure);
             this.createShadow(figure);
+        }
+    }
+    stateFigure(fix = false, figure){
+        for (let i = 0; i < figure.matrix.length; i++) {
+            for (let j = 0; j < figure.matrix[i].length; j++) {
+                if (figure.matrix[i][j])
+                    this.matrix[i + figure.y][j + figure.x] = figure.matrix[i][j] + (fix ? 10 : 0);
+            }
         }
     }
 }

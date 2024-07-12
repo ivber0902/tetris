@@ -117,7 +117,7 @@ class Player {
         if (!this.needStop()) {
             this.moveDown();
         }
-        this.clearRow();
+        this.field.clearRow();
     }
 
     getStartX(figure) {
