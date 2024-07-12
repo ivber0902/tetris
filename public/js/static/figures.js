@@ -91,20 +91,3 @@ let figures = [
 
 let blockField = new Image()
 
-class Figure {
-    constructor(
-        matrix,
-        image = new Image(),
-        block = new Image(),
-        shadow = new Image(),
-        id = 0,
-    ) {
-        this.matrix = matrix.map(row => row.slice());
-        this.image = image;
-        this.block = block;
-        this.shadow = shadow;
-        this.x = 0;
-        this.y = 0;
-        this.id = id
-    }
-}
