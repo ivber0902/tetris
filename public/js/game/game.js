@@ -57,7 +57,7 @@ let GAME = {
             this.clear(field);
             player.field.drawField(field, 34)
             // player.drawField(this.width, this.height);
-            // if (localStorage.mode === 'm') player.drawOtherField(this.width, this.height, otherPlayersFields)
+            if (localStorage.mode === 'm') player.drawOtherField(this.width, this.height, otherPlayersFields)
             document.querySelector('.game__score').innerHTML = player.score;
             let updateTime = new Date();
             updateTime -= this.playTime;
