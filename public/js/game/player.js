@@ -5,9 +5,9 @@ class Player {
         this.lvl = 0;
         this.field = field;
         this.tickTime = 0;
-        this.figureCount = 0;
+        this.playTime = new Date(),
+            this.figureCount = 0;
         this.move = {
-            down: 1,
             left: 0,
             right: 0,
             drop: 0,
@@ -21,37 +21,38 @@ class Player {
         this.isActive = true;
     }
 
-    initFigures() {
-        let randomIndex = Math.floor(Math.random() * figures.length);
-        this.currentFigure = getFigure(randomIndex);
+    initFigures(currentFigureIndex, bufferFigureIndex, NextFiguresIndex) {
+        this.currentFigure = getFigure(currentFigureIndex);
         this.currentFigure.x = this.field.getStartX(this.currentFigure);
-        randomIndex = Math.floor(Math.random() * figures.length);
-        this.buffer = getFigure(randomIndex);
+        this.buffer = getFigure(bufferFigureIndex);
         this.ui.buffer.src = this.buffer.image.src;
         this.nextFigures = [];
         for (let i = 0; i < this.figuresQueueSize; i++) {
-            randomIndex = Math.floor(Math.random() * figures.length);
-            this.nextFigures[i] = getFigure(randomIndex);
+            this.nextFigures[i] = getFigure(NextFiguresIndex[i]);
         }
+        this.ui.updateNextFigures(this.nextFigures);
     }
 
     nextFigure() {
+        this.playTime = new Date;
         let randomIndex = Math.floor(Math.random() * figures.length);
         this.addFigure(getFigure(randomIndex));
     }
 
     addFigure(figure) {
         this.currentFigure = this.nextFigures[0];
+        this.currentFigure.setY(0);
+        this.currentFigure.setX(this.field.getStartX(this.currentFigure));
         for (let i = 0; i < this.figuresQueueSize - 1; i++) {
             this.nextFigures[i] = this.nextFigures[i + 1];
         }
         this.nextFigures[this.figuresQueueSize - 1] = figure
-        // this.updateUI();
+        this.ui.updateNextFigures(this.nextFigures);
         this.isShifter = true;
     }
 
-    updateScore(score) {
-        switch (score) {
+    updateScore(countLines) {
+        switch (countLines) {
             case 1:
                 this.score += 100 * Math.max(1, this.lvl);
                 break;
@@ -115,33 +116,45 @@ class Player {
         this.ui.music.playbackRate = 0.7 + this.lvl * 0.05;
     }
 
-    needStop() {
-       if(!this.field.checkPosition(this.currentFigure.x, this.currentFigure.y + 1, this.currentFigure.matrix))
-        {
-            this.field.stateFigure(true, this.currentFigure)   
-            this.nextFigure();
-            let startX = this.field.getStartX(this.currentFigure);
-            if(this.field.checkPosition(startX, 0, this.currentFigure.matrix)){
-                    this.currentFigure.x = startX;
-                    this.currentFigure.y = 0;
-                    this.figureCount += 1;
-            }else{
-                this.isActive = false;
-                gameEnd(this.score)
-                return true
-            }
-        } 
-        return false
-    }
 
     update() {
-        if (!this.needStop()) {
-            this.field.updateVerticalPosition(this.currentFigure);
+        if (this.isActive) {
+            this.field.clearField();
+            this.field.drawField();
+            this.field.updateHorizontalPosition(this.currentFigure, this.move);
+            if (this.move.drop) {
+                this.field.clearShadow(this.currentFigure);
+                this.field.clearFigure(this.currentFigure);
+                this.field.dropFigure(this.currentFigure);
+                this.field.fixFigure(this.currentFigure);
+                this.updateResults();
+                this.nextFigure();
+                this.update();
+            }
+            if ((new Date() - this.playTime) * this.nitro >= this.tickTime) {
+                this.playTime = new Date;
+                if (!this.field.moveDown(this.currentFigure)) {
+                    this.updateResults();
+                    this.field.fixFigure(this.currentFigure);
+                    this.nextFigure();
+                    if (this.field.checkPosition(this.currentFigure.x, this.currentFigure.y, this.currentFigure.matrix)) {
+                    this.update();
+                    } else {
+                        this.isActive = false;
+                        gameEnd(this.score);
+                    }
+                }
+            }
         }
-        this.field.clearRow();
     }
-
-
+    updateResults() {
+        this.move.drop = 0;
+        this.move.left = 0;
+        this.move.right = 0;
+        this.figureCount++;
+        this.updateScore(this.field.clearRow());
+        this.updateLvl();
+    }
     addPositionListeners() {
         document.addEventListener('keydown', (e) => {
             if (this.isActive)
@@ -166,44 +179,25 @@ class Player {
                         this.field.rotateFigure(this.currentFigure)
                         break;
                 }
-                this.field.updateHorizontalPosition(this.currentFigure, this.move)
+            this.update();
         });
-    }
-
-    addPauseListener() {
-        document.addEventListener('keydown', (e) => {
-            if (e.code === 'KeyP') {
-                if (!this.isActive) {
-                    GAME.drawDowncount(this, field, this.ui, 3, 1, () => { this.isActive = true; GAME.play(this) })
-                } else {
-                    this.isActive = false;
+        document.addEventListener('keyup', (e) => {
+            if (this.isActive)
+                switch (e.code) {
+                    case 'ArrowDown':
+                    case 'KeyS':
+                        this.nitro = 1;
                 }
-            }
         });
     }
 
-    // updateUI() {
-    //     for (let i = 0; i < this.figuresQueueSize; i++) {
-    //         this.ui.viewNextFigures[i].src = this.nextFigures[i].image.src;
-    //     }
-    // }
+    
 
     initEventListeners() {
         this.addBufferListener();
         this.addPositionListeners();
-        this.addPauseListener();
     }
 
-
-
-
-    // drawNumber() {
-    //     field.clearRect(0, 0, canvas.width, canvas.height);
-    //     this.drawField(this.field[0].length, this.field.length);
-    //     field.fillStyle = "white";
-    //     field.font = "96px Russo One";
-    //     field.fillText(player.num, this.ui.field.width / 2 - 36, this.ui.field.height / 2);
-    // }
     addBufferListener() {
         document.addEventListener('keyup', (e) => {
             if (this.isActive && e.code === 'ShiftLeft' && this.isShifter) {
@@ -214,7 +208,7 @@ class Player {
                 this.buffer = figure;
                 this.ui.buffer.src = this.buffer.image.src;
                 this.currentFigure.matrix = figures[this.currentFigure.id].matrix;
-                this.currentFigure.x = this.getStartX(this.currentFigure);
+                this.currentFigure.x = this.field.getStartX(this.currentFigure);
                 this.currentFigure.y = 0;
                 this.isShifter = false;
             }

@@ -1,6 +1,5 @@
 class UI {
-    constructor(blockSize, buffer, viewNextFigures, game, score, level, time, lines) {
-        this.blockSize = blockSize;
+    constructor(buffer, viewNextFigures, game, score, level, time, lines) {
         this.buffer = buffer;
         this.viewNextFigures = viewNextFigures;
         this.field = {
@@ -32,6 +31,12 @@ class UI {
         }
     }
 
+    updateNextFigures(nextFigures) {
+        for (let i = 0; i < 4; i++) {
+            this.viewNextFigures[i].src = nextFigures[i].image.src;
+        }
+    }
+    
     set score(val) {
         if (val !== undefined) {
             this._score.textContent = val;
