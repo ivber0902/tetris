@@ -2,7 +2,7 @@ let GAME = {
     width: localStorage.Gamewidth,
     height: localStorage.Gameheight,
     playTime: new Date(),
-    init(player, ui){
+    init(player, currentFigureIndex, bufferFigureIndex, NextFiguresIndex) {
         let i = 0;
         figures.forEach((figure) => {
             figure.image.src = `/images/figures/${images[i]}.png`;
@@ -11,11 +11,38 @@ let GAME = {
             i++
         });
         blockField.src = '/images/blocks/bg.png';
-        player.field.initField()
+        player.field.initField();
+        player.field.initFieldMatrix();
         player.tickTime = 15974 / this.height;
         player.initEventListeners();
-        player.initFigures();
-        player.updateSpeed()
+        player.initFigures(currentFigureIndex, bufferFigureIndex, NextFiguresIndex);
+        player.updateSpeed();
+        this.addPauseListener(player);
+    },
+    addPauseListener(player) {
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'KeyP') {
+                if (!player.isActive) {
+                    this.drawDowncount(player, player.field.field, 3, 1, () => { player.isActive = true; this.play(player) })
+                } else {
+                    player.isActive = false;
+                }
+            }
+        });
+    },
+    drawDowncount(player, field, fromIndex, toIndex, func) {
+        if (fromIndex >= toIndex) {
+            setTimeout(() => {
+                player.field.clearField();
+                player.field.drawField();
+                field.fillStyle = "white";
+                field.font = "96px Russo One";
+                field.fillText(fromIndex, player.field.width * player.field.blockSize / 2 - 36, player.field.height * player.field.blockSize / 2);
+                this.drawDowncount(player, field, fromIndex - 1, 1, func);
+            }, 1000);
+        } else {
+            setTimeout(() => { func() }, 1000);
+        }
     },
     onLoadImages(func) {
         let counter = 0;
@@ -47,35 +74,22 @@ let GAME = {
             }
         })
     },
-    start(player, field, ui){
-        this.onLoadImages(()=>{this.play(player, field, ui)})
+    start(player) {
+        this.onLoadImages(() => { 
+            this.drawDowncount(player, player.field.field, 3, 1, () => { player.isActive = true; this.play(player) }) })
     },
-    play(player, func = () => {}) {
+    play(player) {
         player.ui.score = player.score;
         player.ui.level = player.lvl;
-        if (player.isActive) {
-            this.clear(field);
-            player.field.drawField(field, 34)
-            // player.drawField(this.width, this.height);
-            if (localStorage.mode === 'm') player.drawOtherField(this.width, this.height, otherPlayersFields)
-            document.querySelector('.game__score').innerHTML = player.score;
-            let updateTime = new Date();
-            updateTime -= this.playTime;
-            if (updateTime * player.nitro >= player.tickTime) {
-                this.playTime = new Date;
-                player.update();
-            }
-            player.field.updateHorizontalPosition(player.currentFigure, player.move)
-            requestAnimationFrame(() => this.play(player, func));
-        }
+        player.update();
+        document.querySelector('.game__score').innerHTML = player.score;
+        document.querySelector('.game__level').innerHTML = player.lvl;
+        requestAnimationFrame(() => this.play(player));
+
     },
-    clear(ctx) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-    }
 }
 
 const ui = new UI(
-    34,
     document.querySelector(".buffer__figure"),
     document.querySelectorAll(".figure"),
     GAME,
@@ -84,15 +98,17 @@ const ui = new UI(
     document.querySelector(".game__time"),
     document.querySelector(".game__lines"),
 );
-
-let matrix = [];
-let arrayField = new Field(matrix, 10, 20)
-let player = new Player(ui, arrayField);
-const canvas = document.getElementById('game');
-const field = canvas.getContext('2d');
-canvas.width = ui.field.width;
-canvas.height = ui.field.height;
-field.fillStyle = 'black';
-field.fillRect(0, 0, ui.field.width, ui.field.height);
-GAME.init(player, ui)
-GAME.start(player, field, ui)
+let player = new Player(ui, new Field([], 10, 20));
+GAME.init
+    (
+        player,
+        Math.floor(Math.random() * figures.length),
+        Math.floor(Math.random() * figures.length),
+        [
+            Math.floor(Math.random() * figures.length),
+            Math.floor(Math.random() * figures.length),
+            Math.floor(Math.random() * figures.length),
+            Math.floor(Math.random() * figures.length)
+        ]
+    )
+GAME.start(player)

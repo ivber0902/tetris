@@ -3,9 +3,18 @@ class Field {
         this.matrix = matrix;
         this.height = height;
         this.width = width;
+        this.field = null;
+        this.blockSize = 34;
     }
-
     initField() {
+        const canvas = document.getElementById('game');
+        this.field = canvas.getContext('2d');
+        canvas.width = this.width * this.blockSize;
+        canvas.height = this.height * this.blockSize;
+        this.field.fillStyle = 'black';
+        this.field.fillRect(0, 0, this.width * this.blockSize, this.height * this.blockSize);
+    }
+    initFieldMatrix() {
         for (let h = 0; h < this.height; h++) {
             this.matrix[h] = [];
             for (let w = 0; w < this.width; w++) {
@@ -14,6 +23,10 @@ class Field {
         }
     }
 
+
+    clearField() {
+        this.field.clearRect(0, 0, this.width * this.blockSize, this.height * this.blockSize);
+    }
     insertFigure(figure) {
         for (let h = 0; h < figure.matrix.length; h++) {
             for (let w = 0; w < figure.matrix[0].length; w++) {
@@ -22,35 +35,43 @@ class Field {
             }
         }
     }
+    fixFigure(figure) {
+        this.clearShadow(figure);
+        this.clearFigure(figure);
+        for (let h = 0; h < figure.matrix.length; h++) {
+            for (let w = 0; w < figure.matrix[0].length; w++) {
+                if (figure.matrix[h][w])
+                    this.matrix[h + figure.y][w + figure.x] = figure.matrix[h][w] + 10;
+            }
+        }
+
+    }
 
     getStartX(figure) {
         return Math.floor((this.width - Math.max(...figure.matrix.map(row => row.length))) / 2);
     }
 
-    updateVerticalPosition(figure) {
-        this.clearFigure(figure);
-        figure.y++;
-        this.insertFigure(figure);
+    moveDown(figure) {
+        if (this.checkPosition(figure.x, figure.y + 1, figure.matrix)) {
+            this.clearShadow(figure);
+            this.clearFigure(figure);
+            figure.y++;
+            this.insertFigure(figure);
+            this.createShadow(figure);
+            return true;
+        }
+        return false;
     }
 
     updateHorizontalPosition(figure, isPlayerMove) {
-        this.clearShadow(figure);
-        this.changeHorizontalPosition(figure, isPlayerMove);
-        if (isPlayerMove.drop) {
-            this.dropFigure(figure);
-            isPlayerMove.drop = 0;
-            //this.update();
-        }
-        this.insertFigure(figure);
-        this.createShadow(figure);
-    }
-
-    changeHorizontalPosition(figure, isPlayerMove) {
         if (this.checkPosition(figure.x + isPlayerMove.right - isPlayerMove.left, figure.y, figure.matrix)) {
+            this.clearShadow(figure);
             this.clearFigure(figure);
             figure.x += isPlayerMove.right - isPlayerMove.left;
-            isPlayerMove.left = isPlayerMove.right = 0;
+            this.insertFigure(figure);
+            this.createShadow(figure);
         }
+        isPlayerMove.left = isPlayerMove.right = 0;
     }
 
     dropFigure(figure) {
@@ -59,7 +80,7 @@ class Field {
         figure.y = pos.y;
     }
 
-    drawField(ctx, blockSize) {
+    drawField() {
         for (let h = 0; h < this.height; h++) {
             for (let w = 0; w < this.width; w++) {
                 let drawingImage
@@ -69,12 +90,12 @@ class Field {
                     if (this.matrix[h][w] === 0)
                         drawingImage = blockField;
                     else
-                      drawingImage = figures[(this.matrix[h][w] - 1) % 10].block;
-                ctx.drawImage(
+                        drawingImage = figures[(this.matrix[h][w] - 1) % 10].block;
+                this.field.drawImage(
                     drawingImage,
-                    w * blockSize,
-                    h * blockSize,
-                    blockSize, blockSize
+                    w * this.blockSize,
+                    h * this.blockSize,
+                    this.blockSize, this.blockSize
                 )
             }
         }
@@ -141,7 +162,13 @@ class Field {
     clearShadow(figure) {
         this.clearFigure({ matrix: figure.matrix, ...this.getBottomPosition(figure) });
     }
-
+    drawNumber(num) {
+        this.clearField();
+        this.drawField();
+        field.fillStyle = "white";
+        field.font = "96px Russo One";
+        field.fillText(num, this.width * this.blockSize / 2 - 36, this.height * this.blockSize / 2);
+    }
     getBottomPosition(figure) {
         let i = 1;
         for (; this.checkPosition(figure.x, figure.y + i, figure.matrix);) i++;
@@ -157,7 +184,7 @@ class Field {
             this.createShadow(figure);
         }
     }
-    stateFigure(fix = false, figure){
+    stateFigure(fix = false, figure) {
         for (let i = 0; i < figure.matrix.length; i++) {
             for (let j = 0; j < figure.matrix[i].length; j++) {
                 if (figure.matrix[i][j])
