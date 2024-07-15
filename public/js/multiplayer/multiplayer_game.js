@@ -2,120 +2,72 @@ const host = window.location.hostname;
 let params = new URLSearchParams(document.location.search);
 let wsUrl = "ws://" + host + ":8080/game?lobby=" + params.get('lobby');
 let ws = new WebSocket(wsUrl);
-let otherPlayersFields = []
+let otherPlayersFields = [];
 let otherPlayers;
 let playerField = document.querySelector('.wrapper-main-field');
 let startGame = true;
 let init = false;
 let ListPlayers = document.querySelector('.palyers-list');
-let GAME = {
-    width: parseInt(localStorage.Gamewidth),
-    height: parseInt(localStorage.Gameheight),
-    playTime: new Date(),
-    init(player, currentFigureIndex, bufferFigureIndex, NextFiguresIndex, otherPlayers) {
-        let i = 0;
-        figures.forEach((figure) => {
-            figure.image.src = `/images/figures/${images[i]}.png`;
-            figure.block.src = `/images/blocks/${images[i]}.png`;
-            figure.shadow.src = `/images/shadow/${images[i]}.png`;
-            i++
-        });
-        blockField.src = '/images/blocks/bg.png';
-        player.field.initField();
-        player.field.initOtherFields(otherPlayers)
-        player.field.initFieldMatrix();
-        player.tickTime = 15974 / this.height;
-        player.initEventListeners();
-        player.initFigures(currentFigureIndex, bufferFigureIndex, NextFiguresIndex);
-        player.updateSpeed();
-        this.addPauseListener(player);
-    },
-    addPauseListener(player) {
-        document.addEventListener('keydown', (e) => {
-            if (e.code === 'KeyP') {
-                if (!player.isActive) {
-                    this.drawDowncount(player, player.field.field, 3, 1, () => { player.isActive = true; this.play(player) })
-                } else {
-                    player.isActive = false;
-                }
-            }
-        });
-    },
-    drawDowncount(player, field, fromIndex, toIndex, func) {
-        if (fromIndex >= toIndex) {
-            setTimeout(() => {
-                player.field.clearField();
-                player.field.drawField(player.field.field, player.field.matrix);
-                field.fillStyle = "white";
-                field.font = "96px Russo One";
-                field.fillText(fromIndex, player.field.width * player.field.blockSize / 2 - 36, player.field.height * player.field.blockSize / 2);
-                this.drawDowncount(player, field, fromIndex - 1, 1, func);
-            }, 1000);
-        } else {
-            setTimeout(() => { func() }, 1000);
-        }
-    },
-    onLoadImages(func) {
-        let counter = 0;
-        figures.forEach((figure) => {
-            figure.image.addEventListener('load', () => {
-                counter++;
-                if (counter === figures.length * 3 + 1) {
-                    func()
-                }
-            })
-            figure.block.addEventListener('load', () => {
-                counter++;
-                if (counter === figures.length * 3 + 1) {
-                    func()
-                }
-            })
-            figure.shadow.addEventListener('load', () => {
-                counter++;
-                if (counter === figures.length * 3 + 1) {
-                    func()
-                }
-            })
-        }
-        );
-        blockField.addEventListener('load', () => {
-            counter++;
-            if (counter === figures.length * 3 + 1) {
-                func()
-            }
-        })
-    },
-    start(player) {
-        this.onLoadImages(() => { 
-            this.play(player)
-            // this.drawDowncount(player, player.field.field, 3, 1, () => { player.isActive = true; this.play(player) }) })
-    },)},
-    play(player) {
-        player.ui.score = player.score;
-        player.ui.level = player.lvl;
-        player.update();
-        document.querySelector('.game__score').innerHTML = player.score;
-        document.querySelector('.game__level').innerHTML = player.lvl;
-        requestAnimationFrame(() => this.play(player));
+let newFigureId;
 
-    },
+player.field.moveDownDefault = player.field.moveDown;
+player.field.updateHorizontalPositionDefault = player.field.updateHorizontalPosition
+
+player.field.moveDown = (figure) => {
+    let r = player.field.moveDownDefault(figure);
+    sendField()
+    return r;
 }
 
-const ui = new UI(
-    document.querySelector(".buffer__figure"),
-    document.querySelectorAll(".figure"),
-    document.querySelector(".game__score"),
-    document.querySelector(".game__level"),
-    document.querySelector(".game__time"),
-    document.querySelector(".game__lines"),
-);
+player.nextFigure = () => {
+}
+player.onPositionKeyDownDefault = player.onPositionKeyDown;
+player.onPositionKeyDown = (e) => {
+    player.onPositionKeyDownDefault(e);
+    sendField();
+}
+player.onBufferKeyUpDefault = player.onBufferKeyUp;
+player.onBufferKeyUp = (e) => {
+    player.onBufferKeyUpDefault(e);
+    sendField();
+}
+player.field.defaultFix = player.field.fixFigure;
+player.field.fixFigure = (figure) => {
+    player.field.defaultFix(figure);
+    player.field.drawField(player.field.field, player.field.matrix);
+    player.isActive = false;
+    console.log('otmena')
+    ws.send(JSON.stringify({
+        "type": "set"
+    }));
+}
 
-let player = new Player(ui, new Field([], GAME.width, GAME.height));
-
-player.updateDefault = player.update;
-player.update = () =>{
-    player.updateDefault();
-    sendField()
+GAME.defaultInit = GAME.init;
+player.field.initOtherFields = (players) => {
+    players.forEach((item) => {
+        let field = item.querySelector('.other-field').getContext('2d')
+        let canvas = item.querySelector('.other-field');
+        canvas.width = player.field.width * player.field.blockSize;
+        canvas.height = player.field.height * player.field.blockSize;
+        field.width = player.field.width * player.field.blockSize;
+        field.height = player.field.height * player.field.blockSize;
+        field.fillStyle = 'black';
+        field.fillRect(0, 0, player.field.width * player.field.blockSize, player.field.height * player.field.blockSize);
+    })
+    document.querySelectorAll('.other-field').forEach((elem) => {
+        switch (player.field.width) {
+            case 7:
+                elem.maxHeight = "480px";
+                document.querySelector('.palyers-list').style.paddingRight = '100px'
+                break
+            case 10:
+                elem.style.maxHeight = "400px";
+                break
+            case 15:
+                elem.style.maxHeight = "320px";
+                break
+        }
+    })
 }
 
 ws.onopen = () => {
@@ -126,33 +78,50 @@ ws.onopen = () => {
 
 ws.onmessage = (msg) => {
     let data = JSON.parse(msg.data);
-    if(data.type === 'config')
-        initMultiplayerGame(data)
-    if(data.type === 'update')
-        {
-            if(init){
-            if(startGame)
-                {
-                    startGame = false;
-                    GAME.init(player, data.state.buffer, data.state.figures[0], data.state.figures.slice(1), otherPlayers)
-                    GAME.start(player)
-                }
-            if(data.state.id === parseInt(playerField.id)) {
+    console.log(data)
+    if (data.type === 'config')
+        initMultiplayerGame(data);
+    if (data.type === 'set') {
+        player.buffer = getFigure(data.state.buffer);
+        player.ui.buffer.src = player.buffer.image.src;
+        player.nextFigures[0] = getFigure(data.state.figures[1]);
+        player.isActive = true;
+        player.playTime = new Date;
+        player.isShifter = true;
+        player.currentFigure = getFigure(data.state.figures[0]);
+        player.nextFigures[0] = getFigure(data.state.figures[1]);
+        player.nextFigures[1] = getFigure(data.state.figures[2]);
+        player.nextFigures[2] = getFigure(data.state.figures[3]);
+        player.nextFigures[3] = getFigure(data.state.figures[4]);
+        player.ui.viewNextFigures[0].src = player.nextFigures[0].image.src;
+        player.ui.viewNextFigures[1].src = player.nextFigures[1].image.src;
+        player.ui.viewNextFigures[2].src = player.nextFigures[2].image.src;
+        player.ui.viewNextFigures[3].src = player.nextFigures[3].image.src;
+        player.currentFigure.setY(0);
+        player.currentFigure.setX(player.field.getStartX(player.currentFigure));
+    }
+    if (data.type === 'update') {
+        if (init) {
+            if (startGame) {
+                startGame = false;
+                GAME.init(player, data.state.buffer, data.state.figures[0], data.state.figures.slice(1))
+                player.field.initOtherFields(otherPlayers)
+                GAME.start(player)
+            }
+            if (data.state.id === parseInt(playerField.id)) {
+                console.log(data.state.figures)
                 player.buffer = getFigure(data.state.buffer);
                 player.ui.buffer.src = player.buffer.image.src;
-                for (let i = 0; i < data.state.figures.length - 1 ; i++) {
-                    player.nextFigures[i] = getFigure(data.state.figures[i + 1]);
-                    player.ui.viewNextFigures[i].src = player.nextFigures[i].image.src;
-                }   
-            }else{
+
+            } else {
                 player.field.drawField(document.getElementById(data.state.id).querySelector('.other-field').getContext('2d'), data.state.play_field
-            )
+                )
             }
         }
-        }
+    }
 }
 
-function sendField(){
+function sendField() {
     let state = {
         id: parseInt(playerField.id),
         play_field: player.field.matrix,
@@ -161,14 +130,14 @@ function sendField(){
         score: 12345,
         figure_count: 234,
         current_figure: {
-          matrix: player.currentFigure.matrix,
-          pos: {
-            x: player.currentFigure.x,
-            y: player.currentFigure.y
-          }
+            matrix: player.currentFigure.matrix,
+            pos: {
+                x: player.currentFigure.x,
+                y: player.currentFigure.y
+            }
         },
         game_over: false
-      }
+    }
     ws.send(JSON.stringify({
         "type": "update",
         "updates": state
@@ -189,7 +158,7 @@ function initMultiplayerGame(data) {
 function initPlayers(players) {
     players.forEach((id) => {
         createField(id)
-        if(id !== parseInt(playerField.id)){
+        if (id !== parseInt(playerField.id)) {
             let newField = createField(id);
             ListPlayers.appendChild(newField)
             foundUser(id).then((player) => newField.querySelector('.player__username').textContent = player.login)
@@ -205,16 +174,11 @@ async function foundUser(id) {
     return user
 }
 
-function initPlayertField(fieldParam){
+function initPlayertField(fieldParam) {
     GAME.width = fieldParam.width;
     GAME.height = fieldParam.height;
 }
 
-/* <div class="other-player">
-<p class="player__username"></p>
-<canvas class="other-field"></canvas>
-<p class="game__score">200</p>
-</div> */
 function createField(id) {
     const wrappperField = document.createElement('div');
     wrappperField.setAttribute('class', 'other-player');

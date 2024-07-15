@@ -72,6 +72,15 @@ func (game *Game) NextFigure() {
 	game.Figures = append(game.Figures[1:], nextFigure)
 }
 
+func (game *Game) Update(newGame *Game) {
+	game.PlayField = newGame.PlayField
+	game.Figures = newGame.Figures
+	game.Buffer = newGame.Buffer
+	game.Score = newGame.Score
+	game.GameOver = newGame.GameOver
+	game.CurrentFigure = newGame.CurrentFigure
+}
+
 func GetNextFigure() int8 {
 	src := rand.NewSource(time.Now().UnixNano())
 	r := rand.New(src)

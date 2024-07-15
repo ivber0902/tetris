@@ -15,33 +15,6 @@ class Field {
         this.field.fillRect(0, 0, this.width * this.blockSize, this.height * this.blockSize);
     }
 
-    initOtherFields(players) {
-        players.forEach((item) => {
-            let field = item.querySelector('.other-field').getContext('2d')
-            let canvas = item.querySelector('.other-field');
-            canvas.width = this.width * this.blockSize;
-            canvas.height = this.height * this.blockSize;
-            field.width = this.width * this.blockSize;
-            field.height = this.height * this.blockSize;
-            field.fillStyle = 'black';
-            field.fillRect(0, 0, this.width * this.blockSize, this.height * this.blockSize);
-        })    
-        document.querySelectorAll('.other-field').forEach((elem)=>{
-            switch (this.width) {
-                case 7:
-                    elem.maxHeight = "480px";
-                    document.querySelector('.palyers-list').style.paddingRight = '100px'
-                    break
-                case 10:
-                    elem.style.maxHeight = "400px";
-                    break
-                case 15:
-                    elem.style.maxHeight = "320px";
-                    break
-            }
-        })
-    }
-
     initFieldMatrix() {
         for (let h = 0; h < this.height; h++) {
             this.matrix[h] = [];

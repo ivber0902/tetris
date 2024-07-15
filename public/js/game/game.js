@@ -34,7 +34,7 @@ let GAME = {
         if (fromIndex >= toIndex) {
             setTimeout(() => {
                 player.field.clearField();
-                // player.field.drawField(this.field.field, this.field.matrix);
+                player.field.drawField(player.field.field, player.field.matrix);
                 field.fillStyle = "white";
                 field.font = "96px Russo One";
                 field.fillText(fromIndex, player.field.width * player.field.blockSize / 2 - 36, player.field.height * player.field.blockSize / 2);
@@ -97,17 +97,5 @@ const ui = new UI(
     document.querySelector(".game__time"),
     document.querySelector(".game__lines"),
 );
+
 let player = new Player(ui, new Field([], GAME.width, GAME.height));
-GAME.init
-    (
-        player,
-        Math.floor(Math.random() * figures.length),
-        Math.floor(Math.random() * figures.length),
-        [
-            Math.floor(Math.random() * figures.length),
-            Math.floor(Math.random() * figures.length),
-            Math.floor(Math.random() * figures.length),
-            Math.floor(Math.random() * figures.length)
-        ]
-    )
-GAME.start(player)

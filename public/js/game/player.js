@@ -36,19 +36,15 @@ class Player {
     nextFigure() {
         this.playTime = new Date;
         let randomIndex = Math.floor(Math.random() * figures.length);
-        this.addFigure(getFigure(randomIndex));
-    }
-
-    addFigure(figure) {
         this.currentFigure = this.nextFigures[0];
         this.currentFigure.setY(0);
         this.currentFigure.setX(this.field.getStartX(this.currentFigure));
         for (let i = 0; i < this.figuresQueueSize - 1; i++) {
             this.nextFigures[i] = this.nextFigures[i + 1];
         }
-        this.nextFigures[this.figuresQueueSize - 1] = figure
-        this.ui.updateNextFigures(this.nextFigures);
         this.isShifter = true;
+        this.nextFigures[this.figuresQueueSize - 1] = getFigure(randomIndex)
+        this.ui.updateNextFigures(this.nextFigures);
     }
 
     updateScore(countLines) {
@@ -138,9 +134,10 @@ class Player {
                     this.updateResults();
                     this.nextFigure();
                     if (this.field.checkPosition(this.currentFigure.x, this.currentFigure.y, this.currentFigure.matrix)) {
-                    this.update();
+                        this.update();
                     } else {
                         this.isActive = false;
+                        console.log('sosiska')
                         gameEnd(this.score);
                     }
                 }
@@ -155,30 +152,33 @@ class Player {
         this.updateScore(this.field.clearRow());
         this.updateLvl();
     }
+    onPositionKeyDown(e) {
+        if (this.isActive)
+            switch (e.code) {
+                case 'ArrowLeft':
+                case 'KeyA':
+                    this.move.left = this.field.checkPosition(this.currentFigure.x - 1, this.currentFigure.y, this.currentFigure.matrix) ? 1 : 0;
+                    break;
+                case 'ArrowRight':
+                case 'KeyD':
+                    this.move.right = this.field.checkPosition(this.currentFigure.x + 1, this.currentFigure.y, this.currentFigure.matrix) ? 1 : 0;
+                    break;
+                case 'Space':
+                    this.move.drop = 1;
+                    break;
+                case 'ArrowDown':
+                case 'KeyS':
+                    this.nitro = 4;
+                    break;
+                case 'ArrowUp':
+                case 'KeyW':
+                    this.field.rotateFigure(this.currentFigure)
+                    break;
+            }
+    }
     addPositionListeners() {
         document.addEventListener('keydown', (e) => {
-            if (this.isActive)
-                switch (e.code) {
-                    case 'ArrowLeft':
-                    case 'KeyA':
-                        this.move.left = this.field.checkPosition(this.currentFigure.x - 1, this.currentFigure.y, this.currentFigure.matrix) ? 1 : 0;
-                        break;
-                    case 'ArrowRight':
-                    case 'KeyD':
-                        this.move.right = this.field.checkPosition(this.currentFigure.x + 1, this.currentFigure.y, this.currentFigure.matrix) ? 1 : 0;
-                        break;
-                    case 'Space':
-                        this.move.drop = 1;
-                        break;
-                    case 'ArrowDown':
-                    case 'KeyS':
-                        this.nitro = 4;
-                        break;
-                    case 'ArrowUp':
-                    case 'KeyW':
-                        this.field.rotateFigure(this.currentFigure)
-                        break;
-                }
+            this.onPositionKeyDown(e);
             this.update();
         });
         document.addEventListener('keyup', (e) => {
@@ -191,27 +191,29 @@ class Player {
         });
     }
 
-    
+
 
     initEventListeners() {
         this.addBufferListener();
         this.addPositionListeners();
     }
-
+    onBufferKeyUp(e) {
+        if (this.isActive && e.code === 'ShiftLeft' && this.isShifter) {
+            this.field.clearFigure(this.currentFigure);
+            this.field.clearShadow(this.currentFigure);
+            let figure = this.currentFigure;
+            this.currentFigure = this.buffer;
+            this.buffer = figure;
+            this.ui.buffer.src = this.buffer.image.src;
+            this.currentFigure.matrix = figures[this.currentFigure.id].matrix;
+            this.currentFigure.x = this.field.getStartX(this.currentFigure);
+            this.currentFigure.y = 0;
+            this.isShifter = false;
+        }
+    }
     addBufferListener() {
         document.addEventListener('keyup', (e) => {
-            if (this.isActive && e.code === 'ShiftLeft' && this.isShifter) {
-                this.field.clearFigure(this.currentFigure);
-                this.field.clearShadow(this.currentFigure);
-                let figure = this.currentFigure;
-                this.currentFigure = this.buffer;
-                this.buffer = figure;
-                this.ui.buffer.src = this.buffer.image.src;
-                this.currentFigure.matrix = figures[this.currentFigure.id].matrix;
-                this.currentFigure.x = this.field.getStartX(this.currentFigure);
-                this.currentFigure.y = 0;
-                this.isShifter = false;
-            }
+            this.onBufferKeyUp(e);
         });
     }
 }

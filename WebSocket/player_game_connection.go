@@ -67,7 +67,7 @@ func (player *PlayerGameConnection) readLoop() {
 					}
 				}
 			case "update":
-				*player.state = request.Updates
+				player.state.Update(&request.Updates)
 				player.game.update <- &GameUpdateResponse{
 					Type:  "update",
 					State: player.state,
@@ -75,7 +75,7 @@ func (player *PlayerGameConnection) readLoop() {
 			case "set":
 				player.state.NextFigure()
 				player.send <- &GameUpdateResponse{
-					Type:  "update",
+					Type:  "set",
 					State: player.state,
 				}
 			case "game_over":
