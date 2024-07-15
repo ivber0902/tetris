@@ -1,11 +1,7 @@
 class UI {
-    constructor(buffer, viewNextFigures, game, score, level, time, lines) {
+    constructor(buffer, viewNextFigures, score, level, time, lines) {
         this.buffer = buffer;
         this.viewNextFigures = viewNextFigures;
-        this.field = {
-            width: game.width * this.blockSize,
-            height: game.height * this.blockSize,
-        }
         this._score = score;
         this._level = level;
         this._time = time;
@@ -23,12 +19,6 @@ class UI {
             this.currentTime = 0;
             this.play();
         }, false);
-    }
-    updateSize(game) {
-        this.field = {
-            width: game.width * this.blockSize,
-            height: game.height * this.blockSize,
-        }
     }
 
     updateNextFigures(nextFigures) {

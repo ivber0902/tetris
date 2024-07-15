@@ -120,7 +120,7 @@ class Player {
     update() {
         if (this.isActive) {
             this.field.clearField();
-            this.field.drawField();
+            this.field.drawField(this.field.field, this.field.matrix);
             this.field.updateHorizontalPosition(this.currentFigure, this.move);
             if (this.move.drop) {
                 this.field.clearShadow(this.currentFigure);
@@ -134,8 +134,8 @@ class Player {
             if ((new Date() - this.playTime) * this.nitro >= this.tickTime) {
                 this.playTime = new Date;
                 if (!this.field.moveDown(this.currentFigure)) {
-                    this.updateResults();
                     this.field.fixFigure(this.currentFigure);
+                    this.updateResults();
                     this.nextFigure();
                     if (this.field.checkPosition(this.currentFigure.x, this.currentFigure.y, this.currentFigure.matrix)) {
                     this.update();

@@ -14,6 +14,34 @@ class Field {
         this.field.fillStyle = 'black';
         this.field.fillRect(0, 0, this.width * this.blockSize, this.height * this.blockSize);
     }
+
+    initOtherFields(players) {
+        players.forEach((item) => {
+            let field = item.querySelector('.other-field').getContext('2d')
+            let canvas = item.querySelector('.other-field');
+            canvas.width = this.width * this.blockSize;
+            canvas.height = this.height * this.blockSize;
+            field.width = this.width * this.blockSize;
+            field.height = this.height * this.blockSize;
+            field.fillStyle = 'black';
+            field.fillRect(0, 0, this.width * this.blockSize, this.height * this.blockSize);
+        })    
+        document.querySelectorAll('.other-field').forEach((elem)=>{
+            switch (this.width) {
+                case 7:
+                    elem.maxHeight = "480px";
+                    document.querySelector('.palyers-list').style.paddingRight = '100px'
+                    break
+                case 10:
+                    elem.style.maxHeight = "400px";
+                    break
+                case 15:
+                    elem.style.maxHeight = "320px";
+                    break
+            }
+        })
+    }
+
     initFieldMatrix() {
         for (let h = 0; h < this.height; h++) {
             this.matrix[h] = [];
@@ -79,19 +107,18 @@ class Field {
         figure.x = pos.x;
         figure.y = pos.y;
     }
-
-    drawField() {
+    drawField(field, matrix) {
         for (let h = 0; h < this.height; h++) {
             for (let w = 0; w < this.width; w++) {
                 let drawingImage
-                if (this.matrix[h][w] - 1 >= 20)
-                    drawingImage = figures[(this.matrix[h][w] - 1) % 10].shadow
+                if (matrix[h][w] - 1 >= 20)
+                    drawingImage = figures[(matrix[h][w] - 1) % 10].shadow
                 else
-                    if (this.matrix[h][w] === 0)
+                    if (matrix[h][w] === 0)
                         drawingImage = blockField;
                     else
-                        drawingImage = figures[(this.matrix[h][w] - 1) % 10].block;
-                this.field.drawImage(
+                        drawingImage = figures[(matrix[h][w] - 1) % 10].block;
+                field.drawImage(
                     drawingImage,
                     w * this.blockSize,
                     h * this.blockSize,

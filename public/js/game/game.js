@@ -1,6 +1,6 @@
 let GAME = {
-    width: localStorage.Gamewidth,
-    height: localStorage.Gameheight,
+    width: parseInt(localStorage.Gamewidth),
+    height: parseInt(localStorage.Gameheight),
     playTime: new Date(),
     init(player, currentFigureIndex, bufferFigureIndex, NextFiguresIndex) {
         let i = 0;
@@ -34,7 +34,7 @@ let GAME = {
         if (fromIndex >= toIndex) {
             setTimeout(() => {
                 player.field.clearField();
-                player.field.drawField();
+                // player.field.drawField(this.field.field, this.field.matrix);
                 field.fillStyle = "white";
                 field.font = "96px Russo One";
                 field.fillText(fromIndex, player.field.width * player.field.blockSize / 2 - 36, player.field.height * player.field.blockSize / 2);
@@ -92,13 +92,12 @@ let GAME = {
 const ui = new UI(
     document.querySelector(".buffer__figure"),
     document.querySelectorAll(".figure"),
-    GAME,
     document.querySelector(".game__score"),
     document.querySelector(".game__level"),
     document.querySelector(".game__time"),
     document.querySelector(".game__lines"),
 );
-let player = new Player(ui, new Field([], 10, 20));
+let player = new Player(ui, new Field([], GAME.width, GAME.height));
 GAME.init
     (
         player,
