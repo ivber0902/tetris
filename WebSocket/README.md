@@ -212,3 +212,23 @@
   "state": // State
 }
 ```
+
+# Результаты
+`GET /game/results`
+### Ответ
+```json
+[
+  {
+    "player_id": 1,
+    "score": 1500
+  },
+  {
+    "player_id": 2,
+    "score": 1700
+  },
+  {
+    "player_id": 3,
+    "score": 2000
+  }
+]
+```
