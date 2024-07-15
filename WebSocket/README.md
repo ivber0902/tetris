@@ -214,7 +214,7 @@
 ```
 
 # Результаты
-`GET /game/results`
+`GET /game/results?lobby=<LobbyID>`
 ### Ответ
 ```json
 [
