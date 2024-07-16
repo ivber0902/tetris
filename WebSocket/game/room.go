@@ -27,6 +27,8 @@ func New(lobbyRoom *lobby.Room, lobbyEvents *EventList) *Room {
 		Room:    *connection.New[State, lobby.Config, Response](lobbyRoom.ID, lobbyRoom.HostIP, lobbyRoom.Config),
 		Events:  lobbyEvents,
 		Figures: &figures,
+		Results: &Results{},
+		GameEnd: make(chan *State),
 	}
 
 	for player := range lobbyRoom.Clients {
