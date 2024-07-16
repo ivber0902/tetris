@@ -16,7 +16,7 @@ function multiplayerGameEnd(score) {
     sendResult(score).then(() => { });
 }
 player.field.moveDownDefault = player.field.moveDown;
-player.field.updateHorizontalPositionDefault = player.field.updateHorizontalPosition
+player.field.updateHorizontalPositionDefault = player.field.updateHorizontalPosition;
 
 player.field.moveDown = (figure) => {
     let r = player.field.moveDownDefault(figure);
@@ -41,10 +41,30 @@ player.field.fixFigure = (figure) => {
     player.field.defaultFix(figure);
     player.field.drawField(player.field.field, player.field.matrix);
     player.isActive = false;
-    console.log('otmena')
-    ws.send(JSON.stringify({
-        "type": "set"
-    }));
+    console.log('otmena');
+    player.isActive = true;
+    player.playTime = new Date;
+    player.isShifter = true;
+    player.figuresPos += 1;
+    player.currentFigure = getFigure(player.figuresAll[player.figuresPos]);
+    player.nextFigures[0] = getFigure(player.figuresAll[player.figuresPos + 1]);
+    player.nextFigures[1] = getFigure(player.figuresAll[player.figuresPos + 2]);
+    player.nextFigures[2] = getFigure(player.figuresAll[player.figuresPos + 3]);
+    player.nextFigures[3] = getFigure(player.figuresAll[player.figuresPos + 4]);
+    player.ui.viewNextFigures[0].src = player.nextFigures[0].image.src;
+    player.ui.viewNextFigures[1].src = player.nextFigures[1].image.src;
+    player.ui.viewNextFigures[2].src = player.nextFigures[2].image.src;
+    player.ui.viewNextFigures[3].src = player.nextFigures[3].image.src;
+    player.currentFigure.setY(0);
+    player.currentFigure.setX(player.field.getStartX(player.currentFigure));
+    if (player.isGameOver) {
+        if (player.field.checkPosition(player.currentFigure.x, player.currentFigure.y, player.currentFigure.matrix)) {
+
+            player.isGameOver = false;
+        } else {
+            multiplayerGameEnd(score);
+        }
+    }
 }
 
 GAME.defaultInit = GAME.init;
@@ -85,38 +105,22 @@ ws.onmessage = (msg) => {
     let data = JSON.parse(msg.data);
     if (data.type === 'config')
         initMultiplayerGame(data);
-    if (data.type === 'set') {
-        player.buffer = getFigure(data.state.buffer);
-        player.ui.buffer.src = player.buffer.image.src;
-        player.nextFigures[0] = getFigure(data.state.figures[1]);
-        player.isActive = true;
-        player.playTime = new Date;
-        player.isShifter = true;
-        player.currentFigure = getFigure(data.state.figures[0]);
-        player.nextFigures[0] = getFigure(data.state.figures[1]);
-        player.nextFigures[1] = getFigure(data.state.figures[2]);
-        player.nextFigures[2] = getFigure(data.state.figures[3]);
-        player.nextFigures[3] = getFigure(data.state.figures[4]);
-        player.ui.viewNextFigures[0].src = player.nextFigures[0].image.src;
-        player.ui.viewNextFigures[1].src = player.nextFigures[1].image.src;
-        player.ui.viewNextFigures[2].src = player.nextFigures[2].image.src;
-        player.ui.viewNextFigures[3].src = player.nextFigures[3].image.src;
-        player.currentFigure.setY(0);
-        player.currentFigure.setX(player.field.getStartX(player.currentFigure));
-        if (player.isGameOver) {
-            if (player.field.checkPosition(player.currentFigure.x, player.currentFigure.y, player.currentFigure.matrix)) {
-
-                player.isGameOver = false;
-            } else {
-                multiplayerGameEnd(score);
-            }
-        }
-    }
     if (data.type === 'update') {
         if (init) {
             if (startGame) {
                 startGame = false;
-                GAME.init(player, data.state.buffer, data.state.figures[0], data.state.figures.slice(1))
+                GAME.init
+                    (
+                        player,
+                        data.state.buffer,
+                        player.figuresAll[player.figuresPos],
+                        [
+                            player.figuresAll[player.figuresPos + 1],
+                            player.figuresAll[player.figuresPos + 2],
+                            player.figuresAll[player.figuresPos + 3],
+                            player.figuresAll[player.figuresPos + 4]
+                        ]
+                    )
                 player.field.initOtherFields(otherPlayers)
                 GAME.start(player)
             }
@@ -136,7 +140,6 @@ function sendField() {
     let state = {
         id: parseInt(playerField.id),
         play_field: player.field.matrix,
-        figures: [player.currentFigure.id, player.nextFigures[0].id, player.nextFigures[1].id, player.nextFigures[2].id, player.nextFigures[3].id],
         buffer: player.buffer.id,
         score: 12345,
         figure_count: 234,
@@ -160,6 +163,8 @@ function initMultiplayerGame(data) {
     document.querySelector('.main').style.backgroundImage = `url(${data.config.settings.background})`;
     initPlayertField(data.config.settings.play_field);
     initPlayers(data.config.players);
+    player.figuresAll = data.figures;
+    player.figuresPos = 0;
     otherPlayers = document.querySelectorAll('.other-player');
     ws.send(JSON.stringify({
         "type": "all"
