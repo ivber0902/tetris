@@ -1,6 +1,8 @@
 package main
 
 import (
+	"WebSocket/connection"
+	"WebSocket/game"
 	"WebSocket/lobby"
 	"encoding/json"
 	"github.com/gorilla/websocket"
@@ -15,18 +17,51 @@ var upgrader = websocket.Upgrader{
 }
 
 type Server struct {
-	Lobbies   map[string]*LobbyConnection
+	Lobbies   map[connection.RoomIDType]*lobby.Room
 	LobbyList LobbyList
-	Games     map[string]*GameConnection
+	Games     map[connection.RoomIDType]*game.Room
 	On        struct {
-		LobbyRemove chan *LobbyConnection
-		LobbyUpdate chan *lobby.Info
-		GameRun     chan *LobbyConnection
-		GameRemove  chan *GameConnection
+		Lobby *lobby.EventList
+		Game  *game.EventList
 	}
 }
 
-func (server *Server) HandleConnection(w http.ResponseWriter, r *http.Request, clientIP string) {
+func (server *Server) Init() {
+	server.Lobbies = make(map[connection.RoomIDType]*lobby.Room)
+	server.Games = make(map[connection.RoomIDType]*game.Room)
+	server.On.Lobby = &lobby.EventList{
+		Remove: make(chan *lobby.Room),
+		Update: make(chan *lobby.Config),
+		Run:    make(chan *lobby.Room),
+	}
+	server.On.Game = &game.EventList{
+		Remove: make(chan *game.Room),
+		Update: make(chan *game.Response),
+	}
+
+	server.LobbyList.Init()
+	go server.LobbyList.Listen()
+
+	go func() {
+		for {
+			select {
+			case lobbyConn := <-server.On.Lobby.Remove:
+				server.LobbyList.remove <- lobbyConn.Config
+				delete(server.Lobbies, lobbyConn.ID)
+			case lobbyInfo := <-server.On.Lobby.Update:
+				server.LobbyList.update <- lobbyInfo
+			case lobbyConn := <-server.On.Lobby.Run:
+				log.Printf("Lobby %s has ran", lobbyConn.ID)
+				newGame := game.New(lobbyConn, server.On.Game)
+				server.Games[newGame.ID] = newGame
+			case gameConn := <-server.On.Game.Remove:
+				delete(server.Games, gameConn.ID)
+			}
+		}
+	}()
+}
+
+func (server *Server) HandleConnection(w http.ResponseWriter, r *http.Request, clientIP connection.IPType) {
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		log.Println("Server HandleConnection:", err)
@@ -35,52 +70,43 @@ func (server *Server) HandleConnection(w http.ResponseWriter, r *http.Request, c
 
 	log.Printf("Server HandleConnection: Connecting to %s....", clientIP)
 
-	lobbyID := r.URL.Query().Get("lobby")
+	lobbyID := connection.RoomIDType(r.URL.Query().Get("lobby"))
 
-	lobbyConn, ok := server.Lobbies[lobbyID]
-	if !ok {
-		lobbyConn = newLobbyConnection(
-			clientIP,
-			server.On.LobbyUpdate,
-			server.On.LobbyRemove,
-			server.On.GameRun,
-		)
-		server.Lobbies[lobbyConn.id] = lobbyConn
+	lobbyConn, existsLobby := server.Lobbies[lobbyID]
+	if !existsLobby {
+		lobbyConn = lobby.New(clientIP, server.On.Lobby)
+		server.Lobbies[lobbyConn.ID] = lobbyConn
 		go lobbyConn.Init()
 
-		server.LobbyList.new <- lobbyConn.info
+		server.LobbyList.new <- lobbyConn.Config
 
-		log.Printf("Server HandleConnection: LobbyInfo %s created by player (IP: %s)", lobbyConn.id, clientIP)
+		log.Printf("Server HandleConnection: LobbyInfo %s created by player (IP: %s)", lobbyConn.ID, clientIP)
 	}
 
-	for player := range lobbyConn.players {
-		if clientIP == player.ip {
-			player.conn.Close()
-			player.conn = conn
-			player.send = make(chan *lobby.Info)
-			player.isOpen = true
+	for player := range lobbyConn.Clients {
+		log.Println(clientIP, player.IP)
+		if clientIP == player.IP {
+			player.Conn.Close()
+			player.Init(conn, player.IP)
 
-			go player.readLoop()
-			go player.writeLoop()
+			go player.ReadLoop(lobby.HandleRequest, lobby.WaitConnection)
+			go player.WriteLoop()
 
-			log.Printf("Server HandleConnection: Player %d (IP: %s) is reconnecting to the lobby %s", player.id, player.ip, lobbyConn.id)
+			log.Printf("Server HandleConnection: Player %d (IP: %s) is reconnecting to the lobby %s", player.ID, player.IP, lobbyConn.ID)
 			return
 		}
 	}
 
-	log.Printf("Server HandleConnection: Player (IP: %s) is joining the lobby %s", clientIP, lobbyConn.id)
+	log.Printf("Server HandleConnection: Player (IP: %s) is joining the lobby %s", clientIP, lobbyConn.ID)
 
-	player := &PlayerConnection{
-		lobby:  lobbyConn,
-		conn:   conn,
-		send:   make(chan *lobby.Info),
-		ip:     clientIP,
-		isOpen: true,
+	player := lobbyConn.ConnectClient(conn, clientIP)
+	if !existsLobby {
+		player.IsHost = true
 	}
-	lobbyConn.connect <- player
+	lobbyConn.Connect <- player
 
-	go player.readLoop()
-	go player.writeLoop()
+	go player.ReadLoop(lobby.HandleRequest, lobby.WaitConnection)
+	go player.WriteLoop()
 }
 
 func (server *Server) ListLobbiesHandler(w http.ResponseWriter, r *http.Request) {
@@ -94,7 +120,7 @@ func (server *Server) ListLobbiesHandler(w http.ResponseWriter, r *http.Request)
 	go server.LobbyList.ListenConnection(conn)
 }
 
-func (server *Server) HandleGameJoin(w http.ResponseWriter, r *http.Request, clientIP string) {
+func (server *Server) HandleGameJoin(w http.ResponseWriter, r *http.Request, clientIP connection.IPType) {
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		log.Println("Server HandleGameJoin:", err)
@@ -103,7 +129,7 @@ func (server *Server) HandleGameJoin(w http.ResponseWriter, r *http.Request, cli
 
 	log.Printf("Server HandleGameJoin: Connecting to %s....", clientIP)
 
-	lobbyID := r.URL.Query().Get("lobby")
+	lobbyID := connection.RoomIDType(r.URL.Query().Get("lobby"))
 
 	gameConn, ok := server.Games[lobbyID]
 	if !ok {
@@ -111,17 +137,17 @@ func (server *Server) HandleGameJoin(w http.ResponseWriter, r *http.Request, cli
 		return
 	}
 
-	for player := range gameConn.players {
-		if clientIP == player.ip {
-			player.conn = conn
-			player.send = make(chan *GameUpdateResponse)
-			player.isOpen = true
-			player.gameEnd = gameConn.gameEnd
+	for player := range gameConn.Clients {
+		if clientIP == player.IP {
+			player.Conn = conn
+			player.Init(conn, player.IP)
 
-			go player.readLoop()
-			go player.writeLoop()
+			go player.ReadLoop(func(c *connection.Client[game.State, lobby.Config, game.Response], r connection.Request[game.State]) bool {
+				return game.HandleRequest(gameConn, player, r)
+			}, game.WaitConnection)
+			go player.WriteLoop()
 
-			log.Printf("Server HandleGameJoin: Player %d (IP: %s) is connecting to the game %s", player.id, player.ip, gameConn.id)
+			log.Printf("Server HandleGameJoin: Player %d (IP: %s) is connecting to the game %s", player.ID, player.IP, gameConn.ID)
 			return
 		}
 	}
@@ -131,7 +157,7 @@ func (server *Server) GameResultsHandler(w http.ResponseWriter, r *http.Request)
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Methods", "GET")
 
-	lobbyID := r.URL.Query().Get("lobby")
+	lobbyID := connection.RoomIDType(r.URL.Query().Get("lobby"))
 
 	gameConn, ok := server.Games[lobbyID]
 	if !ok {
@@ -141,36 +167,6 @@ func (server *Server) GameResultsHandler(w http.ResponseWriter, r *http.Request)
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	w.Header().Set("Content-Type", "application/json")
 
-	json.NewEncoder(w).Encode(gameConn.results)
+	json.NewEncoder(w).Encode(gameConn.Results)
 	//w.WriteHeader(http.StatusOK)
-}
-
-func (server *Server) Init() {
-	server.Lobbies = make(map[string]*LobbyConnection)
-	server.Games = make(map[string]*GameConnection)
-	server.On.LobbyRemove = make(chan *LobbyConnection)
-	server.On.LobbyUpdate = make(chan *lobby.Info)
-	server.On.GameRun = make(chan *LobbyConnection)
-	server.On.GameRemove = make(chan *GameConnection)
-
-	server.LobbyList.Init()
-	go server.LobbyList.Listen()
-
-	go func() {
-		for {
-			select {
-			case lobbyConn := <-server.On.LobbyRemove:
-				delete(server.Lobbies, lobbyConn.id)
-				server.LobbyList.remove <- lobbyConn.info
-			case lobbyInfo := <-server.On.LobbyUpdate:
-				server.LobbyList.update <- lobbyInfo
-			case lobbyConn := <-server.On.GameRun:
-				log.Printf("Lobby %s has ran", lobbyConn.id)
-				newGame := newGameConnection(lobbyConn, server.On.GameRemove)
-				server.Games[newGame.id] = newGame
-			case gameConn := <-server.On.GameRemove:
-				delete(server.Games, gameConn.id)
-			}
-		}
-	}()
 }

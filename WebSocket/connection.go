@@ -8,13 +8,13 @@ import (
 type UpdateJSONRequest struct {
 	Type       string                `json:"type"`
 	Connection ConnectionJSONRequest `json:"connection"`
-	Updates    lobby.Info            `json:"updates,omitempty"`
+	Updates    lobby.Config          `json:"updates,omitempty"`
 }
 
 type UpdateGameJSONRequest struct {
 	Type       string                `json:"type"`
 	Connection ConnectionJSONRequest `json:"connection"`
-	Updates    game.Game             `json:"updates,omitempty"`
+	Updates    game.State            `json:"updates,omitempty"`
 }
 
 const (

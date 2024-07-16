@@ -1,15 +1,16 @@
 package lobby
 
 import (
+	"WebSocket/connection"
 	"encoding/json"
 	"os"
 )
 
-type Info struct {
-	ID       string   `bson:"_id" json:"id"`
-	Players  []int32  `bson:"players,omitempty" json:"players,omitempty"`
-	Settings Settings `bson:"settings,omitempty" json:"settings,omitempty"`
-	GameRun  bool     `bson:"game_run,omitempty" json:"game_run,omitempty"`
+type Config struct {
+	ID       string                    `bson:"_id" json:"id"`
+	Players  []connection.ClientIDType `bson:"players,omitempty" json:"players,omitempty"`
+	Settings Settings                  `bson:"settings,omitempty" json:"settings,omitempty"`
+	GameRun  bool                      `bson:"game_run,omitempty" json:"game_run,omitempty"`
 }
 
 type Settings struct {
@@ -25,11 +26,11 @@ type PlayFieldSettings struct {
 	Height int8 `bson:"height,omitempty" json:"height,omitempty"`
 }
 
-func (lobby *Info) Init(lobbyID string) {
+func (lobby *Config) Init(lobbyID string) {
 	lobby.ID = lobbyID
 }
 
-func (lobby *Info) SetDefault() error {
+func (lobby *Config) SetDefault() error {
 	file, err := os.Open("default-lobby.json")
 	if err != nil {
 		return err
@@ -47,7 +48,7 @@ func (lobby *Info) SetDefault() error {
 	return err
 }
 
-func (lobby *Info) AddPlayer(playerID int32) {
+func (lobby *Config) AddPlayer(playerID connection.ClientIDType) {
 	for _, player := range lobby.Players {
 		if player == playerID {
 			return
@@ -57,10 +58,16 @@ func (lobby *Info) AddPlayer(playerID int32) {
 	lobby.Players = append(lobby.Players, playerID)
 }
 
-func (lobby *Info) RemovePlayer(playerID int32) {
+func (lobby *Config) RemovePlayer(playerID connection.ClientIDType) {
 	for i, player := range lobby.Players {
 		if player == playerID {
 			lobby.Players = append(lobby.Players[:i], lobby.Players[i+1:]...)
 		}
 	}
+}
+
+func NewConfig() (config *Config, err error) {
+	config = new(Config)
+	err = config.SetDefault()
+	return config, err
 }

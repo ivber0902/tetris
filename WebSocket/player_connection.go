@@ -1,6 +1,7 @@
 package main
 
 import (
+	"WebSocket/connection"
 	"WebSocket/lobby"
 	"encoding/json"
 	"github.com/gorilla/websocket"
@@ -10,7 +11,7 @@ import (
 
 type PlayerConnection struct {
 	conn   *websocket.Conn
-	send   chan *lobby.Info
+	send   chan *lobby.Config
 	lobby  *LobbyConnection
 	ip     string
 	id     int32
@@ -60,7 +61,7 @@ func (player *PlayerConnection) readLoop() {
 				}
 			case ConnectRequestType:
 				if id := request.Connection.PlayerID; id != 0 {
-					player.lobby.info.AddPlayer(id)
+					player.lobby.info.AddPlayer(connection.ClientIDType(id))
 					player.id = id
 					player.lobby.update <- player.lobby.info
 

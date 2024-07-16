@@ -129,7 +129,7 @@
 
 # Мультиплеер
 Путь: `/game`
-В GET-параметр передаём `lobby=<lobbyID>`
+В GET-параметр передаём `lobby=<roomID>`
 
 ## Структура State
 ```golang

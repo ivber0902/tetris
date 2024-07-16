@@ -1,56 +1,69 @@
 package connection
 
-type InfoObject interface {
-	AddPlayer(int32)
-	RemovePlayer(int32)
+import (
+	"github.com/gorilla/websocket"
+	"log"
+)
+
+type Room[T Object, ConfType Object, RespType Response] struct {
+	ID      RoomIDType
+	Clients map[*Client[T, ConfType, RespType]]bool
+	Connect chan *Client[T, ConfType, RespType]
+	Config  *ConfType
+
+	HostIP IPType
+
+	On *ClientEvents[T, ConfType, RespType]
 }
 
-type Room[T InfoObject] struct {
-	ID         string
-	Info       *T
-	Players    map[*Player[T]]bool
-	Connect    chan *Player[T]
-	Disconnect chan *Player[T]
-	Update     chan *T
-	updates    chan *T
-	HostIP     string
-	Remove     chan *Room[T]
-}
+func New[T Object, ConfType Object, RespType Response](id RoomIDType, hostIP IPType, conf *ConfType) *Room[T, ConfType, RespType] {
+	return &Room[T, ConfType, RespType]{
+		ID:      id,
+		Clients: make(map[*Client[T, ConfType, RespType]]bool),
+		Connect: make(chan *Client[T, ConfType, RespType]),
+		Config:  conf,
 
-func New[T InfoObject](id, hostIP string, info *T, updates chan *T) *Room[T] {
-	return &Room[T]{
-		ID:         id,
-		Info:       info,
-		Players:    make(map[*Player[T]]bool),
-		Connect:    make(chan *Player[T]),
-		Disconnect: make(chan *Player[T]),
-		Update:     make(chan *T),
-		HostIP:     hostIP,
-		Remove:     make(chan *Room[T]),
-		updates:    updates,
+		HostIP: hostIP,
+		On: &ClientEvents[T, ConfType, RespType]{
+			Update:     make(chan *RespType),
+			Disconnect: make(chan ClientIDType),
+			Next:       make(chan bool),
+		},
 	}
 }
 
-func (r *Room[T]) Start() {
-	for {
-		go func() {
-			r.updates <- r.Info
-		}()
-		select {
-		case player := <-r.Connect:
-			r.Players[player] = true
-		case player := <-r.Disconnect:
-			if _, ok := r.Players[player]; ok {
-				(*r.Info).RemovePlayer(player.ID)
-				delete(r.Players, player)
-				close(player.Send)
-				player.Conn.Close()
+func (r *Room[T, ConfType, RespType]) Init(loop func(room *Room[T, ConfType, RespType]) bool) {
+	for loop(r) {
+	}
+}
 
-				if player.IP == r.HostIP {
-					r.Remove <- r
-					return
-				}
-			}
+func (r *Room[T, ConfType, RespType]) DefaultUpdate() {
+	select {
+	case client := <-r.Connect:
+		r.Clients[client] = true
+		log.Printf("Room %T %s: Player %d joined\n", client, r.HostIP, client.ID)
+	case update := <-r.On.Update:
+		for client := range r.Clients {
+			client.Send(update)
+		}
+	default:
+	}
+}
+
+func (r *Room[T, ConfType, RespType]) ConnectClient(conn *websocket.Conn, IP IPType) *Client[T, ConfType, RespType] {
+	client := &Client[T, ConfType, RespType]{
+		Event:  r.On,
+		Config: r.Config,
+	}
+	client.Init(conn, IP)
+	return client
+}
+
+func (r *Room[T, ConfType, RespType]) GetClientByID(id ClientIDType) *Client[T, ConfType, RespType] {
+	for client := range r.Clients {
+		if client.ID == id {
+			return client
 		}
 	}
+	return nil
 }

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"WebSocket/connection"
 	"WebSocket/lobby"
 	"github.com/google/uuid"
 	"log"
@@ -11,20 +12,20 @@ import (
 
 type LobbyConnection struct {
 	id         string
-	info       *lobby.Info
+	info       *lobby.Config
 	players    map[*PlayerConnection]bool
 	connect    chan *PlayerConnection
 	disconnect chan *PlayerConnection
-	update     chan *lobby.Info
+	update     chan *lobby.Config
 	hostIP     string
 	remove     chan *LobbyConnection
-	updates    chan *lobby.Info
+	updates    chan *lobby.Config
 	run        chan *LobbyConnection
 }
 
-func newLobbyConnection(hostIP string, updates chan *lobby.Info, remove, run chan *LobbyConnection) *LobbyConnection {
+func newLobbyConnection(hostIP string, updates chan *lobby.Config, remove, run chan *LobbyConnection) *LobbyConnection {
 	lobbyID := uuid.New()
-	var lobbyModel lobby.Info
+	var lobbyModel lobby.Config
 	err := lobbyModel.SetDefault()
 	if err != nil {
 		return nil
@@ -36,7 +37,7 @@ func newLobbyConnection(hostIP string, updates chan *lobby.Info, remove, run cha
 		players:    map[*PlayerConnection]bool{},
 		connect:    make(chan *PlayerConnection),
 		disconnect: make(chan *PlayerConnection),
-		update:     make(chan *lobby.Info),
+		update:     make(chan *lobby.Config),
 		hostIP:     hostIP,
 		remove:     remove,
 		updates:    updates,
@@ -56,7 +57,7 @@ func (lobby *LobbyConnection) Init() {
 
 		case player := <-lobby.disconnect:
 			if _, ok := lobby.players[player]; ok {
-				lobby.info.RemovePlayer(player.id)
+				lobby.info.RemovePlayer(connection.ClientIDType(player.id))
 				delete(lobby.players, player)
 				close(player.send)
 				player.conn.Close()
