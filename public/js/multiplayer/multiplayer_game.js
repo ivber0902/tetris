@@ -9,7 +9,12 @@ let startGame = true;
 let init = false;
 let ListPlayers = document.querySelector('.palyers-list');
 let newFigureId;
-
+gameEnd = () => { };
+function multiplayerGameEnd(score) {
+    localStorage.Gamewidth = 10;
+    localStorage.Gameheight = 20;
+    sendResult(score).then(() => { });
+}
 player.field.moveDownDefault = player.field.moveDown;
 player.field.updateHorizontalPositionDefault = player.field.updateHorizontalPosition
 
@@ -98,6 +103,14 @@ ws.onmessage = (msg) => {
         player.ui.viewNextFigures[3].src = player.nextFigures[3].image.src;
         player.currentFigure.setY(0);
         player.currentFigure.setX(player.field.getStartX(player.currentFigure));
+        if (player.isGameOver) {
+            if (player.field.checkPosition(player.currentFigure.x, player.currentFigure.y, player.currentFigure.matrix)) {
+
+                player.isGameOver = false;
+            } else {
+                multiplayerGameEnd(score);
+            }
+        }
     }
     if (data.type === 'update') {
         if (init) {
