@@ -5,6 +5,7 @@ import (
 	"WebSocket/game"
 	"WebSocket/lobby"
 	"encoding/json"
+	"fmt"
 	"github.com/gorilla/websocket"
 	"log"
 	"net/http"
@@ -53,6 +54,7 @@ func (server *Server) Init() {
 			case lobbyConn := <-server.On.Lobby.Run:
 				log.Printf("Lobby %s has ran", lobbyConn.ID)
 				newGame := game.New(lobbyConn, server.On.Game)
+				newGame.Init()
 				server.Games[newGame.ID] = newGame
 			case gameConn := <-server.On.Game.Remove:
 				delete(server.Games, gameConn.ID)
@@ -86,6 +88,7 @@ func (server *Server) HandleConnection(w http.ResponseWriter, r *http.Request, c
 	for player := range lobbyConn.Clients {
 		log.Println(clientIP, player.IP)
 		if clientIP == player.IP {
+			fmt.Println("State", player.State)
 			player.Conn.Close()
 			player.Init(conn, player.IP)
 

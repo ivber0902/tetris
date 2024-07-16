@@ -42,6 +42,8 @@ func New(lobbyRoom *lobby.Room, lobbyEvents *EventList) *Room {
 			ClientConnection: player.ClientConnection,
 			ID:               player.ID,
 			State:            gameState,
+			Config:           lobbyRoom.Config,
+			Event:            room.On,
 		}] = true
 	}
 	return room

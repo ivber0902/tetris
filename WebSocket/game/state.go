@@ -7,6 +7,8 @@ import (
 	"time"
 )
 
+const ClientFigureQueueLength = 25
+
 type State struct {
 	ID              connection.ClientIDType `json:"id"`
 	PlayField       [][]FigureType          `json:"play_field"`
@@ -15,7 +17,7 @@ type State struct {
 	FigureCount     int32                   `json:"figure_count"`
 	Score           int32                   `json:"score"`
 	GameOver        bool                    `json:"game_over"`
-	CurrentFigure   CurrentFigure           `json:"current_figure"`
+	CurrentFigure   *CurrentFigure          `json:"current_figure,omitempty"`
 	figureQueue     *queue.Queue[FigureType]
 	NewFigure       chan FigureType `json:"-"`
 	newGlobalFigure chan FigureType
@@ -40,9 +42,9 @@ func (game *State) Init(PlayFieldWidth, PlayFieldHeight int8, globalFigureChan c
 	game.figureQueue = queue.New[FigureType]()
 	game.NewFigure = make(chan FigureType)
 	game.newGlobalFigure = globalFigureChan
-	game.Figures = make([]FigureType, 5)
+	game.Figures = make([]FigureType, ClientFigureQueueLength)
 
-	for i := 0; i < 5; i++ {
+	for i := 0; i < ClientFigureQueueLength; i++ {
 		game.NextFigure()
 	}
 	game.Buffer = game.Figures[0]
@@ -52,12 +54,14 @@ func (game *State) Init(PlayFieldWidth, PlayFieldHeight int8, globalFigureChan c
 }
 
 func (game *State) Update(newGame *State) {
-	game.PlayField = newGame.PlayField
-	game.Figures = newGame.Figures
-	game.Buffer = newGame.Buffer
-	game.Score = newGame.Score
-	game.GameOver = newGame.GameOver
-	game.CurrentFigure = newGame.CurrentFigure
+	if newGame != nil {
+		game.PlayField = newGame.PlayField
+		game.Figures = newGame.Figures
+		game.Buffer = newGame.Buffer
+		game.Score = newGame.Score
+		game.GameOver = newGame.GameOver
+		game.CurrentFigure = newGame.CurrentFigure
+	}
 }
 
 func (game *State) waitNewFigures() {
@@ -77,7 +81,7 @@ func (game *State) NextFigure() {
 		game.newGlobalFigure <- GetNextFigure()
 		nextFigure = game.figureQueue.Receive()
 	}
-	game.CurrentFigure = CurrentFigure{}
+	game.CurrentFigure = nil
 	game.FigureCount++
 	game.Figures = append(game.Figures[1:], nextFigure)
 }
