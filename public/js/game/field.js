@@ -175,7 +175,14 @@ class Field {
         return { x: figure.x, y: figure.y + i - 1 }
     }
     rotateFigure(figure) {
-        let rotated = rotateMatrix(figure.matrix);
+        let rotated = [];
+        if(figure.currentPosition < 3){
+            rotated = figure.matrixPositions[figure.currentPosition + 1];
+            figure.currentPosition += 1;
+        }else{
+            rotated = figure.matrixPositions[0]
+            figure.currentPosition = 0
+        }
         if (this.checkPosition(figure.x, figure.y, rotated)) {
             this.clearFigure(figure);
             this.clearShadow(figure);
