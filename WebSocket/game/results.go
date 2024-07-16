@@ -4,7 +4,7 @@ import "WebSocket/connection"
 
 type PlayerResult struct {
 	PlayerID connection.ClientIDType `json:"player_id"`
-	Score    int32                   `json:"score"`
+	Score    int                     `json:"score"`
 }
 
 type Results []PlayerResult

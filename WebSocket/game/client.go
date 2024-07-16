@@ -11,8 +11,9 @@ func HandleRequest(room *Room, player *connection.Client[State, lobby.Config, Re
 	switch request.Type {
 	case ConfigRequestType:
 		player.Send(&Response{
-			Type:   "config",
-			Config: player.Config,
+			Type:    "config",
+			Config:  player.Config,
+			Figures: *player.State.Figures,
 		})
 		log.Printf("Player %d (IP: %s) reading: got config %s", player.ID, player.IP, room.ID)
 	case AllRequestType:

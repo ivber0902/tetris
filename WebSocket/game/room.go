@@ -8,10 +8,10 @@ import (
 )
 
 type Room struct {
-	Events    *EventList
-	NewFigure chan FigureType
-	GameEnd   chan *State
-	Results   *Results
+	Events  *EventList
+	GameEnd chan *State
+	Results *Results
+	Figures *FigureArray
 
 	connection.Room[State, lobby.Config, Response]
 }
@@ -22,17 +22,18 @@ type EventList struct {
 }
 
 func New(lobbyRoom *lobby.Room, lobbyEvents *EventList) *Room {
+	figures := GenerateFigureArray(ClientFigureQueueLength)
 	room := &Room{
-		Room:      *connection.New[State, lobby.Config, Response](lobbyRoom.ID, lobbyRoom.HostIP, lobbyRoom.Config),
-		Events:    lobbyEvents,
-		NewFigure: make(chan FigureType),
+		Room:    *connection.New[State, lobby.Config, Response](lobbyRoom.ID, lobbyRoom.HostIP, lobbyRoom.Config),
+		Events:  lobbyEvents,
+		Figures: &figures,
 	}
 
 	for player := range lobbyRoom.Clients {
 		gameState := &State{
 			ID: player.ID,
 		}
-		go gameState.Init(lobbyRoom.Config.Settings.PlayField.Width, lobbyRoom.Config.Settings.PlayField.Height, room.NewFigure)
+		go gameState.Init(lobbyRoom.Config.Settings.PlayField.Width, lobbyRoom.Config.Settings.PlayField.Height, room.Figures)
 
 		for i := range gameState.PlayField {
 			gameState.PlayField[i] = make([]FigureType, lobbyRoom.Config.Settings.PlayField.Width)
@@ -57,10 +58,6 @@ func (room *Room) Init() {
 				if player.IsOpen {
 					player.Send(updatedLobby)
 				}
-			}
-		case figure := <-room.NewFigure:
-			for player := range room.Clients {
-				player.State.NewFigure <- figure
 			}
 		case player := <-room.GameEnd:
 			room.Results.Add(player)
