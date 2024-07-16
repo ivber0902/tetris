@@ -55,7 +55,9 @@ func WaitConnection(player *connection.Client[State, lobby.Config, Response]) {
 	for !player.IsOpen {
 		select {
 		case <-connectTimer:
-			player.Event.Disconnect <- player.ID
+			if player.Event != nil {
+				player.Event.Disconnect <- player.ID
+			}
 			log.Printf("Player %d (IP: %s) disconnected after waiting", player.ID, player.IP)
 			return
 		default:

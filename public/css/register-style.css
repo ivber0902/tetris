@@ -45,6 +45,7 @@ body {
     font-size: 32px;
     margin: 0 auto 15px;
     width: 850px;
+    color: black;
 }
 
 .login-input__username-input,

@@ -1,7 +1,12 @@
 class UI {
-    constructor(buffer, viewNextFigures, score, level, time, lines) {
+    constructor(blockSize, buffer, viewNextFigures, game, score, level, time, lines) {
+        this.blockSize = blockSize;
         this.buffer = buffer;
         this.viewNextFigures = viewNextFigures;
+        this.field = {
+            width: game.width * this.blockSize,
+            height: game.height * this.blockSize,
+        }
         this._score = score;
         this._level = level;
         this._time = time;
@@ -20,13 +25,13 @@ class UI {
             this.play();
         }, false);
     }
-
-    updateNextFigures(nextFigures) {
-        for (let i = 0; i < 4; i++) {
-            this.viewNextFigures[i].src = nextFigures[i].image.src;
+    updateSize(game) {
+        this.field = {
+            width: game.width * this.blockSize,
+            height: game.height * this.blockSize,
         }
     }
-    
+
     set score(val) {
         if (val !== undefined) {
             this._score.textContent = val;

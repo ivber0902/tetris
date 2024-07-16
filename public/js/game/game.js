@@ -1,9 +1,8 @@
 let GAME = {
-    width: localStorage.Gamewidth,
-    height: localStorage.Gameheight,
+    width: parseInt(localStorage.Gamewidth),
+    height: parseInt(localStorage.Gameheight),
     playTime: new Date(),
-    figuresQueueSize: 4,
-    init(player, ui) {
+    init(player, currentFigureIndex, bufferFigureIndex, NextFiguresIndex) {
         let i = 0;
         figures.forEach((figure) => {
             figure.image.src = `/images/figures/${images[i]}.png`;
@@ -12,33 +11,43 @@ let GAME = {
             i++
         });
         blockField.src = '/images/blocks/bg.png';
-        player.initField(this.width, this.height);
+        player.field.initField();
+        player.field.initFieldMatrix();
         player.tickTime = 15974 / this.height;
-        player.initFigures();
         player.initEventListeners();
-        player.updateUI();
-        ui.initMusic();
-        player.updateLvl()
+        player.initFigures(currentFigureIndex, bufferFigureIndex, NextFiguresIndex);
+        player.updateSpeed();
+        this.addPauseListener(player);
     },
-    start(player, field, ui, func =() => {}) {
-        this.onLoadImages(() => {
-            this.drawDowncount(player, field, ui, 3, 1, () => { this.play(player, func); })
+    addPauseListener(player) {
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'KeyP') {
+                if (!player.isActive) {
+                    this.drawDowncount(player, player.field.field, 3, 1, () => { player.isActive = true; this.play(player) })
+                } else {
+                    player.isActive = false;
+                }
+            }
         });
     },
-    drawDowncount(player, field, ui, fromIndex, toIndex, func) {
+    drawDowncount(player, field, fromIndex, toIndex, func) {
         if (fromIndex >= toIndex) {
-            setTimeout(() => {
-                this.clear(field);
-                player.drawField(this.width, this.height);
-                // player.drawOtherField(this.width, this.height, otherPlayersFields);
-                field.fillStyle = "white";
-                field.font = "96px Russo One";
-                field.fillText(fromIndex, ui.field.width / 2 - 36, ui.field.height / 2);
-                this.drawDowncount(player, field, ui, fromIndex - 1, 1, func);
-            }, 1000);
+            setTimeout(
+                () => {
+                    this.drawNumber(player, field, fromIndex);
+                    this.drawDowncount(player, field, fromIndex - 1, 1, func);
+
+                }, 1000);
         } else {
             setTimeout(() => { func() }, 1000);
         }
+    },
+    drawNumber(player, field, num) {
+        player.field.clearField();
+        player.field.drawField(player.field.field, player.field.matrix);
+        field.fillStyle = "white";
+        field.font = "96px Russo One";
+        field.fillText(num, player.field.width * player.field.blockSize / 2 - 36, player.field.height * player.field.blockSize / 2);
     },
     onLoadImages(func) {
         let counter = 0;
@@ -70,27 +79,29 @@ let GAME = {
             }
         })
     },
-    play(player, func = () => {}) {
+    start(player) {
+        this.onLoadImages(() => {
+            this.drawDowncount(player, player.field.field, 3, 1, () => { player.isActive = true; this.play(player) })
+        })
+    },
+    play(player) {
         player.ui.score = player.score;
         player.ui.level = player.lvl;
-        if (player.isActive) {
-            this.clear(field);
-            player.drawField(this.width, this.height);
-            console.log(localStorage.mode, localStorage.mode === 'm')
-            if (localStorage.mode === 'm') player.drawOtherField(this.width, this.height, otherPlayersFields)
-            document.querySelector('.game__score').innerHTML = player.score;
-            let updateTime = new Date();
-            updateTime -= this.playTime;
-            if (updateTime * player.nitro >= player.tickTime) {
-                this.playTime = new Date;
-                player.update();
-            }
+        player.update();
+        document.querySelector('.game__score').innerHTML = player.score;
+        document.querySelector('.game__level').innerHTML = player.lvl;
+        requestAnimationFrame(() => this.play(player));
 
-            player.updatePosition();
-            requestAnimationFrame(() => this.play(player, func));
-        }
     },
-    clear(ctx) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-    }
 }
+
+const ui = new UI(
+    document.querySelector(".buffer__figure"),
+    document.querySelectorAll(".figure"),
+    document.querySelector(".game__score"),
+    document.querySelector(".game__level"),
+    document.querySelector(".game__time"),
+    document.querySelector(".game__lines"),
+);
+
+let player = new Player(ui, new Field([], GAME.width, GAME.height));

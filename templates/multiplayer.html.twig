@@ -10,7 +10,7 @@
         <img class="logo" src="/images/logo.png" alt="logo">
         <div class="wrapper-game">
             <div id="{{ user.playerId }}" class="wrapper-main-field">
-                <p class="player_name">никита</p>
+                <p class="player_name">{{ user.login }}</p>
                 <div class="main-field">
                     <div class="game__buffer"> 
                         <p class="title">буффер</p>
@@ -40,31 +40,32 @@
                 </div>
             </div>
             <div class="palyers-list">
-                <div class="other-player">
-                    <p class="player__username"></p>
-                    <canvas class="other-field"></canvas>
-                    <p class="player__score">200</p>
-                </div>
                 {# <div class="other-player">
                     <p class="player__username"></p>
                     <canvas class="other-field"></canvas>
-                    <p class="player__score">200</p>
+                    <p class="game__score">200</p>
                 </div>
                 <div class="other-player">
                     <p class="player__username"></p>
                     <canvas class="other-field"></canvas>
-                    <p class="player__score">200</p>
+                    <p class="game__score">200</p>
+                </div>
+                <div class="other-player">
+                    <p class="player__username"></p>
+                    <canvas class="other-field"></canvas>
+                    <p class="game__score">200</p>
                 </div> #}
             </div>
         </div>
     </main>
 </body>
-<script src="/js/game/game-mode.js"></script>
-<script src="/js/game/game-end.js"></script>
+<script src="/js/static/images.js"></script>
+<script src="/js/static/figures.js"></script>
+<script src="/js/game/figure.js"></script>
+<script src="/js/game/field.js"></script>
 <script src="/js/game/player.js"></script>
 <script src="/js/game/ui.js"></script>
-<script src="/js/game/figures.js"></script>
-<script src="/js/game/images.js"></script>
 <script src="/js/game/game.js"></script>
-<script src="/js/multiplayer-settings.js"></script>
+<script src="/js/game/game_end.js"></script>
+<script src="/js/multiplayer/multiplayer_game.js"></script>
 {% endblock %}
