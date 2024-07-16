@@ -129,7 +129,7 @@ class Field {
     checkPosition(x, y, insertedMatrix) {
         for (let h = 0; h < insertedMatrix.length; h++) {
             for (let w = 0; w < insertedMatrix[0].length; w++) {
-                if (insertedMatrix[h][w]) {
+                if (insertedMatrix[h][w] > 0) {
                     if (
                         y + h >= this.height
                         || x + w >= this.width

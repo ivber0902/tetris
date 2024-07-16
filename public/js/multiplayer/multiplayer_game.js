@@ -78,7 +78,6 @@ ws.onopen = () => {
 
 ws.onmessage = (msg) => {
     let data = JSON.parse(msg.data);
-    console.log(data)
     if (data.type === 'config')
         initMultiplayerGame(data);
     if (data.type === 'set') {
@@ -109,7 +108,6 @@ ws.onmessage = (msg) => {
                 GAME.start(player)
             }
             if (data.state.id === parseInt(playerField.id)) {
-                console.log(data.state.figures)
                 player.buffer = getFigure(data.state.buffer);
                 player.ui.buffer.src = player.buffer.image.src;
 

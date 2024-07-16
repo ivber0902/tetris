@@ -32,17 +32,22 @@ let GAME = {
     },
     drawDowncount(player, field, fromIndex, toIndex, func) {
         if (fromIndex >= toIndex) {
-            setTimeout(() => {
-                player.field.clearField();
-                player.field.drawField(player.field.field, player.field.matrix);
-                field.fillStyle = "white";
-                field.font = "96px Russo One";
-                field.fillText(fromIndex, player.field.width * player.field.blockSize / 2 - 36, player.field.height * player.field.blockSize / 2);
-                this.drawDowncount(player, field, fromIndex - 1, 1, func);
-            }, 1000);
+            setTimeout(
+                () => {
+                    this.drawNumber(player, field, fromIndex);
+                    this.drawDowncount(player, field, fromIndex - 1, 1, func);
+
+                }, 1000);
         } else {
             setTimeout(() => { func() }, 1000);
         }
+    },
+    drawNumber(player, field, num) {
+        player.field.clearField();
+        player.field.drawField(player.field.field, player.field.matrix);
+        field.fillStyle = "white";
+        field.font = "96px Russo One";
+        field.fillText(num, player.field.width * player.field.blockSize / 2 - 36, player.field.height * player.field.blockSize / 2);
     },
     onLoadImages(func) {
         let counter = 0;
@@ -75,8 +80,9 @@ let GAME = {
         })
     },
     start(player) {
-        this.onLoadImages(() => { 
-            this.drawDowncount(player, player.field.field, 3, 1, () => { player.isActive = true; this.play(player) }) })
+        this.onLoadImages(() => {
+            this.drawDowncount(player, player.field.field, 3, 1, () => { player.isActive = true; this.play(player) })
+        })
     },
     play(player) {
         player.ui.score = player.score;
