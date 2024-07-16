@@ -45,6 +45,7 @@ func HandleRequest(room *Room, player *connection.Client[State, lobby.Config, Re
 			Type:  "update",
 			State: player.State,
 		}
+		log.Printf("Player %d (IP: %s) game over", player.ID, player.IP)
 	}
 	return true
 }
