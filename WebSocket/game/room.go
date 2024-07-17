@@ -47,6 +47,7 @@ func New(lobbyRoom *lobby.Room, lobbyEvents *EventList) *Room {
 			State:            gameState,
 			Config:           lobbyRoom.Config,
 			Event:            room.On,
+			IsHost:           player.IsHost,
 		}] = true
 	}
 	return room
