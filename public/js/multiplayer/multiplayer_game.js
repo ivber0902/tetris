@@ -17,7 +17,21 @@ player.field.moveDown = (figure) => {
     sendField()
     return r;
 }
-
+gameEnd = () => {     
+    localStorage.Gamewidth = 10;
+    localStorage.Gameheight = 20;
+    player.update = () => {
+    }
+    player.onBufferKeyUp = () => {
+    }
+    player.onPositionKeyDown = () => {
+    }
+    playerField.style.display = 'none'
+    ListPlayers.style.width = '100%'
+    ws.send(JSON.stringify({
+        "type": "game_over",
+    })); 
+};
 player.nextFigure = () => {
 }
 player.onPositionKeyDownDefault = player.onPositionKeyDown;
@@ -87,9 +101,15 @@ ws.onopen = () => {
 
 ws.onmessage = (msg) => {
     let data = JSON.parse(msg.data);
+    if (data.type === 'game_over'){
+        ListPlayers.style.display = 'none'
+        playerField.style.display = 'none'    
+        getResults()
+    }
     if (data.type === 'config')
         initMultiplayerGame(data);
     if (data.type === 'update') {
+        console.log(data)
         if (init) {
             if (startGame) {
                 startGame = false;
@@ -113,8 +133,12 @@ ws.onmessage = (msg) => {
                 player.ui.buffer.src = player.buffer.image.src;
 
             } else {
-                player.field.drawField(document.getElementById(data.state.id).querySelector('.other-field').getContext('2d'), data.state.play_field
-                )
+                if(data.state.game_over === false){
+                    player.field.drawField(document.getElementById(data.state.id).querySelector('.other-field').getContext('2d'), data.state.play_field)
+                }
+                else{
+                    document.getElementById(data.state.id).style.display = 'none'
+                }
             }
         }
     }
@@ -125,7 +149,7 @@ function sendField() {
         id: parseInt(playerField.id),
         play_field: player.field.matrix,
         buffer: player.buffer.id,
-        score: 12345,
+        score: player.score,
         figure_count: 234,
         current_figure: {
             matrix: player.currentFigure.matrix,
@@ -138,7 +162,7 @@ function sendField() {
     }
     ws.send(JSON.stringify({
         "type": "update",
-        "updates": state
+        "update": state
     }));
 }
 
@@ -164,6 +188,13 @@ function initPlayers(players) {
             foundUser(id).then((player) => newField.querySelector('.player__username').textContent = player.login)
         }
     })
+}
+
+async function getResults(){
+    let response = await fetch("http://" + host + ":8080/game/results?lobby=" + params.get('lobby'), {
+        method: 'GET'
+    });
+    console.log(response.json())
 }
 
 async function foundUser(id) {
