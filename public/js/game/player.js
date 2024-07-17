@@ -135,18 +135,16 @@ class Player {
                         this.field.fixFigure(this.currentFigure);
                     } else {
                         this.isGameOver = true;
-                        console.log(this.currentFigure, this.field.matrix)
                     }
                     this.updateResults();
                     this.nextFigure();
                     if (this.field.checkPosition(this.currentFigure.x, this.currentFigure.y, this.currentFigure.matrix)) {
                         this.update();
                     } else {
-                        if (this.isActive || this.isGameOver) {
-                            this.isActive = false;
-                            console.log('sosiska')
-                            gameEnd(this.score);
-                        }
+                        this.isGameOver = true;
+                        this.isActive = false;
+                        console.log('sosiska')
+                        gameEnd(this.score);
                     }
                 }
             }

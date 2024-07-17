@@ -9,12 +9,6 @@ let startGame = true;
 let init = false;
 let ListPlayers = document.querySelector('.palyers-list');
 let newFigureId;
-gameEnd = () => { };
-function multiplayerGameEnd(score) {
-    localStorage.Gamewidth = 10;
-    localStorage.Gameheight = 20;
-    sendResult(score).then(() => { });
-}
 player.field.moveDownDefault = player.field.moveDown;
 player.field.updateHorizontalPositionDefault = player.field.updateHorizontalPosition;
 
@@ -40,9 +34,6 @@ player.field.defaultFix = player.field.fixFigure;
 player.field.fixFigure = (figure) => {
     player.field.defaultFix(figure);
     player.field.drawField(player.field.field, player.field.matrix);
-    player.isActive = false;
-    console.log('otmena');
-    player.isActive = true;
     player.playTime = new Date;
     player.isShifter = true;
     player.figuresPos += 1;
@@ -57,14 +48,7 @@ player.field.fixFigure = (figure) => {
     player.ui.viewNextFigures[3].src = player.nextFigures[3].image.src;
     player.currentFigure.setY(0);
     player.currentFigure.setX(player.field.getStartX(player.currentFigure));
-    if (player.isGameOver) {
-        if (player.field.checkPosition(player.currentFigure.x, player.currentFigure.y, player.currentFigure.matrix)) {
-
-            player.isGameOver = false;
-        } else {
-            multiplayerGameEnd(score);
-        }
-    }
+    
 }
 
 GAME.defaultInit = GAME.init;
