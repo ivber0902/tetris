@@ -10,10 +10,6 @@ let init = false;
 let ListPlayers = document.querySelector('.palyers-list');
 let newFigureId;
 gameEnd = () => {     
-     
-};
-function multiplayerGameEnd() { 
-    console.log('test')
     localStorage.Gamewidth = 10;
     localStorage.Gameheight = 20;
     player.update = () => {
@@ -26,8 +22,8 @@ function multiplayerGameEnd() {
     ListPlayers.style.width = '100%'
     ws.send(JSON.stringify({
         "type": "game_over",
-    })); 
-}
+    }));  
+};
 player.field.moveDownDefault = player.field.moveDown;
 player.field.updateHorizontalPositionDefault = player.field.updateHorizontalPosition;
 
