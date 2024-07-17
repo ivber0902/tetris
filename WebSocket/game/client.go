@@ -71,7 +71,7 @@ func HandleRequest(room *Room, player *connection.Client[State, lobby.Config, Re
 
 func WaitConnection(player *connection.Client[State, lobby.Config, Response]) {
 	log.Printf("Player %d (IP: %s) waiting for connection to game", player.ID, player.IP)
-	connectTimer := time.After(15 * time.Second)
+	connectTimer := time.After(15 * time.Minute)
 
 	for !player.IsOpen {
 		select {
