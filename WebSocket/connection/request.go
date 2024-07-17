@@ -6,6 +6,7 @@ type Request[T Object] struct {
 	Type        RequestType  `json:"type"`
 	Credentials *Credentials `json:"connection,omitempty"`
 	Update      *T           `json:"update,omitempty"`
+	Info        interface{}  `json:"info,omitempty"`
 }
 
 type RequestInterface interface {

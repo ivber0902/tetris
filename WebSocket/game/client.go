@@ -4,6 +4,7 @@ import (
 	"WebSocket/connection"
 	"WebSocket/lobby"
 	"log"
+	"math/rand"
 	"time"
 )
 
@@ -16,12 +17,19 @@ func HandleRequest(room *Room, player *connection.Client[State, lobby.Config, Re
 			Figures: (*player.State.Figures)[1:],
 		})
 		log.Printf("Player %d (IP: %s) reading: got config %s", player.ID, player.IP, room.ID)
+	case StartRequestType:
+		if player.IsHost {
+			player.State.Started = true
+			player.Event.Update <- &Response{
+				Type: "start",
+			}
+		}
 	case AllRequestType:
-		for p := range room.Clients {
-			if p.IsOpen {
+		for client := range room.Clients {
+			if client.IsOpen {
 				player.Send(&Response{
-					Type:  "update",
-					State: p.State,
+					Type:  "state",
+					State: client.State,
 				})
 			}
 		}
@@ -33,9 +41,19 @@ func HandleRequest(room *Room, player *connection.Client[State, lobby.Config, Re
 		}
 	case SetRequestType:
 		player.State.NextFigure()
-		player.Event.Update <- &Response{
-			Type:  "set",
-			State: player.State,
+	case RowRequestType:
+		switch request.Info.(type) {
+		case float64:
+			client := getRandomClient(room.Clients)
+			if client != nil {
+				client.Send(&Response{
+					Type: "add_rows",
+					Info: AddRowInfo{
+						int(request.Info.(float64)),
+						rand.Intn(int(player.Config.Settings.PlayField.Width)),
+					},
+				})
+			}
 		}
 	case GameOverRequestType:
 		if !player.State.GameOver {
@@ -67,4 +85,23 @@ func WaitConnection(player *connection.Client[State, lobby.Config, Response]) {
 			time.Sleep(1 * time.Second)
 		}
 	}
+}
+
+func getRandomClient(clients map[*connection.Client[State, lobby.Config, Response]]bool) *connection.Client[State, lobby.Config, Response] {
+	counter := 0
+	active := make(map[*connection.Client[State, lobby.Config, Response]]bool)
+
+	for client := range clients {
+		if client.IsOpen {
+			active[client] = true
+		}
+	}
+
+	clientOrder := rand.Intn(len(active))
+	for client := range active {
+		if clientOrder == counter {
+			return client
+		}
+	}
+	return nil
 }
