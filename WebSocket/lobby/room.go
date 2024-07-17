@@ -55,8 +55,9 @@ func (room *Room) Init() {
 			}
 
 			if len(room.Clients) > 1 && len(room.Config.Players) > 1 {
-				if newHost := room.GetClientByID(room.Config.Players[0]); client.IsHost && newHost != nil {
+				if newHost := room.GetClientByID(room.Config.Players[1]); client.IsHost && newHost != nil {
 					room.HostIP = newHost.IP
+					newHost.IsHost = true
 				}
 				room.Config.RemovePlayer(clientID)
 				delete(room.Clients, client)
