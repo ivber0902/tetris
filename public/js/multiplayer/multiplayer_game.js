@@ -8,9 +8,13 @@ let playerField = document.querySelector('.wrapper-main-field');
 let startGame = true;
 let init = false;
 let ListPlayers = document.querySelector('.palyers-list');
-let newFigureId;
+
 player.field.moveDownDefault = player.field.moveDown;
 player.field.updateHorizontalPositionDefault = player.field.updateHorizontalPosition;
+player.onBufferKeyUpDefault = player.onBufferKeyUp;
+player.onPositionKeyDownDefault = player.onPositionKeyDown;
+player.field.defaultFix = player.field.fixFigure;
+GAME.defaultInit = GAME.init;
 
 player.field.moveDown = (figure) => {
     let r = player.field.moveDownDefault(figure);
@@ -20,39 +24,34 @@ player.field.moveDown = (figure) => {
 
 player.nextFigure = () => {
 }
-player.onPositionKeyDownDefault = player.onPositionKeyDown;
+
 player.onPositionKeyDown = (e) => {
     player.onPositionKeyDownDefault(e);
     sendField();
 }
-player.onBufferKeyUpDefault = player.onBufferKeyUp;
+
 player.onBufferKeyUp = (e) => {
     player.onBufferKeyUpDefault(e);
     sendField();
 }
-player.field.defaultFix = player.field.fixFigure;
+
 player.field.fixFigure = (figure) => {
     player.field.defaultFix(figure);
     player.field.drawField(player.field.field, player.field.matrix);
     player.playTime = new Date;
     player.isShifter = true;
     player.figuresPos += 1;
+    for(let i = 0; i < 4; i++){
+        player.nextFigures[i] = getFigure(player.figuresAll[player.figuresPos + 1 + i]);
+        player.ui.viewNextFigures[i].src = player.nextFigures[i].image.src;
+    }
     player.currentFigure = getFigure(player.figuresAll[player.figuresPos]);
-    player.nextFigures[0] = getFigure(player.figuresAll[player.figuresPos + 1]);
-    player.nextFigures[1] = getFigure(player.figuresAll[player.figuresPos + 2]);
-    player.nextFigures[2] = getFigure(player.figuresAll[player.figuresPos + 3]);
-    player.nextFigures[3] = getFigure(player.figuresAll[player.figuresPos + 4]);
-    player.ui.viewNextFigures[0].src = player.nextFigures[0].image.src;
-    player.ui.viewNextFigures[1].src = player.nextFigures[1].image.src;
-    player.ui.viewNextFigures[2].src = player.nextFigures[2].image.src;
-    player.ui.viewNextFigures[3].src = player.nextFigures[3].image.src;
     player.currentFigure.setY(0);
     player.currentFigure.setX(player.field.getStartX(player.currentFigure));
     
 }
 
-GAME.defaultInit = GAME.init;
-player.field.initOtherFields = (players) => {
+function initOtherFields(players) {
     players.forEach((item) => {
         let field = item.querySelector('.other-field').getContext('2d')
         let canvas = item.querySelector('.other-field');
@@ -63,6 +62,10 @@ player.field.initOtherFields = (players) => {
         field.fillStyle = 'black';
         field.fillRect(0, 0, player.field.width * player.field.blockSize, player.field.height * player.field.blockSize);
     })
+    updateSize()
+}
+
+function updateSize() {
     document.querySelectorAll('.other-field').forEach((elem) => {
         switch (player.field.width) {
             case 7:
@@ -87,9 +90,11 @@ ws.onopen = () => {
 
 ws.onmessage = (msg) => {
     let data = JSON.parse(msg.data);
+    console.log(data)
     if (data.type === 'config')
         initMultiplayerGame(data);
     if (data.type === 'update') {
+        // console.log('буфер, который пришел', data.state.buffer)
         if (init) {
             if (startGame) {
                 startGame = false;
@@ -105,7 +110,7 @@ ws.onmessage = (msg) => {
                             player.figuresAll[player.figuresPos + 4]
                         ]
                     )
-                player.field.initOtherFields(otherPlayers)
+                initOtherFields(otherPlayers)
                 GAME.start(player)
             }
             if (data.state.id === parseInt(playerField.id)) {
@@ -136,6 +141,7 @@ function sendField() {
         },
         game_over: false
     }
+    // console.log('буфер, который отправили', state.buffer)
     ws.send(JSON.stringify({
         "type": "update",
         "updates": state

@@ -19,7 +19,6 @@ class Player {
         this.figuresQueueSize = 4;
         this.isShifter = true;
         this.isActive = false;
-        this.isGameOver = false;
     }
 
     initFigures(currentFigureIndex, bufferFigureIndex, NextFiguresIndex) {
@@ -115,7 +114,7 @@ class Player {
 
 
     update() {
-        if (this.isActive && !this.isGameOver) {
+        if (this.isActive) {
             this.field.clearField();
             this.field.drawField(this.field.field, this.field.matrix);
             this.field.updateHorizontalPosition(this.currentFigure, this.move);
@@ -131,19 +130,13 @@ class Player {
             if ((new Date() - this.playTime) * this.nitro >= this.tickTime) {
                 this.playTime = new Date;
                 if (!this.field.moveDown(this.currentFigure)) {
-                    if (this.field.checkPosition(this.currentFigure.x, this.currentFigure.y, this.currentFigure.matrix)) {
                         this.field.fixFigure(this.currentFigure);
-                    } else {
-                        this.isGameOver = true;
-                    }
                     this.updateResults();
                     this.nextFigure();
                     if (this.field.checkPosition(this.currentFigure.x, this.currentFigure.y, this.currentFigure.matrix)) {
                         this.update();
                     } else {
-                        this.isGameOver = true;
                         this.isActive = false;
-                        console.log('sosiska')
                         gameEnd(this.score);
                     }
                 }
@@ -159,7 +152,7 @@ class Player {
         this.updateLvl();
     }
     onPositionKeyDown(e) {
-        if (this.isActive && !this.isGameOver)
+        if (this.isActive)
             switch (e.code) {
                 case 'ArrowLeft':
                 case 'KeyA':
@@ -203,7 +196,7 @@ class Player {
         this.addPositionListeners();
     }
     onBufferKeyUp(e) {
-        if (this.isActive && e.code === 'ShiftLeft' && this.isShifter && !this.isGameOver) {
+        if (this.isActive && e.code === 'ShiftLeft' && this.isShifter) {
             this.field.clearFigure(this.currentFigure);
             this.field.clearShadow(this.currentFigure);
             let figure = this.currentFigure;
