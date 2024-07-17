@@ -13,7 +13,7 @@ func HandleRequest(room *Room, player *connection.Client[State, lobby.Config, Re
 		player.Send(&Response{
 			Type:    "config",
 			Config:  player.Config,
-			Figures: *player.State.Figures,
+			Figures: (*player.State.Figures)[1:],
 		})
 		log.Printf("Player %d (IP: %s) reading: got config %s", player.ID, player.IP, room.ID)
 	case AllRequestType:
@@ -38,14 +38,15 @@ func HandleRequest(room *Room, player *connection.Client[State, lobby.Config, Re
 			State: player.State,
 		}
 	case GameOverRequestType:
-		player.State.GameOver = true
-		room.Results.Add(player.State)
-		room.GameEnd <- player.State
-		player.Event.Update <- &Response{
-			Type:  "update",
-			State: player.State,
+		if !player.State.GameOver {
+			player.State.GameOver = true
+			room.GameEnd <- player.State
+			player.Event.Update <- &Response{
+				Type:  "update",
+				State: player.State,
+			}
+			log.Printf("Player %d (IP: %s) game over", player.ID, player.IP)
 		}
-		log.Printf("Player %d (IP: %s) game over", player.ID, player.IP)
 	}
 	return true
 }
