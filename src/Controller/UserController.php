@@ -65,11 +65,4 @@ class UserController extends AbstractController
             ], 400, ["Content-Type" => "application/json"]);
         }
     }
-    public function showError(int $code): Response
-    {
-        return $this->render('error.html.twig', [
-            'code' => $code,
-            'message' => 'страница не найдена',
-        ]);
-    }
 }
