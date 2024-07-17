@@ -33,10 +33,10 @@ func HandleRequest(room *Room, player *connection.Client[State, lobby.Config, Re
 		}
 	case SetRequestType:
 		player.State.NextFigure()
-		player.Send(&Response{
+		player.Event.Update <- &Response{
 			Type:  "set",
 			State: player.State,
-		})
+		}
 	case GameOverRequestType:
 		player.State.GameOver = true
 		room.Results.Add(player.State)

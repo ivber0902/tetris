@@ -10,7 +10,7 @@ func HandleRequest(player *connection.Client[Config, Config, Config], request co
 	switch request.Type {
 	case GetRequestType:
 	case UpdateRequestType:
-		if player.IsHost {
+		if player.IsHost && request.Update != nil {
 			*player.Config = *request.Update
 			log.Printf("Player %d (IP: %s) reading: host update lobby info %s", player.ID, player.IP, player.Config.ID)
 		}
