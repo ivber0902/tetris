@@ -80,9 +80,11 @@ let GAME = {
         })
     },
     start(player) {
-        this.onLoadImages(() => {
-            this.drawDowncount(player, player.field.field, 3, 1, () => { player.isActive = true; this.play(player) })
-        })
+        player.isActive = true; 
+        this.play(player) 
+        // this.onLoadImages(() => {
+        //     this.drawDowncount(player, player.field.field, 3, 1, () => { player.isActive = true; this.play(player) })
+        // })
     },
     play(player) {
         player.ui.score = player.score;

@@ -5,10 +5,9 @@ let ws = new WebSocket(wsUrl);
 let otherPlayersFields = [];
 let otherPlayers;
 let playerField = document.querySelector('.wrapper-main-field');
-let startGame = true;
 let init = false;
 let ListPlayers = document.querySelector('.palyers-list');
-
+let stratGameButton = document.querySelector('.start_game');
 player.field.moveDownDefault = player.field.moveDown;
 player.field.updateHorizontalPositionDefault = player.field.updateHorizontalPosition;
 player.onBufferKeyUpDefault = player.onBufferKeyUp;
@@ -16,10 +15,18 @@ player.onPositionKeyDownDefault = player.onPositionKeyDown;
 player.field.defaultFix = player.field.fixFigure;
 GAME.defaultInit = GAME.init;
 
+stratGameButton.addEventListener('click', ()=>{
+    ws.send(JSON.stringify({
+        "type": "start"
+    }));
+    console.log('отправил запрос')
+})
+
+
 player.field.moveDown = (figure) => {
-    let r = player.field.moveDownDefault(figure);
+    let moving = player.field.moveDownDefault(figure);
     sendField()
-    return r;
+    return moving;
 }
 
 player.nextFigure = () => {
@@ -41,14 +48,21 @@ player.field.fixFigure = (figure) => {
     player.playTime = new Date;
     player.isShifter = true;
     player.figuresPos += 1;
+    updateNextFigures(player);
+    player.currentFigure = getFigure(player.figuresAll[player.figuresPos]);
+    player.currentFigure.setY(0);
+    player.currentFigure.setX(player.field.getStartX(player.currentFigure));
+    ws.send(JSON.stringify({
+        "type": "set"
+    }));
+    
+}
+
+function updateNextFigures(player) {
     for(let i = 0; i < 4; i++){
         player.nextFigures[i] = getFigure(player.figuresAll[player.figuresPos + 1 + i]);
         player.ui.viewNextFigures[i].src = player.nextFigures[i].image.src;
     }
-    player.currentFigure = getFigure(player.figuresAll[player.figuresPos]);
-    player.currentFigure.setY(0);
-    player.currentFigure.setX(player.field.getStartX(player.currentFigure));
-    
 }
 
 function initOtherFields(players) {
@@ -93,37 +107,49 @@ ws.onmessage = (msg) => {
     console.log(data)
     if (data.type === 'config')
         initMultiplayerGame(data);
-    if (data.type === 'update') {
-        // console.log('буфер, который пришел', data.state.buffer)
-        if (init) {
-            if (startGame) {
-                startGame = false;
-                GAME.init
-                    (
-                        player,
-                        data.state.buffer,
-                        player.figuresAll[player.figuresPos],
-                        [
-                            player.figuresAll[player.figuresPos + 1],
-                            player.figuresAll[player.figuresPos + 2],
-                            player.figuresAll[player.figuresPos + 3],
-                            player.figuresAll[player.figuresPos + 4]
-                        ]
-                    )
-                initOtherFields(otherPlayers)
+    if(data.type === 'state'){
+        if (data.state.id === parseInt(playerField.id)) {
+            initOtherFields(otherPlayers);
+            GAME.init
+            (
+                player,
+                data.state.buffer,
+                player.figuresAll[player.figuresPos],
+                [
+                    player.figuresAll[player.figuresPos + 1],
+                    player.figuresAll[player.figuresPos + 2],
+                    player.figuresAll[player.figuresPos + 3],
+                    player.figuresAll[player.figuresPos + 4]
+                ]
+            )    
+            if(data.state.current_figure && (data.state.id === parseInt(playerField.id))){
+                player.field.matrix = data.state.play_field;
+                player.figuresPos = data.state.figure_count;
+                player.currentFigure = getFigure(player.figuresAll[player.figuresPos]);
+                player.currentFigure.setX(data.state.current_figure.pos.x);
+                player.currentFigure.setY(data.state.current_figure.pos.y);
+                updateNextFigures(player);
+                GAME.drawDowncount = () => {player.isActive = true; GAME.play(player)}
                 GAME.start(player)
             }
+        }
+        
+    }
+    if (data.type === 'start'){
+        GAME.start(player)
+    }    
+    if (data.type === 'update') {
             if (data.state.id === parseInt(playerField.id)) {
                 player.buffer = getFigure(data.state.buffer);
                 player.ui.buffer.src = player.buffer.image.src;
 
             } else {
-                player.field.drawField(document.getElementById(data.state.id).querySelector('.other-field').getContext('2d'), data.state.play_field
-                )
+                player.field.drawField(document.getElementById(data.state.id).querySelector('.other-field').getContext('2d'), data.state.play_field)
             }
-        }
+        
     }
 }
+
 
 function sendField() {
     let state = {
@@ -131,7 +157,6 @@ function sendField() {
         play_field: player.field.matrix,
         buffer: player.buffer.id,
         score: 12345,
-        figure_count: 234,
         current_figure: {
             matrix: player.currentFigure.matrix,
             pos: {
@@ -141,14 +166,16 @@ function sendField() {
         },
         game_over: false
     }
-    // console.log('буфер, который отправили', state.buffer)
     ws.send(JSON.stringify({
         "type": "update",
-        "updates": state
+        "update": state
     }));
 }
 
 function initMultiplayerGame(data) {
+    if(parseInt(playerField.id) !== data.config.players[0]){
+        stratGameButton.style.display = "none"
+    }
     init = true;
     document.querySelector('.main').style.backgroundImage = `url(${data.config.settings.background})`;
     initPlayertField(data.config.settings.play_field);
@@ -160,6 +187,17 @@ function initMultiplayerGame(data) {
         "type": "all"
     }));
 }
+
+
+// function createButton() {
+//     const button = document.createElement("button");
+//     button.textContent = 'начать';
+//     button.onclick = () => { 
+//         startGame()
+//       };
+      
+//     return button;
+// }
 
 function initPlayers(players) {
     players.forEach((id) => {
@@ -183,6 +221,29 @@ async function foundUser(id) {
 function initPlayertField(fieldParam) {
     GAME.width = fieldParam.width;
     GAME.height = fieldParam.height;
+    player.field.width = fieldParam.width;
+    player.field.height = fieldParam.height;
+}
+
+function addLines(player, countLines, positionEmpty) {
+    let newFiled;
+    if(player.field.matrix[countLines - 1].every((elem) => elem === 0)){
+        let newLine;
+        for (let i = 0; i < player.field.matrix.length; i++){
+            if(i !== positionEmpty)
+                newLine.push(1)
+            else
+                newLine.push(0)
+        }
+        for (let i = countLines; i < player.field.matrix.length; i++) {
+            newFiled.push(player.field.matrix[i])
+        }
+        for (let i = 0; i < countLines; i++){
+            newFiled.push(newLine)
+        }
+    }else{
+        player.gameEnd(player.score);
+    }
 }
 
 function createField(id) {
