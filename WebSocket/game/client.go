@@ -17,12 +17,19 @@ func HandleRequest(room *Room, player *connection.Client[State, lobby.Config, Re
 			Figures: (*player.State.Figures)[1:],
 		})
 		log.Printf("Player %d (IP: %s) reading: got config %s", player.ID, player.IP, room.ID)
+	case StartRequestType:
+		if player.IsHost {
+			player.State.Started = true
+			player.Event.Update <- &Response{
+				Type: "start",
+			}
+		}
 	case AllRequestType:
-		for p := range room.Clients {
-			if p.IsOpen {
+		for client := range room.Clients {
+			if client.IsOpen {
 				player.Send(&Response{
-					Type:  "update",
-					State: p.State,
+					Type:  "state",
+					State: client.State,
 				})
 			}
 		}
@@ -40,8 +47,11 @@ func HandleRequest(room *Room, player *connection.Client[State, lobby.Config, Re
 			client := getRandomClient(room.Clients)
 			if client != nil {
 				client.Send(&Response{
-					Type: "clear_row",
-					Info: request.Info.(float64),
+					Type: "add_rows",
+					Info: AddRowInfo{
+						int(request.Info.(float64)),
+						rand.Intn(int(player.Config.Settings.PlayField.Width)),
+					},
 				})
 			}
 		}
@@ -79,8 +89,16 @@ func WaitConnection(player *connection.Client[State, lobby.Config, Response]) {
 
 func getRandomClient(clients map[*connection.Client[State, lobby.Config, Response]]bool) *connection.Client[State, lobby.Config, Response] {
 	counter := 0
-	clientOrder := rand.Intn(len(clients))
+	active := make(map[*connection.Client[State, lobby.Config, Response]]bool)
+
 	for client := range clients {
+		if client.IsOpen {
+			active[client] = true
+		}
+	}
+
+	clientOrder := rand.Intn(len(active))
+	for client := range active {
 		if clientOrder == counter {
 			return client
 		}

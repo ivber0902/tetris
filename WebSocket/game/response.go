@@ -9,3 +9,8 @@ type Response struct {
 	Figures []FigureType  `json:"figures,omitempty"`
 	Info    interface{}   `json:"info,omitempty"`
 }
+
+type AddRowInfo struct {
+	Count         int `json:"count"`
+	ClearedColumn int `json:"empty_column"`
+}

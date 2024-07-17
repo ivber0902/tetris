@@ -16,6 +16,7 @@ type State struct {
 	Score         int                     `json:"score"`
 	GameOver      bool                    `json:"game_over"`
 	CurrentFigure *CurrentFigure          `json:"current_figure,omitempty"`
+	Started       bool                    `json:"started"`
 	figureQueue   *queue.Queue[FigureType]
 }
 
