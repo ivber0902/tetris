@@ -43,7 +43,6 @@ func (game *State) Init(playFieldWidth, playFieldHeight int8, figures *FigureArr
 func (game *State) Update(newGame *State) {
 	if newGame != nil {
 		game.PlayField = newGame.PlayField
-		game.Figures = newGame.Figures
 		game.Buffer = newGame.Buffer
 		game.Score = newGame.Score
 		game.GameOver = newGame.GameOver
