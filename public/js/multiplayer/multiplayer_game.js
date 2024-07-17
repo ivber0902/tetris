@@ -9,11 +9,24 @@ let startGame = true;
 let init = false;
 let ListPlayers = document.querySelector('.palyers-list');
 let newFigureId;
-gameEnd = () => { };
-function multiplayerGameEnd(score) {
+gameEnd = () => {     
+     
+};
+function multiplayerGameEnd() { 
+    console.log('test')
     localStorage.Gamewidth = 10;
     localStorage.Gameheight = 20;
-    sendResult(score).then(() => { });
+    player.update = () => {
+    }
+    player.onBufferKeyUp = () => {
+    }
+    player.onPositionKeyDown = () => {
+    }
+    playerField.style.display = 'none'
+    ListPlayers.style.width = '100%'
+    ws.send(JSON.stringify({
+        "type": "game_over",
+    })); 
 }
 player.field.moveDownDefault = player.field.moveDown;
 player.field.updateHorizontalPositionDefault = player.field.updateHorizontalPosition
@@ -83,6 +96,10 @@ ws.onopen = () => {
 
 ws.onmessage = (msg) => {
     let data = JSON.parse(msg.data);
+    if (data.type === 'game_over'){
+        ListPlayers.style.display = 'none'
+        playerField.style.display = 'none'    
+    }
     if (data.type === 'config')
         initMultiplayerGame(data);
     if (data.type === 'set') {
@@ -102,15 +119,7 @@ ws.onmessage = (msg) => {
         player.ui.viewNextFigures[2].src = player.nextFigures[2].image.src;
         player.ui.viewNextFigures[3].src = player.nextFigures[3].image.src;
         player.currentFigure.setY(0);
-        player.currentFigure.setX(player.field.getStartX(player.currentFigure));
-        if (player.isGameOver) {
-            if (player.field.checkPosition(player.currentFigure.x, player.currentFigure.y, player.currentFigure.matrix)) {
-
-                player.isGameOver = false;
-            } else {
-                multiplayerGameEnd(score);
-            }
-        }
+        player.currentFigure.setX(player.field.getStartX(player.currentFigure));  
     }
     if (data.type === 'update') {
         if (init) {
@@ -125,9 +134,20 @@ ws.onmessage = (msg) => {
                 player.ui.buffer.src = player.buffer.image.src;
 
             } else {
-                player.field.drawField(document.getElementById(data.state.id).querySelector('.other-field').getContext('2d'), data.state.play_field
-                )
+                if(data.state.game_over === false){
+                    player.field.drawField(document.getElementById(data.state.id).querySelector('.other-field').getContext('2d'), data.state.play_field)
+                }
+                else{
+                    document.getElementById(data.state.id).style.display = 'none'
+                }
             }
+        }
+    }
+    if (player.isGameOver) {
+        if (player.field.checkPosition(player.currentFigure.x, player.currentFigure.y, player.currentFigure.matrix)) {
+            player.isGameOver = false;
+        } else {
+            multiplayerGameEnd()
         }
     }
 }
@@ -175,6 +195,13 @@ function initPlayers(players) {
             foundUser(id).then((player) => newField.querySelector('.player__username').textContent = player.login)
         }
     })
+}
+
+async function getResults(){
+    let response = await fetch("http://" + host + ":8080/game/results?lobby=" + params.get('lobby'), {
+        method: 'GET'
+    });
+    console.log(response.text())
 }
 
 async function foundUser(id) {

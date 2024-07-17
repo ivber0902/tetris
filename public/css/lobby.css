@@ -102,6 +102,11 @@
     width: 17px;
     height: 17px;
     padding-right: 12px;
+    display: none;
+}
+
+body.host .triangle{
+    display: flex
 }
 
 .settings__text-music,
@@ -140,6 +145,14 @@
     box-sizing: border-box;
     padding-right: 10px;
     padding-left: 10px;
+    pointer-events: none;
+}
+
+body.host .settings__size,
+body.host .settings__music,
+body.host .settings__complexity,
+body.host .settings__background {
+    pointer-events: auto;
 }
 
 .user-profile {
@@ -244,6 +257,11 @@
 .start-game {
     color: #b190e2;
     background: none;
+    display: none;
+}
+
+body.host .start-game{
+    display: flex;
 }
 .item__title {
     color: #dac8e7;
