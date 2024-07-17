@@ -7,7 +7,6 @@ let otherPlayers;
 let playerField = document.querySelector('.wrapper-main-field');
 let init = false;
 let ListPlayers = document.querySelector('.palyers-list');
-let stratGameButton = document.querySelector('.start_game');
 player.field.moveDownDefault = player.field.moveDown;
 player.field.updateHorizontalPositionDefault = player.field.updateHorizontalPosition;
 player.onBufferKeyUpDefault = player.onBufferKeyUp;
@@ -15,13 +14,10 @@ player.onPositionKeyDownDefault = player.onPositionKeyDown;
 player.field.defaultFix = player.field.fixFigure;
 GAME.defaultInit = GAME.init;
 
-stratGameButton.addEventListener('click', ()=>{
-    ws.send(JSON.stringify({
-        "type": "start"
-    }));
-    console.log('отправил запрос')
-})
-
+GAME.start = (player) => {
+    player.isActive = true; 
+    GAME.play(player)
+}
 
 player.field.moveDown = (figure) => {
     let moving = player.field.moveDownDefault(figure);
@@ -126,10 +122,10 @@ ws.onmessage = (msg) => {
                 player.field.matrix = data.state.play_field;
                 player.figuresPos = data.state.figure_count;
                 player.currentFigure = getFigure(player.figuresAll[player.figuresPos]);
+                player.currentFigure.matrix = data.state.current_figure.matrix;
                 player.currentFigure.setX(data.state.current_figure.pos.x);
                 player.currentFigure.setY(data.state.current_figure.pos.y);
                 updateNextFigures(player);
-                GAME.drawDowncount = () => {player.isActive = true; GAME.play(player)}
                 GAME.start(player)
             }
         }
@@ -173,8 +169,8 @@ function sendField() {
 }
 
 function initMultiplayerGame(data) {
-    if(parseInt(playerField.id) !== data.config.players[0]){
-        stratGameButton.style.display = "none"
+    if(parseInt(playerField.id) === data.config.players[0]){
+        playerField.appendChild(createStartGameButton());
     }
     init = true;
     document.querySelector('.main').style.backgroundImage = `url(${data.config.settings.background})`;
@@ -188,17 +184,6 @@ function initMultiplayerGame(data) {
     }));
 }
 
-
-// function createButton() {
-//     const button = document.createElement("button");
-//     button.textContent = 'начать';
-//     button.onclick = () => { 
-//         startGame()
-//       };
-      
-//     return button;
-// }
-
 function initPlayers(players) {
     players.forEach((id) => {
         createField(id)
@@ -208,6 +193,18 @@ function initPlayers(players) {
             foundUser(id).then((player) => newField.querySelector('.player__username').textContent = player.login)
         }
     })
+}
+
+function createStartGameButton() {
+    const button = document.createElement("button");
+    button.textContent = 'начать';
+    button.onclick = () => { 
+        ws.send(JSON.stringify({
+            "type": "start"
+        }));
+      };
+      
+    return button;
 }
 
 async function foundUser(id) {

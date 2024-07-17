@@ -72,6 +72,8 @@ func (c *Client[T, ConfType, RespType]) ReadLoop(callback func(*Client[T, ConfTy
 			case error:
 				log.Printf("Player (IP: %s) reading: JSON reading error: %v", c.IP, err)
 				return
+			default:
+				log.Printf("UNKNOWN ERROR: %v", err)
 			}
 		} else {
 			if !callback(c, request) {
