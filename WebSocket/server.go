@@ -84,6 +84,7 @@ func (server *Server) HandleConnection(w http.ResponseWriter, r *http.Request, c
 
 		log.Printf("Server HandleConnection: LobbyInfo %s created by player (IP: %s)", lobbyConn.ID, clientIP)
 	}
+	lobbyConn.Config.GameRun = false
 
 	for player := range lobbyConn.Clients {
 		log.Println(clientIP, player.IP)
