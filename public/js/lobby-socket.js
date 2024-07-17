@@ -44,7 +44,7 @@ startGame.addEventListener('click', () => {
 function sendLobbySettings(settingLobby) {
     ws.send(JSON.stringify({
         "type": "update",
-        "updates": settingLobby
+        "update": settingLobby
     }));
 }
 

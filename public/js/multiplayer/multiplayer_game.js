@@ -117,6 +117,7 @@ ws.onopen = () => {
 ws.onmessage = (msg) => {
     let data = JSON.parse(msg.data);
     if (data.type === 'game_over'){
+        console.log('game_over')
         ListPlayers.style.display = 'none'
         playerField.style.display = 'none'    
         getResults()
@@ -228,7 +229,11 @@ async function getResults(){
     let response = await fetch("http://" + host + ":8080/game/results?lobby=" + params.get('lobby'), {
         method: 'GET'
     });
-    console.log(response.json())
+    let results = await response.json()
+    console.log(results)
+    let jsonResults = JSON.stringify(results);
+    sessionStorage.setItem('results', jsonResults);
+    window.location.href = '/game_over_multi?lobby='  + params.get('lobby');
 }
 
 async function foundUser(id) {
