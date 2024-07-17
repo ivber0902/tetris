@@ -1,0 +1,57 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Russo One", sans-serif;
+    font-weight: 400;
+    color: #fff;
+    text-decoration: none;
+    user-select: none;
+    border: none;
+    text-transform: uppercase;
+}
+
+.logo {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.bg {
+    height: 100vh;
+    background: url(/images/dark-bg.png) no-repeat;
+    background-size: cover;
+    padding: 10px;
+}
+
+.error{ 
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    padding: 10px;
+}
+
+.error-title{
+    font-size: 70px;
+}
+
+.error-subtitle{
+    font-size: 30px;
+    margin-bottom: 25px;
+}
+
+.error-links{
+    font-size: 27px;
+}
+
+.links{
+    display: flex;
+    justify-content: space-between;
+}
+
+.register, .login, .menu{
+    padding: 5px;
+    font-size: 30px;
+    border-radius: 5px;
+    background-color: #160b47;
+}

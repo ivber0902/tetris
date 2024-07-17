@@ -9,6 +9,25 @@ let startGame = true;
 let init = false;
 let ListPlayers = document.querySelector('.palyers-list');
 let newFigureId;
+gameEnd = () => {     
+     
+};
+function multiplayerGameEnd() { 
+    console.log('test')
+    localStorage.Gamewidth = 10;
+    localStorage.Gameheight = 20;
+    player.update = () => {
+    }
+    player.onBufferKeyUp = () => {
+    }
+    player.onPositionKeyDown = () => {
+    }
+    playerField.style.display = 'none'
+    ListPlayers.style.width = '100%'
+    ws.send(JSON.stringify({
+        "type": "game_over",
+    })); 
+}
 player.field.moveDownDefault = player.field.moveDown;
 player.field.updateHorizontalPositionDefault = player.field.updateHorizontalPosition;
 
@@ -108,6 +127,25 @@ ws.onmessage = (msg) => {
     }
     if (data.type === 'config')
         initMultiplayerGame(data);
+    if (data.type === 'set') {
+        player.buffer = getFigure(data.state.buffer);
+        player.ui.buffer.src = player.buffer.image.src;
+        player.nextFigures[0] = getFigure(data.state.figures[1]);
+        player.isActive = true;
+        player.playTime = new Date;
+        player.isShifter = true;
+        player.currentFigure = getFigure(data.state.figures[0]);
+        player.nextFigures[0] = getFigure(data.state.figures[1]);
+        player.nextFigures[1] = getFigure(data.state.figures[2]);
+        player.nextFigures[2] = getFigure(data.state.figures[3]);
+        player.nextFigures[3] = getFigure(data.state.figures[4]);
+        player.ui.viewNextFigures[0].src = player.nextFigures[0].image.src;
+        player.ui.viewNextFigures[1].src = player.nextFigures[1].image.src;
+        player.ui.viewNextFigures[2].src = player.nextFigures[2].image.src;
+        player.ui.viewNextFigures[3].src = player.nextFigures[3].image.src;
+        player.currentFigure.setY(0);
+        player.currentFigure.setX(player.field.getStartX(player.currentFigure));  
+    }
     if (data.type === 'update') {
         console.log(data)
         if (init) {

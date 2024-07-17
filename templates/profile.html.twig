@@ -12,7 +12,10 @@
     </header>
     <main class="main">
         <div class="description-user">
-            <img class="user-avatar" src="/images/human.jpeg" alt="avatar">
+            <label for="image-input">
+                <img class="user-avatar" src="/images/human.jpeg" alt="avatar" >
+            </label>
+            <input type="file" id="image-input" accept="image/png, image/jpeg, image/jpg">
             <div class="general-results">
                 <h1 class="username">{{ login ?? 'Славянин'}}</h1>
                 <div class="single-game">
