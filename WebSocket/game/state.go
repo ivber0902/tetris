@@ -27,16 +27,15 @@ type CurrentFigure struct {
 	} `json:"pos,omitempty"`
 }
 
-func (game *State) Init(PlayFieldWidth, PlayFieldHeight int8, Figures *FigureArray) {
-	game.PlayField = make([][]FigureType, PlayFieldHeight)
+func (game *State) Init(playFieldWidth, playFieldHeight int8, figures *FigureArray) {
+	game.PlayField = make([][]FigureType, playFieldHeight)
 	for i := range game.PlayField {
-		game.PlayField[i] = make([]FigureType, PlayFieldWidth)
+		game.PlayField[i] = make([]FigureType, playFieldWidth)
 	}
 
 	game.figureQueue = queue.New[FigureType]()
-	game.Figures = Figures
-	game.Buffer = GetRandomFigure()
-	game.NextFigure()
+	game.Figures = figures
+	game.Buffer = (*figures)[1]
 	game.FigureCount = 0
 	game.Score = 0
 }

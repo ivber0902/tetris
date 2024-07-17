@@ -1,7 +1,6 @@
 package game
 
 import (
-	"log"
 	"math/rand"
 	"time"
 )
@@ -13,7 +12,6 @@ func GenerateFigureArray(length int) FigureArray {
 	for i := range figureArray {
 		figureArray[i] = GetRandomFigure()
 	}
-	log.Printf("Generated Figure Array: %v", figureArray)
 	return figureArray
 }
 
