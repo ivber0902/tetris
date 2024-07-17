@@ -8,4 +8,5 @@ const (
 	UpdateRequestType   = "update"
 	SetRequestType      = "set"
 	GameOverRequestType = "game_over"
+	RowRequestType      = "send_row"
 )
