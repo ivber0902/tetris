@@ -68,6 +68,11 @@ get_user:
     methods: GET
     controller: App\Controller\PlayerController::getUserApi
 
+error_page:
+    path: /error/{code}
+    methods: GET
+    controller: App\Controller\UserController::showError
+
 # api
 api_register:
     path: /api/register

@@ -7,6 +7,8 @@ let otherPlayers;
 let playerField = document.querySelector('.wrapper-main-field');
 let init = false;
 let ListPlayers = document.querySelector('.palyers-list');
+let newFigureId;
+
 player.field.moveDownDefault = player.field.moveDown;
 player.field.updateHorizontalPositionDefault = player.field.updateHorizontalPosition;
 player.onBufferKeyUpDefault = player.onBufferKeyUp;
@@ -15,7 +17,7 @@ player.field.defaultFix = player.field.fixFigure;
 GAME.defaultInit = GAME.init;
 
 GAME.start = (player) => {
-    player.isActive = true; 
+    player.isActive = true;
     GAME.play(player)
 }
 
@@ -24,7 +26,21 @@ player.field.moveDown = (figure) => {
     sendField()
     return moving;
 }
-
+gameEnd = () => {
+    localStorage.Gamewidth = 10;
+    localStorage.Gameheight = 20;
+    player.update = () => {
+    }
+    player.onBufferKeyUp = () => {
+    }
+    player.onPositionKeyDown = () => {
+    }
+    playerField.style.display = 'none'
+    ListPlayers.style.width = '100%'
+    ws.send(JSON.stringify({
+        "type": "game_over",
+    }));
+};
 player.nextFigure = () => {
 }
 
@@ -48,10 +64,11 @@ player.field.fixFigure = (figure) => {
     player.currentFigure = getFigure(player.figuresAll[player.figuresPos]);
     player.currentFigure.setY(0);
     player.currentFigure.setX(player.field.getStartX(player.currentFigure));
+
     ws.send(JSON.stringify({
         "type": "set"
     }));
-    
+
 }
 
 function updateNextFigures(player) {
@@ -100,7 +117,12 @@ ws.onopen = () => {
 
 ws.onmessage = (msg) => {
     let data = JSON.parse(msg.data);
-    console.log(data)
+    if (data.type === 'game_over'){
+        console.log('game_over')
+        ListPlayers.style.display = 'none'
+        playerField.style.display = 'none'
+        getResults()
+    }
     if (data.type === 'config')
         initMultiplayerGame(data);
     if(data.type === 'state'){
@@ -117,7 +139,7 @@ ws.onmessage = (msg) => {
                     player.figuresAll[player.figuresPos + 3],
                     player.figuresAll[player.figuresPos + 4]
                 ]
-            )    
+            )
             if(data.state.current_figure && (data.state.id === parseInt(playerField.id))){
                 player.field.matrix = data.state.play_field;
                 player.figuresPos = data.state.figure_count;
@@ -129,20 +151,25 @@ ws.onmessage = (msg) => {
                 GAME.start(player)
             }
         }
-        
+
     }
     if (data.type === 'start'){
         GAME.start(player)
-    }    
+    }
     if (data.type === 'update') {
             if (data.state.id === parseInt(playerField.id)) {
                 player.buffer = getFigure(data.state.buffer);
                 player.ui.buffer.src = player.buffer.image.src;
 
             } else {
-                player.field.drawField(document.getElementById(data.state.id).querySelector('.other-field').getContext('2d'), data.state.play_field)
+                if(data.state.game_over === false){
+                    player.field.drawField(document.getElementById(data.state.id).querySelector('.other-field').getContext('2d'), data.state.play_field)
+                }
+                else{
+                    document.getElementById(data.state.id).style.display = 'none'
+                }
             }
-        
+
     }
 }
 
@@ -152,7 +179,7 @@ function sendField() {
         id: parseInt(playerField.id),
         play_field: player.field.matrix,
         buffer: player.buffer.id,
-        score: 12345,
+        score: player.score,
         current_figure: {
             matrix: player.currentFigure.matrix,
             pos: {
@@ -198,13 +225,24 @@ function initPlayers(players) {
 function createStartGameButton() {
     const button = document.createElement("button");
     button.textContent = 'начать';
-    button.onclick = () => { 
+    button.onclick = () => {
         ws.send(JSON.stringify({
             "type": "start"
         }));
       };
-      
+
     return button;
+}
+
+async function getResults(){
+    let response = await fetch("http://" + host + ":8080/game/results?lobby=" + params.get('lobby'), {
+        method: 'GET'
+    });
+    let results = await response.json()
+    console.log(results)
+    let jsonResults = JSON.stringify(results);
+    sessionStorage.setItem('results', jsonResults);
+    window.location.href = '/game_over_multi?lobby='  + params.get('lobby');
 }
 
 async function foundUser(id) {

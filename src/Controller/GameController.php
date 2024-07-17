@@ -51,7 +51,13 @@ class GameController extends AbstractController
     }
     public function gameOverMulti(): Response
     {
-        return $this->render('game-over-multi.html.twig');
+        $securityUser = $this->getUser();
+        if($securityUser === null){
+            return $this->render('game-over-multi.html.twig', ["user" => $user]);
+        }
+        $user = $this->userService->findUser($securityUser->getId());
+        $player = $user->getPlayer();
+        return $this->render('game-over-multi.html.twig', ["user" => $user, "player" => $player]);
     }
     public function koop(): Response
     {
