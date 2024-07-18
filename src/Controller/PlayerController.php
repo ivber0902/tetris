@@ -24,7 +24,7 @@ class PlayerController extends AbstractController
     {
         $user = $this->userService->findUserByLogin($login);
         if ($user !== null) {
-            return $this->render('profile.html.twig', [
+            return $this->render('menu/profile.html.twig', [
                 "login" => $login,
                 "player" => $user->getPlayer(),
             ]);

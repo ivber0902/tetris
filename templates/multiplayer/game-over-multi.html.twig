@@ -1,0 +1,54 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Multiplayer Game Over
+{% endblock %}
+{% block style %}<link rel="stylesheet" href="/css/game-over-multi.css"/><link rel="stylesheet" href="/css/mini-profile.css"/>
+{% endblock %}
+{% block content %}
+	<div class="bg">
+		<div class="header">
+			<img src="/images/settings.png" alt="settings" class="settings">
+			<img src="/images/logo.png" alt="logo" class="logo">
+			<input class="player_id" type="hidden" value="{{ user.playerId}}">
+			<div class="profile">
+				{% if not user or not user.login %}
+					<a href="{{ path('register') }}">
+						<div class="profile">
+							<p class="profile__nickname">{{user.login ?? 'славянин'}}</p>
+							<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
+						</div>
+					</a>
+				{% else %}
+					<div class="profile">
+						<p class="profile__nickname">{{user.login ?? 'славянин'}}</p>
+						<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
+					</div>
+				{% endif %}
+			</div>
+		</div>
+		<div class="results-placeholder">
+			<div class="results">
+				<div class="results__header">
+					<h1 class="results__title">№0</h1>
+					<div class="results__time">
+						<p class="time__text">Количество Очков</p>
+						<p class="time__value">0</p>
+					</div>
+				</div>
+				<div class="players">
+				</div>
+			</div>
+		</div>
+		<a class="back__link">
+			<div class="back">
+				<h1 class="back__button">
+					сыграть заново
+				</h1>
+			</div>
+		</a>
+		{% include 'mini-profile.html.twig' %}	
+	</div>
+</body>
+<script src="/js/game/game_over.js"></script>
+<script src="/js/mini-profile.js"></script>
+{% endblock %}

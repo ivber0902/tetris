@@ -72,15 +72,8 @@ async function foundUser(id)
     return user
 }
 
-function baningSettings(){
-    triangle.forEach((elem)=>{
-        elem.style.display = "none"
-    })
-    selectSize.style.pointerEvents = 'none';
-    selectMusic.style.pointerEvents = 'none';
-    selectDifficulty.style.pointerEvents = 'none';
-    selectBg.style.pointerEvents = 'none';
-    startGame.style.display = 'none';
+function giveHostRole(){
+    document.querySelector('body').classList.add('host');
 }
 
 function initKickButtons(){
@@ -120,8 +113,8 @@ ws.onmessage = (msg) => {
         }
     updateView(data);
     updatePlayers(data);
-    if(userId !== data.players[0])
-        baningSettings()
+    if(userId === data.players[0])
+        giveHostRole()
     settingLobby.id = data.id;
     if (window.location.href === baseLink)
         history.pushState(null, null, "?lobby=" + data.id)
