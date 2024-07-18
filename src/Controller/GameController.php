@@ -53,7 +53,7 @@ class GameController extends AbstractController
     {
         $securityUser = $this->getUser();
         if($securityUser === null){
-            return $this->render('multiplayer/game-over-multi.html.twig', ["user" => $user]);
+            return $this->render('multiplayer/game-over-multi.html.twig', ["user" => $securityUser]);
         }
         $user = $this->userService->findUser($securityUser->getId());
         $player = $user->getPlayer();
@@ -141,5 +141,15 @@ class GameController extends AbstractController
         $user = $this->userService->findUser($securityUser->getId());
         $player = $user->getPlayer();
         return $this->render('multiplayer/lobby.html.twig', ["user" => $user, "player" => $player]);
+    }
+    public function leaderboard(): Response
+    {
+        $securityUser = $this->getUser();
+        if($securityUser === null){
+            return $this->render('menu/leaderboard.html.twig', ["user" => $securityUser]);
+        }
+        $user = $this->userService->findUser($securityUser->getId());
+        $player = $user->getPlayer();
+        return $this->render('menu/leaderboard.html.twig', ["user" => $securityUser, "player" => $player]);
     }
 }

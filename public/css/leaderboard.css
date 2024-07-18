@@ -1,0 +1,102 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Russo One", sans-serif;
+    font-weight: 400;
+    color: #fff;
+    text-decoration: none;
+    user-select: none;
+    border: none;
+    text-transform: uppercase;
+}
+
+.bg {
+    height: 100vh;
+    background: url(/images/bg.png) no-repeat;
+    background-size: cover;
+}
+
+.bg_dark {
+    background: url(/images/dark-bg.png) no-repeat;
+    background-size: cover;
+}
+
+.settings {
+    width: 40px;
+    height: 40px;
+    display: none;
+}
+
+.header {
+    display: flex;
+    justify-content: end;
+    padding: 25px;
+}
+
+.logo {
+    
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.profile {
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.profile__nickname {
+    font-size: 32px;
+    color: #fff;
+    margin: 10px;
+}
+
+.profile__avatar {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.link__image {
+    height: 55%;
+}
+
+.img-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: -9px;
+    width: 10%;
+}
+
+.link {
+    width: calc(100% - 21px);
+    display: flex;
+    flex-direction: row;
+    padding: 9px;
+    background-color: #1a161d;
+    border-top: 3px solid #453351;
+    border-left: 3px solid #392e40;
+    border-bottom: 3px solid #0a080b;
+}
+
+.link_with-image {
+    width: calc(100% - 12px);
+    padding: 0 0 0 9px;
+}
+
+.link__text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.link__title {
+    color: #dac8e7;
+}
+
+.link__subtitle {
+    color: #7c6b88;
+}
