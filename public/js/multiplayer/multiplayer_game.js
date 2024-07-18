@@ -125,7 +125,7 @@ ws.onmessage = (msg) => {
     }
     if (data.type === 'config')
         initMultiplayerGame(data);
-    if(data.type === 'state'){
+    if (data.type === 'state'){
         if (data.state.id === parseInt(playerField.id)) {
             initOtherFields(otherPlayers);
             GAME.init
