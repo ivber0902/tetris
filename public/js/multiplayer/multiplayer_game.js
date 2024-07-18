@@ -282,14 +282,14 @@ function createStartGameButton() {
     return button;
 }
 
-async function getResults(){
-    let response = await fetch("http://" + host + ":8080/game/results?lobby=" + params.get('lobby'), {
-        method: 'GET'
-    });
-    let results = await response.json()
-    console.log(results)
-    let jsonResults = JSON.stringify(results);
-    sessionStorage.setItem('results', jsonResults);
+function getResults(){
+    // let response = await fetch("http://" + host + ":8080/game/results?lobby=" + params.get('lobby'), {
+    //     method: 'GET'
+    // });
+    // let results = await response.json()
+    // console.log(results)
+    // let jsonResults = JSON.stringify(results);
+    // sessionStorage.setItem('results', jsonResults);
     window.location.href = '/game_over_multi?lobby='  + params.get('lobby');
 }
 
