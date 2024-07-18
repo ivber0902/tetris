@@ -28,16 +28,16 @@ class Field {
     clearField() {
         this.field.clearRect(0, 0, this.width * this.blockSize, this.height * this.blockSize);
     }
-    insertFigure(figure) {
+    insertFigure(figure, playerIndex) {
         for (let h = 0; h < figure.matrix.length; h++) {
             for (let w = 0; w < figure.matrix[0].length; w++) {
                 if (figure.matrix[h][w])
-                    this.matrix[h + figure.y][w + figure.x] = figure.matrix[h][w];
+                    this.matrix[h + figure.y][w + figure.x] = figure.matrix[h][w] + playerIndex * 100;
             }
         }
     }
-    fixFigure(figure) {
-        this.clearShadow(figure);
+    fixFigure(figure, playerIndex) {
+        this.clearShadow(figure, playerIndex);
         this.clearFigure(figure);
         for (let h = 0; h < figure.matrix.length; h++) {
             for (let w = 0; w < figure.matrix[0].length; w++) {
@@ -52,31 +52,31 @@ class Field {
         return Math.floor((this.width - Math.max(...figure.matrix.map(row => row.length))) / 2);
     }
 
-    moveDown(figure) {
-        if (this.checkPosition(figure.x, figure.y + 1, figure.matrix)) {
-            this.clearShadow(figure);
+    moveDown(figure, playerIndex) {
+        if (this.checkPosition(figure.x, figure.y + 1, figure.matrix, playerIndex)) {
+            this.clearShadow(figure, playerIndex);
             this.clearFigure(figure);
             figure.y++;
-            this.insertFigure(figure);
-            this.createShadow(figure);
+            this.insertFigure(figure, playerIndex);
+            this.createShadow(figure, playerIndex);
             return true;
         }
         return false;
     }
 
-    updateHorizontalPosition(figure, isPlayerMove) {
-        if (this.checkPosition(figure.x + isPlayerMove.right - isPlayerMove.left, figure.y, figure.matrix)) {
-            this.clearShadow(figure);
+    updateHorizontalPosition(figure, isPlayerMove, playerIndex) {
+        if (this.checkPosition(figure.x + isPlayerMove.right - isPlayerMove.left, figure.y, figure.matrix, playerIndex)) {
+            this.clearShadow(figure, playerIndex);
             this.clearFigure(figure);
             figure.x += isPlayerMove.right - isPlayerMove.left;
-            this.insertFigure(figure);
-            this.createShadow(figure);
+            this.insertFigure(figure, playerIndex);
+            this.createShadow(figure, playerIndex);
         }
         isPlayerMove.left = isPlayerMove.right = 0;
     }
 
-    dropFigure(figure) {
-        let pos = this.getBottomPosition(figure);
+    dropFigure(figure, playerIndex) {
+        let pos = this.getBottomPosition(figure, playerIndex);
         figure.x = pos.x;
         figure.y = pos.y;
     }
@@ -84,7 +84,7 @@ class Field {
         for (let h = 0; h < this.height; h++) {
             for (let w = 0; w < this.width; w++) {
                 let drawingImage
-                if (matrix[h][w] - 1 >= 20)
+                if (matrix[h][w] - 1 >= 20 && matrix[h][w] - 1 < 100)
                     drawingImage = figures[(matrix[h][w] - 1) % 10].shadow
                 else
                     if (matrix[h][w] === 0)
@@ -113,7 +113,7 @@ class Field {
     clearRow() {
         let cleared = 0;
         for (let h = this.height - 1; h > 0; h--) {
-            if (this.matrix[h].every(element => element > 10)) {
+            if (this.matrix[h].every(element => element > 10 && element < 100)) {
                 cleared++;
                 for (let w = 0; w < this.width; w++) {
                     for (let i = h; i > 0; i--) {
@@ -126,7 +126,7 @@ class Field {
         return cleared;
     }
 
-    checkPosition(x, y, insertedMatrix) {
+    checkPosition(x, y, insertedMatrix, playerIndex) {
         for (let h = 0; h < insertedMatrix.length; h++) {
             for (let w = 0; w < insertedMatrix[0].length; w++) {
                 if (insertedMatrix[h][w] > 0) {
@@ -137,7 +137,7 @@ class Field {
                         || x + w < 0
                     ) return false;
                     let color = this.matrix[y + h][x + w];
-                    if (10 < color && color <= 20 || 30 < color) {
+                    if (10 < color && color <= 20 || ((30 < color) && (color < 100)) || ((color > 100) && (Math.floor(color / 100) !== playerIndex))) {
                         return false;
                     }
                 }
@@ -146,8 +146,8 @@ class Field {
         return true;
     }
 
-    createShadow(figure) {
-        let pos = this.getBottomPosition(figure);
+    createShadow(figure, playerIndex) {
+        let pos = this.getBottomPosition(figure, playerIndex);
         for (let h = 0; h < figure.matrix.length; h++) {
             for (let w = 0; w < figure.matrix[h].length; w++) {
                 if (
@@ -159,8 +159,8 @@ class Field {
         }
     }
 
-    clearShadow(figure) {
-        this.clearFigure({ matrix: figure.matrix, ...this.getBottomPosition(figure) });
+    clearShadow(figure, playerIndex) {
+        this.clearFigure({ matrix: figure.matrix, ...this.getBottomPosition(figure, playerIndex) });
     }
     drawNumber(num) {
         this.clearField();
@@ -169,12 +169,12 @@ class Field {
         field.font = "96px Russo One";
         field.fillText(num, this.width * this.blockSize / 2 - 36, this.height * this.blockSize / 2);
     }
-    getBottomPosition(figure) {
+    getBottomPosition(figure, playerIndex) {
         let i = 1;
-        for (; this.checkPosition(figure.x, figure.y + i, figure.matrix);) i++;
+        for (; this.checkPosition(figure.x, figure.y + i, figure.matrix, playerIndex);) i++;
         return { x: figure.x, y: figure.y + i - 1 }
     }
-    rotateFigure(figure) {
+    rotateFigure(figure, playerIndex) {
         let rotated = [];
         if(figure.currentPosition < 3){
             rotated = figure.matrixPositions[figure.currentPosition + 1];
@@ -183,12 +183,12 @@ class Field {
             rotated = figure.matrixPositions[0]
             figure.currentPosition = 0
         }
-        if (this.checkPosition(figure.x, figure.y, rotated)) {
+        if (this.checkPosition(figure.x, figure.y, rotated, playerIndex)) {
             this.clearFigure(figure);
-            this.clearShadow(figure);
+            this.clearShadow(figure, playerIndex);
             figure.matrix = rotated;
-            this.insertFigure(figure);
-            this.createShadow(figure);
+            this.insertFigure(figure, playerIndex);
+            this.createShadow(figure, playerIndex);
         }
     }
 }
