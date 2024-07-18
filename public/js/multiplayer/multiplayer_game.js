@@ -2,21 +2,45 @@ const host = window.location.hostname;
 let params = new URLSearchParams(document.location.search);
 let wsUrl = "ws://" + host + ":8080/game?lobby=" + params.get('lobby');
 let ws = new WebSocket(wsUrl);
-let otherPlayersFields = [];
 let otherPlayers;
+let addRows = false;
 let playerField = document.querySelector('.wrapper-main-field');
-let init = false;
 let ListPlayers = document.querySelector('.palyers-list');
 player.field.moveDownDefault = player.field.moveDown;
 player.field.updateHorizontalPositionDefault = player.field.updateHorizontalPosition;
 player.onBufferKeyUpDefault = player.onBufferKeyUp;
 player.onPositionKeyDownDefault = player.onPositionKeyDown;
 player.field.defaultFix = player.field.fixFigure;
+player.field.defaultClearRow = player.field.clearRow;
 GAME.defaultInit = GAME.init;
 
 GAME.start = (player) => {
     player.isActive = true; 
     GAME.play(player)
+}
+
+player.field.clearRow = () => {
+    let clearLines = player.field.defaultClearRow();
+    if (player.countAddLines > clearLines) {
+        let addLines = player.countAddLines - clearLines;
+        let newField = [];
+        for(let i = addLines; i < player.field.matrix.length; i++){
+            newField.push(player.field.matrix[i])
+        }
+        let newLine = Array(player.field.matrix[0].length).fill(12);
+        newLine[player.emptyCell] = 0;
+        for(let i = 0; i < addLines; i++){
+            newField.push(newLine)
+        }
+        player.field.matrix = newField;
+    } else if (clearLines !== 0) {
+        ws.send(JSON.stringify({
+            "type": "clear_rows",
+            "info": clearLines - player.countAddLines
+        }));
+    }
+    player.countAddLines = 0;
+    return clearLines
 }
 
 player.field.moveDown = (figure) => {
@@ -51,8 +75,31 @@ player.field.fixFigure = (figure) => {
     ws.send(JSON.stringify({
         "type": "set"
     }));
-    
 }
+
+
+
+function addLines(player, countLines, positionEmpty) {
+    let newFiled;
+    if(player.field.matrix[countLines - 1].every((elem) => elem === 0)){
+        let newLine = [];
+        for (let i = 0; i < player.field.matrix.length; i++){
+            if(i !== emptyCell)
+                newLine.push(12)
+            else
+                newLine.push(0)
+        }
+        for (let i = countLines; i < player.field.matrix.length; i++) {
+            newFiled.push(player.field.matrix[i])
+        }
+        for (let i = 0; i < countLines; i++){
+            newFiled.push(newLine)
+        }
+    }else{
+        player.gameEnd(player.score);
+    }
+}
+
 
 function updateNextFigures(player) {
     for(let i = 0; i < 4; i++){
@@ -100,7 +147,6 @@ ws.onopen = () => {
 
 ws.onmessage = (msg) => {
     let data = JSON.parse(msg.data);
-    console.log(data)
     if (data.type === 'config')
         initMultiplayerGame(data);
     if(data.type === 'state'){
@@ -144,6 +190,11 @@ ws.onmessage = (msg) => {
             }
         
     }
+    if (data.type === 'add_rows')
+        {
+            player.countAddLines = data.info.count;
+            player.emptyCell = data.info.empty_column;
+        }
 }
 
 
@@ -152,7 +203,7 @@ function sendField() {
         id: parseInt(playerField.id),
         play_field: player.field.matrix,
         buffer: player.buffer.id,
-        score: 12345,
+        score: player.score,
         current_figure: {
             matrix: player.currentFigure.matrix,
             pos: {
@@ -172,8 +223,9 @@ function initMultiplayerGame(data) {
     if(parseInt(playerField.id) === data.config.players[0]){
         playerField.appendChild(createStartGameButton());
     }
-    init = true;
     document.querySelector('.main').style.backgroundImage = `url(${data.config.settings.background})`;
+    player.lvl = data.config.settings.difficulty;
+    player.ui.music = new Audio(data.config.settings.music)
     initPlayertField(data.config.settings.play_field);
     initPlayers(data.config.players);
     player.figuresAll = data.figures;
@@ -220,27 +272,6 @@ function initPlayertField(fieldParam) {
     GAME.height = fieldParam.height;
     player.field.width = fieldParam.width;
     player.field.height = fieldParam.height;
-}
-
-function addLines(player, countLines, positionEmpty) {
-    let newFiled;
-    if(player.field.matrix[countLines - 1].every((elem) => elem === 0)){
-        let newLine;
-        for (let i = 0; i < player.field.matrix.length; i++){
-            if(i !== positionEmpty)
-                newLine.push(1)
-            else
-                newLine.push(0)
-        }
-        for (let i = countLines; i < player.field.matrix.length; i++) {
-            newFiled.push(player.field.matrix[i])
-        }
-        for (let i = 0; i < countLines; i++){
-            newFiled.push(newLine)
-        }
-    }else{
-        player.gameEnd(player.score);
-    }
 }
 
 function createField(id) {

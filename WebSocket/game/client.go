@@ -44,7 +44,7 @@ func HandleRequest(room *Room, player *connection.Client[State, lobby.Config, Re
 	case RowRequestType:
 		switch request.Info.(type) {
 		case float64:
-			client := getRandomClient(room.Clients)
+			client := getRandomClient(room.Clients, player)
 			if client != nil {
 				client.Send(&Response{
 					Type: "add_rows",
@@ -87,12 +87,12 @@ func WaitConnection(player *connection.Client[State, lobby.Config, Response]) {
 	}
 }
 
-func getRandomClient(clients map[*connection.Client[State, lobby.Config, Response]]bool) *connection.Client[State, lobby.Config, Response] {
+func getRandomClient(clients map[*connection.Client[State, lobby.Config, Response]]bool, except *connection.Client[State, lobby.Config, Response]) *connection.Client[State, lobby.Config, Response] {
 	counter := 0
 	active := make(map[*connection.Client[State, lobby.Config, Response]]bool)
 
 	for client := range clients {
-		if client.IsOpen {
+		if client.IsOpen && client != except {
 			active[client] = true
 		}
 	}
