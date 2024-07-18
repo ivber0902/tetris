@@ -92,17 +92,20 @@ func getRandomClient(clients map[*connection.Client[State, lobby.Config, Respons
 	active := make(map[*connection.Client[State, lobby.Config, Response]]bool)
 
 	for client := range clients {
-		if client.IsOpen && client != except {
+		if client.IsOpen && client != except && !client.State.GameOver {
 			active[client] = true
 		}
 	}
 
-	clientOrder := rand.Intn(len(active))
-	for client := range active {
-		if clientOrder == counter {
-			return client
+	if activeCount := len(active); activeCount > 0 {
+		clientOrder := rand.Intn(activeCount)
+		for client := range active {
+			if clientOrder == counter {
+				return client
+			}
+			counter += 1
 		}
-		counter += 1
 	}
+
 	return nil
 }
