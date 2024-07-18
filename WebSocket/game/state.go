@@ -2,7 +2,6 @@ package game
 
 import (
 	"WebSocket/connection"
-	"WebSocket/queue"
 )
 
 const ClientFigureQueueLength = 666
@@ -17,7 +16,6 @@ type State struct {
 	GameOver      bool                    `json:"game_over"`
 	CurrentFigure *CurrentFigure          `json:"current_figure,omitempty"`
 	Started       bool                    `json:"started"`
-	figureQueue   *queue.Queue[FigureType]
 }
 
 type CurrentFigure struct {
@@ -34,7 +32,6 @@ func (game *State) Init(playFieldWidth, playFieldHeight int8, figures *FigureArr
 		game.PlayField[i] = make([]FigureType, playFieldWidth)
 	}
 
-	game.figureQueue = queue.New[FigureType]()
 	game.Figures = figures
 	game.Buffer = (*figures)[1]
 	game.FigureCount = 0

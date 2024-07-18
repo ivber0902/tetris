@@ -3,7 +3,6 @@ package game
 import (
 	"WebSocket/connection"
 	"WebSocket/lobby"
-	"fmt"
 	"log"
 	"math/rand"
 	"time"
@@ -45,9 +44,8 @@ func HandleRequest(room *Room, player *connection.Client[State, lobby.Config, Re
 	case RowRequestType:
 		switch request.Info.(type) {
 		case float64:
-			client := getRandomClient(room.Clients, player)
-			if client != nil && request.Info.(float64) > 0 {
-				fmt.Println(client, request.Info.(float64), request.Info)
+			client := getRandomClient(room.Clients)
+			if client != nil {
 				client.Send(&Response{
 					Type: "add_rows",
 					Info: AddRowInfo{
@@ -89,22 +87,20 @@ func WaitConnection(player *connection.Client[State, lobby.Config, Response]) {
 	}
 }
 
-func getRandomClient(clients map[*connection.Client[State, lobby.Config, Response]]bool, except *connection.Client[State, lobby.Config, Response]) *connection.Client[State, lobby.Config, Response] {
+func getRandomClient(clients map[*connection.Client[State, lobby.Config, Response]]bool) *connection.Client[State, lobby.Config, Response] {
 	counter := 0
 	active := make(map[*connection.Client[State, lobby.Config, Response]]bool)
 
 	for client := range clients {
-		if client.IsOpen && !client.State.GameOver && client != except {
+		if client.IsOpen {
 			active[client] = true
 		}
 	}
-	if countActive := len(active); countActive > 0 {
-		clientOrder := rand.Intn(countActive)
 
-		for client := range active {
-			if clientOrder == counter {
-				return client
-			}
+	clientOrder := rand.Intn(len(active))
+	for client := range active {
+		if clientOrder == counter {
+			return client
 		}
 	}
 	return nil
