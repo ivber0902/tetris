@@ -102,6 +102,7 @@ func getRandomClient(clients map[*connection.Client[State, lobby.Config, Respons
 		if clientOrder == counter {
 			return client
 		}
+		counter += 1
 	}
 	return nil
 }

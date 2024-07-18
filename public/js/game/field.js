@@ -89,8 +89,12 @@ class Field {
                 else
                     if (matrix[h][w] === 0)
                         drawingImage = blockField;
-                    else
+                    else{
+                        if(matrix[h][w] === 19)
+                            drawingImage = blockAdd
+                        else
                         drawingImage = figures[(matrix[h][w] - 1) % 10].block;
+                    }
                 field.drawImage(
                     drawingImage,
                     w * this.blockSize,

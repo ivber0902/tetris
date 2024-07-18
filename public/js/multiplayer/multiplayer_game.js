@@ -14,32 +14,54 @@ player.field.defaultFix = player.field.fixFigure;
 player.field.defaultClearRow = player.field.clearRow;
 GAME.defaultInit = GAME.init;
 
+player.countAddLines = [];
+player.emptyCell = [];
+
 GAME.start = (player) => {
     player.isActive = true; 
     GAME.play(player)
 }
 
+function sumArr(array){
+    let sum = 0;
+    if(array)
+    {
+        array.forEach((elem)=>{
+            sum = sum + elem
+        })
+    }
+    return sum
+}
+
 player.field.clearRow = () => {
-    let clearLines = player.field.defaultClearRow();
-    if (player.countAddLines > clearLines) {
-        let addLines = player.countAddLines - clearLines;
-        let newField = [];
-        for(let i = addLines; i < player.field.matrix.length; i++){
-            newField.push(player.field.matrix[i])
-        }
-        let newLine = Array(player.field.matrix[0].length).fill(12);
-        newLine[player.emptyCell] = 0;
-        for(let i = 0; i < addLines; i++){
-            newField.push(newLine)
-        }
-        player.field.matrix = newField;
-    } else if (clearLines !== 0) {
+    let needClearLines = player.field.defaultClearRow();
+    let clearLines = needClearLines;
+    let newField = player.field.matrix;
+    if(sumArr(player.countAddLines) >= needClearLines){
+        player.countAddLines.forEach((countLine, index)=>{
+            if(countLine - needClearLines > 0) {
+                countLine = countLine - needClearLines;
+                needClearLines = 0;
+                for(i = 0; i < newField.length - countLine; i++){
+                    newField[i] = newField[i + countLine]
+                }
+                let newLine = Array(player.field.matrix[0].length).fill(19);
+                newLine[player.emptyCell[index]] = 0;
+                for(let i = newField.length - countLine; i < newField.length ; i++){
+                    newField[i] = Array(...newLine)
+                }
+            }else{
+                needClearLines = needClearLines - countLine;
+            }
+        })
+        player.countAddLines = [];
+        player.emptyCell = [];
+    }else{
         ws.send(JSON.stringify({
             "type": "clear_rows",
-            "info": clearLines - player.countAddLines
+            "info": clearLines - sumArr(player.countAddLines)
         }));
     }
-    player.countAddLines = 0;
     return clearLines
 }
 
@@ -76,30 +98,6 @@ player.field.fixFigure = (figure) => {
         "type": "set"
     }));
 }
-
-
-
-function addLines(player, countLines, positionEmpty) {
-    let newFiled;
-    if(player.field.matrix[countLines - 1].every((elem) => elem === 0)){
-        let newLine = [];
-        for (let i = 0; i < player.field.matrix.length; i++){
-            if(i !== emptyCell)
-                newLine.push(12)
-            else
-                newLine.push(0)
-        }
-        for (let i = countLines; i < player.field.matrix.length; i++) {
-            newFiled.push(player.field.matrix[i])
-        }
-        for (let i = 0; i < countLines; i++){
-            newFiled.push(newLine)
-        }
-    }else{
-        player.gameEnd(player.score);
-    }
-}
-
 
 function updateNextFigures(player) {
     for(let i = 0; i < 4; i++){
@@ -192,8 +190,8 @@ ws.onmessage = (msg) => {
     }
     if (data.type === 'add_rows')
         {
-            player.countAddLines = data.info.count;
-            player.emptyCell = data.info.empty_column;
+            player.countAddLines.push(data.info.count);
+            player.emptyCell.push(data.info.empty_column)
         }
 }
 

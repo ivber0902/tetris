@@ -11,6 +11,7 @@ let GAME = {
             i++
         });
         blockField.src = '/images/blocks/bg.png';
+        blockAdd.src = '/images/blocks/addLine.png',
         player.field.initField();
         player.field.initFieldMatrix();
         player.tickTime = 15974 / this.height;
@@ -54,19 +55,19 @@ let GAME = {
         figures.forEach((figure) => {
             figure.image.addEventListener('load', () => {
                 counter++;
-                if (counter === figures.length * 3 + 1) {
+                if (counter === figures.length * 3 + 2) {
                     func()
                 }
             })
             figure.block.addEventListener('load', () => {
                 counter++;
-                if (counter === figures.length * 3 + 1) {
+                if (counter === figures.length * 3 + 2) {
                     func()
                 }
             })
             figure.shadow.addEventListener('load', () => {
                 counter++;
-                if (counter === figures.length * 3 + 1) {
+                if (counter === figures.length * 3 + 2) {
                     func()
                 }
             })
@@ -74,7 +75,13 @@ let GAME = {
         );
         blockField.addEventListener('load', () => {
             counter++;
-            if (counter === figures.length * 3 + 1) {
+            if (counter === figures.length * 3 + 2) {
+                func()
+            }
+        })
+        blockAdd.addEventListener('load', () => {
+            counter++;
+            if (counter === figures.length * 3 + 2) {
                 func()
             }
         })
