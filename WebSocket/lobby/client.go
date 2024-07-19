@@ -40,7 +40,7 @@ func WaitConnection(player *connection.Client[Config, Config, Config]) {
 
 	var duration time.Duration
 	if player.Config.GameRun {
-		duration = time.Second * 30
+		duration = time.Minute * 2
 	} else {
 		duration = time.Second * 5
 	}
