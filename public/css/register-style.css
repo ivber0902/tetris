@@ -28,7 +28,7 @@ body {
     padding-bottom: 250px;
 }
 
-.login {
+.login-wrapper {
     border-radius: 10px;
     box-sizing: border-box;
     background-color: white;

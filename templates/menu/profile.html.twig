@@ -19,13 +19,13 @@
             <div class="general-results">
                 <h1 class="username">{{ login ?? 'Славянин'}}</h1>
                 <div class="single-game">
-                    <p class="count-solo-game">Всего одиночных игр :</p>
+                    <p class="count-solo-game count-game">Всего одиночных игр :</p>
                     <p class="count-solo-game">{{ player.gameCount }}</p>
                 </div>
                 <div class="multiplayer-game">
-                    <p class="count-multiplayer-game">Всего онлайн игр :</p>
+                    <p class="count-multiplayer-game count-online-game">Всего онлайн игр :</p>
                     <p class="count-multiplayer-game">10</p>
-                    <p class="count-win-game">↪ выиграно из них {{ player.winCount }}</p>
+                    <span class="count-win-game title">↪ выиграно из них</span><span class="count-win-game"> {{ player.winCount }}</span>
                 </div>
             </div>
         </div>

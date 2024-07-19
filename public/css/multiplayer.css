@@ -130,12 +130,9 @@
 }
 
 .palyers-list {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    height: 100%;
+    display: grid;
+    height: 70vh;
     width: 50%;
-    gap: 0 13%;
 }
 
 .other-player {
@@ -143,13 +140,29 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    min-height: 100%;
 }
 
-.player__score,
-.player__username {
+.player__score{
     color: white;
     text-align: center;
     font: 800 22px/22px "Russo One", sans-serif;
+}
+
+.player__username,
+.game__score-other
+{
+    color: white;
+    text-align: center;
+    font: 800 22px/22px "Russo One", sans-serif;
+}
+
+.player__username{
+    padding-top: 3px;
+}
+
+.game__score-other{
+    padding-bottom: 3px;
 }
 
 .player__field {
@@ -157,8 +170,8 @@
     background-color: white;
 }
 
-.game__score,
 .game__level,
+.game__score,
 .title-score,
 .title-level,
 .player_name {
@@ -183,4 +196,12 @@
     width: 100%;
     display: flex;
     justify-content: center;
+}
+
+.wrapper-name
+{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
 }

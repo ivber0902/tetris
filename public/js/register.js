@@ -71,7 +71,7 @@ addEventListener("DOMContentLoaded", (event) => {
         }
         else {
             againRequire.style.display = 'none';
-            if ((passwordAgain.length > 8)) {
+            if ((passwordAgain.length > 7)) {
                 againError.style.display = 'none';
                 if (passwordInput === passwordAgain) {
                     againError.style.display = 'none';

@@ -2,25 +2,49 @@ localStorage.mode = 'm';
 let settings = {
     music: [
         {
-        title: "Корoбейники",
-        description: "мистическая и загадочная композиция, в которой звуки эха на фоне темноты создают атмосферу напряжения и тайны.",
+        title: {
+            "ru": "Корoбейники",
+            "en": "Peddlers"
+        },
+        description:{
+            "ru": "Классическая песня для тетриса",
+            "en": "A classic song for tetris"
+        }, 
         value: "/audio/Korobeiniki.wav"
         },
         {
-        title: "Калинка",
-        description: "Романтичная и нежная мелодия, напоминающая танец под лунным светом. Идеальный трек для вечернего романтического настроения.",
+        title: {
+            "ru": "Калинка",
+            "en": "Kalinka"
+        },
+        description:{
+            "ru": "Русская народная песня",
+            "en": "Russian folk song"
+        }, 
         value: "/audio/kalinka.mp3"
         },
         {
-        title: "Stop narcotics",
-        description: "эпическая и кинематографичная музыка, создающая ощущение путешествия сквозь временные измерения и пространство.",
+        title: {
+            "ru": "Долой искушение",
+            "en": "Stop narcotics"
+        },
+        description:{
+            "ru": "Поучительная песня",
+            "en": "An instructive song"
+        }, 
         value: "/audio/stop_narcotics.mp3"
         },
     ],
     size: [
         {
-            title: "холоп",
-            description: "маленький размер поля",
+            title: {
+                "ru": "Холоп",
+                "en": "lackey"
+            },
+            description:{
+                "ru": "маленький размер поля",
+                "en": "small field size"
+            }, 
             value:
             {
                 width: 5,
@@ -28,8 +52,14 @@ let settings = {
             }
         },
         {
-            title: "крестьянин",
-            description: "классические размер поля",
+            title: {
+                "ru": "крестьянин",
+                "en": "the peasant"
+            },
+            description:{
+                "ru": "классический размер поля",
+                "en": "classic field size"
+            }, 
             value:
             {
                 width: 10,
@@ -37,8 +67,14 @@ let settings = {
             }
         },
         {
-            title: "боярин",
-            description: "большой размер поля",
+            title: {
+                "ru": "боярин",
+                "en": "boyar"
+            },
+            description:{
+                "ru": "большой размер поля",
+                "en": "large field size"
+            }, 
             value:
             {
                 width: 15,
@@ -48,35 +84,71 @@ let settings = {
     ],
     difficulty: [
         {
-            title: "легко",
-            description: "игра для холопов",
+            title: {
+                "ru": "Легко",
+                "en": "Easy"
+            },
+            description:{
+                "ru": "Игра для новичков",
+                "en": "A game for beginners"
+            }, 
             value: 1
         },
         {
-            title: "средний",
-            description: "ты уже что-то можешь",
+            title: {
+                "ru": "Средний",
+                "en": "Medium"
+            },
+            description:{
+                "ru": "Игра для любителей",
+                "en": "A game for fans"
+            }, 
             value: 5
         },
         {
-            title: "имбоссссибл",
-            description: "ты просто гений тетриса",
+            title: {
+                "ru": "Сложный",
+                "en": "Difficult"
+            },
+            description:{
+                "ru": "Игра для профессионалов",
+                "en": "A game for professionals"
+            }, 
             value: 10
         }
     ],
     bg: [
         {
-            title: "ISPRING",
-            description: "Фон компании Ispting",
+            title: {
+                "ru": "Ispring",
+                "en": "Ispring"
+            },
+            description:{
+                "ru": "Играй на фоне компании Ispring",
+                "en": "Play against the background of the Ispring company"
+            }, 
             value: "/images/bg.png"
         },
         {
-            title: "IOшкар-Ола",
-            description: "Фон Йошкар-Олы",
+            title: {
+                "ru": "Йошкар-Ола",
+                "en": "Yoshkar-Ola"
+            },
+            description:{
+                "ru": "При игре на фоне находится город Йошкар-Ола",
+                "en": "When playing, the city of Yoshkar-Ola is located in the background"
+            }, 
             value: "/images/backgrounds/io.jpg"
         },
         {
-            title: "Тетрис",
-            description: "Кубики тетриса",
+            title: {
+                "ru": "Мир тетриса",
+                "en": "The world of Tetris"
+            },
+            description:{
+                "ru": "Кубики тетриса на фоне",
+                "en": "Tetris cubes on the background"
+            }, 
             value: "/images/backgrounds/square.jpg"
         }
     ],
@@ -151,11 +223,11 @@ function createMenuItem(title, subtitle) {
 
     let titleItme = document.createElement('p');
     titleItme.classList.add('item__title');
-    titleItme.textContent = title;
+    titleItme.textContent = title[localStorage.lang];
 
     let subtitleItem = document.createElement('p');
     subtitleItem.classList.add('item__subtitle');
-    subtitleItem.textContent = subtitle;
+    subtitleItem.textContent = subtitle[localStorage.lang];
 
     div.appendChild(titleItme);
     div.appendChild(subtitleItem);
@@ -206,7 +278,7 @@ function createPlayer(hiddenValue, createKickButton) {
         playerButton.type = 'button';
         playerButton.value = hiddenValue;
         playerButton.classList.add('kick__button');
-        playerButton.textContent = 'ВЫГНАТЬ'; 
+        playerButton.textContent = 'kick'; 
         avatarContainer.appendChild(playerButton);
     }
     return player;

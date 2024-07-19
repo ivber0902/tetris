@@ -131,24 +131,41 @@ function initOtherFields(players) {
         field.fillStyle = 'black';
         field.fillRect(0, 0, player.field.width * player.field.blockSize, player.field.height * player.field.blockSize);
     })
-    updateSize()
+    updateSize(players.length)
 }
 
-function updateSize() {
+function updateSize(countPlayers) {
+    if(countPlayers > 6){
+        document.querySelectorAll('.player__username').forEach((elem) => {
+            elem.style.cssText = 'font: 800 14px/14px "Russo One", sans-serif'
+        });
+        document.querySelectorAll('.game__score-other').forEach((elem) => {
+            elem.style.cssText = 'font: 800 14px/14px "Russo One", sans-serif'
+        });
+        document.querySelectorAll('.other-field').forEach((elem) => {
+            elem.style.marginTop = '2px';
+            elem.style.marginBottom = '2px'
+        });
+        
+    }
+    let length = Math.ceil(Math.sqrt(countPlayers))
+    let height = Math.round(Math.sqrt(countPlayers));
+
+    ListPlayers.style.gridTemplateColumns = `repeat(${length}, ${100 / (length)}%)`
+    ListPlayers.style.gridTemplateRows = `repeat(${length}, ${100 / (height)}%)`
+    document.querySelectorAll('.other-player').forEach((elem) => {
+        elem.style.maxHeight = `${100 / length}%`;
+    });
     document.querySelectorAll('.other-field').forEach((elem) => {
-        switch (player.field.width) {
-            case 7:
-                elem.maxHeight = "480px";
-                document.querySelector('.palyers-list').style.paddingRight = '100px'
-                break
-            case 10:
-                elem.style.maxHeight = "400px";
-                break
-            case 15:
-                elem.style.maxHeight = "320px";
-                break
-        }
+        elem.style.maxHeight = `${80}%`;
+        console.log('hahah')
     })
+
+    let width = document.querySelector('.other-field').offsetWidth;
+    document.querySelectorAll('.wrapper-name').forEach((elem)=>{
+        elem.style.width = `${width}px`
+    })
+
 }
 
 ws.onopen = () => {
@@ -250,7 +267,8 @@ function initMultiplayerGame(data) {
     player.lvl = data.config.settings.difficulty;
     player.ui.music = new Audio(data.config.settings.music)
     initPlayertField(data.config.settings.play_field);
-    initPlayers(data.config.players);
+    // data.config.players
+    initPlayers([2,2,2,2]);
     player.figuresAll = data.figures;
     player.figuresPos = 0;
     otherPlayers = document.querySelectorAll('.other-player');
@@ -312,12 +330,17 @@ function createField(id) {
     const wrappperField = document.createElement('div');
     wrappperField.setAttribute('class', 'other-player');
     wrappperField.setAttribute('id', id);
+
     const playerName = document.createElement('p');
     playerName.setAttribute('class', 'player__username');
+    const gameScore = document.createElement('p');
+    gameScore.textContent = '200';
+    gameScore.setAttribute('class', 'game__score-other');
+
+
     const field = document.createElement('canvas');
     field.setAttribute('class', 'other-field');
-    const gameScore = document.createElement('p');
-    gameScore.setAttribute('class', 'game__score');
+    
     wrappperField.appendChild(playerName);
     wrappperField.appendChild(field);
     wrappperField.appendChild(gameScore);
