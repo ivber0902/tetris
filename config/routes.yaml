@@ -2,26 +2,44 @@ index:
     path: /
     methods: GET
     controller: App\Controller\GameController::menu
+#регистрация логинация
 register:
     path: /signup
     controller: App\Controller\UserController::register
 login:
     path: /login
     controller: App\Controller\SecurityController::login
-
 logout:
     path: /logout
     controller: App\Controller\SecurityController::logout
-
-lobby:
-    path: /lobby
-    controller: App\Controller\GameController::lobby
-join:
-    path: /join
-    controller: App\Controller\GameController::join
+#страницы меню
 menu:
     path: /menu
     controller: App\Controller\GameController::menu
+profile:
+    path: /profile/{login}
+    controller: App\Controller\PlayerController::profile
+about:
+    path: /about
+    controller: App\Controller\GameController::about
+leaderboard:
+    path: /leaderboard
+    controller: App\Controller\GameController::leaderboard
+#мультиплеер
+join:
+    path: /join
+    controller: App\Controller\GameController::join
+lobby:
+    path: /lobby
+    controller: App\Controller\GameController::lobby
+multiplayer:
+    path: /multiplayer
+    methods: GET
+    controller: App\Controller\GameController::multiplayer
+game_over_multi:
+    path: /game_over_multi
+    controller: App\Controller\GameController::gameOverMulti
+#выбор режимов
 select_multiplayer_mode:
     path: /select_multiplayer_mode
     controller: App\Controller\GameController::selectMultiplayerMode
@@ -34,21 +52,10 @@ select_koop_mode:
 select_solo_mode:
     path: /select_solo_mode
     controller: App\Controller\GameController::selectSoloMode
-about:
-    path: /about
-    controller: App\Controller\GameController::about
-game_over:
-    path: /game_over
-    controller: App\Controller\GameController::gameOver
-game_over_multi:
-    path: /game_over_multi
-    controller: App\Controller\GameController::gameOverMulti
+#игра
 game:
     path: /game
     controller: App\Controller\GameController::game
-leaderboard:
-    path: /leaderboard
-    controller: App\Controller\GameController::leaderboard
 blitz:
     path: /blitz
     controller: App\Controller\GameController::blitz
@@ -58,24 +65,18 @@ koop:
 l40:
     path: /l40
     controller: App\Controller\GameController::l40
-profile:
-    path: /profile/{login}
-    controller: App\Controller\PlayerController::profile
-multiplayer:
-    path: /multiplayer
-    methods: GET
-    controller: App\Controller\GameController::multiplayer
-
-get_user:
-    path: /api/player/{id}/user
-    methods: GET
-    controller: App\Controller\PlayerController::getUserApi
-
+game_over:
+    path: /game_over
+    controller: App\Controller\GameController::gameOver
 # api
 api_register:
     path: /api/register
     controller: App\Controller\UserController::registerByJson
     methods: POST
+get_user:
+    path: /api/player/{id}/user
+    methods: GET
+    controller: App\Controller\PlayerController::getUserApi
 api_update_statistics:
     path: /api/statistics
     methods: POST
