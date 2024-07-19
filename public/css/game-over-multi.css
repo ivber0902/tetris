@@ -35,9 +35,14 @@
     color: #c9c9c9;
 }
 
+.results__title{
+    font-size: 30px;
+}
+
 .back__button {
     padding: 8px;
     padding-left: 40px;
+    font-size: 30px;
 }
 .profile {
     height: 60px;
@@ -102,12 +107,11 @@
     font-size: 32px;
 }
 .results__header {
-    background-color: #0F160D;
+    background-color: #243e25;
     border-top: 3px solid #45794f;
     border-left: 3px solid #3d6242;
     border-bottom: 3px solid #162419;
     border-right: 3px solid #1d3220;
-
 }
 .players {
     display: flex;

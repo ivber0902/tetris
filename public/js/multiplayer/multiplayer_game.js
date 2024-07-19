@@ -4,7 +4,7 @@ let wsUrl = "ws://" + host + ":8080/game?lobby=" + params.get('lobby');
 let ws = new WebSocket(wsUrl);
 let otherPlayers;
 let playerField = document.querySelector('.wrapper-main-field');
-let ListPlayers = document.querySelector('.palyers-list');
+let ListPlayers = document.querySelector('.players-list');
 player.field.moveDownDefault = player.field.moveDown;
 player.field.updateHorizontalPositionDefault = player.field.updateHorizontalPosition;
 player.onBufferKeyUpDefault = player.onBufferKeyUp;
@@ -139,7 +139,7 @@ function updateSize() {
         switch (player.field.width) {
             case 7:
                 elem.maxHeight = "480px";
-                document.querySelector('.palyers-list').style.paddingRight = '100px'
+                document.querySelector('.players-list').style.paddingRight = '100px'
                 break
             case 10:
                 elem.style.maxHeight = "400px";

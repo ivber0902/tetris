@@ -36,6 +36,7 @@
     flex-direction: column;
     justify-content: center;
     gap: 9px;
+    font-size: 30px;
 }
 
 .video-placeholder {

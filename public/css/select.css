@@ -95,6 +95,7 @@
 
 .link__title {
     color: #dac8e7;
+    font-size: 30px;
 }
 
 .link__subtitle {
@@ -144,6 +145,7 @@
 .back__button {
     padding: 8px;
     padding-left: 40px;
+    font-size: 30px;
 }
 
 .custom {
