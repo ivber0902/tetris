@@ -1,8 +1,10 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Menu
+{% block title %}
+	Menu
 {% endblock %}
-{% block style %}<link rel="stylesheet" href="/css/select.css"/><link rel="stylesheet" href="/css/mini-profile.css"/>
+{% block style %}
+	<link rel="stylesheet" href="/css/select.css"/><link rel="stylesheet" href="/css/mini-profile.css"/>
 {% endblock %}
 {% block content %}
 	<div class="bg">
@@ -27,7 +29,6 @@
 		</div>
 		<div class="menu">
 			<div class="links links_start">
-
 				<a href="/select_solo_mode" class="link solo link_with-image">
 					<div class="img-placeholder">
 						<img src="/images/solo.png" alt="solo" class="link__image">
@@ -71,7 +72,6 @@
 		</div>	
 	</div>
 	{% include 'mini-profile.html.twig' %}
-</body>
-<script src="/js/menu/menu.js"></script>
-<script src="/js/menu/mini-profile.js"></script>
+	<script src="/js/menu/menu.js"></script>
+	<script src="/js/menu/mini-profile.js"></script>
 {% endblock %}

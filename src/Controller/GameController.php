@@ -90,7 +90,12 @@ class GameController extends AbstractController
     public function selectKoop(): Response
     {
         $securityUser = $this->getUser();
-        return $this->render('select_modes/select-koop-mode.html.twig', ["user" => $securityUser]);
+        if($securityUser === null){
+            return $this->render('select_modes/select-koop-mode.html.twig', ["user" => $securityUser]);
+        }
+        $user = $this->userService->findUser($securityUser->getId());
+        $player = $user->getPlayer();
+        return $this->render('select_modes/select-koop-mode.html.twig', ["user" => $securityUser, "player" => $player]);
     }
     public function selectSoloMode(): Response
     {

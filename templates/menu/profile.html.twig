@@ -1,9 +1,12 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Profile{% endblock %}
-{% block style %}<link rel="stylesheet" href="/css/profile.css"/>{% endblock %}
+{% block title %}
+    Profile 
+{% endblock %}
+{% block style %}
+    <link rel="stylesheet" href="/css/profile.css"/>
+{% endblock %}
 {% block content %}
-<body class="body">
     <header class="header">
         <img src="/images/settings.png" alt="settings" class="header__settings">
         <a href="/logout">
@@ -69,6 +72,5 @@
             </div>
         </div>
     </main>
-</body>
-<script src="/js/menu/profile.js"></script>
+    <script src="/js/menu/profile.js"></script>
 {% endblock%}
