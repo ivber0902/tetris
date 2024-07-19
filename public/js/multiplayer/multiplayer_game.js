@@ -267,8 +267,7 @@ function initMultiplayerGame(data) {
     player.lvl = data.config.settings.difficulty;
     player.ui.music = new Audio(data.config.settings.music)
     initPlayertField(data.config.settings.play_field);
-    // data.config.players
-    initPlayers([2,2,2,2]);
+    initPlayers(data.config.players);
     player.figuresAll = data.figures;
     player.figuresPos = 0;
     otherPlayers = document.querySelectorAll('.other-player');

@@ -300,10 +300,14 @@ const langArr = {
         "ru": "пароли должны должны быть одинаковыми",
         "en": "passwords must be the same",
     },
+    "time__text": {
+        "ru": "Количество Очков",
+        "en": "Number of Points",
+    },
     
     
 }
-localStorage.lang = 'ru';
+localStorage.lang = 'en';
 addEventListener("DOMContentLoaded", (event) => {
     for(let key in langArr){
         let elem = document.querySelector(`.${key}`);
