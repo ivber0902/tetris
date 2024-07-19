@@ -44,3 +44,12 @@ func getPlayerIP(r *http.Request) (string, error) {
 	}
 	return "", fmt.Errorf("no valid ip found")
 }
+
+func reverseArray[T any](arr []T) []T {
+	reversed := make([]T, len(arr))
+	for i := 0; i < len(arr); i++ {
+		reversed[i] = arr[len(arr)-1-i]
+	}
+
+	return reversed
+}

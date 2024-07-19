@@ -1,17 +1,17 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Lobby
+{% block title %}
+	Lobby
 {% endblock %}
-{% block style %}<link rel="stylesheet" href="/css/lobby.css"/><link rel="stylesheet" href="/css/mini-profile.css"/>
+{% block style %}
+	<link rel="stylesheet" href="/css/lobby.css"/><link rel="stylesheet" href="/css/mini-profile.css"/>
 {% endblock %}
 {% block content %}
-	<body>
 		<div class="bg">
 			<div class="header">
 				<img src="/images/logo.png" alt="logo" class="logo">
 				<div class="profile">
 					<p class="profile__nickname">{{user.login ?? 'славянин'}}</p>
-					<p class="profile__playerId">{{user.playerId ?? '0'}}</p>
 					<input class="player_id" type="hidden" value="{{ user.playerId }}">
 					<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
 				</div>
@@ -22,8 +22,7 @@
 				</div>
 				<div class="settings">
 					<div class="settings__size">
-						<p class="settings__text size">размер поля:
-						</p>
+						<p class="settings__text size">размер поля:</p>
 						<div class="setting">
 							<div class="wrapper-setting">
 								<p id="size" class="settings__text-size">крестьянин</p>
@@ -33,8 +32,7 @@
 						</div>
 					</div>
 					<div class="settings__music">
-						<p class="settings__text music">музыка:
-						</p>
+						<p class="settings__text music">музыка:</p>
 						<div class="setting">
 							<div class="wrapper-setting">
 								<p id="music" class="settings__text-music">лунный вальс</p>
@@ -44,8 +42,7 @@
 						</div>
 					</div>
 					<div class="settings__complexity">
-						<p class="settings__text complexity">сложность:
-						</p>
+						<p class="settings__text complexity">сложность:</p>
 						<div class="setting">
 							<div class="wrapper-setting">
 								<p id="difficulty" class="settings__text-difficulty">средний</p>
@@ -55,12 +52,11 @@
 						</div>
 					</div>
 					<div class="settings__background">
-						<p class="settings__text background">задний фон:
-						</p>
+						<p class="settings__text background">задний фон:</p>
 						<div class="setting">
 							<div class="wrapper-setting">
 								<p id="bg" class="settings__text-bg">ispring</p>
-								<img class="triangle" src="/images/triangle.png">
+								<img class="triangle" src="/images/triangle.png" alt="triangle">
 							</div>
 							<hr class="line-settings">
 						</div>
@@ -75,7 +71,6 @@
 		<div class="start-game-panel">
 			<button class="start-game">начать игру</button>
 		</div>
-	</body>
 	<script src="/js/lobby.js"></script>
 	<script src="/js/lobby-socket.js"></script>
 {% endblock %}

@@ -4,7 +4,7 @@ let wsUrl = "ws://" + host + ":8080/game?lobby=" + params.get('lobby');
 let ws = new WebSocket(wsUrl);
 let otherPlayers;
 let playerField = document.querySelector('.wrapper-main-field');
-let ListPlayers = document.querySelector('.palyers-list');
+let ListPlayers = document.querySelector('.players-list');
 player.field.moveDownDefault = player.field.moveDown;
 player.field.updateHorizontalPositionDefault = player.field.updateHorizontalPosition;
 player.onBufferKeyUpDefault = player.onBufferKeyUp;
@@ -300,14 +300,14 @@ function createStartGameButton() {
     return button;
 }
 
-async function getResults(){
-    let response = await fetch("http://" + host + ":8080/game/results?lobby=" + params.get('lobby'), {
-        method: 'GET'
-    });
-    let results = await response.json()
-    console.log(results)
-    let jsonResults = JSON.stringify(results);
-    sessionStorage.setItem('results', jsonResults);
+function getResults(){
+    // let response = await fetch("http://" + host + ":8080/game/results?lobby=" + params.get('lobby'), {
+    //     method: 'GET'
+    // });
+    // let results = await response.json()
+    // console.log(results)
+    // let jsonResults = JSON.stringify(results);
+    // sessionStorage.setItem('results', jsonResults);
     window.location.href = '/game_over_multi?lobby='  + params.get('lobby');
 }
 

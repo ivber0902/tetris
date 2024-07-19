@@ -1,17 +1,16 @@
 {% extends "base.html.twig" %}
 
 {% block title %}
-	Multiplayer Game Over
+	Leaderboard
 {% endblock %}
 {% block style %}
-	<link rel="stylesheet" href="/css/game-over-multi.css"/><link rel="stylesheet" href="/css/mini-profile.css"/>
+	<link rel="stylesheet" href="/css/leaderboard.css"/><link rel="stylesheet" href="/css/mini-profile.css"/>
 {% endblock %}
 {% block content %}
 	<div class="bg">
 		<div class="header">
 			<img src="/images/settings.png" alt="settings" class="settings">
 			<img src="/images/logo.png" alt="logo" class="logo">
-			<input class="player_id" type="hidden" value="{{ user.playerId ?? 0}}">
 			<div class="profile">
 				{% if not user or not user.login %}
 					<a href="{{ path('register') }}">
@@ -28,28 +27,28 @@
 				{% endif %}
 			</div>
 		</div>
-		<div class="results-placeholder">
-			<div class="results">
-				<div class="results__header">
-					<p class="results__title">№0</p>
-					<div class="results__time">
-						<p class="time__text">Количество Очков</p>
-						<p class="time__value">0</p>
-					</div>
-				</div>
-				<div class="players">
+		<div class="menu">
+			<div class="max__score">
+				<div class="menu__title">
+					<h1>max score</h1>
+					<h2>топ игроков по максимальному счету</h2>
 				</div>
 			</div>
-		</div>
-		<a class="back__link">
-			<div class="back">
-				<p class="back__button">
-					сыграть заново
-				</p>
+			<div class="max__win">
+				<div class="menu__title">
+					<h1>max win</h1>
+					<h2>топ игроков по максимальному количеству побед</h2>
+				</div>
 			</div>
-		</a>
-		{% include 'mini-profile.html.twig' %}	
+			<div class="max__average">
+				<div class="menu__title">
+					<h1>max average score</h1>
+					<h2>топ игроков по максимальному  среднему счету</h2>
+				</div>
+			</div>
+		</div>	
 	</div>
-	<script src="/js/game/game_over.js"></script>
-	<script src="/js/mini-profile.js"></script>
+	{% include 'mini-profile.html.twig' %}
+	<script src="/js/menu/leaderboard.js"></script>
+	<script src="/js/menu/mini-profile.js"></script>
 {% endblock %}

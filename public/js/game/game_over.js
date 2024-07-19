@@ -1,12 +1,15 @@
+const host = window.location.hostname;
 let params = new URLSearchParams(document.location.search);
 let players = document.querySelectorAll(".player")
 let playerId = parseInt(document.querySelector(".player_id").value);
 let playersCount = 0
 let data
 
-function getData(){
-    let codedData = sessionStorage.getItem('results');
-    data = JSON.parse(codedData);
+async function getResults(){
+    let response = await fetch("http://" + host + ":8080/game/results?lobby=" + params.get('lobby'), {
+        method: 'GET'
+    });
+    return results = await response.json()
 }
 
 async function foundUser(id) {
@@ -53,16 +56,22 @@ function createPlayerBlock(elem, user){
     document.querySelector('.players').appendChild(player);
 }
 
+function printResults(data){
+    data.forEach((elem)=>{
+        foundUser(elem.player_id).then((user) => {
+            createPlayerBlock(elem, user)
+            if (playerId == parseInt(elem.player_id)){
+                document.querySelector('.results__title').innerHTML = `№` + (playersCount + 1) + ' ' + user.login
+                document.querySelector('.time__value').innerHTML = elem.score
+            }
+            playersCount += 1
+        }) 
+    })
+}
+
 document.querySelector(".back__link").href = '/lobby?lobby=' + params.get('lobby');
 
-getData()
-data.forEach((elem)=>{
-    foundUser(elem.player_id).then((user) => {
-        createPlayerBlock(elem, user)
-        if (playerId == parseInt(elem.player_id)){
-            document.querySelector('.results__title').innerHTML = `№` + (playersCount + 1) + ' ' + user.login
-            document.querySelector('.time__value').innerHTML = elem.score
-        }
-        playersCount += 1
-    }) 
+getResults().then((data) => {
+    printResults(data)
+    console.log(data)
 })

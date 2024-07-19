@@ -1,8 +1,10 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Menu
+{% block title %}
+	Menu
 {% endblock %}
-{% block style %}<link rel="stylesheet" href="/css/select.css"/><link rel="stylesheet" href="/css/mini-profile.css"/>
+{% block style %}
+	<link rel="stylesheet" href="/css/select.css"/>
 {% endblock %}
 {% block content %}
 	<div class="bg">
@@ -10,32 +12,24 @@
 			<img src="/images/settings.png" alt="settings" class="settings">
 			<img src="/images/logo.png" alt="logo" class="logo">
 			<div class="profile">
-				{% if not user or not user.login %}
-					<a href="{{ path('register') }}">
-						<div class="profile">
-							<p class="profile__nickname">{{user.login ?? 'славянин'}}</p>
-							<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
-						</div>
-					</a>
-				{% else %}
+				<a href="{{(user.login ?? null) ? path("profile", {login: user.login}) : path('register') }}">
 					<div class="profile">
 						<p class="profile__nickname">{{user.login ?? 'славянин'}}</p>
 						<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
 					</div>
-				{% endif %}
+				</a>
 			</div>
 		</div>
 		<div class="menu">
 			<div class="links links_start">
-
 				<a href="/select_solo_mode" class="link solo link_with-image">
 					<div class="img-placeholder">
 						<img src="/images/solo.png" alt="solo" class="link__image">
 					</div>
 					<div class="link__text">
-						<h1 class="link__title solo__title">
+						<p class="link__title solo__title">
 							однопользовательский режим
-						</h1>
+						</p>
 						<p class="link__subtitle solo__subtitle">
 							превзойди себя и поставь новый рекорд
 						</p>
@@ -46,9 +40,9 @@
 						<img src="/images/multiplayer.png" alt="multiplayer" class="link__image">
 					</div>
 					<div class="link__text">
-						<h1 class="link__title multiplayer__title">
+						<p class="link__title multiplayer__title">
 							многопользовательский режим
-						</h1>
+						</p>
 						<p class="link__subtitle multiplayer__subtitle">
 							играйте онлайн с друзьями
 						</p>
@@ -59,9 +53,9 @@
 						<img src="/images/about.png" alt="about" class="link__image">
 					</div>
 					<div class="link__text">
-						<h1 class="link__title about__title">
+						<p class="link__title about__title">
 							про нас
-						</h1>
+						</p>
 						<p class="link__subtitle about__subtitle">
 							узнайте все о славянах
 						</p>
@@ -70,8 +64,5 @@
 			</div>
 		</div>	
 	</div>
-	{% include 'mini-profile.html.twig' %}
-</body>
-<script src="/js/menu.js"></script>
-<script src="/js/mini-profile.js"></script>
+	<script src="/js/menu/menu.js"></script>
 {% endblock %}

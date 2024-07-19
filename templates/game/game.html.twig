@@ -1,11 +1,13 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Tetris
+{% block title %}
+	Tetris
 {% endblock %}
-{% block style %}<link rel="stylesheet" href="/css/game.css"/>
+{% block style %}
+	<link rel="stylesheet" href="/css/game.css"/>
 {% endblock %}
 {% block content %}
-	<body>
+
 		<main class="main">
 			<img class="logo" src="/images/logo.svg" alt="logo">
 			<div class="wrapper-game">
@@ -48,7 +50,6 @@
 			<p class="instruction__text buffer">использование буффера - левый шифт (фигуры поменяются местами, обратно можно будет поменять только следующую фигуру)</p>
 			<p class="instruction__text pause">пауза - клавиша "з"</p>
 		</div>
-	</body>
 	<script src="/js/static/images.js"></script>
 	<script src="/js/static/figures.js"></script>
 	<script src="/js/game/figure.js"></script>

@@ -4,57 +4,63 @@
 	solo classic mode
 {% endblock %}
 {% block style %}
-	<link rel="stylesheet" href="/css/select.css"/>
+	<link rel="stylesheet" href="/css/select.css"/><link rel="stylesheet" href="/css/mini-profile.css"/>
 {% endblock %}
 {% block script %}
-	<script src="/js/game/game-mode.js"></script>
+	<script src="/js/game/game-mode.js"></script><script src="/js/menu/mini-profile.js"></script>
 {% endblock %}
 {% block content %}
-	<body>
-		<div class="bg bg_dark">
-			<div class="header">
-				<img src="/images/settings.png" alt="settings" class="settings"/>
-				<img src="/images/logo.png" alt="logo" class="logo"/>
-				<div class="profile">
-					<a href="{{(user.login ?? null) ? path("profile", {login: user.login}) : path('register') }}">
+	<div class="bg bg_dark">
+		<div class="header">
+			<img src="/images/settings.png" alt="settings" class="settings"/>
+			<img src="/images/logo.png" alt="logo" class="logo"/>
+			<div class="profile">
+				{% if not user or not user.login %}
+					<a href="{{ path('register') }}">
 						<div class="profile">
 							<p class="profile__nickname">{{user.login ?? 'славянин'}}</p>
 							<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
 						</div>
 					</a>
-				</div>
-			</div>
-			<div class="select">
-				<a href="/menu">
-					<div class="back">
-						<h1 class="back__button">
-							назад
-						</h1>
+				{% else %}
+					<div class="profile">
+						<p class="profile__nickname">{{user.login ?? 'славянин'}}</p>
+						<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
 					</div>
-				</a>
-				<div class="links">
-					<a href="/koop" class="link">
-						<div class="link__text">
-							<h1 class="link__title">
-								локальная игра
-							</h1>
-							<p class="link__subtitle">
-								сыграйте с другом на одном поле и одном компьютере (коммунизм победил)
-							</p>
-						</div>
-					</a>
-					<a href="/koop" class="link">
-						<div class="link__text">
-							<h1 class="link__title">
-								сетевая игра
-							</h1>
-							<p class="link__subtitle">
-								сыграйте с другом на одном поле и своих компьютерах (капитализм победил)
-							</p>
-						</div>
-					</a>
-				</div>
+				{% endif %}
 			</div>
 		</div>
-	</body>
+		<div class="select">
+			<a href="/menu">
+				<div class="back">
+					<p class="back__button">
+						назад
+					</p>
+				</div>
+			</a>
+			<div class="links">
+				<a href="/koop" class="link">
+					<div class="link__text">
+						<p class="link__title">
+							локальная игра
+						</p>
+						<p class="link__subtitle">
+							сыграйте с другом на одном поле и одном компьютере (коммунизм победил)
+						</p>
+					</div>
+				</a>
+				<a href="/koop" class="link">
+					<div class="link__text">
+						<p class="link__title">
+							сетевая игра
+						</p>
+						<p class="link__subtitle">
+							сыграйте с другом на одном поле и своих компьютерах (капитализм победил)
+						</p>
+					</div>
+				</a>
+			</div>
+		</div>
+	</div>
+	{% include 'mini-profile.html.twig' %}
 {% endblock %}

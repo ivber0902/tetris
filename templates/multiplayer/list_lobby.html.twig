@@ -1,8 +1,10 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Menu
+{% block title %}
+	List Lobby
 {% endblock %}
-{% block style %}<link rel="stylesheet" href="/css/list_lobby.css"/><link rel="stylesheet" href="/css/mini-profile.css"/>
+{% block style %}
+	<link rel="stylesheet" href="/css/list_lobby.css"/><link rel="stylesheet" href="/css/mini-profile.css"/>
 {% endblock %}
 {% block content %}
 	<div class="bg">
@@ -31,22 +33,22 @@
 			<div class="row">
 				<a href="/select_multiplayer_mode">
 					<div class="back">
-						<h1 class="back__button">
+						<p class="back__button">
 							назад
-						</h1>
+						</p>
 					</div>
 				</a>
-				<div class = "joinn">
-				<input type="string" id="join" class="join" name="join">
-				<button class="join-button">Войти в лобби</button>
+				<div class="joinn">
+					<input type="string" id="join" class="join" name="join">
+					<button class="join-button">Войти в лобби</button>
 				</div>
 			</div>
 		</div>
 		<h1 class="list-title">Список лобби<h1>
-				<div class="menu"></div>
-				{% include 'mini-profile.html.twig' %}
-			</div>
-			<script src="/js/list_lobby.js"></script>
-			<script src="/js/list_lobby-socket.js"></script>
-			<script src="/js/mini-profile.js"></script>
-		{% endblock %}
+		<div class="menu"></div>
+		{% include 'mini-profile.html.twig' %}
+	</div>
+	<script src="/js/menu/list_lobby.js"></script>
+	<script src="/js/multiplayer/list_lobby-socket.js"></script>
+	<script src="/js/menu/mini-profile.js"></script>
+{% endblock %}
