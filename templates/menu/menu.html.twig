@@ -12,19 +12,12 @@
 			<img src="/images/settings.png" alt="settings" class="settings">
 			<img src="/images/logo.png" alt="logo" class="logo">
 			<div class="profile">
-				{% if not user or not user.login %}
-					<a href="{{ path('register') }}">
-						<div class="profile">
-							<p class="profile__nickname">{{user.login ?? 'славянин'}}</p>
-							<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
-						</div>
-					</a>
-				{% else %}
+				<a href="{{(user.login ?? null) ? path("profile", {login: user.login}) : path('register') }}">
 					<div class="profile">
 						<p class="profile__nickname">{{user.login ?? 'славянин'}}</p>
 						<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
 					</div>
-				{% endif %}
+				</a>
 			</div>
 		</div>
 		<div class="menu">
@@ -71,7 +64,5 @@
 			</div>
 		</div>	
 	</div>
-	{% include 'mini-profile.html.twig' %}
 	<script src="/js/menu/menu.js"></script>
-	<script src="/js/menu/mini-profile.js"></script>
 {% endblock %}
