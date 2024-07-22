@@ -9,17 +9,27 @@ GAME.defaultPlay = GAME.play;
 GAME.play = (player) => {
     GAME.defaultPlay(player)
     player.ui.time = new Date() - GAME.startTime;
-    if ((!GAME.stopTimer) && ((new Date() - GAME.startTime) >= ((2 * 60 - 11) * 1000))) {
-        GAME.stopTimer = true;
-        GAME.num = 10;
-        GAME.drawDowncount(player, player.field.field, 10, 1, () => {
-            player.isActive = false;
-            player.isGameOver = true;
-            gameEnd(player.score)
-        })
+    if (!player.field.checkPosition(player.currentFigure.x, player.currentFigure.y, player.currentFigure.matrix)) {
+        player.isActive = false;
+        gameEnd = () => {
+            window.location.href = '/menu'
+        }
+        gameEnd()
     }
-    if (GAME.stopTimer) {
-        GAME.defdrawNumber(player, player.field.field, GAME.num)
+    else
+    {
+        if ((!GAME.stopTimer) && ((new Date() - GAME.startTime) >= ((2 * 60 - 11) * 1000))) {
+            GAME.stopTimer = true;
+            GAME.num = 10;
+            GAME.drawDowncount(player, player.field.field, 10, 1, () => {
+                player.isActive = false;
+                player.isGameOver = true;
+                gameEnd(player.score)
+            })
+        }
+        if (GAME.stopTimer) {
+            GAME.defdrawNumber(player, player.field.field, GAME.num)
+        }
     }
 }
 GAME.start = (player) => {
