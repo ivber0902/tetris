@@ -9,7 +9,7 @@ GAME.defaultPlay = GAME.play;
 GAME.play = (player) => {
     GAME.defaultPlay(player)
     player.ui.time = new Date() - GAME.startTime;
-    if ((!GAME.stopTimer) && ((new Date() - GAME.startTime) >= ((2 * 60 - 11) * 100))) {
+    if ((!GAME.stopTimer) && ((new Date() - GAME.startTime) >= ((2 * 60 - 11) * 1000))) {
         GAME.stopTimer = true;
         GAME.num = 10;
         GAME.drawDowncount(player, player.field.field, 10, 1, () => {

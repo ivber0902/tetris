@@ -25,6 +25,9 @@ about:
 leaderboard:
     path: /leaderboard
     controller: App\Controller\GameController::leaderboard
+settings:
+    path: /settings
+    controller: App\Controller\GameController::settings    
 #мультиплеер
 join:
     path: /join

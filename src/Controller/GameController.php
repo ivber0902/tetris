@@ -67,6 +67,16 @@ class GameController extends AbstractController
     {
         return $this->render('game_modes/l40.html.twig');
     }
+    public function settings(): Response
+    {
+        $securityUser = $this->getUser();
+        if($securityUser === null){
+            return $this->render('menu/settings.html.twig', ["user" => $securityUser]);
+        }
+        $user = $this->userService->findUser($securityUser->getId());
+        $player = $user->getPlayer();
+        return $this->render('menu/settings.html.twig', ["user" => $securityUser, "player" => $player]);
+    }
     public function selectMultiplayerMode(): Response
     {
         $securityUser = $this->getUser();

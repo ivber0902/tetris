@@ -10,62 +10,62 @@
 	<script src="/js/menu/mini-profile.js"></script>
 {% endblock %}
 {% block content %}
-	<div class="bg bg_dark">
-		<div class="header">
+	<div class="header">
+		<a href="/settings">
 			<img src="/images/settings.png" alt="settings" class="settings"/>
-			<img src="/images/logo.png" alt="logo" class="logo"/>
-			<div class="profile">
-				{% if not user or not user.login %}
-					<a href="{{ path('register') }}">
-						<div class="profile">
-							<p class="profile__nickname">{{user.login ?? 'славянин'}}</p>
-							<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
-						</div>
-					</a>
-				{% else %}
+		</a>
+		<img src="/images/logo.png" alt="logo" class="logo"/>
+		<div class="profile">
+			{% if not user or not user.login %}
+				<a href="{{ path('register') }}">
 					<div class="profile">
 						<p class="profile__nickname">{{user.login ?? 'славянин'}}</p>
 						<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
 					</div>
-				{% endif %}
-			</div>
+				</a>
+			{% else %}
+				<div class="profile">
+					<p class="profile__nickname">{{user.login ?? 'славянин'}}</p>
+					<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
+				</div>
+			{% endif %}
 		</div>
-		<div class="select">
-			<a href="/menu">
-				<div class="back">
-					<p class="back__button">
-						назад
+	</div>
+	<div class="select">
+		<a href="/menu">
+			<div class="back">
+				<p class="back__button">
+					назад
+				</p>
+			</div>
+		</a>
+		<div class="links">
+			<a href="/lobby" class="link custom link_with-image">
+				<div class="img-placeholder">
+					<img src="/images/custom.png" alt="custom" class="link__image">
+				</div>
+				<div class="link__text">
+					<p class="link__title custom__title">
+						создать лобби
+					</p>
+					<p class="link__subtitle custom__subtitle">
+						кастомизируй игру и сразись с друзьями
 					</p>
 				</div>
 			</a>
-			<div class="links">
-				<a href="/lobby" class="link custom link_with-image">
-					<div class="img-placeholder">
-						<img src="/images/custom.png" alt="custom" class="link__image">
-					</div>
-					<div class="link__text">
-						<p class="link__title custom__title">
-							создать лобби
-						</p>
-						<p class="link__subtitle custom__subtitle">
-							кастомизируй игру и сразись с друзьями
-						</p>
-					</div>
-				</a>
-				<a href="/join" class="link listing link_with-image">
-					<div class="img-placeholder">
-						<img src="/images/listing.png" alt="listing" class="link__image">
-					</div>
-					<div class="link__text">
-						<p class="link__title listing__title">
-							войти в лобби
-						</p>
-						<p class="link__subtitle listing__subtitle">сразись с друзьями на их правилах
-						</p>
-					</div>
-				</a>
-			</div>
+			<a href="/join" class="link listing link_with-image">
+				<div class="img-placeholder">
+					<img src="/images/listing.png" alt="listing" class="link__image">
+				</div>
+				<div class="link__text">
+					<p class="link__title listing__title">
+						войти в лобби
+					</p>
+					<p class="link__subtitle listing__subtitle">сразись с друзьями на их правилах
+					</p>
+				</div>
+			</a>
 		</div>
-		{% include 'mini-profile.html.twig' %}
 	</div>
+	{% include 'mini-profile.html.twig' %}
 {% endblock %}

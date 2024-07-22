@@ -304,11 +304,41 @@ const langArr = {
         "ru": "Количество Очков",
         "en": "Number of Points",
     },
-    
+    "item__title.language": {
+        "ru": "Выбор языка",
+        "en": "language selection",
+    },
+    "item__description.language": {
+        "ru": "Выбери нужный язык из предложенных",
+        "en": "Choose the desired language from the suggested ones",
+    },
+    "item__title.bg": {
+        "ru": "Выбор фона",
+        "en": "background selection",
+    },
+    "item__description.bg": {
+        "ru": "Выбери фон, который понравится именно тебе",
+        "en": "Choose a background that you will like.",
+    },
+    "title-time": {
+        "ru": "время",
+        "en": "time",
+    },
+    "title-lines": {
+        "ru": "количество линий",
+        "en": "number of lines",
+    },
     
 }
-localStorage.lang = 'en';
+if((localStorage.lang === undefined) || (!localStorage.lang)){
+    localStorage.lang = 'ru';
+}
+if((localStorage.bg === undefined) || (!localStorage.bg)){
+    localStorage.bg = '/images/bg.png';
+  }
+
 addEventListener("DOMContentLoaded", (event) => {
+    document.body.style.backgroundImage = `url(${localStorage.bg})`;
     for(let key in langArr){
         let elem = document.querySelector(`.${key}`);
         if(elem){

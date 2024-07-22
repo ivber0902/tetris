@@ -10,57 +10,57 @@
 	<script src="/js/game/game-mode.js"></script><script src="/js/menu/mini-profile.js"></script>
 {% endblock %}
 {% block content %}
-	<div class="bg bg_dark">
-		<div class="header">
+	<div class="header">
+		<a href="/settings">
 			<img src="/images/settings.png" alt="settings" class="settings"/>
-			<img src="/images/logo.png" alt="logo" class="logo"/>
-			<div class="profile">
-				{% if not user or not user.login %}
-					<a href="{{ path('register') }}">
-						<div class="profile">
-							<p class="profile__nickname">{{user.login ?? 'славянин'}}</p>
-							<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
-						</div>
-					</a>
-				{% else %}
+		</a>
+		<img src="/images/logo.png" alt="logo" class="logo"/>
+		<div class="profile">
+			{% if not user or not user.login %}
+				<a href="{{ path('register') }}">
 					<div class="profile">
 						<p class="profile__nickname">{{user.login ?? 'славянин'}}</p>
 						<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
 					</div>
-				{% endif %}
-			</div>
+				</a>
+			{% else %}
+				<div class="profile">
+					<p class="profile__nickname">{{user.login ?? 'славянин'}}</p>
+					<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
+				</div>
+			{% endif %}
 		</div>
-		<div class="select">
-			<a href="/menu">
-				<div class="back">
-					<p class="back__button">
-						назад
+	</div>
+	<div class="select">
+		<a href="/menu">
+			<div class="back">
+				<p class="back__button">
+					назад
+				</p>
+			</div>
+		</a>
+		<div class="links">
+			<a href="/koop" class="link">
+				<div class="link__text">
+					<p class="link__title">
+						локальная игра
+					</p>
+					<p class="link__subtitle">
+						сыграйте с другом на одном поле и одном компьютере (коммунизм победил)
 					</p>
 				</div>
 			</a>
-			<div class="links">
-				<a href="/koop" class="link">
-					<div class="link__text">
-						<p class="link__title">
-							локальная игра
-						</p>
-						<p class="link__subtitle">
-							сыграйте с другом на одном поле и одном компьютере (коммунизм победил)
-						</p>
-					</div>
-				</a>
-				<a href="/koop" class="link">
-					<div class="link__text">
-						<p class="link__title">
-							сетевая игра
-						</p>
-						<p class="link__subtitle">
-							сыграйте с другом на одном поле и своих компьютерах (капитализм победил)
-						</p>
-					</div>
-				</a>
-			</div>
+			<a href="/koop" class="link">
+				<div class="link__text">
+					<p class="link__title">
+						сетевая игра
+					</p>
+					<p class="link__subtitle">
+						сыграйте с другом на одном поле и своих компьютерах (капитализм победил)
+					</p>
+				</div>
+			</a>
 		</div>
 	</div>
-	{% include 'mini-profile.html.twig' %}
+{% include 'mini-profile.html.twig' %}
 {% endblock %}
