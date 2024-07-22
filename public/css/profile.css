@@ -100,7 +100,7 @@ body {
 
 .list-score {
     width: 100%;
-    max-height: 745px;
+    max-height: 70%;
     overflow-y: scroll;
 }
 

@@ -131,7 +131,7 @@
 .menu-wrapper{
     overflow-y: scroll;
     align-items: flex-end;
-    max-height: 550px;
+    max-height: 50%;
 }
 
 .menu-wrapper::-webkit-scrollbar {

@@ -119,7 +119,7 @@
     justify-content: center;
     width: 100%; 
     align-items: flex-end;
-    max-height: 400px;
+    max-height: 40%;
 }
 
 .players::-webkit-scrollbar {
