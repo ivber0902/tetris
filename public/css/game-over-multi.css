@@ -114,12 +114,29 @@
     border-right: 3px solid #1d3220;
 }
 .players {
-    display: flex;
+    overflow-y: scroll;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-    gap: 15px;
-    width: 100%;
+    width: 100%; 
+    align-items: flex-end;
+    max-height: 400px;
+}
+
+.players::-webkit-scrollbar {
+    width: 5px;
+    background-color: #1a161d;
+}
+
+.players::-webkit-scrollbar-thumb {
+    width: 5px;
+    border-radius: 10px;
+    background-color: #243e25;
+}
+
+.players::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    background-color: #1a161d;
 }
 .player {
     background-color: #243e25;
@@ -133,6 +150,7 @@
     justify-content: start;
     font-size: 32px;
     width: 100%;
+    margin-bottom: 15px;
 }
 .player__number {
     background-color: #0F160D;
