@@ -180,7 +180,7 @@ ws.onmessage = (msg) => {
         console.log('game_over')
         ListPlayers.style.display = 'none'
         playerField.style.display = 'none'
-        getResults()
+        window.location.href = '/game_over_multi?lobby='  + params.get('lobby');
     }
     if (data.type === 'config')
         initMultiplayerGame(data);
@@ -299,16 +299,6 @@ function createStartGameButton() {
     return button;
 }
 
-function getResults(){
-    // let response = await fetch("http://" + host + ":8080/game/results?lobby=" + params.get('lobby'), {
-    //     method: 'GET'
-    // });
-    // let results = await response.json()
-    // console.log(results)
-    // let jsonResults = JSON.stringify(results);
-    // sessionStorage.setItem('results', jsonResults);
-    window.location.href = '/game_over_multi?lobby='  + params.get('lobby');
-}
 
 async function foundUser(id) {
     let response = await fetch('/api/player/' + id + '/user', {
