@@ -1,0 +1,18 @@
+.phone{
+    display: none
+}
+@media (pointer: coarse) or (hover: none) {
+    body {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+    }
+    .pc{
+        display: none
+    }
+    .phone{
+        display: flex
+    }
+}

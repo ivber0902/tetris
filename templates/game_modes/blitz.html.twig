@@ -4,7 +4,7 @@
 	Blitz
 {% endblock %}
 {% block style %}
-	<link rel="stylesheet" href="/css/game.css"/>
+	<link rel="stylesheet" href="/css/game.css"/><link rel="stylesheet" href="/css/swipe-events.css"/>
 {% endblock %}
 {% block content %}
 	<main class="main">
@@ -44,15 +44,7 @@
 			</div>
 		</div>
 	</main>
-	<div class="instruction">
-		<h1>инструкция</h1>
-		<p class="instruction__text">движения по сторонам - соответствующие стрелочки или клавиши "ф" и "в"</p>
-		<p class="instruction__text">ускорение падения - стрелочка вниз или кнопка "ы"</p>
-		<p class="instruction__text">моментальная установка - пробел</p>
-		<p class="instruction__text">поворот фигуры по часовой стрелке - клавиша "ц"</p>
-		<p class="instruction__text">использование буффера - левый шифт (фигуры поменяются местами, обратно можно будет поменять только следующую фигуру)</p>
-		<p class="instruction__text">пауза - клавиша "з"</p>
-	</div>
+	{% include 'instruction.html.twig' %}
 	<script src="/js/static/images.js"></script>
 	<script src="/js/static/figures.js"></script>
 	<script src="/js/game/figure.js"></script>
