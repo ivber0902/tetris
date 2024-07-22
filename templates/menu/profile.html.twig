@@ -31,40 +31,197 @@
                     <span class="count-win-game title">↪ выиграно из них</span><span class="count-win-game"> {{ player.winCount }}</span>
                 </div>
             </div>
+            <a href="#">посмотреть ВСЮ СТАТИСТИКУ</a>
         </div>
-        <div class="wrapper">
-            <div class="list-score">
-                <div class="score">
-                    <p class="score__title">Последний результат</p>
-                    <p class="score__description">В последней игре ты набрад 1000 очков</p>
+        <div class="other-information">
+            <div class="slider-container">
+                <div class="slider">
+                    <div class="achievement">
+                        <h3 class="achievement__title path-legend">Путь легенды</h3>
+                        <div class="achievement__list">
+                            <div class="achievement__item">
+                                <img src="/images/medals/bronze.png" alt="medal" class="item__image">
+                                <div class="item-wrapper">
+                                    <p class="item__title path-legend easy">Сыграй 10 игр</p>
+                                    <p class="item__subtitle path-legend easy">Ты только на старте своего пути! Пройдя 10 игр, ты сделал первые шаги к новой эре в своем игровом путешествии.</p>
+                                </div>
+                            </div>
+                            <div class="achievement__item">
+                                <img src="/images/medals/silver.png" alt="medal" class="item__image">
+                                <div class="item-wrapper">
+                                    <p class="item__title path-legend medium">Сыграй 50 игр</p>
+                                    <p class="item__subtitle path-legend medium">Твоя настойчивость приносит плоды! С 50 сыгранными играми ты уже формируешь свою игровую судьбу.</p>
+                                </div>
+                            </div>
+                            <div class="achievement__item">
+                                <img src="/images/medals/gold.png" alt="medal" class="item__image">
+                                <div class="item-wrapper">
+                                    <p class="item__title path-legend hard">Сыграй 100 игр</p>
+                                    <p class="item__subtitle path-legend hard">Поздравляем, легенда! Достигнув 100 игр, ты входишь в ряды мастеров, о которых шепчутся по всему игровому миру.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="achievement">
+                        <h3 class="achievement__title legend-tetris">Легенда тетриса</h3>
+                        <div class="achievement__list">
+                            <div class="achievement__item">
+                                <img src="/images/medals/bronze.png" alt="medal" class="item__image">
+                                <div class="item-wrapper">
+                                    <p class="item__title legend-tetris easy">Набери за игру 10000 очков</p>
+                                    <p class="item__subtitle legend-tetris easy">Ты сделал первый шаг к бессмертию! 10000 очков — это начало твоей легенды!</p>
+                                </div>
+                            </div>
+                            <div class="achievement__item">
+                                <img src="/images/medals/silver.png" alt="medal" class="item__image">
+                                <div class="item-wrapper">
+                                    <p class="item__title legend-tetris medium">Набери за игру 50000 очков</p>
+                                    <p class="item__subtitle legend-tetris medium">Ты на пути к небесам! 50000 очков делают тебя не только мастером, но и легендой!</p>
+                                </div>
+                            </div>
+                            <div class="achievement__item">
+                                <img src="/images/medals/gold.png" alt="medal" class="item__image">
+                                <div class="item-wrapper">
+                                    <p class="item__title legend-tetris hard">Набери за игру 100000 очков</p>
+                                    <p class="item__subtitle legend-tetris hard">Ты достиг божественных высот! 100000 очков — это финальный аккорд, который подтверждает твое мастерство!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="achievement">
+                        <h3 class="achievement__title blitz">Блиц-мастер</h3>
+                        <div class="achievement__list">
+                            <div class="achievement__item">
+                                <img src="/images/medals/bronze.png" alt="medal" class="item__image">
+                                <div class="item-wrapper">
+                                    <p class="item__title blitz easy">Набери в режиме "Блиц" 4000 очков</p>
+                                    <p class="item__subtitle blitz easy">Твоя победная серия начинается! 4000 очков — это первый приз, свидетельствующий о твоем таланте.</p>
+                                </div>
+                            </div>
+                            <div class="achievement__item">
+                                <img src="/images/medals/silver.png" alt="medal" class="item__image">
+                                <div class="item-wrapper">
+                                    <p class="item__title blitz medium">Набери в режиме "Блиц" 8000 очков</p>
+                                    <p class="item__subtitle blitz medium">Ты бьешь рекорды! 8000 очков — это заметный шаг к титулу мастера блица.</p>
+                                </div>
+                            </div>
+                            <div class="achievement__item">
+                                <img src="/images/medals/gold.png" alt="medal" class="item__image">
+                                <div class="item-wrapper">
+                                    <p class="item__title blitz hard">Набери в режиме "Блиц" 12000 очков</p>
+                                    <p class="item__subtitle blitz hard">Ты достиг небывалых высот! 12000 очков — это настоящее чудо, подтверждающее твою гениальность в игре.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="achievement">
+                        <h3 class="achievement__title forty-line">40 линий взяты</h3>
+                        <div class="achievement__list">
+                            <div class="achievement__item">
+                                <img src="/images/medals/bronze.png" alt="medal" class="item__image">
+                                <div class="item-wrapper">
+                                    <p class="item__title forty-line easy">Собери 40 линий за 8 минут</p>
+                                    <p class="item__subtitle forty-line easy">Неизвестные скорости! Завершив 40 линий за 8 минут, ты начал свой путь к скоростным вершинам.</p>
+                                </div>
+                            </div>
+                            <div class="achievement__item">
+                                <img src="/images/medals/silver.png" alt="medal" class="item__image">
+                                <div class="item-wrapper">
+                                    <p class="item__title forty-line medium">Собери 40 линий за 5 минут</p>
+                                    <p class="item__subtitle forty-line medium">Смелый преодолитель времени! Зафиксировав 5 минут на 40 линий, ты демонстрируешь настоящую скорость.</p>
+                                </div>
+                            </div>
+                            <div class="achievement__item">
+                                <img src="/images/medals/gold.png" alt="medal" class="item__image">
+                                <div class="item-wrapper">
+                                    <p class="item__title forty-line hard">Собери 40 линий за 3 минут</p>
+                                    <p class="item__subtitle forty-line hard">Ты стал мастером скорости! 3 минуты на 40 линий — это живое искусство быстроты и точности.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="achievement">
+                        <h3 class="achievement__title royal">Королевский дуэт</h3>
+                        <div class="achievement__list">
+                            <div class="achievement__item">
+                                <img src="/images/medals/bronze.png" alt="medal" class="item__image">
+                                <div class="item-wrapper">
+                                    <p class="item__title royal easy">Собери 100 линий</p>
+                                    <p class="item__subtitle royal easy">Сила в единстве! Ваша команда собрала 100 линий, и ты уже на пути к настоящей гармонии!</p>
+                                </div>
+                            </div>
+                            <div class="achievement__item">
+                                <img src="/images/medals/silver.png" alt="medal" class="item__image">
+                                <div class="item-wrapper">
+                                    <p class="item__title royal medium">Собери 500 линий</p>
+                                    <p class="item__subtitle royal medium">Ты и твой партнер — истинные чемпионы! 500 линий — это результат вашего единства и слаженности.</p>
+                                </div>
+                            </div>
+                            <div class="achievement__item">
+                                <img src="/images/medals/gold.png" alt="medal" class="item__image">
+                                <div class="item-wrapper">
+                                    <p class="item__title royal hard">Собери 1000 линий</p>
+                                    <p class="item__subtitle royal hard">Ваше имя будет увековечено! 1000 линий — это легендарное достижение, которое заставит говорить о вас!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="achievement">
+                        <h3 class="achievement__title multy">Непобедимый мультиплеер</h3>
+                        <div class="achievement__list">
+                            <div class="achievement__item">
+                                <img src="/images/medals/bronze.png" alt="medal" class="item__image">
+                                <div class="item-wrapper">
+                                    <p class="item__title multy easy">Победи в 3 онлайн играх подряд</p>
+                                    <p class="item__subtitle multy easy">Ты заручился поддержкой удачи! Три победы подряд — это всего лишь начало великого пути!</p>
+                                </div>
+                            </div>
+                            <div class="achievement__item">
+                                <img src="/images/medals/silver.png" alt="medal" class="item__image">
+                                <div class="item-wrapper">
+                                    <p class="item__title multy medium">Победи в 5 онлайн играх подряд</p>
+                                    <p class="item__subtitle multy medium">Никто не может остановить твою волну! Победа в 5 онлайн играх подряд утвердит твой статус!</p>
+                                </div>
+                            </div>
+                            <div class="achievement__item">
+                                <img src="/images/medals/gold.png" alt="medal" class="item__image">
+                                <div class="item-wrapper">
+                                    <p class="item__title multy hard">Победи 10 соперников подряд</p>
+                                    <p class="item__subtitle multy hard">Ты — непобедимый! 10 побед подряд устанавливают новый стандарт для всех игроков!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="achievement">
+                        <h3 class="achievement__title ai">Битва против ИИ</h3>
+                        <div class="achievement__list">
+                            <div class="achievement__item">
+                                <img src="/images/medals/bronze.png" alt="medal" class="item__image">
+                                <div class="item-wrapper">
+                                    <p class="item__title ai easy">Победи ИИ 3 раза</p>
+                                    <p class="item__subtitle ai easy">Твой первый осколок успеха! Победив 3 искусственных противника, ты показываешь свои шансы на победу!</p>
+                                </div>
+                            </div>
+                            <div class="achievement__item">
+                                <img src="/images/medals/silver.png" alt="medal" class="item__image">
+                                <div class="item-wrapper">
+                                    <p class="item__title ai medium">Победи ИИ 5 раза</p>
+                                    <p class="item__subtitle ai medium">Ты наращиваешь дух и уверенность! 5 побед подряд показывают, что ты готов к большему!</p>
+                                </div>
+                            </div>
+                            <div class="achievement__item">
+                                <img src="/images/medals/gold.png" alt="medal" class="item__image">
+                                <div class="item-wrapper">
+                                    <p class="item__title ai hard">Победи ИИ 10 раза</p>
+                                    <p class="item__subtitle ai hard">Ты поразил систему! 10 побед подряд — ты стал истинным мастером сражений!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="score">
-                    <p class="score__title">Максимальный результат в одиночной игре</p>
-                    <p class="score__description">За самую лучшую игру в одиночном режиме ты набрал {{ player.maxScore }} очков</p>
-                </div>
-                <div class="score">
-                    <p class="score__title">Максимальный результат в онлайн игре</p>
-                    <p class="score__description">За самую лучшую игру в мультиплеерном режиме ты набрал 10000 очков</p>
-                </div>
-                <div class="score">
-                    <p class="score__title">Средний результат</p>
-                    <p class="score__description">В среднем за игру ты набираешт по {{ player.averageScore }} очков</p>
-                </div>
-                <div class="score">
-                    <p class="score__title">Общий результат</p>
-                    <p class="score__description">За все игры ты заработал {{ player.totalScore }} очков</p>
-                </div>
-                <div class="score">
-                    <p class="score__title">Режим "40 ЛИНИЙ"</p>
-                    <p class="score__description">Быстрее всего ты прощел этот режим за 1 минуту 45 секунд</p>
-                </div>
-                <div class="score">
-                    <p class="score__title">Режим "БЛИЦ"</p>
-                    <p class="score__description">Самое большое количество очков в этом режиме 3300</p>
-                </div>
-                <div class="score">
-                    <p class="score__title">Режим "БОСС"</p>
-                    <p class="score__description">Ты смог победить босса 17 раз</p>
+                <div class="wrapper-action">
+                    <button class="prev-button" >&lt;</button>
+                <button class="next-button" >&gt</button>
                 </div>
             </div>
             <div class="back">
