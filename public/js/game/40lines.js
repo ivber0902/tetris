@@ -8,10 +8,19 @@ GAME.startTime = new Date();
 GAME.defaultPlay = GAME.play;
 GAME.play = (player) => {
     player.ui.lines = player.lines;
-    if (player.lines >= 40) {
+    if (!player.field.checkPosition(player.currentFigure.x, player.currentFigure.y, player.currentFigure.matrix)) {
         player.isActive = false;
-        player.gameEnd = true;
-        gameEnd(new Date() - GAME.startTime);
+        gameEnd = () => {
+            window.location.href = '/menu'
+        }
+        gameEnd()
+    }
+    else{
+        if (player.lines >= 40) {
+            player.isActive = false;
+            player.gameEnd = true;
+            gameEnd(new Date() - GAME.startTime);
+        }
     }
     GAME.defaultPlay(player)
 }

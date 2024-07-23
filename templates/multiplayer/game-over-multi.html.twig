@@ -1,8 +1,10 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Multiplayer Game Over
+{% block title %}
+	Multiplayer Game Over
 {% endblock %}
-{% block style %}<link rel="stylesheet" href="/css/game-over-multi.css"/><link rel="stylesheet" href="/css/mini-profile.css"/>
+{% block style %}
+	<link rel="stylesheet" href="/css/game-over-multi.css"/><link rel="stylesheet" href="/css/mini-profile.css"/>
 {% endblock %}
 {% block content %}
 	<div class="bg">
@@ -29,7 +31,7 @@
 		<div class="results-placeholder">
 			<div class="results">
 				<div class="results__header">
-					<h1 class="results__title">№0</h1>
+					<p class="results__title">№0</p>
 					<div class="results__time">
 						<p class="time__text">Количество Очков</p>
 						<p class="time__value">0</p>
@@ -41,14 +43,13 @@
 		</div>
 		<a class="back__link">
 			<div class="back">
-				<h1 class="back__button">
+				<p class="back__button">
 					сыграть заново
-				</h1>
+				</p>
 			</div>
 		</a>
 		{% include 'mini-profile.html.twig' %}	
 	</div>
-</body>
-<script src="/js/game/game_over.js"></script>
-<script src="/js/mini-profile.js"></script>
+	<script src="/js/game/game_over_multi.js"></script>
+	<script src="/js/menu/mini-profile.js"></script>
 {% endblock %}
