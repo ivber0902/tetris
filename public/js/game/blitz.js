@@ -7,17 +7,16 @@ GAME.drawNumber = (player, field, num) => {
 }
 GAME.defaultPlay = GAME.play;
 GAME.play = (player) => {
-    GAME.defaultPlay(player)
-    player.ui.time = new Date() - GAME.startTime;
     if (!player.field.checkPosition(player.currentFigure.x, player.currentFigure.y, player.currentFigure.matrix)) {
         player.isActive = false;
-        gameEnd = () => {
-            window.location.href = '/menu'
+        gameEnd = () => {               
         }
-        gameEnd()
+        window.location.href = "/game_over_mode" 
     }
     else
     {
+        GAME.defaultPlay(player)
+        player.ui.time = new Date() - GAME.startTime;
         if ((!GAME.stopTimer) && ((new Date() - GAME.startTime) >= ((2 * 60 - 11) * 1000))) {
             GAME.stopTimer = true;
             GAME.num = 10;

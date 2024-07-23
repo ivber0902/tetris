@@ -7,24 +7,21 @@ player.updateScore = (countLines) => {
 GAME.startTime = new Date();
 GAME.defaultPlay = GAME.play;
 GAME.play = (player) => {
-    player.ui.lines = player.lines;
     if (!player.field.checkPosition(player.currentFigure.x, player.currentFigure.y, player.currentFigure.matrix)) {
         player.isActive = false;
-        gameEnd = () => {
-            window.location.href = '/menu'
+        gameEnd = () => {               
         }
-        gameEnd()
+        window.location.href = "/game_over_mode" 
     }
     else{
-        if (player.lines >= 40) {
+        player.ui.lines = player.lines;
+        if (player.lines >= 4 && player.isActive) {
             player.isActive = false;
             player.gameEnd = true;
-            console.log('game-over')
             gameEnd(new Date() - GAME.startTime);
         }
         GAME.defaultPlay(player)
     }
-    
 }
 GAME.start = (player) => {
     GAME.onLoadImages(() => {

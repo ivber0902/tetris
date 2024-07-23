@@ -49,6 +49,10 @@ class GameController extends AbstractController
             'maxScore' => $player->getStatistics()->getMaxScore(),
         ]);
     }
+    public function gameOverMode(): Response
+    {
+        return $this->render('game/game-over-mode.html.twig');
+    }
     public function game(): Response
     {
         return $this->render('game/game.html.twig');
