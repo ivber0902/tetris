@@ -122,7 +122,7 @@ ws.onmessage = (msg) => {
         let found = false;
         let lobbyMembers = listPlayers.querySelectorAll(".player__hidden-id");     
         lobbyMembers.forEach((elem)=>{
-            if(parseInt(elem.value) === joinPlayerId)
+            if(elem.value === joinPlayerId)
                 found = true;
         })
         let newPlayer;

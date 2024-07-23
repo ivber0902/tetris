@@ -4,6 +4,7 @@
                     http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
     <document name="App\Document\Player">
         <id />
+        <field name="avatar" type="string"/>
         <embed-one field="user" target-document="App\Document\User"/>
         <embed-one field="statistics" target-document="App\Document\Statistics"/>
         <embed-one field="ui" target-document="App\Document\UI"/>

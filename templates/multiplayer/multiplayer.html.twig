@@ -10,8 +10,8 @@
     <main class="main">
         <img class="logo" src="/images/logo.png" alt="logo">
         <div class="wrapper-game">
-            <div id="{{ user.playerId }}" class="wrapper-main-field">
-                <p class="player_name">{{ user.login }}</p>
+            <div id="{{ player.id }}" class="wrapper-main-field">
+                <p class="player_name">{{ player.user.login }}</p>
                 <div class="main-field">
                     <div class="game__buffer"> 
                         <p class="title buffer">буффер</p>

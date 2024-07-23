@@ -13,9 +13,9 @@
 		</a>
 		<img src="/images/logo.png" alt="logo" class="logo">
 		<div class="profile">
-			<a href="{{(player.login ?? null) ? path("profile", {login: player.login}) : path('login') }}">
+			<a href="{{(player.user.login ?? null) ? path("profile", {login: player.user.login}) : path('login') }}">
 				<div class="profile">
-					<p class="profile__nickname">{{player.login ?? 'славянин'}}</p>
+					<p class="profile__nickname">{{player.user.login ?? 'славянин'}}</p>
 					<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
 				</div>
 			</a>

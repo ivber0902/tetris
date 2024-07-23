@@ -12,18 +12,18 @@
 		<div class="header">
 			<img src="/images/settings.png" alt="settings" class="settings">
 			<img src="/images/logo.png" alt="logo" class="logo">
-			<input class="player_id" type="hidden" value="{{ user.playerId ?? 0}}">
+			<input class="player_id" type="hidden" value="{{ player.id ?? 0}}">
 			<div class="profile">
 				{% if player is not defined %}
 					<a href="{{ path('register') }}">
 						<div class="profile">
-							<p class="profile__nickname">{{user.login ?? 'славянин'}}</p>
+							<p class="profile__nickname">{{player.user.login ?? 'славянин'}}</p>
 							<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
 						</div>
 					</a>
 				{% else %}
 					<div class="profile">
-						<p class="profile__nickname">{{user.login ?? 'славянин'}}</p>
+						<p class="profile__nickname">{{player.user.login ?? 'славянин'}}</p>
 						<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
 					</div>
 				{% endif %}

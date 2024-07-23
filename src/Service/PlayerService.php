@@ -39,6 +39,11 @@ class PlayerService
         return $this->playerRepository->findByLogin($login)?->getUser();
     }
 
+    public function findPlayerByLogin(string $login): ?Player
+    {
+        return $this->playerRepository->findByLogin($login);
+    }
+
     public function findPlayer(string $id): ?Player
     {
         return $this->playerRepository->find($id);

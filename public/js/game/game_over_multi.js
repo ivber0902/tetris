@@ -1,7 +1,7 @@
 const host = window.location.hostname;
 let params = new URLSearchParams(document.location.search);
 let players = document.querySelectorAll(".player")
-let playerId = parseInt(document.querySelector(".player_id").value);
+let playerId = document.querySelector(".player_id").value;
 let playersCount = 0
 
 async function getResults(){
@@ -57,7 +57,7 @@ function printResults(data){
     data.forEach((elem)=>{
         foundUser(elem.player_id).then((user) => {       
             createPlayerBlock(elem, user)
-            if (playerId == parseInt(elem.player_id)){
+            if (playerId == elem.player_id){
                 document.querySelector('.results__title').innerHTML = `№` + (playersCount + 1) + ' ' + user.login
                 document.querySelector('.time__value').innerHTML = elem.score
             }
