@@ -1,6 +1,6 @@
 let GAME = {
-    width: parseInt(localStorage.Gamewidth),
-    height: parseInt(localStorage.Gameheight),
+    width: 20,
+    height: 20,
     playTime: new Date(),
     init(player, currentFigureIndex, bufferFigureIndex, NextFiguresIndex) {
         let i = 0;
@@ -11,8 +11,7 @@ let GAME = {
             i++
         });
         blockField.src = '/images/blocks/bg.png';
-        blockAdd.src = '/images/blocks/addLine.png',
-        player.field.initField('game');
+        player.field.initField();
         player.field.initFieldMatrix();
         player.tickTime = 15974 / this.height;
         player.initEventListeners();
@@ -24,8 +23,11 @@ let GAME = {
         document.addEventListener('keydown', (e) => {
             if (e.code === 'KeyP') {
                 if (!player.isActive) {
-                    this.drawDowncount(player, player.field.field, 3, 1, () => { player.isActive = true; this.play(player) 
-                        ui.music.play();})
+                    this.drawDowncount(player, player.field.field, 3, 1, () => {
+                        player.isActive = true;
+                        this.play(player);
+                        ui.music.play();
+                    })
                 } else {
                     player.isActive = false;
                     ui.music.pause();
@@ -57,19 +59,19 @@ let GAME = {
         figures.forEach((figure) => {
             figure.image.addEventListener('load', () => {
                 counter++;
-                if (counter === figures.length * 3 + 2) {
+                if (counter === figures.length * 3 + 1) {
                     func()
                 }
             })
             figure.block.addEventListener('load', () => {
                 counter++;
-                if (counter === figures.length * 3 + 2) {
+                if (counter === figures.length * 3 + 1) {
                     func()
                 }
             })
             figure.shadow.addEventListener('load', () => {
                 counter++;
-                if (counter === figures.length * 3 + 2) {
+                if (counter === figures.length * 3 + 1) {
                     func()
                 }
             })
@@ -77,19 +79,13 @@ let GAME = {
         );
         blockField.addEventListener('load', () => {
             counter++;
-            if (counter === figures.length * 3 + 2) {
-                func()
-            }
-        })
-        blockAdd.addEventListener('load', () => {
-            counter++;
-            if (counter === figures.length * 3 + 2) {
+            if (counter === figures.length * 3 + 1) {
                 func()
             }
         })
     },
     start(player) {
-        player.isActive = true; 
+        player.isActive = true;
         this.onLoadImages(() => {
             this.drawDowncount(player, player.field.field, 3, 1, () => { player.isActive = true; this.play(player) })
         })

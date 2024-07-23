@@ -16,7 +16,7 @@ GAME.play = (player) => {
         gameEnd()
     }
     else{
-        if (player.lines >= 40) {
+        if (player.lines >= 40 && player.isActive) {
             player.isActive = false;
             player.gameEnd = true;
             console.log('game-over')

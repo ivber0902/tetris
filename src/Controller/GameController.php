@@ -70,6 +70,10 @@ class GameController extends AbstractController
     {
         return $this->render('game_modes/koop.html.twig');
     }
+    public function bot(): Response
+    {
+        return $this->render('game_modes/bot.html.twig');
+    }
     public function l40(): Response
     {
         return $this->render('game_modes/l40.html.twig');
