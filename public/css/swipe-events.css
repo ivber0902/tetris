@@ -2,7 +2,7 @@
     display: none
 }
 @media (pointer: coarse) or (hover: none) {
-    body {
+    body, html{
         position: fixed;
         top: 0;
         left: 0;
@@ -14,5 +14,14 @@
     }
     .phone{
         display: flex
+    }
+    .instruction {
+        position: absolute;
+        top: 15%;
+        left: 30%;
+        transform: translate(0, -50%);
+        flex-direction: column;
+        gap: 10px;
+        margin-left: 20px;
     }
 }

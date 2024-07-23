@@ -2,6 +2,9 @@ index:
     path: /
     methods: GET
     controller: App\Controller\GameController::menu
+menu:
+    path: /menu
+    controller: App\Controller\GameController::menu
 #регистрация логинация
 register:
     path: /signup
@@ -13,9 +16,6 @@ logout:
     path: /logout
     controller: App\Controller\SecurityController::logout
 #страницы меню
-menu:
-    path: /menu
-    controller: App\Controller\GameController::menu
 profile:
     path: /profile/{login}
     controller: App\Controller\PlayerController::profile
