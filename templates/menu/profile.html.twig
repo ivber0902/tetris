@@ -22,7 +22,7 @@
             <input type="file" id="image-input"  name="avatarPath" accept="image/png, image/jpeg, image/jpg">
         </form>
             <div class="general-results">
-                <h1 class="username">{{ login ?? 'Славянин'}}</h1>
+                <h1 class="username">{{ player.user.login ?? 'Славянин'}}</h1>
                 <div class="single-game">
                     <p class="count-solo-game count-game">Всего одиночных игр :</p>
                     <p class="count-solo-game">{{ player.statistics.gameCount }}</p>

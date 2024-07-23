@@ -7,7 +7,7 @@ let viewInputSize = document.getElementById("size")
 let viewInputMusic = document.getElementById("music");
 let viewInputBg = document.getElementById("bg");
 let viewInputDifficulty = document.getElementById("difficulty");
-let userId = parseInt(document.querySelector(".player_id").value);
+let userId = document.querySelector(".player_id").value;
 let listPlayers = document.querySelector(".list-players");
 let triangle = document.querySelectorAll(".triangle");
 let startGame = document.querySelector(".start-game");
@@ -98,7 +98,7 @@ ws.onopen = () => {
 function updatePlayers(data){
     let lobbyMembers = listPlayers.querySelectorAll('.player')
     lobbyMembers.forEach((elem)=>{
-        if(data.players.indexOf(parseInt(elem.id)) === -1)
+        if(data.players.indexOf(elem.id) === -1)
             document.getElementById(elem.id).remove()
     })
 }
@@ -122,7 +122,7 @@ ws.onmessage = (msg) => {
         let found = false;
         let lobbyMembers = listPlayers.querySelectorAll(".player__hidden-id");     
         lobbyMembers.forEach((elem)=>{
-            if(parseInt(elem.value) === joinPlayerId)
+            if(elem.value === joinPlayerId)
                 found = true;
         })
         let newPlayer;

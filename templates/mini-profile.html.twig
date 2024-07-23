@@ -2,14 +2,14 @@
     <div class="user-profile__header">
         <div class="user-profile__player">
             <img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
-            <p class="profile__nickname">{{player.user.login ?? 'славянин'}}</p>
+            <p class="profile__nickname">{{player.login ?? 'славянин'}}</p>
         </div>
         <div class="user-profile__exit">
-            <button class="exit">Exit</button>
-            {% if not player or not player.user.login %}
-                <a class="full-profile" href="/">Profile</a>
+            <button class="exit">Выйти</button>
+            {% if player is not defined %}
+                <a class="full-profile" href="/">Профиль</a>
             {% else %}
-                <a class="full-profile" href="/profile/{{player.user.login}}">Profile</a>
+                <a class="full-profile" href="/profile/{{player.login}}">Profile</a>
             {% endif %}
             
         </div>  
@@ -18,17 +18,17 @@
         <div class="max-score">
             <p class="statistics__text score">максимум очков</p>
             <div class="line"></div>
-            <p>{{player.maxScore ?? '0'}}</p>
+            <p>{{player.statistics.maxScore ?? '0'}}</p>
         </div>
         <div class="count-win">
             <p class="statistics__text vincount">всего побед</p>
             <div class="line"></div>
-            <p>{{player.winCount ?? '0'}}</p>
+            <p>{{player.statistics.winCount ?? '0'}}</p>
         </div>
         <div class="count-game">
             <p class="statistics__text countgame">всего игр</p>
             <div class="line"></div>
-            <p>{{player.gameCount ?? '0'}}</p>
+            <p>{{player.statistics.gameCount ?? '0'}}</p>
         </div>               
     </div>
 </div>

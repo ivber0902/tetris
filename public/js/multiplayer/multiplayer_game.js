@@ -185,7 +185,7 @@ ws.onmessage = (msg) => {
     if (data.type === 'config')
         initMultiplayerGame(data);
     if(data.type === 'state'){
-        if (data.state.id === parseInt(playerField.id)) {
+        if (data.state.id === playerField.id) {
             initOtherFields(otherPlayers);
             GAME.init
             (
@@ -199,7 +199,7 @@ ws.onmessage = (msg) => {
                     player.figuresAll[player.figuresPos + 4]
                 ]
             )
-            if(data.state.current_figure && (data.state.id === parseInt(playerField.id))){
+            if(data.state.current_figure && (data.state.id === playerField.id)){
                 player.field.matrix = data.state.play_field;
                 player.figuresPos = data.state.figure_count;
                 player.currentFigure = getFigure(player.figuresAll[player.figuresPos]);
@@ -216,7 +216,7 @@ ws.onmessage = (msg) => {
         GAME.start(player)
     }
     if (data.type === 'update') {
-            if (data.state.id === parseInt(playerField.id)) {
+            if (data.state.id === playerField.id) {
                 player.buffer = getFigure(data.state.buffer);
                 player.ui.buffer.src = player.buffer.image.src;
 
@@ -240,7 +240,7 @@ ws.onmessage = (msg) => {
 
 function sendField() {
     let state = {
-        id: parseInt(playerField.id),
+        id: playerField.id,
         play_field: player.field.matrix,
         buffer: player.buffer.id,
         score: player.score,
@@ -260,7 +260,7 @@ function sendField() {
 }
 
 function initMultiplayerGame(data) {
-    if(parseInt(playerField.id) === data.config.players[0]){
+    if(playerField.id === data.config.players[0]){
         playerField.appendChild(createStartGameButton());
     }
     document.querySelector('.main').style.backgroundImage = `url(${data.config.settings.background})`;
@@ -279,7 +279,7 @@ function initMultiplayerGame(data) {
 function initPlayers(players) {
     players.forEach((id) => {
         createField(id)
-        if (id !== parseInt(playerField.id)) {
+        if (id !== playerField.id) {
             let newField = createField(id);
             ListPlayers.appendChild(newField)
             foundUser(id).then((player) => newField.querySelector('.player__username').textContent = player.login)

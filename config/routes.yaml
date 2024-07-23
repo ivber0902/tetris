@@ -71,6 +71,9 @@ l40:
 game_over:
     path: /game_over
     controller: App\Controller\GameController::gameOver
+game_over_mode:
+    path: /game_over_mode
+    controller: App\Controller\GameController::gameOverMode
 download_image:
     path: /image
     methods: POST

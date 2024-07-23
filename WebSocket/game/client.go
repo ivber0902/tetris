@@ -46,7 +46,6 @@ func HandleRequest(room *Room, player *connection.Client[State, lobby.Config, Re
 		case float64:
 			client := getRandomClient(room.Clients, player)
 			if client != nil && request.Info.(float64) > 0 {
-				fmt.Println(client, request.Info.(float64), request.Info)
 				client.Send(&Response{
 					Type: "add_rows",
 					Info: AddRowInfo{

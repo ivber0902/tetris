@@ -8,7 +8,6 @@
 {% endblock %}
 {% block script %}
 	<script src="/js/game_modes/game_mode_size.js"></script>
-	<script src="/js/menu/mini-profile.js"></script>
 {% endblock %}
 {% block content %}
 	<div class="header">
@@ -17,16 +16,16 @@
 		</a>
 		<img src="/images/logo.png" alt="logo" class="logo"/>
 		<div class="profile">
-			{% if not user or not user.login %}
+			{% if player is not defined %}
 				<a href="{{ path('register') }}">
 					<div class="profile">
-						<p class="profile__nickname">{{user.login ?? 'славянин'}}</p>
+						<p class="profile__nickname">{{player.user.login ?? 'славянин'}}</p>
 						<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
 					</div>
 				</a>
 			{% else %}
 				<div class="profile">
-					<p class="profile__nickname">{{user.login ?? 'славянин'}}</p>
+					<p class="profile__nickname">{{player.user.login ?? 'славянин'}}</p>
 					<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
 				</div>
 			{% endif %}
@@ -74,4 +73,5 @@
 		</div>
 	</div>
 	{% include 'mini-profile.html.twig' %}
+	<script src="/js/menu/mini-profile.js"></script>
 {% endblock %}
