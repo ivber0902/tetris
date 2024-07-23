@@ -2,14 +2,14 @@
     <div class="user-profile__header">
         <div class="user-profile__player">
             <img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
-            <p class="profile__nickname">{{user.login ?? 'славянин'}}</p>
+            <p class="profile__nickname">{{player.user.login ?? 'славянин'}}</p>
         </div>
         <div class="user-profile__exit">
             <button class="exit">Exit</button>
-            {% if not user or not user.login %}
+            {% if not player or not player.user.login %}
                 <a class="full-profile" href="/">Profile</a>
             {% else %}
-                <a class="full-profile" href="/profile/{{user.login}}">Profile</a>
+                <a class="full-profile" href="/profile/{{player.user.login}}">Profile</a>
             {% endif %}
             
         </div>  
