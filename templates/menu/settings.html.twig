@@ -1,0 +1,48 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	Menu
+{% endblock %}
+{% block style %}
+	<link rel="stylesheet" href="/css/settings.css">
+{% endblock %}
+{% block content %}
+	<div class="header">
+        <a href="/">
+            <img src="/images/home.png" alt="menu" class="menu-img"/>
+        </a>
+		<img src="/images/logo.png" alt="logo" class="logo"/>
+		<div class="profile">
+			{% if not user or not user.login %}
+				<a href="{{ path('register') }}">
+					<div class="profile">
+						<p class="profile__nickname">{{user.login ?? 'славянин'}}</p>
+						<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
+					</div>
+				</a>
+			{% else %}
+				<div class="profile">
+					<p class="profile__nickname">{{user.login ?? 'славянин'}}</p>
+					<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
+				</div>
+			{% endif %}
+		</div>
+	</div>
+    <main>
+        <div class="settings">
+            <div class="settings__item-language">
+                <p class="item__title language">Выбор языка</p>
+                <p class="item__description language">Выбери нужный язык из предложенных</p>
+            </div> 
+            <div class="settings__item-bg">
+                <p class="item__title bg">Выбор фона</p>
+                <p class="item__description bg">Выбери фон, который понравится именно тебе</p>
+            </div> 
+        </div>
+        <div class="list-settings">
+            <div class="menu-settings">
+            </div>
+        </div>
+    </main>
+    <script src="/js/change_setting.js"></script>
+{% endblock %}

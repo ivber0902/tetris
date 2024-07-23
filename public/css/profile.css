@@ -7,14 +7,14 @@
     text-transform: uppercase;
 }
 
-.body {
+body {
     height: 100vh;
     width: 100vw;
     background: url(/images/bg.png) no-repeat;
     background-size: cover;
 }
 
-#image-input{
+#image-input {
     display: none
 }
 
@@ -88,65 +88,51 @@
 
 .count-win-game {
     padding-left: 6px;
-    width: 100%;
     white-space: nowrap
 }
 
-.wrapper{
-    max-width: 65%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-}
-
-.list-score {
+.achievement__item {
+    position: relative;
     width: 100%;
-    max-height: 745px;
-    overflow-y: scroll;
-}
-
-.list-score::-webkit-scrollbar {
-    width: 5px;
-    background-color: #1a161d;
-}
-
-.list-score::-webkit-scrollbar-thumb {
-    width: 5px;
-    border-radius: 10px;
-    background-color: #243e25;
-}
-
-.list-score::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
-    background-color: #1a161d;
-}
-
-.score {
-    width: 100%;
+    height: 108px;
     margin-top: 10px;
     margin-bottom: 10px;
     box-sizing: border-box;
     padding: 14px;
     display: flex;
-    flex-direction: column;
     background-color: #1a161d;
     border-top: 3px solid #453351;
     border-left: 3px solid #392e40;
     border-bottom: 3px solid #0a080b;
+    border-right: 3px solid #0a080b;
+    border-radius: 30px;
 }
 
-.score__title {
+.item__title {
+    color: #9CCA95;
+    font-size: 24px;
+}
+
+.achievement__title{
     color: #dac8e7;
     font-size: 32px;
 }
 
-.score__description {
-    color: #7c6b88;
-    font-size: 28px;
+.item__image {
+    width: 64px;
+    height: 64px;
+    padding-right: 20px;
 }
 
-.back{
+.item__subtitle {
+    color: #7c6b88;
+    font-size: 18px;
+}
+
+.back {
+    position: absolute;
+    right: 0;
+    bottom: 0;
     margin-top: 20px;
     margin-right: 40px;
     display: flex;
@@ -159,10 +145,60 @@
     box-shadow: 0 0 8px #000;
     color: #c9c9c9;
     max-width: 160px;
-} 
+}
 
-.link_back{
+.link_back {
     padding: 8px;
     font-size: 32px;
     color: #fff;
+}
+
+.other-information {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    height: 70vh;
+    width: 60vw;
+}
+
+.slider-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    margin: 75px auto 0;
+}
+
+.achievement {
+    max-width: 780px;
+    width: 100%;
+    height: 100%;
+}
+
+.prev-button,
+.next-button {
+    width: 50px;
+    height: 50px;
+    background-color: #1a161d;
+    border: none;
+    font-size: 24px;
+    color: white;
+    border-radius: 50%;
+}
+
+.other-information__title{
+    font-size: 42px;
+    color: #fff;
+    margin: 0 auto;
+}
+
+.overlay {
+    background-color: rgba(0,0,0,0.5); 
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    border-radius: 30px;
+    top: 0;
+    left: 0;
 }

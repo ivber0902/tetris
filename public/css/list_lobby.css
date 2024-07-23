@@ -160,7 +160,6 @@ input {
    display: flex;
    flex-direction: row;
    transform: translate(-50%, 0);
-
 }
 .row {
     display: flex;

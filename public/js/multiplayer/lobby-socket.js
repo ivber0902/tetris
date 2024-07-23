@@ -49,10 +49,10 @@ function sendLobbySettings(settingLobby) {
 }
 
 function updateView(newData) {
-    viewInputSize.innerHTML = settings.size.find(item => item.value.width === newData.settings.play_field.width).title
-    viewInputMusic.innerHTML = settings.music.find(item => item.value === newData.settings.music).title
-    viewInputBg.innerHTML = settings.bg.find(item => item.value === newData.settings.background).title
-    viewInputDifficulty.innerHTML = settings.difficulty.find(item => item.value === newData.settings.difficulty).title
+    viewInputSize.innerHTML = settings.size.find(item => item.value.width === newData.settings.play_field.width).title[localStorage.lang]
+    viewInputMusic.innerHTML = settings.music.find(item => item.value === newData.settings.music).title[localStorage.lang]
+    viewInputBg.innerHTML = settings.bg.find(item => item.value === newData.settings.background).title[localStorage.lang]
+    viewInputDifficulty.innerHTML = settings.difficulty.find(item => item.value === newData.settings.difficulty).title[localStorage.lang]
 }
 
 function disconnectPlayer(kickId){
