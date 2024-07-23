@@ -14,7 +14,7 @@ body {
     background-size: cover;
 }
 
-#image-input{
+#image-input {
     display: none
 }
 
@@ -92,13 +92,14 @@ body {
 }
 
 .achievement__item {
+    position: relative;
     width: 100%;
+    height: 108px;
     margin-top: 10px;
     margin-bottom: 10px;
     box-sizing: border-box;
     padding: 14px;
     display: flex;
-    align-items: center;
     background-color: #1a161d;
     border-top: 3px solid #453351;
     border-left: 3px solid #392e40;
@@ -107,23 +108,31 @@ body {
     border-radius: 30px;
 }
 
-.achievement__title {
+.item__title {
+    color: #9CCA95;
+    font-size: 24px;
+}
+
+.achievement__title{
     color: #dac8e7;
     font-size: 32px;
 }
 
-.achievement__image
-{
+.item__image {
     width: 64px;
     height: 64px;
+    padding-right: 20px;
 }
 
-.achievement__description {
+.item__subtitle {
     color: #7c6b88;
-    font-size: 28px;
+    font-size: 18px;
 }
 
-.back{
+.back {
+    position: absolute;
+    right: 0;
+    bottom: 0;
     margin-top: 20px;
     margin-right: 40px;
     display: flex;
@@ -136,19 +145,21 @@ body {
     box-shadow: 0 0 8px #000;
     color: #c9c9c9;
     max-width: 160px;
-} 
+}
 
-.link_back{
+.link_back {
     padding: 8px;
     font-size: 32px;
     color: #fff;
 }
 
-.other-information
-{
+.other-information {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: end;
+    height: 70vh;
+    width: 60vw;
 }
 
 .slider-container {
@@ -156,21 +167,38 @@ body {
     flex-direction: column;
     align-items: center;
     overflow: hidden;
-    margin-right: 30vw;
-  }
-  
-  .achievement {
+    margin: 75px auto 0;
+}
+
+.achievement {
+    max-width: 780px;
     width: 100%;
     height: 100%;
-  }
-  
-  .prev-button,
-  .next-button {
-    transform: translateY(-50%);
+}
+
+.prev-button,
+.next-button {
     width: 50px;
     height: 50px;
-    background-color: transparent;
+    background-color: #1a161d;
     border: none;
     font-size: 24px;
     color: white;
-  }
+    border-radius: 50%;
+}
+
+.other-information__title{
+    font-size: 42px;
+    color: #fff;
+    margin: 0 auto;
+}
+
+.overlay {
+    background-color: rgba(0,0,0,0.5); 
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    border-radius: 30px;
+    top: 0;
+    left: 0;
+}

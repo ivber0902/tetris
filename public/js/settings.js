@@ -493,12 +493,12 @@ const langArr = {
         "en": "You've enlisted the help of luck! Three wins in a row is just the beginning of a great journey!"
     },
     "item__subtitle.multy.medium": {
-        "ru": "Победи в 5 онлайн играх подряд",
-        "en": "Wins in 5 online games in a row"
+        "ru": "Никто не может остановить твою волну! Победа в 5 онлайн играх подряд утвердит твой статус!",
+        "en": "No one can stop your wave! Winning 5 online games in a row will confirm your status!"
     },
     "item__subtitle.multy.hard": {
-        "ru": "Победи 10 соперников подряд",
-        "en": "Defeat 10 opponents in a row"
+        "ru": "Ты — непобедимый! 10 побед подряд устанавливают новый стандарт для всех игроков!",
+        "en": "You are invincible! 10 consecutive wins set a new standard for all players!"
     },
     "achievement__title.ai": {
         "ru": "Битва против ИИ",
