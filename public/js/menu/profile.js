@@ -22,21 +22,8 @@ userImageInput.addEventListener('change', (event)=>{
         };
         reader.readAsDataURL(file);
         form.submit();
-        // ChangeImage(file)
     }
 })
-
-async function ChangeImage(fileImage) {
-  console.log(fileImage)
-      let response = await fetch("/api/image", {
-        method: "POST",
-        body: JSON.stringify({
-            image: fileImage,
-            // type: fileImage.type
-        }),
-    })
-    console.log(response)
-}
 
 prevButton.addEventListener('click', showPreviousSlide);
 nextButton.addEventListener('click', showNextSlide);
