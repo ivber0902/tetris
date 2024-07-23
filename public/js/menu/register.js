@@ -98,7 +98,6 @@ addEventListener("DOMContentLoaded", (event) => {
             for (const pair of new FormData(document.forms.register_user_input)) {
                 data.append(pair[0], pair[1]);
             }
-            console.log(data);
             let response = await fetch('/api/register', {
                 method: 'POST',
                 body: data

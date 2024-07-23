@@ -4,27 +4,33 @@ declare(strict_types=1);
 namespace App\Service;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Service\ImageServiceInterface;
+use PhpParser\Node\Expr\Cast\Object_;
 
-class ImageService {
+class ImageService{
     const UPLOADS_PATH = DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'uploads';
     const ALLOWED_MIME_TYPES_MAP = [
         'image/jpeg' => '.jpg',
         'image/png' => '.png',
-        'image/webp' => '.webp'
+        'image/webp' => '.webp',
     ];
     public function deleteImage(string $pathImage): void
     {
-        $pathDir = dirname(__DIR__, 2) . self::UPLOADS_PATH;
-        unlink($pathDir. '/' . $pathImage);
+        unlink(dirname(__DIR__, 2) . self::UPLOADS_PATH. '/' . $pathImage);
     }
 
-    public function updateImage(?string $pathImage, ?array $fileInfo): ?string
+    public function updateImage(?string $pathImage, Object $imageObject): ?string
     {
-        if(empty($fileInfo))
+        if ($imageObject !== null)
         {
-            return null;
+            $fileInfo = [
+                'type' => $imageObject->getClientMimeType(),
+                'name' => $imageObject->getFilename(),
+                'tmp_name' => $imageObject->getPathname(),
+                'error' => $imageObject->getError(),
+            ];
         }
-        if(!empty($pathImage)){
+        if($pathImage !== null){
             $this->deleteImage($pathImage);
         }
         return  $this->moveImageToUploads($fileInfo);

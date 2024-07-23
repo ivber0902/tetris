@@ -71,6 +71,10 @@ l40:
 game_over:
     path: /game_over
     controller: App\Controller\GameController::gameOver
+download_image:
+    path: /image
+    methods: POST
+    controller: App\Controller\PlayerController::updateAvatarPath
 # api
 api_register:
     path: /api/register
