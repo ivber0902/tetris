@@ -3,6 +3,9 @@ addEventListener("DOMContentLoaded", () => {
     document.querySelector(".profile__avatar").addEventListener("click", (e) => open(e));
 })
 
+let userLink = document.querySelector(`a[href="/signup"]`);
+console.log(userLink)
+
 function close()
 {
     const profile = document.querySelector('.user-profile');
@@ -11,6 +14,8 @@ function close()
 
 function open()
 {
-    const profile = document.querySelector('.user-profile');
-    profile.style.display = 'inline';
+    if(!userLink){
+        const profile = document.querySelector('.user-profile');
+        profile.style.display = 'inline';
+    }
 }

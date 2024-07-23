@@ -25,6 +25,15 @@ class GameController extends AbstractController
         $player = $this->service->findPlayer($securityUser->getId());
         return $this->render('menu/menu.html.twig', ["player" => $player]);
     }
+    public function settings(): Response
+    {
+        $securityUser = $this->getUser();
+        if ($securityUser === null) {
+            return $this->render('menu/settings.html.twig');
+        }
+        $player = $this->service->findPlayer($securityUser->getId());
+        return $this->render('menu/settings.html.twig', ["player" => $player]);
+    }
     public function gameOver(Request $request): Response
     {
         $securityUser = $this->getUser();

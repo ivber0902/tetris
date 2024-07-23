@@ -4,7 +4,8 @@
 	List Lobby
 {% endblock %}
 {% block style %}
-	<link rel="stylesheet" href="/css/list_lobby.css"/><link rel="stylesheet" href="/css/mini-profile.css"/>
+	<link rel="stylesheet" href="/css/list_lobby.css"/>
+	<link rel="stylesheet" href="/css/mini-profile.css"/>
 {% endblock %}
 {% block content %}
 	<div class="bg">
@@ -12,16 +13,16 @@
 			<img src="/images/settings.png" alt="settings" class="settings">
 			<img src="/images/logo.png" alt="logo" class="logo">
 			<div class="profile">
-				{% if not user or not user.login %}
+				{% if player is not defined %}
 					<a href="{{ path('register') }}">
 						<div class="profile">
-							<p class="profile__nickname">{{user.login ?? 'славянин'}}</p>
+							<p class="profile__nickname">{{player.login ?? 'славянин'}}</p>
 							<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
 						</div>
 					</a>
 				{% else %}
 					<div class="profile">
-						<p class="profile__nickname">{{user.login ?? 'славянин'}}</p>
+						<p class="profile__nickname">{{player.login ?? 'славянин'}}</p>
 						<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
 					</div>
 				{% endif %}

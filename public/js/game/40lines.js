@@ -19,10 +19,12 @@ GAME.play = (player) => {
         if (player.lines >= 40) {
             player.isActive = false;
             player.gameEnd = true;
+            console.log('game-over')
             gameEnd(new Date() - GAME.startTime);
         }
+        GAME.defaultPlay(player)
     }
-    GAME.defaultPlay(player)
+    
 }
 GAME.start = (player) => {
     GAME.onLoadImages(() => {
