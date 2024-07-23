@@ -3,7 +3,6 @@ package game
 import (
 	"WebSocket/connection"
 	"WebSocket/lobby"
-	"fmt"
 	"log"
 	"math/rand"
 	"time"
@@ -98,14 +97,16 @@ func getRandomClient(clients map[*connection.Client[State, lobby.Config, Respons
 			active[client] = true
 		}
 	}
-	if countActive := len(active); countActive > 0 {
-		clientOrder := rand.Intn(countActive)
 
+	if activeCount := len(active); activeCount > 0 {
+		clientOrder := rand.Intn(activeCount)
 		for client := range active {
 			if clientOrder == counter {
 				return client
 			}
+			counter += 1
 		}
 	}
+
 	return nil
 }

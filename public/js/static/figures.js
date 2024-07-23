@@ -270,3 +270,5 @@ let figures = [
 
 let blockField = new Image()
 
+let blockAdd = new Image()
+

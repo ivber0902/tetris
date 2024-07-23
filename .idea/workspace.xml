@@ -5,49 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7bcc5562-9455-45fa-9b4e-8407aadb17a9" name="Changes" comment="Коммит по-русски">
-      <change afterPath="$PROJECT_DIR$/config/doctrine/Game.mongodb.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/doctrine/Player.mongodb.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/doctrine/SingleGame.mongodb.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/doctrine/Statistics.mongodb.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/doctrine/UI.mongodb.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/doctrine/User.mongodb.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/packages/doctrine_mongodb.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/DebugController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/NoSQLTestController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Document/Game.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Document/Player.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Document/SingleGame.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Document/Statistics.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Document/UI.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Document/User.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Repository/NUserRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebSocket/connection/room.go" beforeDir="false" afterPath="$PROJECT_DIR$/WebSocket/connection/room.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebSocket/connection/types.go" beforeDir="false" afterPath="$PROJECT_DIR$/WebSocket/connection/types.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebSocket/cooperative_game/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/WebSocket/cooperative_game/client.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebSocket/game/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/WebSocket/game/client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebSocket/game/room.go" beforeDir="false" afterPath="$PROJECT_DIR$/WebSocket/game/room.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebSocket/game/state.go" beforeDir="false" afterPath="$PROJECT_DIR$/WebSocket/game/state.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebSocket/lobby/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/WebSocket/lobby/client.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebSocket/lobby/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/WebSocket/lobby/config.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebSocket/lobby/room.go" beforeDir="false" afterPath="$PROJECT_DIR$/WebSocket/lobby/room.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebSocket/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/WebSocket/server.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/framework.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/framework.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/routes.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/routes.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/lobby-socket.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/lobby-socket.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/GameController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/GameController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/PlayerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/PlayerController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Player.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/PlayerRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/PlayerRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/UserRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/UserRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Security/SecurityUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Security/SecurityUser.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Security/UserProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Security/UserProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/PlayerService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/PlayerService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/UserService.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/multiplayer/lobby.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/multiplayer/lobby.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/multiplayer/multiplayer_game.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/multiplayer/multiplayer_game.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,18 +22,10 @@
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="JavaScript File" />
-        <option value="CSS File" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="onlineCooperative" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -113,18 +69,22 @@
       <path value="$PROJECT_DIR$/vendor/symfony/doctrine-bridge" />
       <path value="$PROJECT_DIR$/vendor/symfony/deprecation-contracts" />
       <path value="$PROJECT_DIR$/vendor/symfony/error-handler" />
+      <path value="$PROJECT_DIR$/vendor/symfony/dotenv" />
       <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher-contracts" />
       <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher" />
       <path value="$PROJECT_DIR$/vendor/symfony/finder" />
       <path value="$PROJECT_DIR$/vendor/symfony/filesystem" />
       <path value="$PROJECT_DIR$/vendor/symfony/form" />
+      <path value="$PROJECT_DIR$/vendor/symfony/flex" />
       <path value="$PROJECT_DIR$/vendor/symfony/http-foundation" />
       <path value="$PROJECT_DIR$/vendor/symfony/framework-bundle" />
       <path value="$PROJECT_DIR$/vendor/symfony/maker-bundle" />
       <path value="$PROJECT_DIR$/vendor/symfony/http-kernel" />
       <path value="$PROJECT_DIR$/vendor/symfony/options-resolver" />
+      <path value="$PROJECT_DIR$/vendor/symfony/mime" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-grapheme" />
       <path value="$PROJECT_DIR$/vendor/symfony/password-hasher" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-idn" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-icu" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-mbstring" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-normalizer" />
@@ -139,24 +99,11 @@
       <path value="$PROJECT_DIR$/vendor/symfony/security-http" />
       <path value="$PROJECT_DIR$/vendor/symfony/security-csrf" />
       <path value="$PROJECT_DIR$/vendor/symfony/service-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/serializer" />
       <path value="$PROJECT_DIR$/vendor/symfony/string" />
       <path value="$PROJECT_DIR$/vendor/symfony/stopwatch" />
       <path value="$PROJECT_DIR$/vendor/symfony/twig-bridge" />
       <path value="$PROJECT_DIR$/vendor/symfony/translation-contracts" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php80" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-ctype" />
-      <path value="$PROJECT_DIR$/vendor/symfony/dotenv" />
-      <path value="$PROJECT_DIR$/vendor/symfony/flex" />
-      <path value="$PROJECT_DIR$/vendor/symfony/mime" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-idn" />
-      <path value="$PROJECT_DIR$/vendor/symfony/serializer" />
-      <path value="$PROJECT_DIR$/vendor/friendsofphp/proxy-manager-lts" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php81" />
-      <path value="$PROJECT_DIR$/vendor/jean85/pretty-package-versions" />
-      <path value="$PROJECT_DIR$/vendor/doctrine/mongodb-odm-bundle" />
-      <path value="$PROJECT_DIR$/vendor/doctrine/mongodb-odm" />
-      <path value="$PROJECT_DIR$/vendor/mongodb/mongodb" />
-      <path value="$PROJECT_DIR$/vendor/laminas/laminas-code" />
     </include_path>
   </component>
   <component name="ProjectColorInfo">{
@@ -167,30 +114,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "onlineCooperative",
-    "last_opened_file_path": "/web/tetris/config/doctrine",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;refactoring&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/creepy/tetris&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mongo",
-      "mariadb"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mongo&quot;,
+      &quot;mariadb&quot;
     ]
   }
-}]]></component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/config/doctrine" />
-    </key>
-  </component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -212,7 +153,6 @@
       <workItem from="1720626075820" duration="679000" />
       <workItem from="1720954113746" duration="9939000" />
       <workItem from="1721127789829" duration="1730000" />
-      <workItem from="1721593822333" duration="36529000" />
     </task>
     <task id="LOCAL-00001" summary="Исправил кнопку «Начать игру»">
       <option name="closed" value="true" />

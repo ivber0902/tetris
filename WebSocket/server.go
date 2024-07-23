@@ -170,6 +170,6 @@ func (server *Server) GameResultsHandler(w http.ResponseWriter, r *http.Request)
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	w.Header().Set("Content-Type", "application/json")
 
-	json.NewEncoder(w).Encode(gameConn.Results)
+	json.NewEncoder(w).Encode(reverseArray[game.PlayerResult](*gameConn.Results))
 	//w.WriteHeader(http.StatusOK)
 }

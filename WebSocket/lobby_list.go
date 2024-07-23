@@ -98,7 +98,13 @@ func (l *LobbyList) ListenConnection(conn *websocket.Conn) {
 					websocket.CloseNoStatusReceived:
 					log.Printf("Web socket closed by client: %s", err)
 					return
+				default:
+					log.Printf("UNKNOWN WEBSOCKET ERROR: %v", err)
+					return
 				}
+			default:
+				log.Printf("Web socket closed: %s", err)
+				return
 			}
 		} else if msgType == websocket.TextMessage {
 			if string(msg) == "get" {

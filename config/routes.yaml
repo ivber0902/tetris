@@ -46,6 +46,9 @@ game_over_multi:
 game:
     path: /game
     controller: App\Controller\GameController::game
+leaderboard:
+    path: /leaderboard
+    controller: App\Controller\GameController::leaderboard
 blitz:
     path: /blitz
     controller: App\Controller\GameController::blitz

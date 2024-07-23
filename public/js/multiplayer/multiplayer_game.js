@@ -2,23 +2,66 @@ const host = window.location.hostname;
 let params = new URLSearchParams(document.location.search);
 let wsUrl = "ws://" + host + ":8080/game?lobby=" + params.get('lobby');
 let ws = new WebSocket(wsUrl);
-let otherPlayersFields = [];
 let otherPlayers;
 let playerField = document.querySelector('.wrapper-main-field');
-let init = false;
 let ListPlayers = document.querySelector('.palyers-list');
-let newFigureId;
-
 player.field.moveDownDefault = player.field.moveDown;
 player.field.updateHorizontalPositionDefault = player.field.updateHorizontalPosition;
 player.onBufferKeyUpDefault = player.onBufferKeyUp;
 player.onPositionKeyDownDefault = player.onPositionKeyDown;
 player.field.defaultFix = player.field.fixFigure;
+player.field.defaultClearRow = player.field.clearRow;
 GAME.defaultInit = GAME.init;
+
+player.countAddLines = [];
+player.emptyCell = [];
 
 GAME.start = (player) => {
     player.isActive = true;
     GAME.play(player)
+}
+
+function sumArr(array){
+    let sum = 0;
+    if(array)
+    {
+        array.forEach((elem)=>{
+            sum = sum + elem
+        })
+    }
+    return sum
+}
+
+player.field.clearRow = () => {
+    let needClearLines = player.field.defaultClearRow();
+    let clearLines = needClearLines;
+    let newField = player.field.matrix;
+    if(sumArr(player.countAddLines) >= needClearLines){
+        player.countAddLines.forEach((countLine, index)=>{
+            if(countLine - needClearLines > 0) {
+                countLine = countLine - needClearLines;
+                needClearLines = 0;
+                for(i = 0; i < newField.length - countLine; i++){
+                    newField[i] = newField[i + countLine]
+                }
+                let newLine = Array(player.field.matrix[0].length).fill(19);
+                newLine[player.emptyCell[index]] = 0;
+                for(let i = newField.length - countLine; i < newField.length ; i++){
+                    newField[i] = Array(...newLine)
+                }
+            }else{
+                needClearLines = needClearLines - countLine;
+            }
+        })
+        player.countAddLines = [];
+        player.emptyCell = [];
+    }else{
+        ws.send(JSON.stringify({
+            "type": "clear_rows",
+            "info": clearLines - sumArr(player.countAddLines)
+        }));
+    }
+    return clearLines
 }
 
 player.field.moveDown = (figure) => {
@@ -68,7 +111,6 @@ player.field.fixFigure = (figure) => {
     ws.send(JSON.stringify({
         "type": "set"
     }));
-
 }
 
 function updateNextFigures(player) {
@@ -171,6 +213,11 @@ ws.onmessage = (msg) => {
             }
 
     }
+    if (data.type === 'add_rows')
+        {
+            player.countAddLines.push(data.info.count);
+            player.emptyCell.push(data.info.empty_column)
+        }
 }
 
 
@@ -199,8 +246,9 @@ function initMultiplayerGame(data) {
     if(parseInt(playerField.id) === data.config.players[0]){
         playerField.appendChild(createStartGameButton());
     }
-    init = true;
     document.querySelector('.main').style.backgroundImage = `url(${data.config.settings.background})`;
+    player.lvl = data.config.settings.difficulty;
+    player.ui.music = new Audio(data.config.settings.music)
     initPlayertField(data.config.settings.play_field);
     initPlayers(data.config.players);
     player.figuresAll = data.figures;
@@ -234,14 +282,14 @@ function createStartGameButton() {
     return button;
 }
 
-async function getResults(){
-    let response = await fetch("http://" + host + ":8080/game/results?lobby=" + params.get('lobby'), {
-        method: 'GET'
-    });
-    let results = await response.json()
-    console.log(results)
-    let jsonResults = JSON.stringify(results);
-    sessionStorage.setItem('results', jsonResults);
+function getResults(){
+    // let response = await fetch("http://" + host + ":8080/game/results?lobby=" + params.get('lobby'), {
+    //     method: 'GET'
+    // });
+    // let results = await response.json()
+    // console.log(results)
+    // let jsonResults = JSON.stringify(results);
+    // sessionStorage.setItem('results', jsonResults);
     window.location.href = '/game_over_multi?lobby='  + params.get('lobby');
 }
 
@@ -258,27 +306,6 @@ function initPlayertField(fieldParam) {
     GAME.height = fieldParam.height;
     player.field.width = fieldParam.width;
     player.field.height = fieldParam.height;
-}
-
-function addLines(player, countLines, positionEmpty) {
-    let newFiled;
-    if(player.field.matrix[countLines - 1].every((elem) => elem === 0)){
-        let newLine;
-        for (let i = 0; i < player.field.matrix.length; i++){
-            if(i !== positionEmpty)
-                newLine.push(1)
-            else
-                newLine.push(0)
-        }
-        for (let i = countLines; i < player.field.matrix.length; i++) {
-            newFiled.push(player.field.matrix[i])
-        }
-        for (let i = 0; i < countLines; i++){
-            newFiled.push(newLine)
-        }
-    }else{
-        player.gameEnd(player.score);
-    }
 }
 
 function createField(id) {

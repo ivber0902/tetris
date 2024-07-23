@@ -66,6 +66,9 @@ func (c *Client[T, ConfType, RespType]) ReadLoop(callback func(*Client[T, ConfTy
 					websocket.CloseNoStatusReceived:
 					log.Printf("Player (IP: %s) reading: Web socket closed by client", c.IP)
 					return
+				default:
+					log.Printf("UNKNOWN WEBSOCKET ERROR: %v", err)
+					return
 				}
 			case *json.SyntaxError:
 				log.Printf("Player (IP: %s) reading: JSON Unmarshal error: %v", c.IP, err)
@@ -74,6 +77,7 @@ func (c *Client[T, ConfType, RespType]) ReadLoop(callback func(*Client[T, ConfTy
 				return
 			default:
 				log.Printf("UNKNOWN ERROR: %v", err)
+				return
 			}
 		} else {
 			if !callback(c, request) {
