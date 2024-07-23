@@ -4,11 +4,11 @@ namespace App\Document;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ODM\MongoDB\PersistentCollection;
 
 class Player
 {
     private string $id;
+    private string $avatar;
     private User $user;
     private Statistics $statistics;
     private UI $ui;
@@ -20,6 +20,17 @@ class Player
         $this->statistics = new Statistics();
         $this->ui = new UI();
         $this->games = new ArrayCollection();
+    }
+
+    public function getAvatar(): string
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(string $avatar): static
+    {
+        $this->avatar = $avatar;
+        return $this;
     }
 
     public function setUser(User $user): static
