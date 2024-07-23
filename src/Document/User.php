@@ -1,20 +1,12 @@
 <?php
 
-namespace App\Entity;
+namespace App\Document;
+
 
 class User
 {
-    private ?int $id = null;
     private ?string $login = null;
     private ?string $password = null;
-    private ?Player $player = null;
-
-    private ?int $playerId = null;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getLogin(): ?string
     {
@@ -37,22 +29,6 @@ class User
     {
         $this->password = $password;
 
-        return $this;
-    }
-
-    public function getPlayer(): ?Player
-    {
-        return $this->player;
-    }
-
-    public function getPlayerId(): ?int
-    {
-        return $this->playerId;
-    }
-
-    public function setPlayerId(int $playerId): static
-    {
-        $this->playerId = $playerId;
         return $this;
     }
 

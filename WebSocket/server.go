@@ -95,7 +95,7 @@ func (server *Server) HandleConnection(w http.ResponseWriter, r *http.Request, c
 			go player.ReadLoop(lobby.HandleRequest, lobby.WaitConnection)
 			go player.WriteLoop()
 
-			log.Printf("Server HandleConnection: Player %d (IP: %s) is reconnecting to the lobby %s", player.ID, player.IP, lobbyConn.ID)
+			log.Printf("Server HandleConnection: Player %v (IP: %s) is reconnecting to the lobby %s", player.ID, player.IP, lobbyConn.ID)
 			return
 		}
 	}
@@ -150,7 +150,7 @@ func (server *Server) HandleGameJoin(w http.ResponseWriter, r *http.Request, cli
 			}, game.WaitConnection)
 			go player.WriteLoop()
 
-			log.Printf("Server HandleGameJoin: Player %d (IP: %s) is connecting to the game %s", player.ID, player.IP, gameConn.ID)
+			log.Printf("Server HandleGameJoin: Player %v (IP: %s) is connecting to the game %s", player.ID, player.IP, gameConn.ID)
 			return
 		}
 	}

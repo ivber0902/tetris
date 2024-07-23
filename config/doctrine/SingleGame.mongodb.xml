@@ -1,0 +1,12 @@
+<doctrine-mongo-mapping xmlns="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping"
+                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                        xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
+                    http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
+    <document name="App\Document\SingleGame" collection="Game">
+        <field name="score" type="int"/>
+        <field name="tetrisCount" type="int"/>
+        <field name="figureCount" type="int"/>
+        <field name="filledRows" type="int"/>
+        <field name="fieldMode" type="int"/>
+    </document>
+</doctrine-mongo-mapping>

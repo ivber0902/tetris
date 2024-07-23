@@ -2,36 +2,46 @@
 
 namespace App\Repository;
 
-use App\Entity\Player;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityRepository;
+use App\Document\Player;
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
 
 
 class PlayerRepository
 {
-    private EntityRepository $repository;
+    private DocumentRepository $repository;
 
-    public function __construct(private readonly EntityManagerInterface $entityManager)
+    public function __construct(private readonly DocumentManager $documentManager)
     {
-        $this->repository = $entityManager->getRepository(Player::class);
+        $this->repository = $documentManager->getRepository(Player::class);
     }
 
-    public function store(Player $player): int
+    public function store(Player $player): string
     {
-        $this->entityManager->persist($player);
-        $this->entityManager->flush();
+        $this->documentManager->persist($player);
+        $this->documentManager->flush();
         return $player->getId();
     }
 
     public function delete(Player $player): void
     {
-        $this->entityManager->remove($player);
-        $this->entityManager->flush();
+        $this->documentManager->remove($player);
+        $this->documentManager->flush();
     }
 
-    public function find(int $id): Player
+    public function find(string $id): ?Player
     {
-        return $this->entityManager->find(Player::class, $id);
+        return $this->repository->find($id);
+    }
+
+    public function findByLogin(string $login): ?Player
+    {
+        return $this->repository->findOneBy(['user.login' => $login]);
+    }
+
+    public function findBy(array $criteria): ?Player
+    {
+        return $this->repository->findOneBy($criteria);
     }
 }
 

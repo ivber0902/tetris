@@ -4,32 +4,30 @@ namespace App\Controller;
 
 use App\Repository\PlayerRepository;
 use App\Service\PlayerService;
-use App\Service\UserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 class PlayerController extends AbstractController
 {
     public function __construct(
-        private readonly PlayerService $playerService,
-        private readonly UserService   $userService,
+        private readonly PlayerService $service,
     )
     {
     }
 
     public function profile(string $login): Response
     {
-        $user = $this->userService->findUserByLogin($login);
-        if ($user !== null) {
+        $player = $this->service->findUserByLogin($login);
+        if ($player !== null) {
             return $this->render('menu/profile.html.twig', [
-                "login" => $login,
-                "player" => $user->getPlayer(),
+                "player" => $player,
             ]);
         }
-        throw new NotFoundHttpException();
+        throw new UnprocessableEntityHttpException();
     }
 
     public function updateStatistics(Request $request): Response
@@ -38,13 +36,12 @@ class PlayerController extends AbstractController
         if ($securityUser === null) {
             return $this->json([], Response::HTTP_UNAUTHORIZED);
         }
-        $user = $this->userService->findUser($securityUser->getId());
-        $player_id = $user->getPlayerId();
+        $player = $this->service->findPlayer($securityUser->getId());
 
         $statistics = json_decode($request->getContent(), true);
         if ($statistics !== null) {
-            $this->playerService->updateStatistics(
-                $player_id,
+            $this->service->updateStatistics(
+                $player->getId(),
                 $statistics['score'] ?? null,
                 $statistics['isWon'] ?? null,
             );
@@ -52,26 +49,16 @@ class PlayerController extends AbstractController
         return new Response("Hello");
     }
 
-    public function getPlayerApi()
+    public function getUserApi(string $id): Response
     {
-        $securityUser = $this->getUser();
-        if ($securityUser === null) {
-            return $this->json([], Response::HTTP_UNAUTHORIZED);
+        $player = $this->service->findPlayer($id);
+
+        if ($player === null) {
+            return $this->json([], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
-        $user = $this->userService->findUser($securityUser->getId());
-        $player = $user->getPlayer();
         return $this->json([
             "id" => $player->getId(),
-            ""
-        ], Response::HTTP_OK);
-    }
-
-    public function getUserApi(int $id): Response
-    {
-        $user = $this->userService->findUserByPlayerId($id);
-        return $this->json([
-            "id" => $user->getId(),
-            "login" => $user->getLogin(),
+            "login" => $player->getLogin(),
         ], Response::HTTP_OK);
     }
 }

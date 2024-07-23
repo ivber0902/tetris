@@ -16,7 +16,7 @@ func HandleRequest(room *Room, player *connection.Client[State, lobby.Config, Re
 			Config:  player.Config,
 			Figures: (*player.State.Figures)[1:],
 		})
-		log.Printf("Player %d (IP: %s) reading: got config %s", player.ID, player.IP, room.ID)
+		log.Printf("Player %v (IP: %s) reading: got config %s", player.ID, player.IP, room.ID)
 	case StartRequestType:
 		if player.IsHost {
 			player.State.Started = true
@@ -63,14 +63,14 @@ func HandleRequest(room *Room, player *connection.Client[State, lobby.Config, Re
 				Type:  "update",
 				State: player.State,
 			}
-			log.Printf("Player %d (IP: %s) game over", player.ID, player.IP)
+			log.Printf("Player %v (IP: %s) game over", player.ID, player.IP)
 		}
 	}
 	return true
 }
 
 func WaitConnection(player *connection.Client[State, lobby.Config, Response]) {
-	log.Printf("Player %d (IP: %s) waiting for connection to game", player.ID, player.IP)
+	log.Printf("Player %v (IP: %s) waiting for connection to game", player.ID, player.IP)
 	connectTimer := time.After(15 * time.Minute)
 
 	for !player.IsOpen {
@@ -79,7 +79,7 @@ func WaitConnection(player *connection.Client[State, lobby.Config, Response]) {
 			if player.Event != nil {
 				player.Event.Disconnect <- player.ID
 			}
-			log.Printf("Player %d (IP: %s) disconnected after waiting", player.ID, player.IP)
+			log.Printf("Player %v (IP: %s) disconnected after waiting", player.ID, player.IP)
 			return
 		default:
 			time.Sleep(1 * time.Second)

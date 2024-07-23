@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Controller\Input\RegisterUserInput;
 use App\Service\PlayerService;
-use App\Service\UserService;
 use Symfony\Component\HttpFoundation\Request;
 use \Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,7 +12,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class UserController extends AbstractController
 {
     public function __construct(
-        private readonly UserService $userService
+        private readonly PlayerService $service
     )
     {
     }
@@ -45,7 +44,7 @@ class UserController extends AbstractController
         {
             if ($form->isSubmitted() && $form->isValid()) {
                 $input = $form->getData();
-                $userId = $this->userService->register($input);
+                $userId = $this->service->register($input);
 
                 return $this->json([
                     "message" => "User successfully registered",

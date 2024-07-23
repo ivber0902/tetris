@@ -2,81 +2,96 @@
 
 namespace App\Service;
 
-use App\Entity\Player;
+use App\Document\Player;
+use App\Document\User;
 use App\Repository\PlayerRepository;
+use App\Service\Input\RegisterUserInputInterface;
 
 class PlayerService
 {
-    public function __construct(private readonly PlayerRepository $playerRepository)
+    public function __construct(
+        private readonly PlayerRepository $playerRepository,
+        private readonly PasswordHasher $passwordHasher,
+    )
     {
     }
 
-    public function addPlayer(?int $userId): int
+    public function addPlayer(string $login, string $password): string
     {
         $player = new Player();
-        $player->setUserId($userId);
+        $player->setLogin($login);
+        $player->setPassword($password);
+
         return $this->playerRepository->store($player);
     }
 
-    public function findPlayerById(int $id): ?Player
+    public function updateUser(string $id, string $login, string $password): string
+    {
+        $user = $this->playerRepository->find($id);
+        $user->setLogin($login);
+        $user->setPassword($password);
+
+        return $this->playerRepository->store($user);
+    }
+
+    public function findUserByLogin(string $login): ?User
+    {
+        return $this->playerRepository->findByLogin($login)?->getUser();
+    }
+
+    public function findPlayer(string $id): ?Player
     {
         return $this->playerRepository->find($id);
     }
 
-    public function updatePlayer(
-        int $id,
+
+
+    public function setStatistics(
+        string $id,
         int $maxScore,
-        int $averageScore,
         int $totalScore,
         int $gameCount,
         int $winCount,
         int $lastScore,
-        ?int $userId = null
-    ): int
+    ): ?int
     {
         $player = $this->playerRepository->find($id);
-        $player->setMaxScore($maxScore);
-        $player->setAverageScore($averageScore);
-        $player->setTotalScore($totalScore);
-        $player->setGameCount($gameCount);
-        $player->setWinCount($winCount);
-        $player->setLastScore($lastScore);
 
-        if ($userId !== null) {
-            $player->setUserId($userId);
+        if ($player === null) {
+            return null;
         }
+
+        $player->getStatistics()
+            ->setMaxScore($maxScore)
+            ->setTotalScore($totalScore)
+            ->setGameCount($gameCount)
+            ->setWinCount($winCount)
+            ->setLastScore($lastScore);
 
         return $this->playerRepository->store($player);
     }
 
     public function updateStatistics(
-        int $id,
+        string $id,
         ?int $score,
         ?bool $isWon
-    ): int
+    ): string
     {
         $player = $this->playerRepository->find($id);
 
         if ($isWon === null && $score !== null) {
-            if ($player->getMaxScore() === null || $player->getMaxScore() < $score) {
-                $player->setMaxScore($score);
+            if ($player->getStatistics()->getMaxScore() === null || $player->getStatistics()->getMaxScore() < $score) {
+                $player->getStatistics()->setMaxScore($score);
             }
 
-            if ($player->getAverageScore() === null) {
-                $player->setAverageScore($score);
-            } else {
-                $player->setAverageScore(
-                    ($player->getAverageScore() * $player->getGameCount() + $score) / ($player->getGameCount() + 1)
-                );
-            }
-            $player->setTotalScore(($player->getTotalScore() ?? 0) + $score);
-            $player->setLastScore($score);
+            $player->getStatistics()->setTotalScore(($player->getStatistics()->getTotalScore() ?? 0) + $score);
+            $player->getStatistics()->setLastScore($score);
         }
 
         if ($isWon) {
-            $player->setWinCount(($player->getWinCount() ?? 0) + 1);
+            $player->getStatistics()->setWinCount(($player->getStatistics()->getWinCount() ?? 0) + 1);
         }
-        $player->setGameCount(($player->getGameCount() ?? 0) + 1);
+        $player->getStatistics()->setGameCount(($player->getStatistics()->getGameCount() ?? 0) + 1);
 
         return $this->playerRepository->store($player);
     }
@@ -84,5 +99,18 @@ class PlayerService
     public function deletePlayer(Player $player): void
     {
         $this->playerRepository->delete($player);
+    }
+
+    public function register(RegisterUserInputInterface $input): string
+    {
+        $user = $this->findUserByLogin($input->getLogin());
+        if ($user !== null) {
+            throw new \InvalidArgumentException("Пользователь с логином \"" . $input->getLogin() . "\" уже зарегистрирован");
+        }
+
+        return $this->addPlayer(
+            $input->getLogin(),
+            $this->passwordHasher->hash($input->getPassword())
+        );
     }
 }

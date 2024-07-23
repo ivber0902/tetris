@@ -1,0 +1,14 @@
+<doctrine-mongo-mapping xmlns="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping"
+                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                        xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
+                    http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
+    <document name="App\Document\Game" collection="Game">
+        <id />
+        <field name="mode" type="int"/>
+        <field name="time" type="int"/>
+        <discriminator-field name="type"/>
+        <discriminator-map>
+            <discriminator-mapping value="singleGame" class="App\Document\SingleGame"/>
+        </discriminator-map>
+    </document>
+</doctrine-mongo-mapping>

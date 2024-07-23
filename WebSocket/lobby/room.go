@@ -42,7 +42,7 @@ func (room *Room) Init() {
 			}()
 		case client := <-room.Connect:
 			room.Clients[client] = true
-			log.Printf("Room %T %s: Player %d joined\n", client, room.HostIP, client.ID)
+			log.Printf("Room %T %s: Player %v joined\n", client, room.HostIP, client.ID)
 		case update := <-room.On.Update:
 			for client := range room.Clients {
 				client.Send(update)

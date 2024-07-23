@@ -71,3 +71,8 @@ func NewConfig() (config *Config, err error) {
 	err = config.SetDefault()
 	return config, err
 }
+
+func (lobby *Config) UpdateSettings(updates *Config) {
+	lobby.Settings = updates.Settings
+	lobby.GameRun = updates.GameRun
+}

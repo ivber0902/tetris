@@ -2,34 +2,34 @@
 
 namespace App\Repository;
 
-use App\Entity\User;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityRepository;
+use App\Document\User;
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
 
 class UserRepository
 {
-    private EntityRepository $repository;
-    public function __construct(private readonly EntityManagerInterface $entityManager)
+    private DocumentRepository $repository;
+    public function __construct(private readonly DocumentManager $documentManager)
     {
-        $this->repository = $entityManager->getRepository(User::class);
+        $this->repository = $documentManager->getRepository(User::class);
     }
 
     public function store(User $user): int
     {
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
+        $this->documentManager->persist($user);
+        $this->documentManager->flush();
         return $user->getId();
     }
 
     public function delete(User $user): void
     {
-        $this->entityManager->remove($user);
-        $this->entityManager->flush();
+        $this->documentManager->remove($user);
+        $this->documentManager->flush();
     }
 
-    public function find(int $id): ?User
+    public function find(string $id): ?User
     {
-        return $this->entityManager->find(User::class, $id);
+        return $this->documentManager->find(User::class, $id);
     }
 
     public function findByLogin(string $login): ?User {

@@ -1,0 +1,12 @@
+<doctrine-mongo-mapping xmlns="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping"
+                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                        xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
+                    http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
+    <embedded-document name="App\Document\Statistics">
+        <field name="lastScore" type="int" />
+        <field name="totalScore" type="int" />
+        <field name="maxScore" type="int" />
+        <field name="gameCount" type="int" />
+        <field name="winCount" type="int" />
+    </embedded-document>
+</doctrine-mongo-mapping>

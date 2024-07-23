@@ -11,7 +11,7 @@ class SecurityUser implements UserInterface, PasswordAuthenticatedUserInterface
 {
 
     public function __construct(
-        private int    $id,
+        private string    $id,
         private string $login,
         private string $password,
     )
@@ -38,11 +38,11 @@ class SecurityUser implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->login;
     }
 
-    public function getId(): int
+    public function getId(): string
     {
         return $this->id;
     }
-    public function setId(int $id): void
+    public function setId(string $id): void
     {
         $this->id = $id;
     }

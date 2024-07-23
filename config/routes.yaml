@@ -77,3 +77,12 @@ api_update_statistics:
     path: /api/statistics
     methods: POST
     controller: App\Controller\PlayerController::updateStatistics
+
+
+nosql_test_create:
+    path: /create
+    controller: App\Controller\NoSQLTestController::create
+
+nosql_test_get:
+    path: /get
+    controller: App\Controller\NoSQLTestController::get

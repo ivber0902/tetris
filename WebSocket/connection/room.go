@@ -41,7 +41,7 @@ func (r *Room[T, ConfType, RespType]) DefaultUpdate() {
 	select {
 	case client := <-r.Connect:
 		r.Clients[client] = true
-		log.Printf("Room %T %s: Player %d joined\n", client, r.HostIP, client.ID)
+		log.Printf("Room %T %s: Player %v joined\n", client, r.HostIP, client.ID)
 	case update := <-r.On.Update:
 		for client := range r.Clients {
 			client.Send(update)

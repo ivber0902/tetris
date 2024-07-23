@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Security;
 
+use App\Repository\PlayerRepository;
 use App\Repository\UserRepository;
 use App\Security\SecurityUser;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -13,9 +14,9 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 class UserProvider implements UserProviderInterface
 {
-    private UserRepository $repository;
+    private PlayerRepository $repository;
 
-    public function __construct(UserRepository $repository)
+    public function __construct(PlayerRepository $repository)
     {
         $this->repository = $repository;
     }
@@ -71,7 +72,7 @@ class UserProvider implements UserProviderInterface
         if ($currentUser === null) {
             throw new UserNotFoundException($user->getUserIdentifier());
         }
-        return new SecurityUser($user->getId(), $currentUser->getLogin(), $currentUser->getPassword(), $currentUser->getRole());
+        return new SecurityUser($user->getId(), $currentUser->getLogin(), $currentUser->getPassword());
     }
 
     /**
