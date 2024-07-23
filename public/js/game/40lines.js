@@ -14,8 +14,7 @@ GAME.play = (player) => {
         window.location.href = "/game_over_mode" 
     }
     else{
-        player.ui.lines = player.lines;
-        if (player.lines >= 4 && player.isActive) {
+        if (player.lines >= 40 && player.isActive) {
             player.isActive = false;
             player.gameEnd = true;
             gameEnd(new Date() - GAME.startTime);

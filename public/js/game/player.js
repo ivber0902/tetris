@@ -19,6 +19,8 @@ class Player {
         this.figuresQueueSize = 4;
         this.isShifter = true;
         this.isActive = false;
+        this.startNewLevelTimer = new Date();
+        this.isStartNewLevelTimer = false;
     }
 
     initFigures(currentFigureIndex, bufferFigureIndex, NextFiguresIndex) {
@@ -70,6 +72,8 @@ class Player {
         if (this.figureCount >= 20) {
             this.lvl += Math.floor(this.figureCount / 20);
             this.figureCount = this.figureCount % 20;
+            this.isStartNewLevelTimer = true;
+            this.startNewLevelTimer = new Date();
             this.updateSpeed();
         }
     }
@@ -130,7 +134,7 @@ class Player {
             if ((new Date() - this.playTime) * this.nitro >= this.tickTime) {
                 this.playTime = new Date;
                 if (!this.field.moveDown(this.currentFigure)) {
-                        this.field.fixFigure(this.currentFigure);
+                    this.field.fixFigure(this.currentFigure);
                     this.updateResults();
                     this.nextFigure();
                     if (this.field.checkPosition(this.currentFigure.x, this.currentFigure.y, this.currentFigure.matrix)) {
@@ -141,8 +145,19 @@ class Player {
                     }
                 }
             }
+            if (this.isStartNewLevelTimer) {
+                if (new Date() - this.startNewLevelTimer > 3 * 1000) {
+                    this.isStartNewLevelTimer = false;
+                } else {
+                    this.field.field.fillStyle = "white";
+                    this.field.field.font = "48px Russo One";
+                    this.field.field.fillText('НОВЫЙ', this.field.width * this.field.blockSize / 2 - 100, this.field.height * this.field.blockSize / 2 - 25);
+                    this.field.field.fillText('УРОВЕНЬ', this.field.width * this.field.blockSize / 2 - 120, this.field.height * this.field.blockSize / 2 + 25);
+                }
+            }
         }
     }
+
     updateResults() {
         this.move.drop = 0;
         this.move.left = 0;
@@ -188,9 +203,6 @@ class Player {
             }
         });
     }
-
-
-
     initEventListeners() {
         this.addBufferListener();
         this.addPositionListeners();

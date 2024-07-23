@@ -1,53 +1,63 @@
 {% extends "base.html.twig" %}
 
-{% block title %}
-	Koop
+{% block title %}Tetris
 {% endblock %}
-{% block style %}
-	<link rel="stylesheet" href="/css/game.css"/>
-	<link rel="stylesheet" href="/css/swipe-events.css"/>
+{% block style %}<link rel="stylesheet" href="/css/game.css"/>
 {% endblock %}
 {% block content %}
-	<main class="main">
-		<img class="logo" src="/images/logo.svg" alt="logo">
-		<div class="wrapper-game">
-			<div class="wrapper-field">
-				<div class="game__buffer">
-					<p class="title buffer">буффер</p>
-					<div class="buffer-wrapper">
-						<img class="buffer__figure" src="" alt="figure">
+	<body>
+		<main class="main">
+			<img class="logo" src="/images/logo.svg" alt="logo">
+			<div class="wrapper-game">
+				<div class="wrapper-field">
+					<div class="game__buffer">
+						<p class="title">буффер</p>
+						<div class="buffer-wrapper">
+							<img class="buffer__figure" src="" alt="figure">
+						</div>
+					</div>
+					<canvas id="game"></canvas>
+					<div class="next__figure">
+						<p class="title">Следующие</p>
+						<div class="wrapper-figures">
+							<img class="figure" src="" alt="figure">
+							<img class="figure" src="" alt="figure">
+							<img class="figure" src="" alt="figure">
+							<img class="figure" src="" alt="figure">
+						</div>
 					</div>
 				</div>
-				<canvas id="game"></canvas>
-				<div class="next__figure">
-					<p class="title next-figures">Следующие</p>
-					<div class="wrapper-figures">
-						<img class="figure" src="" alt="figure">
-						<img class="figure" src="" alt="figure">
-						<img class="figure" src="" alt="figure">
-						<img class="figure" src="" alt="figure">
+				<div class="score-wrapper">
+					<div class="score-value-wrapper">
+						<p class="title-score">счет:
+						</p>
+						<p class="game__score"></p>
+					</div>
+					<div class="score-value-wrapper">
+						<p class="title-level">уровень:
+						</p>
+						<p class="game__level"></p>
 					</div>
 				</div>
 			</div>
-			<div class="score-wrapper">
-				<div class="score-value-wrapper">
-					<p class="title-score">счет:</p>
-					<p class="game__score"></p>
-				</div>
-				<div class="score-value-wrapper">
-					<p class="title-level">уровень:</p>
-					<p class="game__level"></p>
-				</div>
-			</div>
+		</main>
+		<div class="instruction">
+			<h1>инструкция</h1>
+			<p class="instruction__text">движения по сторонам - соответствующие стрелочки или клавиши "ф" и "в"</p>
+			<p class="instruction__text">ускорение падения - стрелочка вниз или кнопка "ы"</p>
+			<p class="instruction__text">моментальная установка - пробел</p>
+			<p class="instruction__text">поворот фигуры по часовой стрелке - клавиша "ц"</p>
+			<p class="instruction__text">использование буффера - левый шифт (фигуры поменяются местами, обратно можно будет поменять только следующую фигуру)</p>
+			<p class="instruction__text">пауза - клавиша "з"</p>
 		</div>
-	</main>
-	{% include 'instruction.html.twig' %}
-	<script src="/js/game/player-koop.js"></script>
+	</body>
+	<script src="/js/static/images.js"></script>
+	<script src="/js/static/figures.js"></script>
+	<script src="/js/game/figure.js"></script>
+	<script src="/js/game/koop_field.js"></script>
+	<script src="/js/game/koop_player.js"></script>
 	<script src="/js/game/ui.js"></script>
-	<script src="/js/game/figures.js"></script>
-	<script src="/js/game/images.js"></script>
-	<script src="/js/game/koop-game.js"></script>
-	<script src="/js/game/init-game.js"></script>
-	<script src="/js/game/game-end.js"></script>
-	<script src="/js/swipe_events.js"></script>
+	<script src="/js/game/koop_game.js"></script>
+	<script src="/js/game/game_init.js"></script>
+	<script src="/js/game/game_end.js"></script>
 {% endblock %}
