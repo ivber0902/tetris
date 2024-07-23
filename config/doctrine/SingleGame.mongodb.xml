@@ -8,5 +8,6 @@
         <field name="figureCount" type="int"/>
         <field name="filledRows" type="int"/>
         <field name="fieldMode" type="int"/>
+        <field name="isWon" type="bool"/>
     </document>
 </doctrine-mongo-mapping>

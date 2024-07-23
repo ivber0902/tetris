@@ -17,26 +17,19 @@ class Game
     {
         return $this->mode;
     }
-    public function setMode(int $mode): void
+    public function setMode(int $mode): static
     {
         $this->mode = $mode;
+        return $this;
     }
 
     public function getTime(): int
     {
         return $this->time;
     }
-    public function setTime(int $time): void
+    public function setTime(int $time): static
     {
         $this->time = $time;
-    }
-
-    public function getDifficulty(): int
-    {
-        return $this->difficulty;
-    }
-    public function setDifficulty(int $difficulty): void
-    {
-        $this->difficulty = $difficulty;
+        return $this;
     }
 }
