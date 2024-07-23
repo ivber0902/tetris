@@ -7,73 +7,62 @@
 	<link rel="stylesheet" href="/css/select.css"/>
 {% endblock %}
 {% block content %}
-	<div class="bg">
-		<div class="header">
-			<img src="/images/settings.png" alt="settings" class="settings">
-			<img src="/images/logo.png" alt="logo" class="logo">
-			<div class="profile">
-				{% if not player or not player.user.login %}
-					<a href="{{ path('register') }}">
-						<div class="profile">
-							<p class="profile__nickname">{{player.user.login ?? 'славянин'}}</p>
-							<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
-						</div>
-					</a>
-				{% else %}
-					<div class="profile">
-						<p class="profile__nickname">{{player.user.login ?? 'славянин'}}</p>
-						<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
-					</div>
-				{% endif %}
-			</div>
+	<div class="header">
+		<a href="/settings">
+			<img src="/images/settings.png" alt="settings" class="settings"/>
+		</a>
+		<img src="/images/logo.png" alt="logo" class="logo">
+		<div class="profile">
+			<a href="{{(player.user.login ?? null) ? path("profile", {login: player.user.login}) : path('register') }}">
+				<div class="profile">
+					<p class="profile__nickname">{{player.user.login ?? 'славянин'}}</p>
+					<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
+				</div>
+			</a>
 		</div>
-		<div class="menu">
-			<div class="links links_start">
-
-				<a href="/select_solo_mode" class="link solo link_with-image">
-					<div class="img-placeholder">
-						<img src="/images/solo.png" alt="solo" class="link__image">
-					</div>
-					<div class="link__text">
-						<h1 class="link__title solo__title">
-							однопользовательский режим
-						</h1>
-						<p class="link__subtitle solo__subtitle">
-							превзойди себя и поставь новый рекорд
-						</p>
-					</div>
-				</a>
-				<a href="/select_multiplayer_mode" class="link multiplayer link_with-image">
-					<div class="img-placeholder">
-						<img src="/images/multiplayer.png" alt="multiplayer" class="link__image">
-					</div>
-					<div class="link__text">
-						<h1 class="link__title multiplayer__title">
-							многопользовательский режим
-						</h1>
-						<p class="link__subtitle multiplayer__subtitle">
-							играйте онлайн с друзьями
-						</p>
-					</div>
-				</a>
-				<a href="/about" class="link about link_with-image">
-					<div class="img-placeholder">
-						<img src="/images/about.png" alt="about" class="link__image">
-					</div>
-					<div class="link__text">
-						<h1 class="link__title about__title">
-							про нас
-						</h1>
-						<p class="link__subtitle about__subtitle">
-							узнайте все о славянах
-						</p>
-					</div>
-				</a>
-			</div>
-		</div>	
 	</div>
-	{% include 'mini-profile.html.twig' %}
-</body>
-<script src="/js/menu/menu.js"></script>
-<script src="/js/menu/mini-profile.js"></script>
+	<div class="menu">
+		<div class="links links_start">
+			<a href="/select_solo_mode" class="link solo link_with-image">
+				<div class="img-placeholder">
+					<img src="/images/solo.png" alt="solo" class="link__image">
+				</div>
+				<div class="link__text">
+					<p class="link__title solo__title">
+						однопользовательский режим
+					</p>
+					<p class="link__subtitle solo__subtitle">
+						превзойди себя и поставь новый рекорд
+					</p>
+				</div>
+			</a>
+			<a href="/select_multiplayer_mode" class="link multiplayer link_with-image">
+				<div class="img-placeholder">
+					<img src="/images/multiplayer.png" alt="multiplayer" class="link__image">
+				</div>
+				<div class="link__text">
+					<p class="link__title multiplayer__title">
+						многопользовательский режим
+					</p>
+					<p class="link__subtitle multiplayer__subtitle">
+						играйте онлайн с друзьями
+					</p>
+				</div>
+			</a>
+			<a href="/about" class="link about link_with-image">
+				<div class="img-placeholder">
+					<img src="/images/about.png" alt="about" class="link__image">
+				</div>
+				<div class="link__text">
+					<p class="link__title about__title">
+						про нас
+					</p>
+					<p class="link__subtitle about__subtitle">
+						узнайте все о славянах
+					</p>
+				</div>
+			</a>
+		</div>
+	</div>	
+	<script src="/js/menu/menu.js"></script>
 {% endblock %}
