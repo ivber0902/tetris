@@ -127,7 +127,7 @@ let settings = {
                 "ru": "Играй на фоне компании Ispring",
                 "en": "Play against the background of the Ispring company"
             }, 
-            value: "/images/bg.png"
+            value: "https://i.postimg.cc/1zyHTmtK/bg.png"
         },
         {
             title: {

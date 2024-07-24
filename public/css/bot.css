@@ -27,9 +27,8 @@
 .main {
     width: 100%;
     height: 100vh;
-    background-image: url(/images/bg.png);
+    background: url("https://i.postimg.cc/1zyHTmtK/bg.png") no-repeat;
     background-size: cover;
-    background-repeat: no-repeat;
     display: flex;
     flex-direction: column;
     align-items: center;
