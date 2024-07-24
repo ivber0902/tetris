@@ -17,6 +17,7 @@ player.countAddLines = [];
 player.emptyCell = [];
 
 GAME.start = (player) => {
+    player.ui.music.play();
     player.isActive = true;
     GAME.play(player)
 }
@@ -200,6 +201,7 @@ ws.onmessage = (msg) => {
                 ]
             )
             if(data.state.current_figure && (data.state.id === playerField.id)){
+                player.score = data.state.score;
                 player.field.matrix = data.state.play_field;
                 player.figuresPos = data.state.figure_count;
                 player.currentFigure = getFigure(player.figuresAll[player.figuresPos]);
@@ -223,6 +225,7 @@ ws.onmessage = (msg) => {
             } else {
                 if(data.state.game_over === false){
                     player.field.drawField(document.getElementById(data.state.id).querySelector('.other-field').getContext('2d'), data.state.play_field)
+                    document.getElementById(data.state.id).querySelector('.game__score-other').textContent = data.state.score
                 }
                 else{
                     document.getElementById(data.state.id).style.display = 'none'
@@ -323,7 +326,7 @@ function createField(id) {
     const playerName = document.createElement('p');
     playerName.setAttribute('class', 'player__username');
     const gameScore = document.createElement('p');
-    gameScore.textContent = '200';
+    gameScore.textContent = '0';
     gameScore.setAttribute('class', 'game__score-other');
 
 
