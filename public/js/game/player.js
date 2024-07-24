@@ -6,7 +6,7 @@ class Player {
         this.field = field;
         this.tickTime = 0;
         this.playTime = new Date(),
-            this.figureCount = 0;
+        this.figureCount = 0;
         this.move = {
             left: 0,
             right: 0,
@@ -21,6 +21,8 @@ class Player {
         this.isActive = false;
         this.startNewLevelTimer = new Date();
         this.isStartNewLevelTimer = false;
+        this.countTetris = 0;
+        this.countClearLines = 0;
     }
 
     initFigures(currentFigureIndex, bufferFigureIndex, NextFiguresIndex) {
@@ -66,6 +68,10 @@ class Player {
             default:
                 break;
         }
+        if (countLines === 4)
+            this.countTetris += 1
+        this.countClearLines += countLines;
+        console.log(this.countClearLines, this.countTetris)
     }
 
     updateLvl() {
