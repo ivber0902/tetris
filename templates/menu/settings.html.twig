@@ -17,13 +17,13 @@
 				<a href="{{ path('register') }}">
 					<div class="profile">
 						<p class="profile__nickname">{{player.user.login ?? 'славянин'}}</p>
-						<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
+						<img src="../uploads/{{player.getAvatar() ?? "avatar-placeholder.png"}}" alt="avatar" class="profile__avatar">
 					</div>
 				</a>
 			{% else %}
 				<div class="profile">
 					<p class="profile__nickname">{{player.user.login ?? 'славянин'}}</p>
-					<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
+					<img src="../uploads/{{player.getAvatar() ?? "avatar-placeholder.png"}}" alt="avatar" class="profile__avatar">
 				</div>
 			{% endif %}
 		</div>
