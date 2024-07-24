@@ -5,9 +5,10 @@
 {% endblock %}
 {% block style %}
 	<link rel="stylesheet" href="/css/select.css"/>
+	<link rel="stylesheet" href="/css/header.css"/>
 {% endblock %}
 {% block content %}
-	<div class="header">
+	<div class="header">	
 		<a href="/settings">
 			<img src="/images/settings.png" alt="settings" class="settings"/>
 		</a>
@@ -16,7 +17,7 @@
 			<a href="{{(player.user.login ?? null) ? path("profile", {login: player.user.login}) : path('login') }}">
 				<div class="profile">
 					<p class="profile__nickname">{{player.user.login ?? 'славянин'}}</p>
-					<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
+					<img src="../uploads/{{player.getAvatar() ?? "avatar-placeholder.png"}}" alt="avatar" class="profile__avatar">
 				</div>
 			</a>
 		</div>
