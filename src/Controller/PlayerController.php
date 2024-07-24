@@ -79,7 +79,7 @@ class PlayerController extends AbstractController
         $this->service->addGame($player->getId(), $gameId);
         $this->service->updateStatistics($player->getId(), $data["mode"], $data["is_won"] ?? false);
 
-        return $this->json([], Response::HTTP_OK);
+        return $this->json(["game" => $gameId], Response::HTTP_OK);
     }
 
     public function getUserApi(string $id): Response
@@ -97,7 +97,6 @@ class PlayerController extends AbstractController
 
     public function updateAvatarPath(Request $request): Response
     {
-
         $securityUserId = $this->getUser()->getId();
         $player = $this->service->findPlayer($securityUserId);
         $avatarPath = $this->imageService->updateImage($player->getAvatar(), $request->files->get('avatarPath'));
