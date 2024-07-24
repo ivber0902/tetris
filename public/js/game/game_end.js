@@ -1,3 +1,5 @@
+const host = window.location.hostname;
+
 function gameEnd(score) {
     localStorage.Gamewidth = 10;
     localStorage.Gameheight = 20;
@@ -5,16 +7,18 @@ function gameEnd(score) {
 }
 
 async function sendResult(score) {
-    let response = await fetch('/api/statistics', {
+    let response = await fetch("api/game/single/add", {
         method: 'POST',
-        body: JSON.stringify({
-            score: score
-        })
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(
+            score
+        )
     });
-    console.log(response);
-    if (response.ok) {
+    if (score.is_won) {
         window.location.href = '/game_over'
     } else {
-        window.location.href = "/game_over?score=" + score;
+        window.location.href = "/game_over_mode";
     }
 }

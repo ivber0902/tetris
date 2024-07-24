@@ -9,6 +9,7 @@
         <discriminator-field name="type"/>
         <discriminator-map>
             <discriminator-mapping value="singleGame" class="App\Document\SingleGame"/>
+            <discriminator-mapping value="multiplayerGame" class="App\Document\MultiplayerGame"/>
         </discriminator-map>
     </document>
 </doctrine-mongo-mapping>

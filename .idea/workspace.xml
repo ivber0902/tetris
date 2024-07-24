@@ -4,14 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7bcc5562-9455-45fa-9b4e-8407aadb17a9" name="Changes" comment="Коммит по-русски">
+    <list default="true" id="7bcc5562-9455-45fa-9b4e-8407aadb17a9" name="Changes" comment="Добавлено описание сохранения игры">
+      <change afterPath="$PROJECT_DIR$/config/doctrine/MultiplayerGame.mongodb.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/doctrine/PlayerGameResults.mongodb.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Document/MultiplayerGame.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Document/PlayerGameResults.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebSocket/game/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/WebSocket/game/client.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebSocket/game/room.go" beforeDir="false" afterPath="$PROJECT_DIR$/WebSocket/game/room.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebSocket/game/state.go" beforeDir="false" afterPath="$PROJECT_DIR$/WebSocket/game/state.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebSocket/lobby/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/WebSocket/lobby/client.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebSocket/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/WebSocket/server.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/multiplayer/multiplayer_game.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/multiplayer/multiplayer_game.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/doctrine/Game.mongodb.xml" beforeDir="false" afterPath="$PROJECT_DIR$/config/doctrine/Game.mongodb.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/doctrine/SingleGame.mongodb.xml" beforeDir="false" afterPath="$PROJECT_DIR$/config/doctrine/SingleGame.mongodb.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/routes.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/routes.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/swipe-events.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/swipe-events.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/game/game.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/game/game.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/game/ui.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/game/ui.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/GameController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/GameController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/NoSQLTestController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/NoSQLTestController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/PlayerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/PlayerController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Document/Player.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Document/Player.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Document/Statistics.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Document/Statistics.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/PlayerRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/PlayerRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/GameService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/GameService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/PlayerService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/PlayerService.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,22 +81,18 @@
       <path value="$PROJECT_DIR$/vendor/symfony/doctrine-bridge" />
       <path value="$PROJECT_DIR$/vendor/symfony/deprecation-contracts" />
       <path value="$PROJECT_DIR$/vendor/symfony/error-handler" />
-      <path value="$PROJECT_DIR$/vendor/symfony/dotenv" />
       <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher-contracts" />
       <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher" />
       <path value="$PROJECT_DIR$/vendor/symfony/finder" />
       <path value="$PROJECT_DIR$/vendor/symfony/filesystem" />
       <path value="$PROJECT_DIR$/vendor/symfony/form" />
-      <path value="$PROJECT_DIR$/vendor/symfony/flex" />
       <path value="$PROJECT_DIR$/vendor/symfony/http-foundation" />
       <path value="$PROJECT_DIR$/vendor/symfony/framework-bundle" />
       <path value="$PROJECT_DIR$/vendor/symfony/maker-bundle" />
       <path value="$PROJECT_DIR$/vendor/symfony/http-kernel" />
       <path value="$PROJECT_DIR$/vendor/symfony/options-resolver" />
-      <path value="$PROJECT_DIR$/vendor/symfony/mime" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-grapheme" />
       <path value="$PROJECT_DIR$/vendor/symfony/password-hasher" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-idn" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-icu" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-mbstring" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-normalizer" />
@@ -99,11 +107,24 @@
       <path value="$PROJECT_DIR$/vendor/symfony/security-http" />
       <path value="$PROJECT_DIR$/vendor/symfony/security-csrf" />
       <path value="$PROJECT_DIR$/vendor/symfony/service-contracts" />
-      <path value="$PROJECT_DIR$/vendor/symfony/serializer" />
       <path value="$PROJECT_DIR$/vendor/symfony/string" />
       <path value="$PROJECT_DIR$/vendor/symfony/stopwatch" />
       <path value="$PROJECT_DIR$/vendor/symfony/twig-bridge" />
       <path value="$PROJECT_DIR$/vendor/symfony/translation-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php80" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/vendor/symfony/dotenv" />
+      <path value="$PROJECT_DIR$/vendor/symfony/flex" />
+      <path value="$PROJECT_DIR$/vendor/symfony/mime" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-idn" />
+      <path value="$PROJECT_DIR$/vendor/symfony/serializer" />
+      <path value="$PROJECT_DIR$/vendor/friendsofphp/proxy-manager-lts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php81" />
+      <path value="$PROJECT_DIR$/vendor/jean85/pretty-package-versions" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/mongodb-odm-bundle" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/mongodb-odm" />
+      <path value="$PROJECT_DIR$/vendor/mongodb/mongodb" />
+      <path value="$PROJECT_DIR$/vendor/laminas/laminas-code" />
     </include_path>
   </component>
   <component name="ProjectColorInfo">{
@@ -114,24 +135,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;refactoring&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/creepy/tetris&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "NoSQL",
+    "last_opened_file_path": "/web/tetris/config/doctrine",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mongo&quot;,
-      &quot;mariadb&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mongo",
+      "mariadb"
     ]
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/config/doctrine" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -153,6 +179,7 @@
       <workItem from="1720626075820" duration="679000" />
       <workItem from="1720954113746" duration="9939000" />
       <workItem from="1721127789829" duration="1730000" />
+      <workItem from="1721803347008" duration="19236000" />
     </task>
     <task id="LOCAL-00001" summary="Исправил кнопку «Начать игру»">
       <option name="closed" value="true" />
@@ -178,7 +205,39 @@
       <option name="project" value="LOCAL" />
       <updated>1720771001129</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Добавил avatar">
+      <option name="closed" value="true" />
+      <created>1721730659019</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1721730659020</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Удалил описание моделей MySQL">
+      <option name="closed" value="true" />
+      <created>1721730689836</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1721730689836</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Обновил сохранение статистики одиночной игры">
+      <option name="closed" value="true" />
+      <created>1721805488155</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1721805488155</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Добавлено описание сохранения игры">
+      <option name="closed" value="true" />
+      <created>1721813899483</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1721813899483</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -211,6 +270,12 @@
     <MESSAGE value="Исправил кнопку «Начать игру»" />
     <MESSAGE value="ХЕР" />
     <MESSAGE value="Коммит по-русски" />
-    <option name="LAST_COMMIT_MESSAGE" value="Коммит по-русски" />
+    <MESSAGE value="Внедрил NoSQL. Необходимо много исправлений в JS, TWIG, CSS" />
+    <MESSAGE value="Исправления в моделях игр." />
+    <MESSAGE value="Добавил avatar" />
+    <MESSAGE value="Удалил описание моделей MySQL" />
+    <MESSAGE value="Обновил сохранение статистики одиночной игры" />
+    <MESSAGE value="Добавлено описание сохранения игры" />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавлено описание сохранения игры" />
   </component>
 </project>

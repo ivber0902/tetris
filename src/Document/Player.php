@@ -24,12 +24,7 @@ class Player
 
     public function getAvatar(): ?string
     {
-        if (isset($this->avatar)) {
-            return $this->avatar;
-        } else {
-            return null;
-        }
-        
+        return $this->avatar ?? null;
     }
 
     public function setAvatar(string $avatar): static

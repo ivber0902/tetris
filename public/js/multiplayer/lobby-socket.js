@@ -65,7 +65,7 @@ function disconnectPlayer(kickId){
 
 async function foundUser(id)
 {
-    let response = await fetch('/api/player/' + id + '/user', {
+    let response = await fetch('/api/player/' + id, {
         method: 'GET'
     });
     let user = await response.json();
@@ -81,7 +81,7 @@ function initKickButtons(){
     buttons.forEach((btn)=>{
         btn.addEventListener('click', ()=>{
             document.getElementById(btn.value).remove()
-            disconnectPlayer(parseInt(btn.value))
+            disconnectPlayer(btn.value)
         })
     })
 }
@@ -135,8 +135,10 @@ ws.onmessage = (msg) => {
             listPlayers.appendChild(newPlayer);
         }
         foundUser(joinPlayerId).then((user)=>{
-            if(newPlayer)
+            if(newPlayer){
                 newPlayer.querySelector('.player__name').textContent = user.login
+                newPlayer.querySelector('.profile__avatar').src = `../uploads/${user.avatar ?? "avatar-placeholder.png"}`
+            }
         })
     })
     initKickButtons()

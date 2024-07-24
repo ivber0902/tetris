@@ -2,22 +2,15 @@
 
 namespace App\Document;
 
+use Doctrine\ORM\Query\Expr\Base;
+
 class Statistics
 {
-    private int $lastScore;
-    private int $totalScore;
-    private int $maxScore;
-    private int $gameCount;
-    private int $winCount;
-
-    public function __construct()
-    {
-        $this->lastScore = 0;
-        $this->totalScore = 0;
-        $this->maxScore = 0;
-        $this->gameCount = 0;
-        $this->winCount = 0;
-    }
+    private int $lastScore = 0;
+    private int $totalScore = 0;
+    private int $maxScore = 0;
+    private int $gameCount = 0;
+    private int $winCount = 0;
 
     public function getLastScore(): int
     {

@@ -1,8 +1,7 @@
 const host = window.location.hostname;
 let params = new URLSearchParams(document.location.search);
-let players = document.querySelectorAll(".player")
+let players = document.querySelector('.players');
 let playerId = document.querySelector(".player_id").value;
-let playersCount = 0
 
 async function getResults(){
     let response = await fetch("http://" + host + ":8080/game/results?lobby=" + params.get('lobby'), {
@@ -18,7 +17,27 @@ async function foundUser(id) {
     return await response.json();
 }
 
-function createPlayerBlock(elem, user, frag){
+function printResults(data){ 
+    for (let i = 0; i < data.length; i++){
+        let player = createPlayerBlock(data[i], i);
+        players.appendChild(player);
+        foundUser(data[i].player_id).then((user) => { 
+            player.querySelector('.player__name').textContent = user.login;
+        if (playerId == data[i].player_id){
+            document.querySelector('.results__title').innerHTML = '№' + (i + 1) + ' ' + user.login
+            document.querySelector('.time__value').innerHTML = elem.score
+        }   
+        })
+    }
+}
+
+document.querySelector(".back__link").href = '/lobby?lobby=' + params.get('lobby');
+
+getResults().then((results) => {
+    printResults(results)
+})
+
+function createPlayerBlock(elem, position){
     const player = document.createElement('div');
     player.classList.add('player');
 
@@ -28,7 +47,7 @@ function createPlayerBlock(elem, user, frag){
 
     const playerPlace = document.createElement('p');
     playerPlace.classList.add('player__place');
-    playerPlace.textContent = playersCount + 1
+    playerPlace.textContent = position + 1
 
     const playerNumber = document.createElement('div');
     playerNumber.classList.add('player__number');
@@ -37,7 +56,6 @@ function createPlayerBlock(elem, user, frag){
 
     const playerName = document.createElement('p');
     playerName.classList.add('player__name');
-    playerName.textContent = user.login
 
     const playerScore = document.createElement('p');
     playerScore.classList.add('player__time');
@@ -50,24 +68,5 @@ function createPlayerBlock(elem, user, frag){
 
     player.appendChild(playerNumber);
     player.appendChild(playerInfo);
-    document.querySelector('.players').appendChild(player);
+    return player
 }
-
-function printResults(data){
-    data.forEach((elem)=>{
-        foundUser(elem.player_id).then((user) => {       
-            createPlayerBlock(elem, user)
-            if (playerId == elem.player_id){
-                document.querySelector('.results__title').innerHTML = `№` + (playersCount + 1) + ' ' + user.login
-                document.querySelector('.time__value').innerHTML = elem.score
-            }
-            playersCount += 1
-        }) 
-    })
-}
-
-document.querySelector(".back__link").href = '/lobby?lobby=' + params.get('lobby');
-
-getResults().then((results) => {
-    printResults(results)
-})
