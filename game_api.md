@@ -1,3 +1,28 @@
+## Получить рейтинг
+`GET /api/player/rating?sortKey=<sortKey>&count=<num>`
+
+### Если не указан один из параметров или `count` не больше нуля
+`Response 400`
+
+### Ответ
+```json
+[
+  {
+    "id": string,
+    "login": string,
+    "avatar": string|null,
+    "statistics": {
+      "last_score": int,
+      "total_score": int,
+      "max_score": int,
+      "game_count": int,
+      "win_count": int
+    }
+  },
+  ...
+]
+```
+
 ## Сохранить одиночную игру
 `POST /api/game/single/add`
 ```json

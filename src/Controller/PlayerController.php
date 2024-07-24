@@ -116,7 +116,7 @@ class PlayerController extends AbstractController
 
         return $this->json(
             array_map(function ($player) {
-                return $this->gameService->serializePlayerInfoToJSON($player);
+                return $this->service->serializePlayerInfoToJSON($player);
             }, $players), Response::HTTP_OK
         );
     }

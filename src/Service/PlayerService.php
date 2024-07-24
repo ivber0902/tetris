@@ -138,4 +138,21 @@ class PlayerService
     {
         return $this->playerRepository->findBy([], ["statistics." . $orderedBy => -1], $count);
     }
+
+    public function serializePlayerInfoToJSON(Player $player): array
+    {
+        $statistics = $player->getStatistics();
+        return [
+            "id" => $player->getId(),
+            "login" => $player->getLogin(),
+            "avatar" => $player->getAvatar(),
+            "statistics" => [
+                "last_score" => $statistics->getLastScore(),
+                "total_score" => $statistics->getTotalScore(),
+                "max_score" => $statistics->getMaxScore(),
+                "game_count" => $statistics->getGameCount(),
+                "win_count" => $statistics->getWinCount(),
+            ],
+        ];
+    }
 }
