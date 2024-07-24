@@ -69,5 +69,6 @@ function printResults(data){
 document.querySelector(".back__link").href = '/lobby?lobby=' + params.get('lobby');
 
 getResults().then((results) => {
+    console.log(results)
     printResults(results)
 })

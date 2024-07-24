@@ -6,27 +6,12 @@
 {% block style %}
 	<link rel="stylesheet" href="/css/list_lobby.css"/>
 	<link rel="stylesheet" href="/css/mini-profile.css"/>
+	<link rel="stylesheet" href="/css/header.css"/>
 {% endblock %}
 {% block content %}
 	<div class="bg">
 		<div class="header">
-			<img src="/images/settings.png" alt="settings" class="settings">
-			<img src="/images/logo.png" alt="logo" class="logo">
-			<div class="profile">
-				{% if player is not defined %}
-					<a href="{{ path('register') }}">
-						<div class="profile">
-							<p class="profile__nickname">{{player.user.login ?? 'славянин'}}</p>
-							<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
-						</div>
-					</a>
-				{% else %}
-					<div class="profile">
-						<p class="profile__nickname">{{player.user.login ?? 'славянин'}}</p>
-						<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
-					</div>
-				{% endif %}
-			</div>
+			{% include 'header.html.twig' %}
 		</div>
 		<div class="join-lobby">
 			<h2 class="join-title">Найти лобби по уникальному имени</h2>

@@ -5,9 +5,10 @@
 {% endblock %}
 {% block style %}
 	<link rel="stylesheet" href="/css/select.css"/>
+	<link rel="stylesheet" href="/css/header.css"/>
 {% endblock %}
 {% block content %}
-	<div class="header">
+	<div class="header">	
 		<a href="/settings">
 			<img src="/images/settings.png" alt="settings" class="settings"/>
 		</a>
@@ -16,7 +17,7 @@
 			<a href="{{(player.user.login ?? null) ? path("profile", {login: player.user.login}) : path('login') }}">
 				<div class="profile">
 					<p class="profile__nickname">{{player.user.login ?? 'славянин'}}</p>
-					<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
+					<img src="../uploads/{{player.getAvatar() ?? "avatar-placeholder.png"}}" alt="avatar" class="profile__avatar">
 				</div>
 			</a>
 		</div>
@@ -59,6 +60,19 @@
 					</p>
 					<p class="link__subtitle about__subtitle">
 						узнайте все о славянах
+					</p>
+				</div>
+			</a>
+			<a href="/leaderboard" class="link leader link_with-image">
+				<div class="img-placeholder">
+					<img src="/images/about.png" alt="about" class="link__image">
+				</div>
+				<div class="link__text">
+					<p class="link__title leader__title">
+						таблица лидеров
+					</p>
+					<p class="link__subtitle leader__subtitle">
+						узрите настоящих героев тетриса
 					</p>
 				</div>
 			</a>
