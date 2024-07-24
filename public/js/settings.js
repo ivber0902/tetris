@@ -543,8 +543,7 @@ const langArr = {
     "link__subtitle.leader__subtitle": {
         "ru": "узрите настоящих героев тетриса",
         "en": "see the real tetris heroes"
-    }
-    
+    }    
 }
 if((localStorage.lang === undefined) || (!localStorage.lang)){
     localStorage.lang = 'ru';
