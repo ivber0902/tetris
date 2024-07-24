@@ -19,6 +19,11 @@ async function sendResult(score) {
     if (score.is_won) {
         window.location.href = '/game_over'
     } else {
-        window.location.href = "/game_over_mode";
+        if (score.mode === 1 || score.mode === 2){
+            window.location.href = "/game_over_mode";
+        }
+        else{
+            window.location.href = '/game_over'
+        }
     }
 }
