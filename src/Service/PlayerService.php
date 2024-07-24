@@ -99,7 +99,7 @@ class PlayerService
     {
         $player = $this->playerRepository->find($id);
 
-        if ($isWon === null && $score !== null) {
+        if ($score !== null) {
             if ($player->getStatistics()->getMaxScore() === null || $player->getStatistics()->getMaxScore() < $score) {
                 $player->getStatistics()->setMaxScore($score);
             }
