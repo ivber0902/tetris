@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Document\Player;
 use App\Document\User;
+use App\Repository\GameRepository;
 use App\Repository\PlayerRepository;
 use App\Service\Input\RegisterUserInputInterface;
 
@@ -12,6 +13,7 @@ class PlayerService
     public function __construct(
         private readonly PlayerRepository $playerRepository,
         private readonly PasswordHasher $passwordHasher,
+        private readonly GameRepository $gameRepository,
     )
     {
     }
@@ -56,6 +58,14 @@ class PlayerService
         return $this->playerRepository->store($player);
     }
 
+    public function addGame(string $playerId, string $gameId): void
+    {
+        $game = $this->gameRepository->find($gameId);
+        $player = $this->playerRepository->find($playerId);
+        $player->addGame($game);
+        $this->playerRepository->store($player);
+    }
+
     public function setStatistics(
         string $id,
         int $maxScore,
@@ -84,7 +94,7 @@ class PlayerService
     public function updateStatistics(
         string $id,
         ?int $score,
-        ?bool $isWon
+        ?bool $isWon = false
     ): string
     {
         $player = $this->playerRepository->find($id);
@@ -122,5 +132,27 @@ class PlayerService
             $input->getLogin(),
             $this->passwordHasher->hash($input->getPassword())
         );
+    }
+
+    public function getRating(int $count, string $orderedBy): array
+    {
+        return $this->playerRepository->findBy([], ["statistics." . $orderedBy => -1], $count);
+    }
+
+    public function serializePlayerInfoToJSON(Player $player): array
+    {
+        $statistics = $player->getStatistics();
+        return [
+            "id" => $player->getId(),
+            "login" => $player->getLogin(),
+            "avatar" => $player->getAvatar(),
+            "statistics" => [
+                "last_score" => $statistics->getLastScore(),
+                "total_score" => $statistics->getTotalScore(),
+                "max_score" => $statistics->getMaxScore(),
+                "game_count" => $statistics->getGameCount(),
+                "win_count" => $statistics->getWinCount(),
+            ],
+        ];
     }
 }

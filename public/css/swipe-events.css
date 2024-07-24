@@ -1,18 +1,19 @@
-.phone{
+.phone {
     display: none
 }
 @media (pointer: coarse) or (hover: none) {
-    body, html{
+    body, html {
         position: fixed;
         top: 0;
         left: 0;
         width: 100vw;
         height: 100vh;
+        overflow: hidden;
     }
-    .pc{
+    .pc {
         display: none
     }
-    .phone{
+    .phone {
         display: flex
     }
     .instruction {

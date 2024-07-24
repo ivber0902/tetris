@@ -7,28 +7,45 @@ GAME.drawNumber = (player, field, num) => {
 }
 GAME.defaultPlay = GAME.play;
 GAME.play = (player) => {
-    if (!player.field.checkPosition(player.currentFigure.x, player.currentFigure.y, player.currentFigure.matrix)) {
-        player.isActive = false;
-        gameEnd = () => {               
-        }
-        window.location.href = "/game_over_mode" 
+    GAME.defaultPlay(player)
+    player.ui.time = new Date() - GAME.startTime;
+    if ((!GAME.stopTimer) && ((new Date() - GAME.startTime) >= ((2 * 60 - 11) * 1000))) {
+        GAME.stopTimer = true;
+        GAME.num = 10;
+        GAME.drawDowncount(player, player.field.field, 10, 1, () => {
+            player.isActive = false;
+            player.isGameOver = true;
+            switch (localStorage.Gamewidth) {
+                case '7':
+                    player.fieldMode = 0
+                    break;
+                case '10':
+                    player.fieldMode = 1
+                    break;
+                case '15':
+                    player.fieldMode = 2
+                    break;
+                case '20':
+                    player.fieldMode = 3
+                    break;
+                default:
+                    break;
+            } 
+            let result = {
+                mode: 1,
+                time: 0,
+                score: player.score,
+                tetris_count: player.countTetris,
+                figure_count: player.figureCount,
+                filled_rows: player.countClearLines,
+                field_mode: player.fieldMode,
+                is_won: true
+            }
+            gameEnd(result);
+        })
     }
-    else
-    {
-        GAME.defaultPlay(player)
-        player.ui.time = new Date() - GAME.startTime;
-        if ((!GAME.stopTimer) && ((new Date() - GAME.startTime) >= ((2 * 60 - 11) * 1000))) {
-            GAME.stopTimer = true;
-            GAME.num = 10;
-            GAME.drawDowncount(player, player.field.field, 10, 1, () => {
-                player.isActive = false;
-                player.isGameOver = true;
-                gameEnd(player.score)
-            })
-        }
-        if (GAME.stopTimer) {
-            GAME.defdrawNumber(player, player.field.field, GAME.num)
-        }
+    if (GAME.stopTimer) {
+        GAME.defdrawNumber(player, player.field.field, GAME.num)
     }
 }
 GAME.start = (player) => {

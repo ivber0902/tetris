@@ -15,9 +15,10 @@ class SingleGame extends Game
     {
         return $this->score;
     }
-    public function setScore(int $score): void
+    public function setScore(int $score): static
     {
         $this->score = $score;
+        return $this;
     }
 
     public function getTetrisCount(): int

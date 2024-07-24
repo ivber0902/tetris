@@ -91,7 +91,10 @@ let GAME = {
     start(player) {
         player.isActive = true; 
         this.onLoadImages(() => {
-            this.drawDowncount(player, player.field.field, 3, 1, () => { player.isActive = true; this.play(player) })
+            this.drawDowncount(player, player.field.field, 3, 1, () => { player.isActive = true;
+                player.ui.initMusic();
+                this.play(player);
+            })
         })
     },
     play(player) {
@@ -101,7 +104,6 @@ let GAME = {
         document.querySelector('.game__score').innerHTML = player.score;
         document.querySelector('.game__level').innerHTML = player.lvl;
         requestAnimationFrame(() => this.play(player));
-
     },
 }
 

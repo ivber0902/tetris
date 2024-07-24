@@ -44,36 +44,6 @@
     padding-left: 40px;
     font-size: 30px;
 }
-.profile {
-    height: 60px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-.profile__nickname {
-    font-size: 32px;
-    color: #fff;
-    margin: 10px;
-}
-
-.profile__avatar {
-    width: 40px;
-    height: 40px;
-    margin-right: 10px;
-}
-
-.settings {
-    width: 40px;
-    height: 40px;
-    display: none;
-}
-
-.header {
-    display: flex;
-    justify-content: end;
-    padding: 25px;
-}
 
 .link {
     display: flex;
@@ -115,11 +85,12 @@
 }
 .players {
     overflow-y: scroll;
+    overflow-x: hidden;
     flex-direction: column;
     justify-content: center;
     width: 100%; 
     align-items: flex-end;
-    max-height: 40%;
+    max-height: 30%;
 }
 
 .players::-webkit-scrollbar {

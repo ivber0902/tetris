@@ -212,6 +212,18 @@ const langArr = {
         "ru": "молодец! ещё немного! держи мотивирующее видео!",
         "en": "well done! A little more! Here's a motivational video!"
     },
+    "lose-title": {
+        "ru": "к сожалению ты не достиг цели",
+        "en": "unfortunately you didn't reach your goal"
+    },
+    "lose-title.max": {
+        "ru": "ты можешь попытаться снова или вернуться в меню",
+        "en": "you can try again or go back to the menu"
+    },
+    "lose-title.description": {
+        "ru": "ещё немного! держи мотивирующее видео!",
+        "en": "A little more! Here's a motivational video!"
+    },
     "link__header.again": {
         "ru": "сыграть заново",
         "en": "to play again"
@@ -528,6 +540,14 @@ const langArr = {
         "ru": "Ты поразил систему! 10 побед подряд — ты стал истинным мастером сражений!",
         "en": "You've hit the system! 10 wins in a row — you have become a true master of battles!"
     },
+    "link__title.leader__title": {
+        "ru": "таблица лидеров",
+        "en": "leaderboard"
+    },
+    "link__subtitle.leader__subtitle": {
+        "ru": "узрите настоящих героев тетриса",
+        "en": "see the real tetris heroes"
+    }
     
 }
 if((localStorage.lang === undefined) || (!localStorage.lang)){

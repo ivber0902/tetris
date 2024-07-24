@@ -28,43 +28,6 @@ body{
     background-size: cover;
 } */
 
-.settings {
-    width: 40px;
-    height: 40px;
-}
-
-.header {
-    display: flex;
-    justify-content: space-between;
-    padding: 25px;
-}
-
-/* .logo {
-    
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, 0);
-} */
-
-.profile {
-    height: 60px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-.profile__nickname {
-    font-size: 32px;
-    color: #fff;
-    margin: 10px;
-}
-
-.profile__avatar {
-    width: 40px;
-    height: 40px;
-    margin-right: 10px;
-}
-
 .link__image {
     height: 55%;
 }
@@ -257,6 +220,21 @@ body{
 
 .solo__subtitle {
     color: #7874A5;
+}
+
+.leader{
+    background-color: #6d5531;
+    border-top: 3px solid #a3804b;
+    border-left: 3px solid #574326;
+    border-bottom: 3px solid #1b150c;
+}
+
+.leader__title {
+    color: #dfd9b0;
+}
+
+.leader__subtitle {
+    color: #dfd9b0;
 }
 
 .about {

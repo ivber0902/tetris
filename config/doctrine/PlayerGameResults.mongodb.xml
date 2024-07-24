@@ -1,0 +1,15 @@
+<doctrine-mongo-mapping xmlns="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping"
+                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                        xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
+                    http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
+    <embedded-document name="App\Document\PlayerGameResults">
+        <field name="id" type="string" />
+        <field name="score" type="int" />
+        <field name="time" type="int" />
+        <field name="tetrisCount" type="int" />
+        <field name="figureCount" type="int" />
+        <field name="filledRows" type="int" />
+        <field name="isWon" type="bool" />
+        <field name="playField" type="collection" />
+    </embedded-document>
+</doctrine-mongo-mapping>

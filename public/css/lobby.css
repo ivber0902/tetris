@@ -48,6 +48,7 @@
     height: 40px;
     cursor: pointer;
     padding: 15px;
+    border-radius: 50%;
 }
 
 .player__name {

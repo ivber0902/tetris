@@ -4,32 +4,16 @@
 	solo classic mode
 {% endblock %}
 {% block style %}
-	<link rel="stylesheet" href="/css/select.css"/><link rel="stylesheet" href="/css/mini-profile.css"/>
+	<link rel="stylesheet" href="/css/select.css"/>
+	<link rel="stylesheet" href="/css/mini-profile.css"/>
+	<link rel="stylesheet" href="/css/header.css"/>
 {% endblock %}
 {% block script %}
 	<script src="/js/game_modes/game_mode_size.js"></script>
 {% endblock %}
 {% block content %}
 	<div class="header">
-		<a href="/settings">
-			<img src="/images/settings.png" alt="settings" class="settings"/>
-		</a>
-		<img src="/images/logo.png" alt="logo" class="logo"/>
-		<div class="profile">
-			{% if player is not defined %}
-				<a href="{{ path('register') }}">
-					<div class="profile">
-						<p class="profile__nickname">{{player.user.login ?? 'славянин'}}</p>
-						<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
-					</div>
-				</a>
-			{% else %}
-				<div class="profile">
-					<p class="profile__nickname">{{player.user.login ?? 'славянин'}}</p>
-					<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
-				</div>
-			{% endif %}
-		</div>
+		{% include 'header.html.twig' %}
 	</div>
 	<div class="select">
 		<a href="/select_solo_mode">

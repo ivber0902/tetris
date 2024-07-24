@@ -90,7 +90,19 @@ get_user:
     path: /api/player/{id}/user
     methods: GET
     controller: App\Controller\PlayerController::getUserApi
+api_save_single_game:
+    path: /api/game/single/add
+    methods: POST
+    controller: App\Controller\PlayerController::storeSingleGame
 api_update_statistics:
     path: /api/statistics
     methods: POST
     controller: App\Controller\PlayerController::updateStatistics
+api_get_players_rating:
+    path: /api/player/rating
+    methods: GET
+    controller: App\Controller\PlayerController::getRatings
+
+test:
+    path: /test
+    controller: App\Controller\NoSQLTestController::get

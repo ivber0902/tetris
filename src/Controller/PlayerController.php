@@ -2,7 +2,8 @@
 
 namespace App\Controller;
 
-use App\Repository\PlayerRepository;
+use App\Document\Player;
+use App\Service\GameService;
 use App\Service\PlayerService;
 use App\Service\ImageService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,6 +17,7 @@ class PlayerController extends AbstractController
 {
     public function __construct(
         private readonly PlayerService $service,
+        private readonly GameService $gameService,
         private readonly ImageService $imageService,
     )
     {
@@ -51,6 +53,36 @@ class PlayerController extends AbstractController
         return new Response("Hello");
     }
 
+    public function storeSingleGame(Request $request): Response
+    {
+        $data = json_decode($request->getContent(), true);
+        if (!isset($data["mode"])) {
+            return $this->json([], Response::HTTP_BAD_REQUEST);
+        }
+        $user = $this->getUser();
+        if ($user === null) {
+            return $this->json([], Response::HTTP_UNAUTHORIZED);
+        }
+        $player = $this->service->findPlayer($user->getId());
+        if ($player === null) {
+            return $this->json([], Response::HTTP_UNAUTHORIZED);
+        }
+        $gameId = $this->gameService->saveSingleGame(
+            $data["mode"],
+            $data["time"] ?? 0,
+            $data["score"] ?? 0,
+            $data["tetris_count"] ?? 0,
+            $data["figure_count"] ?? 0,
+            $data["filled_rows"] ?? 0,
+            $data["field_mode"] ?? 0,
+            $data["is_won"] ?? false,
+        );
+        $this->service->addGame($player->getId(), $gameId);
+        $this->service->updateStatistics($player->getId(), $data["mode"]);
+
+        return $this->json(["game" => $gameId], Response::HTTP_OK);
+    }
+
     public function getUserApi(string $id): Response
     {
         $player = $this->service->findPlayer($id);
@@ -66,11 +98,26 @@ class PlayerController extends AbstractController
 
     public function updateAvatarPath(Request $request): Response
     {
-
         $securityUserId = $this->getUser()->getId();
         $player = $this->service->findPlayer($securityUserId);
         $avatarPath = $this->imageService->updateImage($player->getAvatar(), $request->files->get('avatarPath'));
         $this->service->updateAvatarPath($avatarPath, $securityUserId);
         return $this->redirectToRoute("profile" , ["player" => $player, "login" => $player->getLogin()]);
+    }
+
+    public function getRatings(Request $request): Response
+    {
+        $count = $request->get('count');
+        $key = $request->get('sortKey');
+        if ($count === null || $key === null || (int)$count <= 0) {
+            return $this->json([], Response::HTTP_BAD_REQUEST);
+        }
+        $players = $this->service->getRating($count, $key);
+
+        return $this->json(
+            array_map(function ($player) {
+                return $this->service->serializePlayerInfoToJSON($player);
+            }, $players), Response::HTTP_OK
+        );
     }
 }
