@@ -15,7 +15,7 @@
 				<div class="profile">
 					<p class="profile__nickname">{{player.user.login ?? 'славянин'}}</p>
 					<input class="player_id" type="hidden" value="{{ player.id }}">
-					<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
+					<img src="../uploads/{{player.getAvatar() ?? "avatar-placeholder.png"}}" alt="avatar" class="profile__avatar">
 				</div>
 			</div>
 			<div class="main">
