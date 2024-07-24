@@ -485,23 +485,19 @@ const langArr = {
         "en": "Invincible multiplayer"
     },
     "item__title multy.easy": {
-        "ru": "Победи в 3 онлайн играх подряд",
-        "en": "Wins in 3 online games in a row"
+        "ru": "Победи в 3 онлайн играх",
+        "en": "Wins in 3 online games"
     },
     "item__title multy.medium": {
-        "ru": "Победи в 5 онлайн играх подряд",
-        "en": "Wins in 5 online games in a row"
+        "ru": "Победи в 5 онлайн играх",
+        "en": "Wins in 5 online games"
     },
-    "item__title multy.medium": {
-        "ru": "Победи в 10 онлайн играх подряд",
-        "en": "Wins in 10 online games in a row"
-    },
-    "item__subtitle.multy.easy": {
-        "ru": "Победи в 10 онлайн играх подряд",
-        "en": "Wins in 10 online games in a row"
+    "item__title multy.hard": {
+        "ru": "Победи в 10 онлайн играх",
+        "en": "Wins in 10 online games"
     },
     "item__subtitle.multy.easy": {
-        "ru": "Ты заручился поддержкой удачи! Три победы подряд — это всего лишь начало великого пути!",
+        "ru": "Ты заручился поддержкой удачи! Три победы — это всего лишь начало великого пути!",
         "en": "You've enlisted the help of luck! Three wins in a row is just the beginning of a great journey!"
     },
     "item__subtitle.multy.medium": {
@@ -509,7 +505,7 @@ const langArr = {
         "en": "No one can stop your wave! Winning 5 online games in a row will confirm your status!"
     },
     "item__subtitle.multy.hard": {
-        "ru": "Ты — непобедимый! 10 побед подряд устанавливают новый стандарт для всех игроков!",
+        "ru": "Ты — непобедимый! 10 побед устанавливают новый стандарт для всех игроков!",
         "en": "You are invincible! 10 consecutive wins set a new standard for all players!"
     },
     "achievement__title.ai": {
@@ -520,11 +516,11 @@ const langArr = {
         "ru": "Победи ИИ 3 раза",
         "en": "Defeat the AI 3 times"
     },
-    "item__title.ai.easy": {
+    "item__title.ai.medium": {
         "ru": "Победи ИИ 5 раз",
         "en": "Defeat the AI 5 times"
     },
-    "item__title.ai.easy": {
+    "item__title.ai.hard": {
         "ru": "Победи ИИ 10 раз",
         "en": "Defeat the AI 10 times"
     },
@@ -547,8 +543,7 @@ const langArr = {
     "link__subtitle.leader__subtitle": {
         "ru": "узрите настоящих героев тетриса",
         "en": "see the real tetris heroes"
-    }
-    
+    }    
 }
 if((localStorage.lang === undefined) || (!localStorage.lang)){
     localStorage.lang = 'ru';

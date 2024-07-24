@@ -11,7 +11,7 @@ ws.onmessage = (msg) => {
     let data = JSON.parse(msg.data);
     console.log(data)
     async function foundUser(id, link) {        
-        let response = await fetch('/api/player/' + id + '/user', {
+        let response = await fetch('/api/player/' + id, {
             method: 'GET'
         });
         let user = await response.json();
