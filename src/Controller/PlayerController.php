@@ -90,10 +90,7 @@ class PlayerController extends AbstractController
         if ($player === null) {
             return $this->json([], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
-        return $this->json([
-            "id" => $player->getId(),
-            "login" => $player->getLogin(),
-        ], Response::HTTP_OK);
+        return $this->json($this->service->serializePlayerInfoToJSON($player), Response::HTTP_OK);
     }
 
     public function updateAvatarPath(Request $request): Response
@@ -105,7 +102,7 @@ class PlayerController extends AbstractController
         return $this->redirectToRoute("profile" , ["player" => $player, "login" => $player->getLogin()]);
     }
 
-    public function getRatings(Request $request): Response
+    public function getRating(Request $request): Response
     {
         $count = $request->get('count');
         $key = $request->get('sortKey');

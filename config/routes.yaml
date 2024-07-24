@@ -87,7 +87,7 @@ api_register:
     controller: App\Controller\UserController::registerByJson
     methods: POST
 get_user:
-    path: /api/player/{id}/user
+    path: /api/player/{id}
     methods: GET
     controller: App\Controller\PlayerController::getUserApi
 api_save_single_game:
