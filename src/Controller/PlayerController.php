@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Document\Player;
 use App\Service\GameService;
 use App\Service\PlayerService;
 use App\Service\ImageService;
@@ -77,7 +78,7 @@ class PlayerController extends AbstractController
             $data["is_won"] ?? false,
         );
         $this->service->addGame($player->getId(), $gameId);
-        $this->service->updateStatistics($player->getId(), $data["mode"], $data["is_won"] ?? false);
+        $this->service->updateStatistics($player->getId(), $data["mode"]);
 
         return $this->json(["game" => $gameId], Response::HTTP_OK);
     }
@@ -102,5 +103,21 @@ class PlayerController extends AbstractController
         $avatarPath = $this->imageService->updateImage($player->getAvatar(), $request->files->get('avatarPath'));
         $this->service->updateAvatarPath($avatarPath, $securityUserId);
         return $this->redirectToRoute("profile" , ["player" => $player, "login" => $player->getLogin()]);
+    }
+
+    public function getRatings(Request $request): Response
+    {
+        $count = $request->get('count');
+        $key = $request->get('sortKey');
+        if ($count === null || $key === null || (int)$count <= 0) {
+            return $this->json([], Response::HTTP_BAD_REQUEST);
+        }
+        $players = $this->service->getRating($count, $key);
+
+        return $this->json(
+            array_map(function ($player) {
+                return $this->gameService->serializePlayerInfoToJSON($player);
+            }, $players), Response::HTTP_OK
+        );
     }
 }

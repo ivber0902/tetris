@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Document\Game;
+use App\Document\MultiplayerGame;
 use App\Document\Player;
 use App\Service\PlayerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -147,6 +149,7 @@ class GameController extends AbstractController
     {
         return $this->render('user/login.html.twig');
     }
+
     public function lobby(): Response
     {
         $securityUser = $this->getUser();

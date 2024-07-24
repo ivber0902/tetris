@@ -98,3 +98,11 @@ api_update_statistics:
     path: /api/statistics
     methods: POST
     controller: App\Controller\PlayerController::updateStatistics
+api_get_players_rating:
+    path: /api/player/rating
+    methods: GET
+    controller: App\Controller\PlayerController::getRatings
+
+test:
+    path: /test
+    controller: App\Controller\NoSQLTestController::get

@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Document\Player;
 use App\Document\User;
+use App\Repository\GameRepository;
 use App\Repository\PlayerRepository;
 use App\Service\Input\RegisterUserInputInterface;
 
@@ -12,7 +13,7 @@ class PlayerService
     public function __construct(
         private readonly PlayerRepository $playerRepository,
         private readonly PasswordHasher $passwordHasher,
-        private readonly GameService $gameService,
+        private readonly GameRepository $gameRepository,
     )
     {
     }
@@ -59,7 +60,7 @@ class PlayerService
 
     public function addGame(string $playerId, string $gameId): void
     {
-        $game = $this->gameService->find($gameId);
+        $game = $this->gameRepository->find($gameId);
         $player = $this->playerRepository->find($playerId);
         $player->addGame($game);
         $this->playerRepository->store($player);
@@ -93,7 +94,7 @@ class PlayerService
     public function updateStatistics(
         string $id,
         ?int $score,
-        ?bool $isWon
+        ?bool $isWon = false
     ): string
     {
         $player = $this->playerRepository->find($id);
@@ -133,8 +134,8 @@ class PlayerService
         );
     }
 
-    public function getRating(int $count, string $orderedBy): ?array
+    public function getRating(int $count, string $orderedBy): array
     {
-        return $this->playerRepository->findBy([], [$orderedBy => -1], $count);
+        return $this->playerRepository->findBy([], ["statistics." . $orderedBy => -1], $count);
     }
 }
