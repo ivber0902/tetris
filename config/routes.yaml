@@ -86,10 +86,6 @@ api_register:
     path: /api/register
     controller: App\Controller\UserController::registerByJson
     methods: POST
-get_user:
-    path: /api/player/{id}
-    methods: GET
-    controller: App\Controller\PlayerController::getUserApi
 api_save_single_game:
     path: /api/game/single/add
     methods: POST
@@ -102,6 +98,10 @@ api_get_players_rating:
     path: /api/player/rating
     methods: GET
     controller: App\Controller\PlayerController::getRatings
+api_get_user:
+    path: /api/player/{id}
+    methods: GET
+    controller: App\Controller\PlayerController::getUserApi
 
 test:
     path: /test
