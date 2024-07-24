@@ -81,7 +81,7 @@ function initKickButtons(){
     buttons.forEach((btn)=>{
         btn.addEventListener('click', ()=>{
             document.getElementById(btn.value).remove()
-            disconnectPlayer(parseInt(btn.value))
+            disconnectPlayer(btn.value)
         })
     })
 }
