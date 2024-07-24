@@ -62,6 +62,9 @@ game:
 blitz:
     path: /blitz
     controller: App\Controller\GameController::blitz
+bot:
+    path: /bot
+    controller: App\Controller\GameController::bot
 koop:
     path: /koop
     controller: App\Controller\GameController::koop
@@ -71,6 +74,13 @@ l40:
 game_over:
     path: /game_over
     controller: App\Controller\GameController::gameOver
+game_over_mode:
+    path: /game_over_mode
+    controller: App\Controller\GameController::gameOverMode
+download_image:
+    path: /image
+    methods: POST
+    controller: App\Controller\PlayerController::updateAvatarPath
 # api
 api_register:
     path: /api/register

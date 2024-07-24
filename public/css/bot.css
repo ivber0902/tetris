@@ -1,0 +1,189 @@
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    user-select: none;
+    border: none;
+    text-transform: uppercase;
+    font-family: "Russo One", sans-serif;
+    font-weight: 400;
+    color: #fff;
+}
+
+#game, 
+#bot-game {
+    max-height: 683px;
+    padding: 0 3px 3px 3px;
+    background-color: white;
+}
+
+.other-field {
+    padding: 0 3px 3px 3px;
+    background-color: white;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.main {
+    width: 100%;
+    height: 100vh;
+    background-image: url(/images/bg.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.logo {
+    
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    padding: 50px 0 40px 0;
+}
+.main-field-wrapper {
+}
+
+.main-field {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.wrapper-field {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.title {
+    font: 800 20px/20px "Russo One", sans-serif;
+    background-color: white;
+    padding: 5px 0;
+    width: 100%;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.buffer-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.game__buffer {
+    width: 167px;
+    height: 134px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    background-image: url(/images/buffer.png);
+}
+
+.next__figure {
+    width: 172px;
+    height: 539px;
+    background-image: url(/images/next_figures.png);
+    background-size: 100% 100%;
+}
+
+.wrapper-figures {
+    width: 100%;
+    height: 511px;
+    padding: 50px 0;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+
+.border-game {
+    padding: 0 1px 1px 1px;
+    background-color: white;
+}
+
+.wrapper-figures {
+    width: 100%;
+    height: 511px;
+    padding: 50px 0;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.wrapper-game {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 190px 85px 0;
+}
+
+.palyers-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    height: 100%;
+    width: 50%;
+    gap: 0 13%;
+}
+
+.other-player {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.player__score,
+.player__username {
+    color: white;
+    text-align: center;
+    font: 800 22px/22px "Russo One", sans-serif;
+}
+
+.player__field {
+    padding: 0 1px 1px 1px;
+    background-color: white;
+}
+
+.game__score,
+.game__level,
+.bot-game__score,
+.bot-game__level,
+.title-score,
+.title-level,
+.player_name {
+    color: white;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font: 800 22px/22px "Russo One", sans-serif;
+}
+
+.title-level {
+    padding-left: 20px;
+}
+
+.title-level,
+.title-score {
+    padding-right: 10px;
+    text-transform: uppercase;
+}
+
+.score-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}

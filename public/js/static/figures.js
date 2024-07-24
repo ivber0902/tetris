@@ -44,6 +44,8 @@ let figures = [
         image: new Image(),
         block: new Image(),
         shadow: new Image(),
+        color: "#5E4CB2",
+        darkColor: "#15102A" 
     },
     {
         matrix:
@@ -79,6 +81,8 @@ let figures = [
         image: new Image(),
         block: new Image(),
         shadow: new Image(),
+        color: "#AE49A4",
+        darkColor: "#2D142A" 
     },
     {
         matrix:
@@ -119,6 +123,8 @@ let figures = [
         image: new Image(),
         block: new Image(),
         shadow: new Image(),
+        color: "#C0A73E",
+        darkColor: "#302A10" 
     },
     {
         matrix:
@@ -154,6 +160,8 @@ let figures = [
         image: new Image(),
         block: new Image(),
         shadow: new Image(),
+        color: "#C06F3E",
+        darkColor: "#321D11" 
     },
     {
         matrix:
@@ -190,6 +198,8 @@ let figures = [
         image: new Image(),
         block: new Image(),
         shadow: new Image(),
+        color: "#BA3C43",
+        darkColor: "#2F0E10" 
     },
     {
         matrix:
@@ -225,6 +235,8 @@ let figures = [
         image: new Image(),
         block: new Image(),
         shadow: new Image(),
+        color: "#8CBD3D",
+        darkColor: "#243110" 
     },
     {
         matrix:
@@ -265,10 +277,11 @@ let figures = [
         image: new Image(),
         block: new Image(),
         shadow: new Image(),
+        color: "#3BBA8C",
+        darkColor: "#123327" 
     },
 ];
 
 let blockField = new Image()
 
 let blockAdd = new Image()
-

@@ -50,6 +50,13 @@ class PlayerService
         return $this->playerRepository->find($id);
     }
 
+    public function updateAvatarPath(string $avatarPath, string $id): string
+    {
+        $player = $this->playerRepository->find($id);
+        $player->setAvatar($avatarPath);
+        return $this->playerRepository->store($player);
+    }
+
     public function addGame(string $playerId, string $gameId): void
     {
         $game = $this->gameService->find($gameId);

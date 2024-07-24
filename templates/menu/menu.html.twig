@@ -13,7 +13,7 @@
 		</a>
 		<img src="/images/logo.png" alt="logo" class="logo">
 		<div class="profile">
-			<a href="{{(player.user.login ?? null) ? path("profile", {login: player.user.login}) : path('register') }}">
+			<a href="{{(player.user.login ?? null) ? path("profile", {login: player.user.login}) : path('login') }}">
 				<div class="profile">
 					<p class="profile__nickname">{{player.user.login ?? 'славянин'}}</p>
 					<img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">

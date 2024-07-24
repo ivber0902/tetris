@@ -22,9 +22,14 @@ class Player
         $this->games = new ArrayCollection();
     }
 
-    public function getAvatar(): string
+    public function getAvatar(): ?string
     {
-        return $this->avatar;
+        if (isset($this->avatar)) {
+            return $this->avatar;
+        } else {
+            return null;
+        }
+        
     }
 
     public function setAvatar(string $avatar): static
