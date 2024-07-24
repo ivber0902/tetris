@@ -12,6 +12,7 @@ class PlayerService
     public function __construct(
         private readonly PlayerRepository $playerRepository,
         private readonly PasswordHasher $passwordHasher,
+        private readonly GameService $gameService,
     )
     {
     }
@@ -49,7 +50,13 @@ class PlayerService
         return $this->playerRepository->find($id);
     }
 
-
+    public function addGame(string $playerId, string $gameId): void
+    {
+        $game = $this->gameService->find($gameId);
+        $player = $this->playerRepository->find($playerId);
+        $player->addGame($game);
+        $this->playerRepository->store($player);
+    }
 
     public function setStatistics(
         string $id,
@@ -117,5 +124,10 @@ class PlayerService
             $input->getLogin(),
             $this->passwordHasher->hash($input->getPassword())
         );
+    }
+
+    public function getRating(int $count, string $orderedBy): ?array
+    {
+        return $this->playerRepository->findBy([], [$orderedBy => -1], $count);
     }
 }

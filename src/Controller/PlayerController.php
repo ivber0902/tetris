@@ -2,19 +2,18 @@
 
 namespace App\Controller;
 
-use App\Repository\PlayerRepository;
+use App\Service\GameService;
 use App\Service\PlayerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 class PlayerController extends AbstractController
 {
     public function __construct(
         private readonly PlayerService $service,
+        private readonly GameService $gameService,
     )
     {
     }
@@ -47,6 +46,36 @@ class PlayerController extends AbstractController
             );
         }
         return new Response("Hello");
+    }
+
+    public function storeSingleGame(Request $request): Response
+    {
+        $data = json_decode($request->getContent(), true);
+        if (!isset($data["mode"])) {
+            return $this->json([], Response::HTTP_BAD_REQUEST);
+        }
+        $user = $this->getUser();
+        if ($user === null) {
+            return $this->json([], Response::HTTP_UNAUTHORIZED);
+        }
+        $player = $this->service->findPlayer($user->getId());
+        if ($player === null) {
+            return $this->json([], Response::HTTP_UNAUTHORIZED);
+        }
+        $gameId = $this->gameService->saveSingleGame(
+            $data["mode"],
+            $data["time"] ?? 0,
+            $data["score"] ?? 0,
+            $data["tetris_count"] ?? 0,
+            $data["figure_count"] ?? 0,
+            $data["filled_rows"] ?? 0,
+            $data["field_mode"] ?? 0,
+            $data["is_won"] ?? false,
+        );
+        $this->service->addGame($player->getId(), $gameId);
+        $this->service->updateStatistics($player->getId(), $data["mode"], $data["is_won"] ?? false);
+
+        return $this->json([], Response::HTTP_OK);
     }
 
     public function getUserApi(string $id): Response
