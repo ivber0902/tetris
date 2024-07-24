@@ -135,8 +135,10 @@ ws.onmessage = (msg) => {
             listPlayers.appendChild(newPlayer);
         }
         foundUser(joinPlayerId).then((user)=>{
-            if(newPlayer)
+            if(newPlayer){
                 newPlayer.querySelector('.player__name').textContent = user.login
+                newPlayer.querySelector('.profile__avatar').src = `../uploads/${user.avatar ?? "avatar-placeholder.png"}`
+            }
         })
     })
     initKickButtons()
