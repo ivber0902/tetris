@@ -97,7 +97,7 @@ api_update_statistics:
 api_get_players_rating:
     path: /api/player/rating
     methods: GET
-    controller: App\Controller\PlayerController::getRatings
+    controller: App\Controller\PlayerController::getRating
 api_get_user:
     path: /api/player/{id}
     methods: GET
