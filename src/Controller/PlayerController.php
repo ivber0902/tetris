@@ -79,6 +79,7 @@ class PlayerController extends AbstractController
         );
         $this->service->addGame($player->getId(), $gameId);
         $this->service->updateStatistics($player->getId(), $data["mode"]);
+        $this->service->updateStatistics($player->getId(), $data["score"]);
 
         return $this->json(["game" => $gameId], Response::HTTP_OK);
     }
