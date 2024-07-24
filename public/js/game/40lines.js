@@ -9,9 +9,10 @@ GAME.defaultPlay = GAME.play;
 GAME.play = (player) => {
     if (!player.field.checkPosition(player.currentFigure.x, player.currentFigure.y, player.currentFigure.matrix)) {
         player.isActive = false;
-        gameEnd = () => {               
+        gameEnd = () => {    
+            window.location.href = "/game_over_mode"            
         }
-        window.location.href = "/game_over_mode" 
+        gameEnd()
     }
     else{
         if (player.lines >= 40 && player.isActive) {

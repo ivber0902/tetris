@@ -52,6 +52,11 @@ class Player {
     }
 
     updateScore(countLines) {
+        if (countLines === 4)
+            this.countTetris += 1
+        this.countClearLines += countLines;
+        console.log(this.countClearLines, this.countTetris)
+        
         switch (countLines) {
             case 1:
                 this.score += 100 * Math.max(1, this.lvl);
@@ -67,11 +72,7 @@ class Player {
                 break;
             default:
                 break;
-        }
-        if (countLines === 4)
-            this.countTetris += 1
-        this.countClearLines += countLines;
-        console.log(this.countClearLines, this.countTetris)
+        } 
     }
 
     updateLvl() {
