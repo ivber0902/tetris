@@ -65,7 +65,7 @@ function disconnectPlayer(kickId){
 
 async function foundUser(id)
 {
-    let response = await fetch('/api/player/' + id + '/user', {
+    let response = await fetch('/api/player/' + id, {
         method: 'GET'
     });
     let user = await response.json();
