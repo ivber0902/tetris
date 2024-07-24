@@ -23,6 +23,7 @@ class Player {
         this.isStartNewLevelTimer = false;
         this.countTetris = 0;
         this.countClearLines = 0;
+        this.fieldMode = 0;
     }
 
     initFigures(currentFigureIndex, bufferFigureIndex, NextFiguresIndex) {
@@ -56,7 +57,7 @@ class Player {
             this.countTetris += 1
         this.countClearLines += countLines;
         console.log(this.countClearLines, this.countTetris)
-        
+
         switch (countLines) {
             case 1:
                 this.score += 100 * Math.max(1, this.lvl);
@@ -148,7 +149,32 @@ class Player {
                         this.update();
                     } else {
                         this.isActive = false;
-                        gameEnd(this.score);
+                        switch (localStorage.Gamewidth) {
+                            case '7':
+                                this.fieldMode = 0
+                                break;
+                            case '10':
+                                this.fieldMode = 1
+                                break;
+                            case '15':
+                                this.fieldMode = 2
+                                break;
+                            case '20':
+                                this.fieldMode = 3
+                                break;
+                            default:
+                                break;
+                        } 
+                        let result = {
+                            mode: parseInt(localStorage.mode),
+                            score: this.score,
+                            tetris_count: this.countTetris,
+                            figure_count: this.figureCount,
+                            filled_rows: this.countClearLines,
+                            field_mode: this.fieldMode,
+                            is_won: false
+                        }
+                        gameEnd(result);
                     }
                 }
             }

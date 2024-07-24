@@ -182,6 +182,7 @@ class Player {
                     this.field.insertFigure(this.currentFigure, 1);
                     if (!this.field.checkPosition(this.currentFigure.x, this.currentFigure.y, this.currentFigure.matrix, 1)) {
                         this.isActive = false;
+                        console.log('sosiska')
                         gameEnd(this.score);
                     }
                 }
@@ -200,6 +201,7 @@ class Player {
                     this.field.insertFigure(this.currentFigure2, 2);
                     if (!this.field.checkPosition(this.currentFigure2.x, this.currentFigure2.y, this.currentFigure2.matrix, 2)) {
                         this.isActive = false;
+                        console.log('sosiska2')
                         gameEnd(this.score);
                     }
                 }

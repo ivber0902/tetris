@@ -7,21 +7,38 @@ player.updateScore = (countLines) => {
 GAME.startTime = new Date();
 GAME.defaultPlay = GAME.play;
 GAME.play = (player) => {
-    if (!player.field.checkPosition(player.currentFigure.x, player.currentFigure.y, player.currentFigure.matrix)) {
+    if (player.lines >= 40 && player.isActive) {
         player.isActive = false;
-        gameEnd = () => {    
-            window.location.href = "/game_over_mode"            
+        player.gameEnd = true;
+        switch (localStorage.Gamewidth) {
+            case '7':
+                player.fieldMode = 0
+                break;
+            case '10':
+                player.fieldMode = 1
+                break;
+            case '15':
+                player.fieldMode = 2
+                break;
+            case '20':
+                player.fieldMode = 3
+                break;
+            default:
+                break;
+        } 
+        let result = {
+            mode: 2,
+            time: new Date() - GAME.startTime,
+            score: player.score,
+            tetris_count: player.countTetris,
+            figure_count: player.figureCount,
+            filled_rows: player.countClearLines,
+            field_mode: player.fieldMode,
+            is_won: true
         }
-        gameEnd()
+        gameEnd(result);
     }
-    else{
-        if (player.lines >= 40 && player.isActive) {
-            player.isActive = false;
-            player.gameEnd = true;
-            gameEnd(new Date() - GAME.startTime);
-        }
-        GAME.defaultPlay(player)
-    }
+    GAME.defaultPlay(player)
 }
 GAME.start = (player) => {
     GAME.onLoadImages(() => {
