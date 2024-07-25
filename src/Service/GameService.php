@@ -94,9 +94,9 @@ class GameService
         $this->repository->store($game);
     }
 
-    public function getRating(int $count, string $orderedBy, array $filters = []): ?array
+    public function getRating(?int $count = null, ?string $orderedBy = null, array $filters = []): ?array
     {
-        return $this->repository->findBy($filters, [$orderedBy => -1], $count);
+        return $this->repository->findBy($filters, [$orderedBy ?? "id" => -1], $count);
     }
 
     public function findGames(): array

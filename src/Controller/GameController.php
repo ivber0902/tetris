@@ -178,8 +178,8 @@ class GameController extends AbstractController
 
         $filters = [];
         foreach (["mode", "time", "tetrisCount",
-                     "figure_count", "filled_rows", "field_mode",
-                     "is_won"] as $key) {
+                     "figureCount", "filledRows", "field_mode",
+                     "isWon"] as $key) {
             if (($filter = $request->get($key)) !== null) {
                 $filters[$key] = $filter;
             }
@@ -189,5 +189,40 @@ class GameController extends AbstractController
         return $this->json(array_map(function ($game) {
             return $this->gameService->serializeGameInfoToArray($game);
         }, $games), Response::HTTP_OK);
+    }
+
+    public function countGamesWithFiltering(Request $request): Response
+    {
+        $filters = [];
+        foreach (["mode",
+                     "time", "tetrisCount",
+                     "figureCount", "filledRows", "field_mode",
+                     "isWon"] as $key) {
+            if (($filter = $request->get($key)) !== null) {
+                if ($key === "isWon") {
+                    $filters[$key] = $filter != 0;
+                    continue;
+                }
+                $filters[$key] = $filter;
+            }
+        }
+
+        $games = $this->gameService->getRating(null, null, $filters);
+        return $this->json([
+            "count" => count($games),
+        ]);
+    }
+
+    public function storeMultiplayerGame(Request $request): Response
+    {
+        $data = json_decode($request->getContent(), true);
+        $gameId = $this->gameService->saveMultiplayerGame(
+            $data["mode"] ?? 0,
+            $data["time"] ?? 0,
+        );
+
+        foreach ($data["players"] ?? [] as $player) {
+            $this->gameService->addPlayerToMultiplayerGame();
+        }
     }
 }
