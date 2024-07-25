@@ -13,7 +13,7 @@
 body {
     height: 100vh;
     width: 100vw;
-    background: url(/images/bg.png) no-repeat;
+    background: url("https://i.postimg.cc/1zyHTmtK/bg.png") no-repeat;
     background-size: cover;
     display: flex;
     flex-direction: column;

@@ -15,13 +15,13 @@
 {
     min-height: 100vh;
     height: 100%;
-    background: url(/images/bg.png) no-repeat;
+    background: url("https://i.postimg.cc/1zyHTmtK/bg.png") no-repeat;
     background-size: cover;
 }
 
 .bg_dark 
 {
-    background: url(/images/dark-bg.png) no-repeat;
+    background: url("https://i.postimg.cc/1zyHTmtK/bg.png") no-repeat;
     background-size: cover;
 }
 
