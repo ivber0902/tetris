@@ -624,6 +624,16 @@ const langArr = {
         "ru": "РЕЖИМ КООПЕРАТИВА",
         "en": "CO-OP MODE"
     },
+    "other-information__title": {
+        "ru": "статистика",
+        "en": "statistic"
+    },
+    "all-statistic-view": {
+        "ru": "посмотреть всю статистику",
+        "en": "view all statistics"
+    },
+    
+
 }
 if((localStorage.lang === undefined) || (!localStorage.lang)){
     localStorage.lang = 'ru';
