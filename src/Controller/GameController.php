@@ -181,6 +181,10 @@ class GameController extends AbstractController
                      "figureCount", "filledRows", "fieldMode",
                      "isWon", "playerId"] as $key) {
             if (($filter = $request->get($key)) !== null) {
+                if ($key === "isWon") {
+                    $filters[$key] = $filter != 0 || $filter !== "false";
+                    continue;
+                }
                 $filters[$key] = $filter;
             }
         }
@@ -200,7 +204,7 @@ class GameController extends AbstractController
                      "isWon", "playerId"] as $key) {
             if (($filter = $request->get($key)) !== null) {
                 if ($key === "isWon") {
-                    $filters[$key] = $filter != 0;
+                    $filters[$key] = $filter != 0 || $filter !== "false";
                     continue;
                 }
                 $filters[$key] = $filter;
