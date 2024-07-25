@@ -138,7 +138,7 @@ let settings = {
                 "ru": "При игре на фоне находится город Йошкар-Ола",
                 "en": "When playing, the city of Yoshkar-Ola is located in the background"
             }, 
-            value: "/images/backgrounds/io.jpg"
+            value: "/images/backgrounds/io.png"
         },
         {
             title: {

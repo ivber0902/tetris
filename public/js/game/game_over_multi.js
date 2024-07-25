@@ -24,7 +24,7 @@ function printResults(data){
         foundUser(data[i].player_id).then((user) => { 
             player.querySelector('.player__name').textContent = user.login;
         if (playerId == data[i].player_id){
-            document.querySelector('.results__title').innerHTML = '№' + (i + 1) + ' ' + user.login
+            document.querySelector('.results__title').innerHTML = `№` + (i + 1) + ' ' + user.login
             document.querySelector('.time__value').innerHTML = elem.score
         }   
         })
@@ -47,6 +47,7 @@ function createPlayerBlock(elem, position){
 
     const playerPlace = document.createElement('p');
     playerPlace.classList.add('player__place');
+    playerPlace.textContent = position + 1
     playerPlace.textContent = position + 1
 
     const playerNumber = document.createElement('div');

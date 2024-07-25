@@ -377,11 +377,11 @@ const langArr = {
         "en": "Score 10,000 points per game",
     },
     "item__title.legend-tetris.medium": {
-        "ru": "Набери за игру 10000 очков",
+        "ru": "Набери за игру 50000 очков",
         "en": "Score 50,000 points per game",
     },
     "item__title.legend-tetris.hard": {
-        "ru": "Набери за игру 10000 очков",
+        "ru": "Набери за игру 100000 очков",
         "en": "Score 100,000 points per game",
     },
     "item__subtitle.legend-tetris.easy": {
@@ -544,6 +544,36 @@ const langArr = {
         "ru": "узрите настоящих героев тетриса",
         "en": "see the real tetris heroes"
     }    
+
+
+    // : {
+    //     "ru": "РЕЖИМ БЛИЦ",
+    //     "en": "BLITZ MODE"
+    // }, 
+    // : {
+    //     "ru": "количество игр",
+    //     "en": "number of games"
+    // }, 
+    // : {
+    //     "ru": "МАКСИМАЛЬНОЕ КОЛИЧЕСТВО ОЧКОВ",
+    //     "en": "THE MAXIMUM NUMBER OF POINTS"
+    // }, 
+    // : {
+    //     "ru": "СУММАРНОЕ КОЛИЧЕСТВО ОЧКОВ",
+    //     "en": "TOTAL NUMBER OF POINTS"
+    // }, 
+    // : {
+    //     "ru": "РЕЖИМ 40 ЛИНИЙ",
+    //     "en": "40LINES MODE"
+    // },
+    // : {
+    //     "ru": "РЕЖИМ С БОТОМ",
+    //     "en": "BOT MODE"
+    // },
+    // : {
+    //     "ru": "РЕЖИМ КООПЕРАТИВА",
+    //     "en": "CO-OP MODE"
+    // },
 }
 if((localStorage.lang === undefined) || (!localStorage.lang)){
     localStorage.lang = 'ru';
