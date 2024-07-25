@@ -50,12 +50,15 @@ func (server *Server) Init() {
 				server.LobbyList.remove <- lobbyConn.Config
 				delete(server.Lobbies, lobbyConn.ID)
 			case lobbyInfo := <-server.On.Lobby.Update:
-				server.LobbyList.update <- lobbyInfo
+				if !lobbyInfo.GameRun {
+					server.LobbyList.update <- lobbyInfo
+				}
 			case lobbyConn := <-server.On.Lobby.Run:
 				log.Printf("Lobby %s has ran", lobbyConn.ID)
 				newGame := game.New(lobbyConn, server.On.Game)
 				newGame.Init()
 				server.Games[newGame.ID] = newGame
+				server.LobbyList.remove <- lobbyConn.Config
 			case gameConn := <-server.On.Game.Remove:
 				delete(server.Games, gameConn.ID)
 			}
@@ -85,8 +88,12 @@ func (server *Server) HandleConnection(w http.ResponseWriter, r *http.Request, c
 		log.Printf("Server HandleConnection: LobbyInfo %s created by player (IP: %s)", lobbyConn.ID, clientIP)
 	}
 
+	if lobbyConn.Config.GameRun {
+		conn.Close()
+		return
+	}
+
 	for player := range lobbyConn.Clients {
-		log.Println(clientIP, player.IP)
 		if clientIP == player.IP {
 			fmt.Println("State", player.State)
 			player.Conn.Close()
@@ -170,6 +177,16 @@ func (server *Server) GameResultsHandler(w http.ResponseWriter, r *http.Request)
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	w.Header().Set("Content-Type", "application/json")
 
-	json.NewEncoder(w).Encode(reverseArray[game.PlayerResult](*gameConn.Results))
+	type Results struct {
+		PlayerID connection.ClientIDType `json:"player_id"`
+		Score    int                     `json:"score"`
+	}
+	var res = make([]Results, 0)
+
+	for _, player := range gameConn.Results.Players {
+		res = append(res, Results{PlayerID: player.ID, Score: player.Score})
+	}
+
+	json.NewEncoder(w).Encode(res)
 	//w.WriteHeader(http.StatusOK)
 }

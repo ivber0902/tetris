@@ -63,8 +63,6 @@ func (room *Room) Init() {
 				}
 			}
 		case player := <-room.GameEnd:
-			room.Results.Add(player)
-
 			if func() bool {
 				for player := range room.Clients {
 					if !player.State.GameOver {
@@ -78,9 +76,12 @@ func (room *Room) Init() {
 						Type: "game_over",
 					})
 				}
-				room.ShowResultsTimeout()
+				room.Config.GameRun = false
+				room.Results.AddPlayer(player, true)
+				room.SendResults(room.Results)
 				return false
 			}
+			room.Results.AddPlayer(player, false)
 
 		case playerID := <-room.On.Disconnect:
 			if player := room.GetClientByID(playerID); player != nil {
@@ -97,7 +98,7 @@ func (room *Room) Init() {
 	})
 }
 
-func (room *Room) ShowResultsTimeout() {
+func (room *Room) SendResults(results *Results) {
 	go func() {
 		log.Printf("Show Results for game %s", room.ID)
 		time.Sleep(time.Hour)

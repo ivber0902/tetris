@@ -23,6 +23,7 @@ func HandleRequest(room *Room, player *connection.Client[State, lobby.Config, Re
 			player.Event.Update <- &Response{
 				Type: "start",
 			}
+			log.Printf("Player %v (IP: %s) started lobby %s", player.ID, player.IP, room.ID)
 		}
 	case AllRequestType:
 		for client := range room.Clients {

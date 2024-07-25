@@ -6,12 +6,11 @@ import (
 	"net/http"
 )
 
-// TODO Перевости весь JSON на LowerCamelCase
-
 var server Server
 
 func main() {
 	log.Println("Starting server...")
+
 	server.Init()
 	http.HandleFunc("/lobby", func(w http.ResponseWriter, r *http.Request) {
 		PlayerIP, err := getPlayerIP(r)

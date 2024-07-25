@@ -4,12 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7bcc5562-9455-45fa-9b4e-8407aadb17a9" name="Changes" comment="Иправил ошибку &quot;... must not be accessed before initialization&quot;">
+    <list default="true" id="7bcc5562-9455-45fa-9b4e-8407aadb17a9" name="Changes" comment="Исправил количичество игроков по-умолчанию с 1 на всех">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/GameController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/GameController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Document/Game.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Document/Game.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Document/Player.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Document/Player.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Document/SingleGame.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Document/SingleGame.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebSocket/cooperative_game/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/WebSocket/cooperative_game/client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebSocket/game/results.go" beforeDir="false" afterPath="$PROJECT_DIR$/WebSocket/game/results.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebSocket/game/room.go" beforeDir="false" afterPath="$PROJECT_DIR$/WebSocket/game/room.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebSocket/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/WebSocket/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebSocket/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/WebSocket/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebSocket/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/WebSocket/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebSocket/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/WebSocket/server.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/multiplayer/multiplayer_game.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/multiplayer/multiplayer_game.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -167,7 +171,7 @@
       <workItem from="1721127789829" duration="1730000" />
       <workItem from="1721803347008" duration="19236000" />
       <workItem from="1721843697762" duration="1892000" />
-      <workItem from="1721880660322" duration="5106000" />
+      <workItem from="1721880660322" duration="12721000" />
     </task>
     <task id="LOCAL-00001" summary="Исправил кнопку «Начать игру»">
       <option name="closed" value="true" />
@@ -321,7 +325,47 @@
       <option name="project" value="LOCAL" />
       <updated>1721888031952</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Добавил API для сохранение многопользовательской игры">
+      <option name="closed" value="true" />
+      <created>1721888066473</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1721888066473</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Исправил ошибку типа в SingleGame.php">
+      <option name="closed" value="true" />
+      <created>1721888433900</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1721888433900</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Добавил PLayerID в API для статистики">
+      <option name="closed" value="true" />
+      <created>1721890408170</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1721890408170</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Исправил bool в isWon в API для статистики">
+      <option name="closed" value="true" />
+      <created>1721890710182</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1721890710182</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Исправил количичество игроков по-умолчанию с 1 на всех">
+      <option name="closed" value="true" />
+      <created>1721893376857</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1721893376857</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -371,6 +415,11 @@
     <MESSAGE value="Добавил получение рейтинга игр" />
     <MESSAGE value="Добавил получение количества игр по фильтрам" />
     <MESSAGE value="Иправил ошибку &quot;... must not be accessed before initialization&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Иправил ошибку &quot;... must not be accessed before initialization&quot;" />
+    <MESSAGE value="Добавил API для сохранение многопользовательской игры" />
+    <MESSAGE value="Исправил ошибку типа в SingleGame.php" />
+    <MESSAGE value="Добавил PLayerID в API для статистики" />
+    <MESSAGE value="Исправил bool в isWon в API для статистики" />
+    <MESSAGE value="Исправил количичество игроков по-умолчанию с 1 на всех" />
+    <option name="LAST_COMMIT_MESSAGE" value="Исправил количичество игроков по-умолчанию с 1 на всех" />
   </component>
 </project>

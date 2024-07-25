@@ -1,6 +1,5 @@
-const host = window.location.hostname;
 let params = new URLSearchParams(document.location.search);
-let wsUrl = "ws://" + host + ":8080/game?lobby=" + params.get('lobby');
+let wsUrl = "ws://" + window.location.hostname + ":8080/game?lobby=" + params.get('lobby');
 let ws = new WebSocket(wsUrl);
 let otherPlayers;
 let playerField = document.querySelector('.wrapper-main-field');
@@ -301,7 +300,7 @@ function createStartGameButton() {
 
 
 async function foundUser(id) {
-    let response = await fetch('/api/player/' + id + '/user', {
+    let response = await fetch('/api/player/' + id, {
         method: 'GET'
     });
     let user = await response.json();
