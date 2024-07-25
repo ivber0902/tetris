@@ -12,7 +12,6 @@ class Player
     private User $user;
     private Statistics $statistics;
     private UI $ui;
-    private Collection $games;
 
     public function __construct()
     {
@@ -83,16 +82,5 @@ class Player
     public function getUI(): UI
     {
         return $this->ui;
-    }
-
-    public function getGames(): ?array
-    {
-        return $this->games->toArray();
-    }
-
-    public function addGame(Game $game): static
-    {
-        $this->games->add($game);
-        return $this;
     }
 }

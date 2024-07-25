@@ -11,7 +11,7 @@ async function getResults(){
 }
 
 async function foundUser(id) {
-    let response = await fetch('/api/player/' + id + '/user', {
+    let response = await fetch('/api/player/' + id, {
         method: 'GET'
     });
     return await response.json();

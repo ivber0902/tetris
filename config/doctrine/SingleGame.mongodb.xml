@@ -3,6 +3,7 @@
                         xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
                     http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
     <document name="App\Document\SingleGame" collection="Game">
+        <field name="playerId" type="string"/>
         <field name="score" type="int"/>
         <field name="tetrisCount" type="int"/>
         <field name="figureCount" type="int"/>

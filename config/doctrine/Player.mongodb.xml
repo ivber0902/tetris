@@ -8,6 +8,5 @@
         <embed-one field="user" target-document="App\Document\User"/>
         <embed-one field="statistics" target-document="App\Document\Statistics"/>
         <embed-one field="ui" target-document="App\Document\UI"/>
-        <reference-many field="games" target-document="App\Document\Game"/>
     </document>
 </doctrine-mongo-mapping>
