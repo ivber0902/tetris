@@ -1,6 +1,11 @@
 let playerId = document.querySelector('.player_id').value
 console.log(playerId)
 
+let button = document.querySelector('.back');
+button.addEventListener('click', ()=>{
+    window.history.back();
+})
+
 async function foundMode(sortKey, count, mode)
 {
     let response = await fetch(`/api/game/rating?sortKey=${sortKey}&count=${count}&mode=${mode}&playerId=${playerId}`, {

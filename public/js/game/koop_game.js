@@ -85,7 +85,6 @@ let GAME = {
         })
     },
     start(player) {
-        player.isActive = true;
         this.onLoadImages(() => {
             this.drawDowncount(player, player.field.field, 3, 1, () => { player.isActive = true; this.play(player) })
         })
