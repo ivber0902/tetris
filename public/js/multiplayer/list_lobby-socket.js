@@ -20,7 +20,7 @@ ws.onmessage = (msg) => {
             let title = link.querySelector('.item__title');
             let subtitle = link.querySelector('.item__subtitle');
             title.innerHTML = `Лобби пользователя "${login}"`
-            subtitle.innerHTML = `Участников ${data.lobby.players.length}/4`;
+            subtitle.innerHTML = `Участников ${data.lobby.players.length}`;
         }
         else{
             //лобби после перезагрузки, берем данные из бд и СОЗДАЕМ
@@ -58,7 +58,7 @@ ws.onmessage = (msg) => {
             else{
                 //лобби есть, но пока подгружаются данные, на время кидаем пустые значения
                 title.innerHTML = `Лобби пользователя Славянин`
-                subtitle.innerHTML = `Участников 0/4`;
+                subtitle.innerHTML = `Участников 0`;
             }
         }
     }
