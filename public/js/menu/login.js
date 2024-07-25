@@ -26,7 +26,6 @@ function Validation(e) {
     else {
         usernameRequire.style.display = 'none';
         if (validateUsername(username)) {
-            console.log('hahahha');
             usernameError.style.display = 'none';
             element.style.marginBottom = '10px';
         }

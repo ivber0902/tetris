@@ -97,7 +97,6 @@ function createMaxWinBlock(){
 }
 
 function maxScoreResults(data){ 
-    console.log(data)
     for(let i = 0; i < data.length; i++){
         let playerWrapper = createMaxScoreBlock()
         document.querySelector('.max__score').appendChild(playerWrapper)
@@ -110,7 +109,7 @@ function maxScoreResults(data){
 }
 
 function totalScoreResults(data){ 
-    console.log(data)
+
     for(let i = 0; i < data.length; i++){
         let playerWrapper = createTotalScoreBlock()
         document.querySelector('.max__total').appendChild(playerWrapper)
@@ -123,7 +122,6 @@ function totalScoreResults(data){
 }
 
 function winCountResults(data){ 
-    console.log(data)
     for(let i = 0; i < data.length; i++){
         let playerWrapper = createMaxWinBlock()
         document.querySelector('.max__win').appendChild(playerWrapper)

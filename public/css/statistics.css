@@ -1,4 +1,36 @@
 .other-information{
     text-align: center;
-    display: block;
+    display: inline;
+    width: 100%;
+    padding: 10px 50px;
+}
+
+.statistics-block{
+    display: flex;
+    overflow: auto;
+    flex-wrap: wrap;
+}
+
+.other-information__title{
+    margin-bottom: 10px;
+}
+
+.statistics-block__title{
+    font-size: 30px;
+}
+
+.general-results{
+    margin-right: 50px;
+    padding: 20px;
+    text-align: left;
+    max-width: 350px;
+    margin-bottom: 25px;
+    font-size: 20px;
+    max-width: 40%;
+    margin-bottom: 10px;
+}
+
+.statistics-block{
+    display: flex;
+    justify-content: space-between;
 }

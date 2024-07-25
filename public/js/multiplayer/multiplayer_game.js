@@ -16,6 +16,7 @@ player.countAddLines = [];
 player.emptyCell = [];
 
 GAME.start = (player) => {
+    player.ui.music.play();
     player.isActive = true;
     GAME.play(player)
 }
@@ -157,7 +158,6 @@ function updateSize(countPlayers) {
     });
     document.querySelectorAll('.other-field').forEach((elem) => {
         elem.style.maxHeight = `${80}%`;
-        console.log('hahah')
     })
 
     let width = document.querySelector('.other-field').offsetWidth;
@@ -176,7 +176,6 @@ ws.onopen = () => {
 ws.onmessage = (msg) => {
     let data = JSON.parse(msg.data);
     if (data.type === 'game_over'){
-        console.log('game_over')
         ListPlayers.style.display = 'none'
         playerField.style.display = 'none'
         window.location.href = '/game_over_multi?lobby='  + params.get('lobby');
@@ -199,6 +198,7 @@ ws.onmessage = (msg) => {
                 ]
             )
             if(data.state.current_figure && (data.state.id === playerField.id)){
+                player.score = data.state.score;
                 player.field.matrix = data.state.play_field;
                 player.figuresPos = data.state.figure_count;
                 player.currentFigure = getFigure(player.figuresAll[player.figuresPos]);
@@ -216,12 +216,11 @@ ws.onmessage = (msg) => {
     }
     if (data.type === 'update') {
             if (data.state.id === playerField.id) {
-                player.buffer = getFigure(data.state.buffer);
-                player.ui.buffer.src = player.buffer.image.src;
 
             } else {
                 if(data.state.game_over === false){
                     player.field.drawField(document.getElementById(data.state.id).querySelector('.other-field').getContext('2d'), data.state.play_field)
+                    document.getElementById(data.state.id).querySelector('.game__score-other').textContent = data.state.score
                 }
                 else{
                     document.getElementById(data.state.id).style.display = 'none'
@@ -288,11 +287,13 @@ function initPlayers(players) {
 
 function createStartGameButton() {
     const button = document.createElement("button");
+    button.classList.add('startGameButton')
     button.textContent = 'начать';
     button.onclick = () => {
         ws.send(JSON.stringify({
             "type": "start"
         }));
+        button.remove()
       };
 
     return button;
@@ -322,7 +323,7 @@ function createField(id) {
     const playerName = document.createElement('p');
     playerName.setAttribute('class', 'player__username');
     const gameScore = document.createElement('p');
-    gameScore.textContent = '200';
+    gameScore.textContent = '0';
     gameScore.setAttribute('class', 'game__score-other');
 
 

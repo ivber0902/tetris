@@ -377,11 +377,11 @@ const langArr = {
         "en": "Score 10,000 points per game",
     },
     "item__title.legend-tetris.medium": {
-        "ru": "Набери за игру 10000 очков",
+        "ru": "Набери за игру 50000 очков",
         "en": "Score 50,000 points per game",
     },
     "item__title.legend-tetris.hard": {
-        "ru": "Набери за игру 10000 очков",
+        "ru": "Набери за игру 100000 очков",
         "en": "Score 100,000 points per game",
     },
     "item__subtitle.legend-tetris.easy": {
@@ -536,24 +536,105 @@ const langArr = {
         "ru": "Ты поразил систему! 10 побед подряд — ты стал истинным мастером сражений!",
         "en": "You've hit the system! 10 wins in a row — you have become a true master of battles!"
     },
-    "link__title.leader__title": {
+    "link__title.leaders__title": {
         "ru": "таблица лидеров",
         "en": "leaderboard"
     },
-    "link__subtitle.leader__subtitle": {
+    "link__subtitle.leaders__subtitle": {
         "ru": "узрите настоящих героев тетриса",
         "en": "see the real tetris heroes"
-    }    
+    },
+    "game-count": {
+        "ru": "количество игр",
+        "en": "number of games"
+    }, 
+    "game-count.blitz": {
+        "ru": "количество игр",
+        "en": "number of games"
+    }, 
+    "game-count.lines": {
+        "ru": "количество игр",
+        "en": "number of games"
+    }, 
+    "game-count.bot": {
+        "ru": "количество игр",
+        "en": "number of games"
+    }, 
+    "game-count.koop": {
+        "ru": "количество игр",
+        "en": "number of games"
+    }, 
+    "max-score": {
+        "ru": "МАКСИМАЛЬНОЕ КОЛИЧЕСТВО ОЧКОВ",
+        "en": "THE MAXIMUM NUMBER OF POINTS"
+    }, 
+    "max-score.blitz": {
+        "ru": "МАКСИМАЛЬНОЕ КОЛИЧЕСТВО ОЧКОВ",
+        "en": "THE MAXIMUM NUMBER OF POINTS"
+    }, 
+    "max-score.lines": {
+        "ru": "МАКСИМАЛЬНОЕ КОЛИЧЕСТВО ОЧКОВ",
+        "en": "THE MAXIMUM NUMBER OF POINTS"
+    }, 
+    "max-score.bot": {
+        "ru": "МАКСИМАЛЬНОЕ КОЛИЧЕСТВО ОЧКОВ",
+        "en": "THE MAXIMUM NUMBER OF POINTS"
+    }, 
+    "max-score.koop": {
+        "ru": "МАКСИМАЛЬНОЕ КОЛИЧЕСТВО ОЧКОВ",
+        "en": "THE MAXIMUM NUMBER OF POINTS"
+    }, 
+    "total-score": {
+        "ru": "СУММАРНОЕ КОЛИЧЕСТВО ОЧКОВ",
+        "en": "TOTAL NUMBER OF POINTS"
+    }, 
+    "total-score.blitz": {
+        "ru": "СУММАРНОЕ КОЛИЧЕСТВО ОЧКОВ",
+        "en": "TOTAL NUMBER OF POINTS"
+    }, 
+    "total-score.lines": {
+        "ru": "СУММАРНОЕ КОЛИЧЕСТВО ОЧКОВ",
+        "en": "TOTAL NUMBER OF POINTS"
+    }, 
+    "total-score.bot": {
+        "ru": "СУММАРНОЕ КОЛИЧЕСТВО ОЧКОВ",
+        "en": "TOTAL NUMBER OF POINTS"
+    }, 
+    "total-score.koop": {
+        "ru": "СУММАРНОЕ КОЛИЧЕСТВО ОЧКОВ",
+        "en": "TOTAL NUMBER OF POINTS"
+    }, 
+    "statistics-block__title.classic": {
+        "ru": "классический режим",
+        "en": "classic mode"
+    },
+    "statistics-block__title.blitz": {
+        "ru": "РЕЖИМ БЛИЦ",
+        "en": "BLITZ MODE"
+    }, 
+    "statistics-block__title.lines": {
+        "ru": "РЕЖИМ 40 ЛИНИЙ",
+        "en": "40LINES MODE"
+    },
+    "statistics-block__title.bot": {
+        "ru": "РЕЖИМ С БОТОМ",
+        "en": "BOT MODE"
+    },
+    "statistics-block__title.koop": {
+        "ru": "РЕЖИМ КООПЕРАТИВА",
+        "en": "CO-OP MODE"
+    },
 }
 if((localStorage.lang === undefined) || (!localStorage.lang)){
     localStorage.lang = 'ru';
 }
 if((localStorage.bg === undefined) || (!localStorage.bg)){
-    localStorage.bg = '/images/bg.png';
+    localStorage.bg = 'https://i.postimg.cc/1zyHTmtK/bg.png';
   }
 
 addEventListener("DOMContentLoaded", (event) => {
-    document.body.style.backgroundImage = `url(${localStorage.bg})`;
+    document.body.style.background = `url(${localStorage.bg}) no-repeat`;
+    document.body.style.backgroundSize = `cover`;
     for(let key in langArr){
         let elem = document.querySelector(`.${key}`);
         if(elem){

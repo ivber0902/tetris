@@ -6,7 +6,6 @@ function addSwipeEventListener(swipeArea) {
     function catchHolding(holdTimeout = 0) {
         setTimeout(() => {
             if (isSwiping && !isHolding) {
-                console.log("WaitHolding", holdTimeout)
                 if (Date.now() - startTime > holdTimeout) {
                     isHolding = true;
                     swipeArea.dispatchEvent(new CustomEvent('startHolding'));
@@ -41,7 +40,6 @@ function addSwipeEventListener(swipeArea) {
         const diffX = endX - startX;
         const diffY = endY - startY;
 
-        console.log(diffX, diffY);
 
         if (isHolding) {
             swipeArea.dispatchEvent(new CustomEvent('stopHolding'));

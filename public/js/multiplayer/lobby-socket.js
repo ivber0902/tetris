@@ -18,7 +18,7 @@ let settingLobby = {
     players: [],
     settings: {
         music: "/audio/Korobeiniki.wav",
-        background: "/images/bg.png",
+        background: "https://i.postimg.cc/1zyHTmtK/bg.png",
         difficulty: 1,
         play_field: {
             width: 10,
@@ -105,7 +105,6 @@ function updatePlayers(data){
 
 ws.onmessage = (msg) => {
     let data = JSON.parse(msg.data);
-    console.log(data)
     if (data.game_run)
         {
             runGame = true;

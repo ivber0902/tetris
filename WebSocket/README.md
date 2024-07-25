@@ -45,7 +45,7 @@
   "players": [123],
   "settings": {
     "music": "/audio/Korobeiniki.wav",
-    "background": "/images/bg.png",
+    "background": "https://i.postimg.cc/1zyHTmtK/bg.png",
     "difficulty": 1,
     "play_field": {
       "width": 10,
@@ -70,7 +70,7 @@
   "players": [123],
   "settings": {
     "music": "/audio/Korobeiniki.wav",
-    "background": "/images/bg.png",
+    "background": "https://i.postimg.cc/1zyHTmtK/bg.png",
     "difficulty": 1,
     "play_field": {
       "width": 10,
@@ -94,7 +94,7 @@
     "players": [123],
     "settings": {
       "music": "/audio/Korobeiniki.wav",
-      "background": "/images/bg.png",
+      "background": "https://i.postimg.cc/1zyHTmtK/bg.png",
       "difficulty": 1,
       "play_field": {
         "width": 10,
@@ -113,7 +113,7 @@
     "players": [123, 456],
     "settings": {
       "music": "/audio/Korobeiniki.wav",
-      "background": "/images/bg.png",
+      "background": "https://i.postimg.cc/1zyHTmtK/bg.png",
       "difficulty": 1,
       "play_field": {
         "width": 10,

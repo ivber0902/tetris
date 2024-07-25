@@ -1,10 +1,9 @@
-const host = window.location.hostname;
 let params = new URLSearchParams(document.location.search);
 let players = document.querySelector('.players');
 let playerId = document.querySelector(".player_id").value;
 
 async function getResults(){
-    let response = await fetch("http://" + host + ":8080/game/results?lobby=" + params.get('lobby'), {
+    let response = await fetch("http://" + window.location.hostname + ":8080/game/results?lobby=" + params.get('lobby'), {
         method: 'GET'
     });
     return await response.json()
@@ -24,7 +23,7 @@ function printResults(data){
         foundUser(data[i].player_id).then((user) => { 
             player.querySelector('.player__name').textContent = user.login;
         if (playerId == data[i].player_id){
-            document.querySelector('.results__title').innerHTML = '№' + (i + 1) + ' ' + user.login
+            document.querySelector('.results__title').innerHTML = `№` + (i + 1) + ' ' + user.login
             document.querySelector('.time__value').innerHTML = elem.score
         }   
         })
@@ -47,6 +46,7 @@ function createPlayerBlock(elem, position){
 
     const playerPlace = document.createElement('p');
     playerPlace.classList.add('player__place');
+    playerPlace.textContent = position + 1
     playerPlace.textContent = position + 1
 
     const playerNumber = document.createElement('div');

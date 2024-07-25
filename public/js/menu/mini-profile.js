@@ -1,10 +1,9 @@
 addEventListener("DOMContentLoaded", () => {
     document.querySelector(".exit").addEventListener("click", (e) => close(e));
-    document.querySelector(".profile__avatar").addEventListener("click", (e) => open(e));
+    document.querySelector(".profile").addEventListener("click", (e) => open(e));
 })
 
 let userLink = document.querySelector(`a[href="/signup"]`);
-console.log(userLink)
 
 function close()
 {
