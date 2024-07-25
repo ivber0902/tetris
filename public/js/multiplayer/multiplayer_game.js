@@ -1,8 +1,8 @@
 let params = new URLSearchParams(document.location.search);
-let wsUrl = "ws://" + window.location.hostname + ":8080/game?lobby=" + params.get('lobby');
+let playerField = document.querySelector('.wrapper-main-field');
+let wsUrl = "ws://" + window.location.hostname + ":8080/game?lobby=" + params.get('lobby') + "&player=" + playerField.id;
 let ws = new WebSocket(wsUrl);
 let otherPlayers;
-let playerField = document.querySelector('.wrapper-main-field');
 let ListPlayers = document.querySelector('.players-list');
 player.field.moveDownDefault = player.field.moveDown;
 player.field.updateHorizontalPositionDefault = player.field.updateHorizontalPosition;
