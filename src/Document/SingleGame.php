@@ -4,12 +4,23 @@ namespace App\Document;
 
 class SingleGame extends Game
 {
+    private string $playerId;
     private int $score;
     private int $tetrisCount;
     private int $figureCount;
     private int $filledRows;
     private int $fieldMode;
     private bool $isWon;
+
+    public function getPlayerId(): string
+    {
+        return $this->playerId;
+    }
+    public function setPlayerId(string $playerId): static
+    {
+        $this->playerId = $playerId;
+        return $this;
+    }
 
     public function getScore(): int
     {

@@ -58,14 +58,6 @@ class PlayerService
         return $this->playerRepository->store($player);
     }
 
-    public function addGame(string $playerId, string $gameId): void
-    {
-        $game = $this->gameRepository->find($gameId);
-        $player = $this->playerRepository->find($playerId);
-        $player->addGame($game);
-        $this->playerRepository->store($player);
-    }
-
     public function setStatistics(
         string $id,
         int $maxScore,
@@ -139,7 +131,7 @@ class PlayerService
         return $this->playerRepository->findBy([], ["statistics." . $orderedBy => -1], $count);
     }
 
-    public function serializePlayerInfoToJSON(Player $player): array
+    public function serializePlayerInfoToArray(Player $player): array
     {
         $statistics = $player->getStatistics();
         return [

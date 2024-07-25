@@ -24,6 +24,7 @@ class GameService
     }
 
     public function saveSingleGame(
+        string $playerId,
         int $mode,
         int $time,
         int $score,
@@ -36,6 +37,7 @@ class GameService
     {
         $game = new SingleGame();
         $game
+            ->setPlayerId($playerId)
             ->setMode($mode)
             ->setTime($time)
             ->setScore($score)
@@ -89,17 +91,54 @@ class GameService
             $score,
             $isWon
         );
-        $this->playerService->addGame($playerId, $gameId);
         $this->repository->store($game);
     }
 
-    public function getRating(int $count, string $orderedBy): ?array
+    public function getRating(int $count, string $orderedBy, array $filters = []): ?array
     {
-        return $this->repository->findBy([], [$orderedBy => -1], $count);
+        return $this->repository->findBy($filters, [$orderedBy => -1], $count);
     }
 
     public function findGames(): array
     {
         return $this->repository->findAll();
+    }
+
+    public function serializeGameInfoToArray(Game $game): array
+    {
+        if ($game instanceof SingleGame) {
+            return [
+                'id' => $game->getId(),
+                'player_id' => $game->getPlayerId(),
+                'mode' => $game->getMode(),
+                'time' => $game->getTime(),
+                'score' => $game->getScore(),
+                'tetris_count' => $game->getTetrisCount(),
+                'figure_count' => $game->getFigureCount(),
+                'filled_rows' => $game->getFilledRows(),
+                'field_mode' => $game->getFieldMode(),
+                'is_won' => $game->isWon(),
+            ];
+        } elseif ($game instanceof MultiplayerGame) {
+            return [
+                'id' => $game->getId(),
+                'mode' => $game->getMode(),
+                'time' => $game->getTime(),
+                'difficulty' => $game->getDifficulty(),
+                'players' => array_map(function (PlayerGameResults $player) {
+                    return [
+                        'id' => $player->getId(),
+                        'score' => $player->getScore(),
+                        'time' => $player->getTime(),
+                        'tetris_count' => $player->getTetrisCount(),
+                        'figure_count' => $player->getFigureCount(),
+                        'filled_rows' => $player->getFilledRows(),
+                        'is_won' => $player->getIsWon(),
+                        'play_field' => $player->getPlayField(),
+                    ];
+                }, $game->getPlayers()),
+            ];
+        }
+        return [];
     }
 }
