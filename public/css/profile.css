@@ -32,6 +32,11 @@ body {
     height: 40px;
 }
 
+.header__settings:hover,
+.header__exit:hover {
+    cursor: pointer;
+}
+
 .main {
     width: 100%;
     display: flex;
@@ -108,6 +113,10 @@ body {
     border-radius: 30px;
 }
 
+.achievement__item:hover {
+    cursor: pointer;
+}
+
 .item__title {
     color: #9CCA95;
     font-size: 24px;
@@ -145,6 +154,10 @@ body {
     box-shadow: 0 0 8px #000;
     color: #c9c9c9;
     max-width: 160px;
+}
+
+.back {
+    cursor: pointer;
 }
 
 .link_back {
@@ -187,6 +200,12 @@ body {
     border-radius: 50%;
 }
 
+.prev-button:hover,
+.next-button:hover{
+    cursor: pointer;
+}
+
+
 .other-information__title{
     font-size: 42px;
     color: #fff;
@@ -202,4 +221,17 @@ body {
     top: 0;
     left: 0;
     backdrop-filter: blur(3px)
+}
+
+.all-statistic-view{
+    padding: 20px;
+    margin-top: 20px;
+    background-color: #242424;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+}
+
+.all-statistic-view:hover {
+    color: #9CCA95;
 }
