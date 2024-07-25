@@ -1,4 +1,5 @@
 
+  localStorage.mode = '3';
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 let GAME = {
     width: parseInt(localStorage.Gamewidth),

@@ -1,3 +1,5 @@
+
+  localStorage.mode = '2';
 player.lines = 0;
 player.defaultUpdateScore = player.updateScore;
 player.updateScore = (countLines) => {

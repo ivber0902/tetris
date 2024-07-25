@@ -1,4 +1,6 @@
-GAME.startTime = new Date();
+
+  localStorage.mode = '1';
+  GAME.startTime = new Date();
 GAME.stopTimer = false;
 GAME.defdrawNumber = GAME.drawNumber;
 GAME.drawNumber = (player, field, num) => {
