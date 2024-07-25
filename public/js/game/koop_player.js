@@ -24,6 +24,7 @@ class Player {
         this.nextFigures = null;
         this.buffer = null;
         this.ui = ui;
+        this.countTetris = 0;
         this.figuresQueueSize = 4;
         this.isShifter = true;
         this.isActive = false;
@@ -66,6 +67,8 @@ class Player {
     }
 
     updateScore(countLines) {
+        if (countLines === 4)
+            this.countTetris += 1
         switch (countLines) {
             case 1:
                 this.score += 100 * Math.max(1, this.lvl);
@@ -182,8 +185,33 @@ class Player {
                     this.field.insertFigure(this.currentFigure, 1);
                     if (!this.field.checkPosition(this.currentFigure.x, this.currentFigure.y, this.currentFigure.matrix, 1)) {
                         this.isActive = false;
-                        console.log('sosiska')
-                        gameEnd(this.score);
+                        switch (localStorage.Gamewidth) {
+                            case '7':
+                                player.fieldMode = 0
+                                break;
+                            case '10':
+                                player.fieldMode = 1
+                                break;
+                            case '15':
+                                player.fieldMode = 2
+                                break;
+                            case '20':
+                                player.fieldMode = 3
+                                break;
+                            default:
+                                break;
+                        } 
+                        let result = {
+                            mode: 4,
+                            time: new Date() - GAME.startTime,
+                            score: player.score,
+                            tetris_count: player.countTetris,
+                            figure_count: player.figureCount,
+                            filled_rows: player.countClearLines,
+                            field_mode: player.fieldMode,
+                            is_won: false
+                        }
+                        gameEnd(result);
                     }
                 }
                 this.field.createShadow(this.currentFigure, 1);
@@ -200,9 +228,33 @@ class Player {
                     this.nextFigure(2);
                     this.field.insertFigure(this.currentFigure2, 2);
                     if (!this.field.checkPosition(this.currentFigure2.x, this.currentFigure2.y, this.currentFigure2.matrix, 2)) {
-                        this.isActive = false;
-                        console.log('sosiska2')
-                        gameEnd(this.score);
+                        switch (localStorage.Gamewidth) {
+                            case '7':
+                                player.fieldMode = 0
+                                break;
+                            case '10':
+                                player.fieldMode = 1
+                                break;
+                            case '15':
+                                player.fieldMode = 2
+                                break;
+                            case '20':
+                                player.fieldMode = 3
+                                break;
+                            default:
+                                break;
+                        } 
+                        let result = {
+                            mode: 4,
+                            time: new Date() - GAME.startTime,
+                            score: player.score,
+                            tetris_count: player.countTetris,
+                            figure_count: player.figureCount,
+                            filled_rows: player.countClearLines,
+                            field_mode: player.fieldMode,
+                            is_won: false
+                        }
+                        gameEnd(result);
                     }
                 }
                 this.field.createShadow(this.currentFigure, 1);

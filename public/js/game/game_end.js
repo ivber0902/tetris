@@ -1,8 +1,6 @@
 const host = window.location.hostname;
 
 function gameEnd(score) {
-    localStorage.Gamewidth = 10;
-    localStorage.Gameheight = 20;
     sendResult(score).then(() => { });
 }
 
