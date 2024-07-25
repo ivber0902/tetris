@@ -545,20 +545,35 @@ const langArr = {
         "en": "see the real tetris heroes"
     }    
 
-/*
-    : {
-        "ru": "РЕЖИМ БЛИЦ",
-        "en": "BLITZ MODE"
-    } 
-    : {
-        "ru": "КОЛИЧЕСТВО ИГР",
-        "en": "NUMBER OF GAMES"
-    } 
-    : {
-        "ru": "узрите настоящих героев тетриса",
-        "en": "see the real tetris heroes"
-    } 
-*/
+
+    // : {
+    //     "ru": "РЕЖИМ БЛИЦ",
+    //     "en": "BLITZ MODE"
+    // }, 
+    // : {
+    //     "ru": "количество игр",
+    //     "en": "number of games"
+    // }, 
+    // : {
+    //     "ru": "МАКСИМАЛЬНОЕ КОЛИЧЕСТВО ОЧКОВ",
+    //     "en": "THE MAXIMUM NUMBER OF POINTS"
+    // }, 
+    // : {
+    //     "ru": "СУММАРНОЕ КОЛИЧЕСТВО ОЧКОВ",
+    //     "en": "TOTAL NUMBER OF POINTS"
+    // }, 
+    // : {
+    //     "ru": "РЕЖИМ 40 ЛИНИЙ",
+    //     "en": "40LINES MODE"
+    // },
+    // : {
+    //     "ru": "РЕЖИМ С БОТОМ",
+    //     "en": "BOT MODE"
+    // },
+    // : {
+    //     "ru": "РЕЖИМ КООПЕРАТИВА",
+    //     "en": "CO-OP MODE"
+    // },
 }
 if((localStorage.lang === undefined) || (!localStorage.lang)){
     localStorage.lang = 'ru';
