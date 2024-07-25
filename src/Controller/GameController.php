@@ -178,8 +178,8 @@ class GameController extends AbstractController
 
         $filters = [];
         foreach (["mode", "time", "tetrisCount",
-                     "figureCount", "filledRows", "field_mode",
-                     "isWon"] as $key) {
+                     "figureCount", "filledRows", "fieldMode",
+                     "isWon", "playerId"] as $key) {
             if (($filter = $request->get($key)) !== null) {
                 $filters[$key] = $filter;
             }
@@ -197,7 +197,7 @@ class GameController extends AbstractController
         foreach (["mode",
                      "time", "tetrisCount",
                      "figureCount", "filledRows", "field_mode",
-                     "isWon"] as $key) {
+                     "isWon", "playerId"] as $key) {
             if (($filter = $request->get($key)) !== null) {
                 if ($key === "isWon") {
                     $filters[$key] = $filter != 0;
