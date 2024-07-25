@@ -105,7 +105,6 @@ function updatePlayers(data){
 
 ws.onmessage = (msg) => {
     let data = JSON.parse(msg.data);
-    console.log(data)
     if (data.game_run)
         {
             runGame = true;

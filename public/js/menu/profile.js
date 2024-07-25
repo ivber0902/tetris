@@ -52,7 +52,6 @@ const parseAchievement = [
 ]
 
 function ViewAchievement(arrayAchievement){
-  console.log(arrayAchievement)
   for(let i = 0; i < arrayAchievement.length; i++){
     let achievement = arrayAchievementBlocks[i];
     let settings = parseAchievement[i];
@@ -148,7 +147,6 @@ async function UpdateAchievement(){
       else
         arrayAchievement[2] = 0
       foundAchievment('time', 1, 2).then((results)=>{
-        console.log(results)
         if (results.length !== 0)
           arrayAchievement[3] = results[0].time
         else

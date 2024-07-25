@@ -56,7 +56,6 @@ class Player {
         if (countLines === 4)
             this.countTetris += 1
         this.countClearLines += countLines;
-        console.log(this.countClearLines, this.countTetris)
 
         switch (countLines) {
             case 1:

@@ -4,7 +4,6 @@ addEventListener("DOMContentLoaded", () => {
 })
 
 let userLink = document.querySelector(`a[href="/signup"]`);
-console.log(userLink)
 
 function close()
 {

@@ -102,7 +102,6 @@ addEventListener("DOMContentLoaded", (event) => {
                 method: 'POST',
                 body: data
             });
-            console.log(response)
             if (response.ok) {
                 window.location.href = '/login';
             } else {

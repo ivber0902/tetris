@@ -583,7 +583,8 @@ if((localStorage.bg === undefined) || (!localStorage.bg)){
   }
 
 addEventListener("DOMContentLoaded", (event) => {
-    document.body.style.backgroundImage = `url(${localStorage.bg})`;
+    document.body.style.background = `url(${localStorage.bg}) no-repeat`;
+    document.body.style.backgroundSize = `cover`;
     for(let key in langArr){
         let elem = document.querySelector(`.${key}`);
         if(elem){
