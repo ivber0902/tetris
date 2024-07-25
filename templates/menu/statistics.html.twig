@@ -9,6 +9,7 @@
 {% endblock %}
 {% block content %}
     <header class="header">
+        <input class="player_id" type="hidden" value="{{ player.id }}">
         <img src="/images/settings.png" alt="settings" class="header__settings">
         <a href="/logout">
             <img src="/images/exit-logo.svg" alt="exit" class="header__exit">
@@ -40,24 +41,24 @@
             <h2 class="other-information__title">статистика</h2>
             <div class="statistics-block">
                 <h3 class="statistics-block__title">blitz mode</h3>
-                <p class="">количество игр: </p>
-                <p class="">максимальное количество очков: </p>
-                <p class="">суммарное количество очков:</p>
+                <p class="blitz__game-count">количество игр: </p>
+                <p class="blitz__max-scoret">максимальное количество очков: </p>
+                <p class="blitz__total-score">суммарное количество очков:</p>
 
                 <h3 class="statistics-block__title">40lines mode</h3>
-                <p class="">количество игр: </p>
-                <p class="">максимальное количество очков: </p>
-                <p class="">суммарное количество очков:</p>
+                <p class="40l__game-count">количество игр: </p>
+                <p class="40l__max-scoret">максимальное количество очков: </p>
+                <p class="40l__total-score">суммарное количество очков:</p>
 
                 <h3 class="statistics-block__title">bot mode</h3>
-                <p class="">количество игр: </p>
-                <p class="">максимальное количество очков: </p>
-                <p class="">суммарное количество очков:</p>
+                <p class="bot__game-count">количество игр: </p>
+                <p class="bot__max-scoret">максимальное количество очков: </p>
+                <p class="bot__total-score">суммарное количество очков:</p>
 
                 <h3 class="statistics-block__title">co-op mode</h3>
-                <p class="">количество игр: </p>
-                <p class="">максимальное количество очков: </p>
-                <p class="">суммарное количество очков:</p>
+                <p class="koop__game-count">количество игр: </p>
+                <p class="koop__max-scoret">максимальное количество очков: </p>
+                <p class="koop__total-score">суммарное количество очков:</p>
             </div>
             <div class="back">
                 <p class="link_back">Назад</p>
