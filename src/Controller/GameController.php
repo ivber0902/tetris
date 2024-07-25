@@ -222,7 +222,18 @@ class GameController extends AbstractController
         );
 
         foreach ($data["players"] ?? [] as $player) {
-            $this->gameService->addPlayerToMultiplayerGame();
+            $this->gameService->addPlayerToMultiplayerGame(
+                $gameId,
+                $player["id"] ?? 0,
+                $player["score"] ?? 0,
+                $player["time"] ?? 0,
+                $player["tetris_count"] ?? 0,
+                $player["figure_count"] ?? 0,
+                $player["filled_rows"] ?? 0,
+                $player["is_won"] ?? false,
+                $player["play_field"] ?? [],
+            );
         }
+        return $this->json([], Response::HTTP_OK);
     }
 }

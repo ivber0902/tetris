@@ -4,11 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7bcc5562-9455-45fa-9b4e-8407aadb17a9" name="Changes" comment="Добавил получение количества игр по фильтрам">
+    <list default="true" id="7bcc5562-9455-45fa-9b4e-8407aadb17a9" name="Changes" comment="Иправил ошибку &quot;... must not be accessed before initialization&quot;">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/routes.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/routes.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/GameController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/GameController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/GameService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/GameService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Document/Game.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Document/Game.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Document/Player.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Document/Player.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Document/SingleGame.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Document/SingleGame.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -166,7 +167,7 @@
       <workItem from="1721127789829" duration="1730000" />
       <workItem from="1721803347008" duration="19236000" />
       <workItem from="1721843697762" duration="1892000" />
-      <workItem from="1721880660322" duration="3970000" />
+      <workItem from="1721880660322" duration="5106000" />
     </task>
     <task id="LOCAL-00001" summary="Исправил кнопку «Начать игру»">
       <option name="closed" value="true" />
@@ -312,7 +313,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721885200006</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Иправил ошибку &quot;... must not be accessed before initialization&quot;">
+      <option name="closed" value="true" />
+      <created>1721888031952</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1721888031952</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -361,6 +370,7 @@
     <MESSAGE value="Исправил необновление статистики" />
     <MESSAGE value="Добавил получение рейтинга игр" />
     <MESSAGE value="Добавил получение количества игр по фильтрам" />
-    <option name="LAST_COMMIT_MESSAGE" value="Добавил получение количества игр по фильтрам" />
+    <MESSAGE value="Иправил ошибку &quot;... must not be accessed before initialization&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Иправил ошибку &quot;... must not be accessed before initialization&quot;" />
   </component>
 </project>
