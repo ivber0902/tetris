@@ -536,44 +536,94 @@ const langArr = {
         "ru": "Ты поразил систему! 10 побед подряд — ты стал истинным мастером сражений!",
         "en": "You've hit the system! 10 wins in a row — you have become a true master of battles!"
     },
-    "link__title.leader__title": {
+    "link__title.leaders__title": {
         "ru": "таблица лидеров",
         "en": "leaderboard"
     },
-    "link__subtitle.leader__subtitle": {
+    "link__subtitle.leaders__subtitle": {
         "ru": "узрите настоящих героев тетриса",
         "en": "see the real tetris heroes"
-    }    
-
-
-    // : {
-    //     "ru": "РЕЖИМ БЛИЦ",
-    //     "en": "BLITZ MODE"
-    // }, 
-    // : {
-    //     "ru": "количество игр",
-    //     "en": "number of games"
-    // }, 
-    // : {
-    //     "ru": "МАКСИМАЛЬНОЕ КОЛИЧЕСТВО ОЧКОВ",
-    //     "en": "THE MAXIMUM NUMBER OF POINTS"
-    // }, 
-    // : {
-    //     "ru": "СУММАРНОЕ КОЛИЧЕСТВО ОЧКОВ",
-    //     "en": "TOTAL NUMBER OF POINTS"
-    // }, 
-    // : {
-    //     "ru": "РЕЖИМ 40 ЛИНИЙ",
-    //     "en": "40LINES MODE"
-    // },
-    // : {
-    //     "ru": "РЕЖИМ С БОТОМ",
-    //     "en": "BOT MODE"
-    // },
-    // : {
-    //     "ru": "РЕЖИМ КООПЕРАТИВА",
-    //     "en": "CO-OP MODE"
-    // },
+    },
+    "game-count": {
+        "ru": "количество игр",
+        "en": "number of games"
+    }, 
+    "game-count.blitz": {
+        "ru": "количество игр",
+        "en": "number of games"
+    }, 
+    "game-count.lines": {
+        "ru": "количество игр",
+        "en": "number of games"
+    }, 
+    "game-count.bot": {
+        "ru": "количество игр",
+        "en": "number of games"
+    }, 
+    "game-count.koop": {
+        "ru": "количество игр",
+        "en": "number of games"
+    }, 
+    "max-score": {
+        "ru": "МАКСИМАЛЬНОЕ КОЛИЧЕСТВО ОЧКОВ",
+        "en": "THE MAXIMUM NUMBER OF POINTS"
+    }, 
+    "max-score.blitz": {
+        "ru": "МАКСИМАЛЬНОЕ КОЛИЧЕСТВО ОЧКОВ",
+        "en": "THE MAXIMUM NUMBER OF POINTS"
+    }, 
+    "max-score.lines": {
+        "ru": "МАКСИМАЛЬНОЕ КОЛИЧЕСТВО ОЧКОВ",
+        "en": "THE MAXIMUM NUMBER OF POINTS"
+    }, 
+    "max-score.bot": {
+        "ru": "МАКСИМАЛЬНОЕ КОЛИЧЕСТВО ОЧКОВ",
+        "en": "THE MAXIMUM NUMBER OF POINTS"
+    }, 
+    "max-score.koop": {
+        "ru": "МАКСИМАЛЬНОЕ КОЛИЧЕСТВО ОЧКОВ",
+        "en": "THE MAXIMUM NUMBER OF POINTS"
+    }, 
+    "total-score": {
+        "ru": "СУММАРНОЕ КОЛИЧЕСТВО ОЧКОВ",
+        "en": "TOTAL NUMBER OF POINTS"
+    }, 
+    "total-score.blitz": {
+        "ru": "СУММАРНОЕ КОЛИЧЕСТВО ОЧКОВ",
+        "en": "TOTAL NUMBER OF POINTS"
+    }, 
+    "total-score.lines": {
+        "ru": "СУММАРНОЕ КОЛИЧЕСТВО ОЧКОВ",
+        "en": "TOTAL NUMBER OF POINTS"
+    }, 
+    "total-score.bot": {
+        "ru": "СУММАРНОЕ КОЛИЧЕСТВО ОЧКОВ",
+        "en": "TOTAL NUMBER OF POINTS"
+    }, 
+    "total-score.koop": {
+        "ru": "СУММАРНОЕ КОЛИЧЕСТВО ОЧКОВ",
+        "en": "TOTAL NUMBER OF POINTS"
+    }, 
+    "statistics-block__title.classic": {
+        "ru": "классический режим",
+        "en": "classic mode"
+    },
+    "statistics-block__title.blitz": {
+        "ru": "РЕЖИМ БЛИЦ",
+        "en": "BLITZ MODE"
+    }, 
+    "statistics-block__title.lines": {
+        "ru": "РЕЖИМ 40 ЛИНИЙ",
+        "en": "40LINES MODE"
+    },
+    "statistics-block__title.bot": {
+        "ru": "РЕЖИМ С БОТОМ",
+        "en": "BOT MODE"
+    },
+    "statistics-block__title.koop": {
+        "ru": "РЕЖИМ КООПЕРАТИВА",
+        "en": "CO-OP MODE"
+    },
 }
 if((localStorage.lang === undefined) || (!localStorage.lang)){
     localStorage.lang = 'ru';
