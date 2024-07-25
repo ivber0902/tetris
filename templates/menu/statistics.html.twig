@@ -10,55 +10,96 @@
 {% block content %}
     <header class="header">
         <input class="player_id" type="hidden" value="{{ player.id }}">
-        <img src="/images/settings.png" alt="settings" class="header__settings">
+        <a href="/settings">
+            <img src="/images/settings.png" alt="settings" class="header__settings">
+        </a>
         <a href="/logout">
             <img src="/images/exit-logo.svg" alt="exit" class="header__exit">
         </a>
     </header>
     <main class="main">
-        <div class="description-user">
-        <form action="/image" enctype="multipart/form-data" method="POST">
-            <label for="image-input">
-                <img class="user-avatar" src='../uploads/{{player.getAvatar() ?? "human.jpeg"}}' alt="avatar" >
-            </label>
-            <input type="file" id="image-input"  name="avatarPath" accept="image/png, image/jpeg, image/jpg">
-        </form>
-            <div class="general-results">
-                <h1 class="username">{{ player.user.login ?? 'Славянин'}}</h1>
-                <div class="single-game">
-                    <p class="count-solo-game count-game">Всего одиночных игр :</p>
-                    <p class="count-solo-game">{{ player.statistics.gameCount }}</p>
-                </div>
-                <div class="multiplayer-game">
-                    <p class="count-multiplayer-game count-online-game">Всего онлайн игр :</p>
-                    <p class="count-multiplayer-game">10</p>
-                    <span class="count-win-game title">↪ выиграно из них</span><span class="count-win-game"> {{ player.statistics.winCount }}</span>
-                </div>
-            </div>
-            <a href="/profile/{{player.user.login}}">вернуться в профиль</a>
-        </div>
         <div class="other-information">
             <h2 class="other-information__title">статистика</h2>
             <div class="statistics-block">
-                <h3 class="statistics-block__title">blitz mode</h3>
-                <p class="blitz__game-count">количество игр: </p>
-                <p class="blitz__max-score">максимальное количество очков: </p>
-                <p class="blitz__total-score">суммарное количество очков:</p>
+                <div class="general-results">
+                    <h3 class="statistics-block__title classic">classic mode</h3>
+                    <div class="statistics-block">
+                        <p class="game-count">количество игр: </p>
+                        <p class="classic__game-value">0</p>
+                    </div>
+                    <div class="statistics-block">
+                        <p class="max-score">максимальное количество очков: </p>
+                        <p class="classic__max-value">0</p>
+                    </div>
+                    <div class="statistics-block">
+                        <p class="total-score">суммарное количество очков:</p>
+                        <p class="classic__total-value">0</p>
+                    </div>                    
+                </div>
 
-                <h3 class="statistics-block__title">40lines mode</h3>
-                <p class="lines__game-count">количество игр: </p>
-                <p class="lines__max-score">максимальное количество очков: </p>
-                <p class="lines__total-score">суммарное количество очков:</p>
+                <div class="general-results">
+                    <h3 class="statistics-block__title blitz">blitz mode</h3>
+                    <div class="statistics-block">
+                        <p class="game-count blitz">количество игр: </p>
+                        <p class="blitz__game-value">0</p>
+                    </div>
+                    <div class="statistics-block">
+                        <p class="max-score blitz">максимальное количество очков: </p>
+                        <p class="blitz__max-value">0</p>
+                    </div>
+                    <div class="statistics-block">
+                        <p class="total-score blitz">суммарное количество очков:</p>
+                        <p class="blitz__total-value">0</p>
+                    </div>                    
+                </div>
+                
+                <div class="general-results">
+                    <h3 class="statistics-block__title lines">40lines mode</h3>
+                    <div class="statistics-block">
+                        <p class="game-count lines">количество игр: </p>
+                        <p class="lines__game-value">0</p>
+                    </div>
+                    <div class="statistics-block">
+                        <p class="max-score lines">максимальное количество очков: </p>
+                        <p class="lines__max-value">0</p>
+                    </div>
+                    <div class="statistics-block">
+                        <p class="total-score lines">суммарное количество очков:</p>
+                        <p class="lines__total-value">0</p>
+                    </div>                    
+                </div>
 
-                <h3 class="statistics-block__title">bot mode</h3>
-                <p class="bot__game-count">количество игр: </p>
-                <p class="bot__max-score">максимальное количество очков: </p>
-                <p class="bot__total-score">суммарное количество очков:</p>
+                <div class="general-results">
+                    <h3 class="statistics-block__title bot">bot mode</h3>
+                    <div class="statistics-block">
+                        <p class="game-count bot">количество игр: </p>
+                        <p class="bot__game-value">0</p>
+                    </div>
+                    <div class="statistics-block">
+                        <p class="max-score bot">максимальное количество очков: </p>
+                        <p class="bot__max-value">0</p>
+                    </div>
+                    <div class="statistics-block">
+                        <p class="total-score bot">суммарное количество очков:</p>
+                        <p class="bot__total-value">0</p>
+                    </div>                    
+                </div>
 
-                <h3 class="statistics-block__title">co-op mode</h3>
-                <p class="koop__game-count">количество игр: </p>
-                <p class="koop__max-score">максимальное количество очков: </p>
-                <p class="koop__total-score">суммарное количество очков:</p>
+                <div class="general-results">
+                    <h3 class="statistics-block__title koop">co-op mode</h3>
+                    <div class="statistics-block">
+                        <p class="game-count koop">количество игр: </p>
+                        <p class="koop__game-value">0</p>
+                    </div>
+                    <div class="statistics-block">
+                        <p class="max-score koop">максимальное количество очков: </p>
+                        <p class="koop__max-value">0</p>
+                    </div>
+                    <div class="statistics-block">
+                        <p class="total-score koop">суммарное количество очков:</p>
+                        <p class="koop__total-value">0</p>
+                    </div>                    
+                </div>
             </div>
             <div class="back">
                 <p class="link_back">Назад</p>
