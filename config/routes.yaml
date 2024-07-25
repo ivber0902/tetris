@@ -113,13 +113,10 @@ api_get_game_rating:
     path: /api/game/rating
     methods: GET
     controller: App\Controller\GameController::getGamesWithFiltering
-<<<<<<< HEAD
-=======
 api_get_game_count:
     path: /api/game/count
     methods: GET
     controller: App\Controller\GameController::countGamesWithFiltering
->>>>>>> refs/remotes/origin/NoSQL
 
 
 test:
