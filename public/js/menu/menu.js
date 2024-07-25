@@ -4,5 +4,4 @@ if(reason){
     const url = new URL(window.location);
     url.searchParams.delete('reason');
     window.history.replaceState({}, '', url);
-    console.log("Вы были отключены от сервера")   
 }

@@ -1,5 +1,4 @@
 let playerId = document.querySelector('.player_id').value
-console.log(playerId)
 
 let button = document.querySelector('.back');
 button.addEventListener('click', ()=>{
@@ -45,7 +44,6 @@ foundTotal(0).then((results) => {
 
 foundMode('score', 1, 1).then((results) => {
     let maxScore = 0
-    console.log(results, 'test')
     results.forEach(element => {
         maxScore = element.score
     });
@@ -53,7 +51,6 @@ foundMode('score', 1, 1).then((results) => {
 })
 
 foundTotal(1).then((results) => {
-    console.log(results) 
     let countGame = 0
     let totalScore = 0
     results.forEach(element => {
@@ -66,7 +63,6 @@ foundTotal(1).then((results) => {
 
 foundMode('score', 1, 2).then((results) => {
     let maxScore = 0
-    console.log(results, 'test')
     results.forEach(element => {
         maxScore = element.score
     });
@@ -74,7 +70,6 @@ foundMode('score', 1, 2).then((results) => {
 })
 
 foundTotal(2).then((results) => {
-    console.log(results) 
     let countGame = 0
     let totalScore = 0
     results.forEach(element => {
@@ -87,7 +82,6 @@ foundTotal(2).then((results) => {
 
 foundMode('score', 1, 3).then((results) => {
     let maxScore = 0
-    console.log(results, 'test')
     results.forEach(element => {
         maxScore = element.score
     });
@@ -95,7 +89,6 @@ foundMode('score', 1, 3).then((results) => {
 })
 
 foundTotal(3).then((results) => {
-    console.log(results) 
     let countGame = 0
     let totalScore = 0
     results.forEach(element => {
@@ -108,7 +101,6 @@ foundTotal(3).then((results) => {
 
 foundMode('score', 1, 4).then((results) => {
     let maxScore = 0
-    console.log(results, 'test')
     results.forEach(element => {
         maxScore = element.score
     });
@@ -116,7 +108,6 @@ foundMode('score', 1, 4).then((results) => {
 })
 
 foundTotal(4).then((results) => {
-    console.log(results) 
     let countGame = 0
     let totalScore = 0
     results.forEach(element => {

@@ -12,13 +12,6 @@
 
 .bg {
     height: 100vh;
-    background: url("https://i.postimg.cc/1zyHTmtK/bg.png") no-repeat;
-    background-size: cover;
-}
-
-.bg_dark {
-    background: url("https://i.postimg.cc/1zyHTmtK/bg.png") no-repeat;
-    background-size: cover;
 }
 
 .link__image {

@@ -1,10 +1,9 @@
-const host = window.location.hostname;
 let params = new URLSearchParams(document.location.search);
 let players = document.querySelector('.players');
 let playerId = document.querySelector(".player_id").value;
 
 async function getResults(){
-    let response = await fetch("http://" + host + ":8080/game/results?lobby=" + params.get('lobby'), {
+    let response = await fetch("http://" + window.location.hostname + ":8080/game/results?lobby=" + params.get('lobby'), {
         method: 'GET'
     });
     return await response.json()

@@ -158,7 +158,6 @@ function updateSize(countPlayers) {
     });
     document.querySelectorAll('.other-field').forEach((elem) => {
         elem.style.maxHeight = `${80}%`;
-        console.log('hahah')
     })
 
     let width = document.querySelector('.other-field').offsetWidth;
@@ -177,7 +176,6 @@ ws.onopen = () => {
 ws.onmessage = (msg) => {
     let data = JSON.parse(msg.data);
     if (data.type === 'game_over'){
-        console.log('game_over')
         ListPlayers.style.display = 'none'
         playerField.style.display = 'none'
         window.location.href = '/game_over_multi?lobby='  + params.get('lobby');
@@ -289,11 +287,13 @@ function initPlayers(players) {
 
 function createStartGameButton() {
     const button = document.createElement("button");
+    button.classList.add('startGameButton')
     button.textContent = 'начать';
     button.onclick = () => {
         ws.send(JSON.stringify({
             "type": "start"
         }));
+        button.remove()
       };
 
     return button;

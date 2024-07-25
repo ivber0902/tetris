@@ -35,12 +35,13 @@
 }
 
 .logo {
-    
+
     position: absolute;
     left: 50%;
     transform: translate(-50%, 0);
     padding: 50px 0 40px 0;
 }
+
 .main-field-wrapper {
     padding-top: 80px;
 }
@@ -144,25 +145,24 @@
     min-height: 100%;
 }
 
-.player__score{
+.player__score {
     color: white;
     text-align: center;
     font: 800 22px/22px "Russo One", sans-serif;
 }
 
 .player__username,
-.game__score-other
-{
+.game__score-other {
     color: white;
     text-align: center;
     font: 800 22px/22px "Russo One", sans-serif;
 }
 
-.player__username{
+.player__username {
     padding-top: 3px;
 }
 
-.game__score-other{
+.game__score-other {
     padding-bottom: 3px;
 }
 
@@ -199,10 +199,32 @@
     justify-content: center;
 }
 
-.wrapper-name
-{
+.wrapper-name {
     display: flex;
     width: 100%;
     justify-content: space-between;
     align-items: center;
+}
+
+.startGameButton {
+    color: #b190e2;
+    font-size: 56px;
+    font-weight: 400;
+    background-color: #1a161d;
+    border-top: 3px solid #453351;
+    border-left: 3px solid #392e40;
+    border-right: 3px solid #392e40;
+    border-right: 3px solid #392e40;
+    border-bottom: 3px solid #0a080b;
+    width: 300px;
+    height: 150px;
+    position: absolute;
+    top: calc(50% - 75px);
+    left: calc(50% - 150px);
+    transition: all .2s;
+}
+
+.startGameButton:hover {
+    text-shadow: 0 0 2px white;
+    cursor: pointer;
 }
