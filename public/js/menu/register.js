@@ -51,7 +51,7 @@ addEventListener("DOMContentLoaded", (event) => {
         }
         else {
             passwordRequire.style.display = 'none';
-            if ((passwordInput.length > 8)) {
+            if ((passwordInput.length > 7)) {
                 passError.style.display = 'none';
                 password.style.marginBottom = '10px';
             }
@@ -93,7 +93,7 @@ addEventListener("DOMContentLoaded", (event) => {
             }
         }
 
-        if ((usernameInput !== '') && (validateUsername(username)) && (passwordInput !== '') && (passwordInput.length > 8) && (passwordAgain !== '') && (passwordAgain.length > 8) && (passwordInput === passwordAgain)) {
+        if ((usernameInput !== '') && (validateUsername(username)) && (passwordInput !== '') && (passwordInput.length > 7) && (passwordAgain !== '') && (passwordAgain.length > 7) && (passwordInput === passwordAgain)) {
             const data = new URLSearchParams();
             for (const pair of new FormData(document.forms.register_user_input)) {
                 data.append(pair[0], pair[1]);
