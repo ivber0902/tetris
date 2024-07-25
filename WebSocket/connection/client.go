@@ -30,11 +30,10 @@ type ClientEvents[T Object, ConfType, RespType Response] struct {
 	Next       chan bool
 }
 
-func (c *Client[T, ConfType, RespType]) Init(conn *websocket.Conn, IP IPType) {
+func (c *Client[T, ConfType, RespType]) Init(conn *websocket.Conn) {
 	c.Conn = conn
 	c.send = make(chan *RespType)
 	c.IsOpen = true
-	c.IP = IP
 }
 
 func (c *Client[T, ConfType, RespType]) Send(update *RespType) {
@@ -64,16 +63,16 @@ func (c *Client[T, ConfType, RespType]) ReadLoop(callback func(*Client[T, ConfTy
 				case websocket.CloseNormalClosure,
 					websocket.CloseGoingAway,
 					websocket.CloseNoStatusReceived:
-					log.Printf("Player (IP: %s) reading: Web socket closed by client", c.IP)
+					log.Printf("Player (ID: %s) reading: Web socket closed by client", c.ID)
 					return
 				default:
 					log.Printf("UNKNOWN WEBSOCKET ERROR: %v", err)
 					return
 				}
 			case *json.SyntaxError:
-				log.Printf("Player (IP: %s) reading: JSON Unmarshal error: %v", c.IP, err)
+				log.Printf("Player (ID: %s) reading: JSON Unmarshal error: %v", c.ID, err)
 			case error:
-				log.Printf("Player (IP: %s) reading: JSON reading error: %v", c.IP, err)
+				log.Printf("Player (ID: %s) reading: JSON reading error: %v", c.ID, err)
 				return
 			default:
 				log.Printf("UNKNOWN ERROR: %v", err)

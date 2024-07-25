@@ -24,7 +24,7 @@ type EventList struct {
 func New(lobbyRoom *lobby.Room, lobbyEvents *EventList) *Room {
 	figures := game.GenerateFigureArray(ClientFigureQueueLength)
 	room := &Room{
-		Room:    *connection.New[State, lobby.Config, Response](lobbyRoom.ID, lobbyRoom.HostIP, lobbyRoom.Config),
+		Room:    *connection.New[State, lobby.Config, Response](lobbyRoom.ID, lobbyRoom.HostID, lobbyRoom.Config),
 		Events:  lobbyEvents,
 		Figures: &figures,
 		GameEnd: make(chan *State),

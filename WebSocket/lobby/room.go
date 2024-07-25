@@ -17,7 +17,7 @@ type EventList struct {
 	Run    chan *Room
 }
 
-func New(hostIP connection.IPType, lobbyEvents *EventList) *Room {
+func New(hostID connection.ClientIDType, lobbyEvents *EventList) *Room {
 	roomID := uuid.New().String()
 	config, err := NewConfig()
 	config.ID = roomID
@@ -25,7 +25,7 @@ func New(hostIP connection.IPType, lobbyEvents *EventList) *Room {
 
 	}
 	return &Room{
-		Room:   *connection.New[Config, Config, Config](connection.RoomIDType(roomID), hostIP, config),
+		Room:   *connection.New[Config, Config, Config](connection.RoomIDType(roomID), hostID, config),
 		Events: lobbyEvents,
 	}
 }
@@ -42,7 +42,7 @@ func (room *Room) Init() {
 			}()
 		case client := <-room.Connect:
 			room.Clients[client] = true
-			log.Printf("Room %T %s: Player %v joined\n", client, room.HostIP, client.ID)
+			log.Printf("Room %T %s: Player %v joined\n", client, room.HostID, client.ID)
 		case update := <-room.On.Update:
 			for client := range room.Clients {
 				client.Send(update)
@@ -56,7 +56,7 @@ func (room *Room) Init() {
 
 			if len(room.Clients) > 1 && len(room.Config.Players) > 1 {
 				if newHost := room.GetClientByID(room.Config.Players[1]); client.IsHost && newHost != nil {
-					room.HostIP = newHost.IP
+					room.HostID = newHost.ID
 					newHost.IsHost = true
 				}
 				room.Config.RemovePlayer(clientID)

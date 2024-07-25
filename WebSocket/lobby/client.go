@@ -12,14 +12,14 @@ func HandleRequest(player *connection.Client[Config, Config, Config], request co
 	case UpdateRequestType:
 		if player.IsHost && request.Update != nil {
 			player.Config.UpdateSettings(request.Update)
-			log.Printf("Player %v (IP: %s) reading: host update lobby info %s", player.ID, player.IP, player.Config.ID)
+			log.Printf("Player (ID: %s) reading: host update lobby info %s", player.ID, player.Config.ID)
 		}
 	case ConnectRequestType:
 		if id := request.Credentials.PlayerID; id != "" {
 			player.Config.AddPlayer(id)
 			player.ID = id
 
-			log.Printf("Player %v (IP: %s) reading: connect to lobby %s", player.ID, player.IP, player.Config.ID)
+			log.Printf("Player (ID: %s) reading: connect to lobby %s", player.ID, player.Config.ID)
 		}
 	case DisconnectRequestType:
 		if id := request.Credentials.PlayerID; player.IsHost && id != "" {
@@ -36,7 +36,7 @@ func HandleRequest(player *connection.Client[Config, Config, Config], request co
 }
 
 func WaitConnection(player *connection.Client[Config, Config, Config]) {
-	log.Printf("Player %v (IP: %s) waiting for connection to lobby", player.ID, player.IP)
+	log.Printf("Player (ID: %s) waiting for connection to lobby", player.ID)
 
 	var duration time.Duration
 	if player.Config.GameRun {
@@ -51,7 +51,7 @@ func WaitConnection(player *connection.Client[Config, Config, Config]) {
 		select {
 		case <-connectTimer:
 			player.Event.Disconnect <- player.ID
-			log.Printf("Player %v (IP: %s) disconnected after waiting", player.ID, player.IP)
+			log.Printf("Player (IP: %s) disconnected after waiting", player.ID)
 			return
 		default:
 		}

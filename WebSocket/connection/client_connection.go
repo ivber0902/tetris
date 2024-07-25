@@ -6,6 +6,5 @@ import (
 
 type ClientConnection struct {
 	Conn   *websocket.Conn
-	IP     IPType
 	IsOpen bool
 }

@@ -66,26 +66,33 @@ func (server *Server) Init() {
 	}()
 }
 
-func (server *Server) HandleConnection(w http.ResponseWriter, r *http.Request, clientIP connection.IPType) {
+func (server *Server) HandleConnection(w http.ResponseWriter, r *http.Request) {
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		log.Println("Server HandleConnection:", err)
 		return
 	}
 
-	log.Printf("Server HandleConnection: Connecting to %s....", clientIP)
-
 	lobbyID := connection.RoomIDType(r.URL.Query().Get("lobby"))
+	log.Printf("Server HandleConnection: Connecting to %s....", lobbyID)
+
+	playerID := connection.ClientIDType(r.URL.Query().Get("player"))
+
+	if len(playerID) == 0 {
+		log.Println("Server HandleConnection: Invalid player ID")
+		conn.Close()
+		return
+	}
 
 	lobbyConn, existsLobby := server.Lobbies[lobbyID]
 	if !existsLobby {
-		lobbyConn = lobby.New(clientIP, server.On.Lobby)
+		lobbyConn = lobby.New(playerID, server.On.Lobby)
 		server.Lobbies[lobbyConn.ID] = lobbyConn
 		go lobbyConn.Init()
 
 		server.LobbyList.new <- lobbyConn.Config
 
-		log.Printf("Server HandleConnection: LobbyInfo %s created by player (IP: %s)", lobbyConn.ID, clientIP)
+		log.Printf("Server HandleConnection: LobbyInfo %s created by player (ID: %s)", lobbyConn.ID, playerID)
 	}
 
 	if lobbyConn.Config.GameRun {
@@ -94,22 +101,22 @@ func (server *Server) HandleConnection(w http.ResponseWriter, r *http.Request, c
 	}
 
 	for player := range lobbyConn.Clients {
-		if clientIP == player.IP {
+		if playerID == player.ID {
 			fmt.Println("State", player.State)
 			player.Conn.Close()
-			player.Init(conn, player.IP)
+			player.Init(conn)
 
 			go player.ReadLoop(lobby.HandleRequest, lobby.WaitConnection)
 			go player.WriteLoop()
 
-			log.Printf("Server HandleConnection: Player %v (IP: %s) is reconnecting to the lobby %s", player.ID, player.IP, lobbyConn.ID)
+			log.Printf("Server HandleConnection: Player (ID: %s) is reconnecting to the lobby %s", player.ID, lobbyConn.ID)
 			return
 		}
 	}
 
-	log.Printf("Server HandleConnection: Player (IP: %s) is joining the lobby %s", clientIP, lobbyConn.ID)
+	log.Printf("Server HandleConnection: Player (IP: %s) is joining the lobby %s", playerID, lobbyConn.ID)
 
-	player := lobbyConn.ConnectClient(conn, clientIP)
+	player := lobbyConn.ConnectClient(conn, playerID)
 	if !existsLobby {
 		player.IsHost = true
 	}
@@ -130,34 +137,41 @@ func (server *Server) ListLobbiesHandler(w http.ResponseWriter, r *http.Request)
 	go server.LobbyList.ListenConnection(conn)
 }
 
-func (server *Server) HandleGameJoin(w http.ResponseWriter, r *http.Request, clientIP connection.IPType) {
+func (server *Server) HandleGameJoin(w http.ResponseWriter, r *http.Request) {
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		log.Println("Server HandleGameJoin:", err)
 		return
 	}
 
-	log.Printf("Server HandleGameJoin: Connecting to %s....", clientIP)
-
 	lobbyID := connection.RoomIDType(r.URL.Query().Get("lobby"))
+	log.Printf("Server HandleGameJoin: Connecting to %s....", lobbyID)
+
+	playerID := connection.ClientIDType(r.URL.Query().Get("player"))
+
+	if len(playerID) == 0 {
+		log.Println("Server HandleConnection: Invalid player ID")
+		conn.Close()
+		return
+	}
 
 	gameConn, ok := server.Games[lobbyID]
 	if !ok {
-		log.Printf("Server HandleGameJoin: Player (IP: %s) tried to join to undefined game %s", clientIP, lobbyID)
+		log.Printf("Server HandleGameJoin: Player (ID: %s) tried to join to undefined game %s", playerID, lobbyID)
 		return
 	}
 
 	for player := range gameConn.Clients {
-		if clientIP == player.IP {
+		if playerID == player.ID {
 			player.Conn = conn
-			player.Init(conn, player.IP)
+			player.Init(conn)
 
 			go player.ReadLoop(func(c *connection.Client[game.State, lobby.Config, game.Response], r connection.Request[game.State]) bool {
 				return game.HandleRequest(gameConn, player, r)
 			}, game.WaitConnection)
 			go player.WriteLoop()
 
-			log.Printf("Server HandleGameJoin: Player %v (IP: %s) is connecting to the game %s", player.ID, player.IP, gameConn.ID)
+			log.Printf("Server HandleGameJoin: Player (ID: %s) is connecting to the game %s", player.ID, gameConn.ID)
 			return
 		}
 	}

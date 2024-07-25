@@ -1,7 +1,6 @@
 package main
 
 import (
-	"WebSocket/connection"
 	"log"
 	"net/http"
 )
@@ -13,20 +12,11 @@ func main() {
 
 	server.Init()
 	http.HandleFunc("/lobby", func(w http.ResponseWriter, r *http.Request) {
-		PlayerIP, err := getPlayerIP(r)
-		if err != nil {
-			log.Println("Error during getting client IP:", err)
-			return
-		}
-		server.HandleConnection(w, r, connection.IPType(PlayerIP))
+		server.HandleConnection(w, r)
 	})
 	http.HandleFunc("/lobby/list", server.ListLobbiesHandler)
 	http.HandleFunc("/game", func(w http.ResponseWriter, r *http.Request) {
-		PlayerIP, err := getPlayerIP(r)
-		if err != nil {
-			log.Println("Error during getting client IP:", err)
-		}
-		server.HandleGameJoin(w, r, connection.IPType(PlayerIP))
+		server.HandleGameJoin(w, r)
 	})
 	http.HandleFunc("/game/results", server.GameResultsHandler)
 
