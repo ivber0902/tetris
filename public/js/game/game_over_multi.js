@@ -1,6 +1,7 @@
 const host = window.location.hostname;
 let params = new URLSearchParams(document.location.search);
 let players = document.querySelector('.players');
+let players = document.querySelector('.players');
 let playerId = document.querySelector(".player_id").value;
 
 async function getResults(){
@@ -11,7 +12,7 @@ async function getResults(){
 }
 
 async function foundUser(id) {
-    let response = await fetch('/api/player/' + id + '/user', {
+    let response = await fetch('/api/player/' + id, {
         method: 'GET'
     });
     return await response.json();
@@ -48,6 +49,7 @@ function createPlayerBlock(elem, position){
     const playerPlace = document.createElement('p');
     playerPlace.classList.add('player__place');
     playerPlace.textContent = position + 1
+    playerPlace.textContent = position + 1
 
     const playerNumber = document.createElement('div');
     playerNumber.classList.add('player__number');
@@ -68,5 +70,7 @@ function createPlayerBlock(elem, position){
 
     player.appendChild(playerNumber);
     player.appendChild(playerInfo);
+    return player
+}
     return player
 }

@@ -219,8 +219,6 @@ ws.onmessage = (msg) => {
     }
     if (data.type === 'update') {
             if (data.state.id === playerField.id) {
-                player.buffer = getFigure(data.state.buffer);
-                player.ui.buffer.src = player.buffer.image.src;
 
             } else {
                 if(data.state.game_over === false){

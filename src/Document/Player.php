@@ -8,18 +8,16 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Player
 {
     private string $id;
-    private string $avatar;
+    private ?string $avatar = null;
     private User $user;
     private Statistics $statistics;
     private UI $ui;
-    private Collection $games;
 
     public function __construct()
     {
         $this->user = new User();
         $this->statistics = new Statistics();
         $this->ui = new UI();
-        $this->games = new ArrayCollection();
     }
 
     public function getAvatar(): ?string
@@ -83,16 +81,5 @@ class Player
     public function getUI(): UI
     {
         return $this->ui;
-    }
-
-    public function getGames(): ?array
-    {
-        return $this->games->toArray();
-    }
-
-    public function addGame(Game $game): static
-    {
-        $this->games->add($game);
-        return $this;
     }
 }

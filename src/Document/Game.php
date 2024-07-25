@@ -5,8 +5,8 @@ namespace App\Document;
 class Game
 {
     private string $id;
-    private int $mode;
-    private int $time;
+    private int $mode = 0;
+    private int $time = 0;
 
     public function getId(): string
     {

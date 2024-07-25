@@ -1,4 +1,12 @@
-let GAME = {
+switch (localStorage.mode) {
+    case '0': window.location.href = '/game'; break;
+    case '1': window.location.href = '/blitz'; break;
+    case '2': window.location.href = '/l40'; break;
+    case '3': window.location.href = '/bot'; break;
+    default: window.location.href = '/game'; break;
+  }
+  localStorage.mode = '4';
+  let GAME = {
     width: 20,
     height: 20,
     playTime: new Date(),
@@ -85,7 +93,6 @@ let GAME = {
         })
     },
     start(player) {
-        player.isActive = true;
         this.onLoadImages(() => {
             this.drawDowncount(player, player.field.field, 3, 1, () => { player.isActive = true; this.play(player) })
         })

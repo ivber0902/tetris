@@ -34,6 +34,17 @@ class PlayerController extends AbstractController
         throw new UnprocessableEntityHttpException();
     }
 
+    public function statistics(string $login): Response
+    {
+        $player = $this->service->findPlayerByLogin($login);
+        if ($player !== null) {
+            return $this->render('menu/statistics.html.twig', [
+                "player" => $player,
+            ]);
+        }
+        throw new UnprocessableEntityHttpException();
+    }
+
     public function updateStatistics(Request $request): Response
     {
         $securityUser = $this->getUser();
@@ -68,6 +79,7 @@ class PlayerController extends AbstractController
             return $this->json([], Response::HTTP_UNAUTHORIZED);
         }
         $gameId = $this->gameService->saveSingleGame(
+            $player->getId(),
             $data["mode"],
             $data["time"] ?? 0,
             $data["score"] ?? 0,
@@ -77,8 +89,7 @@ class PlayerController extends AbstractController
             $data["field_mode"] ?? 0,
             $data["is_won"] ?? false,
         );
-        $this->service->addGame($player->getId(), $gameId);
-        $this->service->updateStatistics($player->getId(), $data["mode"]);
+        $this->service->updateStatistics($player->getId(), $data["score"]);
 
         return $this->json(["game" => $gameId], Response::HTTP_OK);
     }
@@ -90,10 +101,7 @@ class PlayerController extends AbstractController
         if ($player === null) {
             return $this->json([], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
-        return $this->json([
-            "id" => $player->getId(),
-            "login" => $player->getLogin(),
-        ], Response::HTTP_OK);
+        return $this->json($this->service->serializePlayerInfoToArray($player), Response::HTTP_OK);
     }
 
     public function updateAvatarPath(Request $request): Response
@@ -105,7 +113,7 @@ class PlayerController extends AbstractController
         return $this->redirectToRoute("profile" , ["player" => $player, "login" => $player->getLogin()]);
     }
 
-    public function getRatings(Request $request): Response
+    public function getRating(Request $request): Response
     {
         $count = $request->get('count');
         $key = $request->get('sortKey');
@@ -116,7 +124,7 @@ class PlayerController extends AbstractController
 
         return $this->json(
             array_map(function ($player) {
-                return $this->service->serializePlayerInfoToJSON($player);
+                return $this->service->serializePlayerInfoToArray($player);
             }, $players), Response::HTTP_OK
         );
     }

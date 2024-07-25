@@ -10,7 +10,7 @@
 body {
     height: 100vh;
     width: 100vw;
-    background: url(/images/bg.png) no-repeat;
+    background: url("https://i.postimg.cc/1zyHTmtK/bg.png") no-repeat;
     background-size: cover;
 }
 
@@ -201,4 +201,5 @@ body {
     border-radius: 30px;
     top: 0;
     left: 0;
+    backdrop-filter: blur(3px)
 }

@@ -1,8 +1,11 @@
+
+  localStorage.mode = '2';
 player.lines = 0;
 player.defaultUpdateScore = player.updateScore;
 player.updateScore = (countLines) => {
     player.defaultUpdateScore(countLines);
     player.lines += countLines;
+    player.ui.lines = player.lines;
 }
 GAME.startTime = new Date();
 GAME.defaultPlay = GAME.play;

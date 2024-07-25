@@ -18,7 +18,7 @@ let settingLobby = {
     players: [],
     settings: {
         music: "/audio/Korobeiniki.wav",
-        background: "/images/bg.png",
+        background: "https://i.postimg.cc/1zyHTmtK/bg.png",
         difficulty: 1,
         play_field: {
             width: 10,
@@ -65,7 +65,7 @@ function disconnectPlayer(kickId){
 
 async function foundUser(id)
 {
-    let response = await fetch('/api/player/' + id + '/user', {
+    let response = await fetch('/api/player/' + id, {
         method: 'GET'
     });
     let user = await response.json();
@@ -135,8 +135,10 @@ ws.onmessage = (msg) => {
             listPlayers.appendChild(newPlayer);
         }
         foundUser(joinPlayerId).then((user)=>{
-            if(newPlayer)
+            if(newPlayer){
                 newPlayer.querySelector('.player__name').textContent = user.login
+                newPlayer.querySelector('.profile__avatar').src = `../uploads/${user.avatar ?? "avatar-placeholder.png"}`
+            }
         })
     })
     initKickButtons()

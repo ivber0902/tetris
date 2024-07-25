@@ -1,6 +1,9 @@
 ## Получить рейтинг
 `GET /api/player/rating?sortKey=<sortKey>&count=<num>`
 
+`<sortKey>`: lastScore, totalScore, maxScore, gameCount, winCount
+
+
 ### Если не указан один из параметров или `count` не больше нуля
 `Response 400`
 

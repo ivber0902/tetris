@@ -1,7 +1,7 @@
 <div class="user-profile">
     <div class="user-profile__header">
         <div class="user-profile__player">
-            <img src="/images/avatar-placeholder.png" alt="avatar" class="profile__avatar">
+            <img src="../uploads/{{player.getAvatar() ?? "avatar-placeholder.png"}}" alt="avatar" class="profile__avatar">
             <p class="profile__nickname">{{player.login ?? 'славянин'}}</p>
         </div>
         <div class="user-profile__exit">
@@ -11,7 +11,6 @@
             {% else %}
                 <a class="full-profile" href="/profile/{{player.login}}">Profile</a>
             {% endif %}
-            
         </div>  
     </div>
     <div class="statistics">
