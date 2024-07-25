@@ -3,8 +3,6 @@ package game
 import (
 	"WebSocket/connection"
 	"WebSocket/lobby"
-	"log"
-	"time"
 )
 
 type Room struct {
@@ -78,7 +76,8 @@ func (room *Room) Init() {
 				}
 				room.Config.GameRun = false
 				room.Results.AddPlayer(player, true)
-				room.SendResults(room.Results)
+				room.Results.Set(room.Config.Settings.Difficulty, 0)
+				room.SaveResults(room.Results)
 				return false
 			}
 			room.Results.AddPlayer(player, false)
@@ -96,12 +95,4 @@ func (room *Room) Init() {
 		}
 		return true
 	})
-}
-
-func (room *Room) SendResults(results *Results) {
-	go func() {
-		log.Printf("Show Results for game %s", room.ID)
-		time.Sleep(time.Hour)
-		room.Events.Remove <- room
-	}()
 }

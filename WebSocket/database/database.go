@@ -1,4 +1,4 @@
-package main
+package database
 
 import (
 	"context"
@@ -11,12 +11,12 @@ import (
 )
 
 var DB *mongo.Database
+var GameCollection *mongo.Collection
 
-func ConnectToDatabase() error {
-	loadEnv()
-	dbURI := os.Getenv("DATABASE_URI")
+func Connect() error {
+	dbURI := os.Getenv("MONGODB_URL")
 	if dbURI == "" {
-		return errors.New("DATABASE_URI environment variable not set")
+		return errors.New("MONGODB_URL environment variable not set")
 	}
 	opt := options.Client().ApplyURI(dbURI)
 	client, err := mongo.Connect(context.TODO(), opt)
@@ -24,7 +24,7 @@ func ConnectToDatabase() error {
 		return err
 	}
 
-	DB = client.Database(os.Getenv("DATABASE_NAME"))
+	DB = client.Database(os.Getenv("MONGODB_DB"))
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
 	defer cancel()
@@ -33,5 +33,13 @@ func ConnectToDatabase() error {
 	if err := DB.RunCommand(ctx, bson.D{{"ping", 1}}).Decode(&result); err != nil {
 		return err
 	}
+	GameCollection = DB.Collection("Game")
 	return nil
+}
+
+func Save(item interface{}) error {
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
+	defer cancel()
+	_, err := GameCollection.InsertOne(ctx, item)
+	return err
 }

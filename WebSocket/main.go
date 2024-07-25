@@ -1,6 +1,7 @@
 package main
 
 import (
+	"WebSocket/database"
 	"log"
 	"net/http"
 )
@@ -8,6 +9,12 @@ import (
 var server Server
 
 func main() {
+	log.Println("Connecting to database...")
+	loadEnv()
+	err := database.Connect()
+	if err != nil {
+		panic(err)
+	}
 	log.Println("Starting server...")
 
 	server.Init()
@@ -20,7 +27,7 @@ func main() {
 	})
 	http.HandleFunc("/game/results", server.GameResultsHandler)
 
-	err := http.ListenAndServe(":8080", nil)
+	err = http.ListenAndServe(":8080", nil)
 	if err != nil {
 		panic(err)
 	}
