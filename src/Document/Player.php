@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Player
 {
     private string $id;
-    private string $avatar;
+    private ?string $avatar = null;
     private User $user;
     private Statistics $statistics;
     private UI $ui;
@@ -18,7 +18,6 @@ class Player
         $this->user = new User();
         $this->statistics = new Statistics();
         $this->ui = new UI();
-        $this->games = new ArrayCollection();
     }
 
     public function getAvatar(): ?string

@@ -4,15 +4,15 @@ namespace App\Document;
 
 class SingleGame extends Game
 {
-    private string $playerId;
-    private int $score;
-    private int $tetrisCount;
-    private int $figureCount;
-    private int $filledRows;
-    private int $fieldMode;
-    private bool $isWon;
+    private ?string $playerId = null;
+    private int $score = 0;
+    private int $tetrisCount = 0;
+    private int $figureCount = 0;
+    private int $filledRows = 0;
+    private int $fieldMode = 0;
+    private bool $isWon = false;
 
-    public function getPlayerId(): string
+    public function getPlayerId(): ?string
     {
         return $this->playerId;
     }
