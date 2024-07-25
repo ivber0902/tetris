@@ -377,11 +377,11 @@ const langArr = {
         "en": "Score 10,000 points per game",
     },
     "item__title.legend-tetris.medium": {
-        "ru": "Набери за игру 10000 очков",
+        "ru": "Набери за игру 50000 очков",
         "en": "Score 50,000 points per game",
     },
     "item__title.legend-tetris.hard": {
-        "ru": "Набери за игру 10000 очков",
+        "ru": "Набери за игру 100000 очков",
         "en": "Score 100,000 points per game",
     },
     "item__subtitle.legend-tetris.easy": {
