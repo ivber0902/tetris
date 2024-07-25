@@ -4,17 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7bcc5562-9455-45fa-9b4e-8407aadb17a9" name="Changes" comment="Исправил необновление статистики">
+    <list default="true" id="7bcc5562-9455-45fa-9b4e-8407aadb17a9" name="Changes" comment="Добавил получение рейтинга игр">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/doctrine/Player.mongodb.xml" beforeDir="false" afterPath="$PROJECT_DIR$/config/doctrine/Player.mongodb.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/doctrine/SingleGame.mongodb.xml" beforeDir="false" afterPath="$PROJECT_DIR$/config/doctrine/SingleGame.mongodb.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/routes.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/routes.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/GameController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/GameController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/PlayerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/PlayerController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Document/Player.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Document/Player.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Document/SingleGame.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Document/SingleGame.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Service/GameService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/GameService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/PlayerService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/PlayerService.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -172,7 +166,7 @@
       <workItem from="1721127789829" duration="1730000" />
       <workItem from="1721803347008" duration="19236000" />
       <workItem from="1721843697762" duration="1892000" />
-      <workItem from="1721880660322" duration="2649000" />
+      <workItem from="1721880660322" duration="3526000" />
     </task>
     <task id="LOCAL-00001" summary="Исправил кнопку «Начать игру»">
       <option name="closed" value="true" />
@@ -302,7 +296,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721847295690</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Добавил получение рейтинга игр">
+      <option name="closed" value="true" />
+      <created>1721884067498</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1721884067498</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -349,6 +351,7 @@
     <MESSAGE value="Изменил API получения игрока по ID" />
     <MESSAGE value="Исправил приоритет в роутах" />
     <MESSAGE value="Исправил необновление статистики" />
-    <option name="LAST_COMMIT_MESSAGE" value="Исправил необновление статистики" />
+    <MESSAGE value="Добавил получение рейтинга игр" />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавил получение рейтинга игр" />
   </component>
 </project>
