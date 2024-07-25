@@ -22,6 +22,9 @@ profile:
 about:
     path: /about
     controller: App\Controller\GameController::about
+statistics:
+    path: /statistics/{login}
+    controller: App\Controller\PlayerController::statistics
 leaderboard:
     path: /leaderboard
     controller: App\Controller\GameController::leaderboard
@@ -90,6 +93,10 @@ api_save_single_game:
     path: /api/game/single/add
     methods: POST
     controller: App\Controller\PlayerController::storeSingleGame
+api_save_multiplayer_game:
+    path: /api/game/multiplayer/add
+    methods: POST
+    controller: App\Controller\GameController::storeMultiplayerGame
 api_update_statistics:
     path: /api/statistics
     methods: POST
@@ -102,6 +109,11 @@ api_get_user:
     path: /api/player/{id}
     methods: GET
     controller: App\Controller\PlayerController::getUserApi
+api_get_game_rating:
+    path: /api/game/rating
+    methods: GET
+    controller: App\Controller\GameController::getGamesWithFiltering
+
 
 test:
     path: /test

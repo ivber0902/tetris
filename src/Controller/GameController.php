@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Document\Game;
 use App\Document\MultiplayerGame;
 use App\Document\Player;
+use App\Service\GameService;
 use App\Service\PlayerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +14,8 @@ use Symfony\Component\HttpFoundation\Request;
 class GameController extends AbstractController
 {
     public function __construct(
-        private readonly PlayerService $service,
+        private readonly PlayerService $playerService,
+        private readonly GameService $gameService,
     )
     {
     }
@@ -24,7 +26,7 @@ class GameController extends AbstractController
         if ($securityUser === null){
             return $this->render('menu/menu.html.twig');
         }
-        $player = $this->service->findPlayer($securityUser->getId());
+        $player = $this->playerService->findPlayer($securityUser->getId());
         return $this->render('menu/menu.html.twig', ["player" => $player]);
     }
     public function settings(): Response
@@ -33,7 +35,7 @@ class GameController extends AbstractController
         if ($securityUser === null) {
             return $this->render('menu/settings.html.twig');
         }
-        $player = $this->service->findPlayer($securityUser->getId());
+        $player = $this->playerService->findPlayer($securityUser->getId());
         return $this->render('menu/settings.html.twig', ["player" => $player]);
     }
     public function leaderboard(): Response
@@ -42,7 +44,7 @@ class GameController extends AbstractController
         if($securityUser === null){
             return $this->render('menu/leaderboard.html.twig');
         }
-        $player = $this->service->findPlayer($securityUser->getId());
+        $player = $this->playerService->findPlayer($securityUser->getId());
         return $this->render('menu/leaderboard.html.twig', ["player" => $player]);
     }
     public function gameOver(Request $request): Response
@@ -54,7 +56,7 @@ class GameController extends AbstractController
                 'maxScore' => $request->get('score', '0'),
             ]);
         }
-        $player = $this->service->findPlayer($securityUser->getId());
+        $player = $this->playerService->findPlayer($securityUser->getId());
         return $this->render('game/game-over.html.twig', [
             'lastScore' => $player->getStatistics()->getLastScore(),
             'maxScore' => $player->getStatistics()->getMaxScore(),
@@ -78,7 +80,7 @@ class GameController extends AbstractController
         if($securityUser === null){
             return $this->render('multiplayer/game-over-multi.html.twig');
         }
-        $player = $this->service->findPlayer($securityUser->getId());
+        $player = $this->playerService->findPlayer($securityUser->getId());
         return $this->render('multiplayer/game-over-multi.html.twig', ["player" => $player]);
     }
     public function koop(): Response
@@ -99,7 +101,7 @@ class GameController extends AbstractController
         if ($securityUser === null) {
             return $this->render('select_modes/select-multiplayer-mode.html.twig');
         }
-        $player = $this->service->findPlayer($securityUser->getId());
+        $player = $this->playerService->findPlayer($securityUser->getId());
         return $this->render('select_modes/select-multiplayer-mode.html.twig', ["player" => $player]);
     }
     public function selectDif(): Response
@@ -108,7 +110,7 @@ class GameController extends AbstractController
         if($securityUser === null){
             return $this->render('select_modes/select-classic-mode.html.twig');
         }
-        $player = $this->service->findPlayer($securityUser->getId());
+        $player = $this->playerService->findPlayer($securityUser->getId());
         return $this->render('select_modes/select-classic-mode.html.twig', ["player" => $player]);
     }
     public function selectKoop(): Response
@@ -117,7 +119,7 @@ class GameController extends AbstractController
         if($securityUser === null){
             return $this->render('select_modes/select-koop-mode.html.twig');
         }
-        $player = $this->service->findPlayer($securityUser->getId());
+        $player = $this->playerService->findPlayer($securityUser->getId());
         return $this->render('select_modes/select-koop-mode.html.twig', ["player" => $player]);
     }
     public function selectSoloMode(): Response
@@ -126,7 +128,7 @@ class GameController extends AbstractController
         if ($securityUser === null){
             return $this->render('select_modes/select-solo-mode.html.twig');
         }
-        $player = $this->service->findPlayer($securityUser->getId());
+        $player = $this->playerService->findPlayer($securityUser->getId());
         return $this->render('select_modes/select-solo-mode.html.twig', ["player" => $player]);
     }
     public function about(): Response
@@ -138,7 +140,7 @@ class GameController extends AbstractController
     {
         $securityUser = $this->getUser();
         if ($securityUser){
-            $player = $this->service->findPlayer($securityUser->getId());
+            $player = $this->playerService->findPlayer($securityUser->getId());
             return $this->render('multiplayer/multiplayer.html.twig', ["player" => $player]);
         } else {
             return $this->redirectToRoute('login');
@@ -148,7 +150,7 @@ class GameController extends AbstractController
     {
         $securityUser = $this->getUser();
         if ($securityUser){
-            $player = $this->service->findPlayer($securityUser->getId());
+            $player = $this->playerService->findPlayer($securityUser->getId());
             return $this->render('multiplayer/list_lobby.html.twig', ["player" => $player]);
         } else {
             return $this->redirectToRoute('login');
@@ -165,7 +167,27 @@ class GameController extends AbstractController
         if ($securityUser === null) {
             return $this->redirectToRoute('login');
         }
-        $player = $this->service->findPlayer($securityUser->getId());
+        $player = $this->playerService->findPlayer($securityUser->getId());
         return $this->render('multiplayer/lobby.html.twig', ["player" => $player]);
+    }
+
+    public function getGamesWithFiltering(Request $request): Response
+    {
+        $sortKey = $request->get('sortKey') ?? "id";
+        $count  = $request->get('count') ?? 1;
+
+        $filters = [];
+        foreach (["mode", "time", "tetrisCount",
+                     "figure_count", "filled_rows", "field_mode",
+                     "is_won"] as $key) {
+            if (($filter = $request->get($key)) !== null) {
+                $filters[$key] = $filter;
+            }
+        }
+
+        $games = $this->gameService->getRating($count, $sortKey, $filters);
+        return $this->json(array_map(function ($game) {
+            return $this->gameService->serializeGameInfoToArray($game);
+        }, $games), Response::HTTP_OK);
     }
 }
