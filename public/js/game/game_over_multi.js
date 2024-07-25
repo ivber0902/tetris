@@ -1,7 +1,6 @@
 const host = window.location.hostname;
 let params = new URLSearchParams(document.location.search);
 let players = document.querySelector('.players');
-let players = document.querySelector('.players');
 let playerId = document.querySelector(".player_id").value;
 
 async function getResults(){
@@ -70,7 +69,5 @@ function createPlayerBlock(elem, position){
 
     player.appendChild(playerNumber);
     player.appendChild(playerInfo);
-    return player
-}
     return player
 }
