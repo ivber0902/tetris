@@ -89,6 +89,7 @@ main{
     border-left: 3px solid #392e40;
     border-bottom: 3px solid #0a080b;
     gap: 10px;
+    cursor: pointer;
 }
 
 .item__title{
