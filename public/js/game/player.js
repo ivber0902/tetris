@@ -6,7 +6,7 @@ class Player {
         this.field = field;
         this.tickTime = 0;
         this.playTime = new Date(),
-        this.figureCount = 0;
+            this.figureCount = 0;
         this.move = {
             left: 0,
             right: 0,
@@ -73,7 +73,7 @@ class Player {
                 break;
             default:
                 break;
-        } 
+        }
     }
 
     updateLvl() {
@@ -137,6 +137,35 @@ class Player {
                 this.field.fixFigure(this.currentFigure);
                 this.updateResults();
                 this.nextFigure();
+                if (!this.field.checkPosition(this.currentFigure.x, this.currentFigure.y, this.currentFigure.matrix)) {
+                    this.isActive = false;
+                    switch (localStorage.Gamewidth) {
+                        case '7':
+                            this.fieldMode = 0
+                            break;
+                        case '10':
+                            this.fieldMode = 1
+                            break;
+                        case '15':
+                            this.fieldMode = 2
+                            break;
+                        case '20':
+                            this.fieldMode = 3
+                            break;
+                        default:
+                            break;
+                    }
+                    let result = {
+                        mode: parseInt(localStorage.mode),
+                        score: this.score,
+                        tetris_count: this.countTetris,
+                        figure_count: this.figureCount,
+                        filled_rows: this.countClearLines,
+                        field_mode: this.fieldMode,
+                        is_won: false
+                    }
+                    gameEnd(result);
+                }
                 this.update();
             }
             if ((new Date() - this.playTime) * this.nitro >= this.tickTime) {
@@ -164,7 +193,7 @@ class Player {
                                 break;
                             default:
                                 break;
-                        } 
+                        }
                         let result = {
                             mode: parseInt(localStorage.mode),
                             score: this.score,

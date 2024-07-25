@@ -22,7 +22,7 @@ async function foundTotal( mode)
     return await response.json();
 }
 
-foundMode('maxScore', 1, 1).then((results) => {
+foundMode('score', 1, 1).then((results) => {
     let maxScore = 0
     console.log(results, 'test')
     results.forEach(element => {
@@ -43,7 +43,7 @@ foundTotal(1).then((results) => {
     document.querySelector('.blitz__game-count').textContent = 'количество игр: ' + countGame
 })
 
-foundMode('maxScore', 1, 2).then((results) => {
+foundMode('score', 1, 2).then((results) => {
     let maxScore = 0
     console.log(results, 'test')
     results.forEach(element => {
@@ -64,7 +64,7 @@ foundTotal(2).then((results) => {
     document.querySelector('.lines__game-count').textContent = 'количество игр: ' + countGame
 })
 
-foundMode('maxScore', 1, 3).then((results) => {
+foundMode('score', 1, 3).then((results) => {
     let maxScore = 0
     console.log(results, 'test')
     results.forEach(element => {
@@ -85,7 +85,7 @@ foundTotal(3).then((results) => {
     document.querySelector('.bot__game-count').textContent = 'количество игр: ' + countGame
 })
 
-foundMode('maxScore', 1, 4).then((results) => {
+foundMode('score', 1, 4).then((results) => {
     let maxScore = 0
     console.log(results, 'test')
     results.forEach(element => {

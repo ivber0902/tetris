@@ -221,7 +221,6 @@ class Bot {
         this.nextFigure();
         document.querySelector('.game__score').innerHTML = this.score;
         document.querySelector('.game__level').innerHTML = this.lvl;
-        if (this.isActive) setTimeout(() => { this.play() }, this.timeOut);
         if (maxdropscore === -1000000) {
             switch (localStorage.Gamewidth) {
                 case '7':
@@ -251,6 +250,7 @@ class Bot {
             }
             gameEnd(result);
         };
+        if (this.isActive) setTimeout(() => { this.play() }, this.timeOut);
     }
     sumArr(array) {
         let sum = 0;

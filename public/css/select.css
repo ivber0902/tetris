@@ -114,10 +114,12 @@
 
 .link__title {
     color: #dac8e7;
+    font-size: 40px;
 }
 
 .link__subtitle {
     color: #7c6b88;
+    font-size: 16px;
 }
 
 .select {
