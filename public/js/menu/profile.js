@@ -11,7 +11,8 @@ const slideCount = slides.length;
 const arrayAchievementBlocks = document.querySelectorAll('.achievement');
 let slideIndex = 0;
 let closeBlock = document.createElement('div');
-closeBlock.classList.add('overlay')
+closeBlock.classList.add('overlay');
+let id = document.querySelector('.player-id').value
 const parseAchievement = [
   {
     'min': 10,
@@ -50,7 +51,7 @@ const parseAchievement = [
   },
 ]
 
-testButton.addEventListener('click', ()=>{
+function ViewAchievement(){
   for(let i = 0; i < arrayAchievement.length; i++){
     let achievement = arrayAchievementBlocks[i];
     let settings = parseAchievement[i];
@@ -63,9 +64,10 @@ testButton.addEventListener('click', ()=>{
         if(arrayAchievement[i] < settings['max'])
           closeAchievement(achievement, 1)
   }
-})
+}
 
-let arrayAchievement = [25, 75000, 7000, 4, 250, 4, 7];
+
+
 
 function closeAchievement(achievement, countClouse){
   let achievementItems = achievement.querySelectorAll('.achievement__item');
@@ -114,5 +116,33 @@ function updateSlider() {
   });
 }
 
-updateSlider();
+let arrayAchievement = [25, 75000, 7000, 4, 250, 4, 7];
 
+updateSlider();
+UpdateAchievement()
+
+async function UpdateAchievement(){
+  await fetch('/api/player/' + id, {
+    method: 'GET'
+  })
+  .then(response => {
+    return response.json();
+  })
+  .then(data => {
+    let responseAchievement = data.statistics;
+    console.log(responseAchievement);
+    arrayAchievement[0] = responseAchievement.game_count;
+    arrayAchievement[1] = responseAchievement.max_score;
+    arrayAchievement[5] = responseAchievement.win_count;
+    ViewAchievement()
+  })
+}
+
+
+async function foundAchievment(sortKey, count, mode)
+{
+    let response = await fetch(`/api/game/rating?sortKey=${sortKey}&count=${count}&mode=${mode}`, {
+        method: 'GET'
+    });
+    return await response.json();
+}
