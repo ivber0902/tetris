@@ -30,7 +30,7 @@ function printResults(data){
     }
 }
 
-document.querySelector(".back__link").href = '/lobby?lobby=' + params.get('lobby');
+document.querySelector(".back__link").href = '/select_multiplayer_mode';
 
 getResults().then((results) => {
     printResults(results)

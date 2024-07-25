@@ -58,6 +58,7 @@
 }
 
 .title {
+    color: black;
     font: 800 20px/20px "Russo One", sans-serif;
     background-color: white;
     padding: 5px 0;
