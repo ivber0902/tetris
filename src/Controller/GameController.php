@@ -174,7 +174,7 @@ class GameController extends AbstractController
     public function getGamesWithFiltering(Request $request): Response
     {
         $sortKey = $request->get('sortKey') ?? "id";
-        $count  = $request->get('count') ?? 1;
+        $count  = $request->get('count') ?? null;
 
         $filters = [];
         foreach (["mode", "time", "tetrisCount",
