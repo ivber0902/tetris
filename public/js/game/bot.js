@@ -20,7 +20,7 @@ class Bot {
         this.isShifter = true;
         this.isActive = false;
         this.field2 = null;
-        this.timeOut = 50;
+        this.timeOut = 100;
     }
 
     initFigures(currentFigureIndex, bufferFigureIndex, NextFiguresIndex) {
@@ -78,7 +78,7 @@ class Bot {
     async play() {
         this.field.clearField();
         this.field.drawField(this.field.field, this.field.matrix);
-        let maxdropscore = 0;
+        let maxdropscore = -1000000;
         let posmax = 0;
         let maxposx = 0;
         let currentFigure2 = new Figure([], []);
@@ -211,16 +211,45 @@ class Bot {
         this.field.clearFigure(this.currentFigure);
         this.field.dropFigure(this.currentFigure);
         if (this.currentFigure.y < 15) {
-            this.timeOut = 100;
+            this.timeOut = 200;
         }
         if (this.currentFigure.y < 7) {
-            this.timeOut = 50;
+            this.timeOut = 100;
         }
         this.field.fixFigure(this.currentFigure);
         this.updateResults();
         this.nextFigure();
         document.querySelector('.game__score').innerHTML = this.score;
         document.querySelector('.game__level').innerHTML = this.lvl;
+        if (maxdropscore === -1000000) {
+            switch (localStorage.Gamewidth) {
+                case '7':
+                    player.fieldMode = 0
+                    break;
+                case '10':
+                    player.fieldMode = 1
+                    break;
+                case '15':
+                    player.fieldMode = 2
+                    break;
+                case '20':
+                    player.fieldMode = 3
+                    break;
+                default:
+                    break;
+            } 
+            let result = {
+                mode: 3,
+                time: new Date() - GAME.startTime,
+                score: player.score,
+                tetris_count: player.countTetris,
+                figure_count: player.figureCount,
+                filled_rows: player.countClearLines,
+                field_mode: player.fieldMode,
+                is_won: true
+            }
+            gameEnd(result);
+        };
         if (this.isActive) setTimeout(() => { this.play() }, this.timeOut);
     }
     sumArr(array) {

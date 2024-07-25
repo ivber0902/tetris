@@ -34,6 +34,17 @@ class PlayerController extends AbstractController
         throw new UnprocessableEntityHttpException();
     }
 
+    public function statistics(string $login): Response
+    {
+        $player = $this->service->findPlayerByLogin($login);
+        if ($player !== null) {
+            return $this->render('menu/statistics.html.twig', [
+                "player" => $player,
+            ]);
+        }
+        throw new UnprocessableEntityHttpException();
+    }
+
     public function updateStatistics(Request $request): Response
     {
         $securityUser = $this->getUser();

@@ -549,7 +549,7 @@ if((localStorage.lang === undefined) || (!localStorage.lang)){
     localStorage.lang = 'ru';
 }
 if((localStorage.bg === undefined) || (!localStorage.bg)){
-    localStorage.bg = '/images/bg.png';
+    localStorage.bg = 'https://i.postimg.cc/1zyHTmtK/bg.png';
   }
 
 addEventListener("DOMContentLoaded", (event) => {
