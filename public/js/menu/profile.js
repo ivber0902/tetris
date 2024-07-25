@@ -2,7 +2,6 @@ let button = document.querySelector('.back');
 let userImageInput = document.getElementById('image-input');
 let userImageProfile = document.querySelector('.user-avatar')
 let form = document.querySelector('form');
-let testButton = document.querySelector('.button');
 const slider = document.querySelector('.slider');
 const prevButton = document.querySelector('.prev-button');
 const nextButton = document.querySelector('.next-button');
@@ -12,7 +11,8 @@ const arrayAchievementBlocks = document.querySelectorAll('.achievement');
 let slideIndex = 0;
 let closeBlock = document.createElement('div');
 closeBlock.classList.add('overlay');
-let id = document.querySelector('.player-id').value
+let id = document.querySelector('.player-id').value;
+let arrayAchievement = [];
 const parseAchievement = [
   {
     'min': 10,
@@ -30,9 +30,9 @@ const parseAchievement = [
     'max': 12000
   },
   {
-    'min': 8,
-    'mid': 5,
-    'max': 3
+    'min': 480000,
+    'mid': 300000,
+    'max': 180000
   },
   {
     'min': 100,
@@ -51,18 +51,31 @@ const parseAchievement = [
   },
 ]
 
-function ViewAchievement(){
+function ViewAchievement(arrayAchievement){
+  console.log(arrayAchievement)
   for(let i = 0; i < arrayAchievement.length; i++){
     let achievement = arrayAchievementBlocks[i];
     let settings = parseAchievement[i];
-    if(arrayAchievement[i] < settings['min'])
-      closeAchievement(achievement, 3)
-    else
-      if(arrayAchievement[i] < settings['mid'])
-        closeAchievement(achievement, 2)
+    if(i !== 3){
+      if(arrayAchievement[i] < settings['min'])
+        closeAchievement(achievement, 3)
       else
-        if(arrayAchievement[i] < settings['max'])
-          closeAchievement(achievement, 1)
+        if(arrayAchievement[i] < settings['mid'])
+          closeAchievement(achievement, 2)
+        else
+          if(arrayAchievement[i] < settings['max'])
+            closeAchievement(achievement, 1)
+    }else{
+      if(arrayAchievement[i] > settings['min'])
+        closeAchievement(achievement, 3)
+      else
+        if(arrayAchievement[i] > settings['mid'])
+          closeAchievement(achievement, 2)
+        else
+          if(arrayAchievement[i] > settings['max'])
+            closeAchievement(achievement, 1)
+    }
+    
   }
 }
 
@@ -74,7 +87,8 @@ function closeAchievement(achievement, countClouse){
   for(let i = 0; i < countClouse; i++){
     const overlay = document.createElement('div');
     overlay.classList.add('overlay');
-    achievementItems[2 - i].appendChild(overlay)
+    achievementItems[2 - i].appendChild(overlay);
+    achievementItems[2 - i].querySelector('.item__title').style.color = "#C0C0C0"
   }
 }
 button.addEventListener('click', () => {
@@ -116,11 +130,6 @@ function updateSlider() {
   });
 }
 
-let arrayAchievement = [25, 75000, 7000, 4, 250, 4, 7];
-
-updateSlider();
-UpdateAchievement()
-
 async function UpdateAchievement(){
   await fetch('/api/player/' + id, {
     method: 'GET'
@@ -130,19 +139,50 @@ async function UpdateAchievement(){
   })
   .then(data => {
     let responseAchievement = data.statistics;
-    console.log(responseAchievement);
     arrayAchievement[0] = responseAchievement.game_count;
     arrayAchievement[1] = responseAchievement.max_score;
     arrayAchievement[5] = responseAchievement.win_count;
-    ViewAchievement()
+    foundAchievment('score', 1, 1).then((results)=>{
+      if (results.length !== 0)
+        arrayAchievement[2] = results[0].score
+      else
+        arrayAchievement[2] = 0
+      foundAchievment('time', 1, 2).then((results)=>{
+        console.log(results)
+        if (results.length !== 0)
+          arrayAchievement[3] = results[0].time
+        else
+          arrayAchievement[3] = 0
+        foundAchievment('score', 1, 4).then((results)=>{
+          if (results.length !== 0)
+            arrayAchievement[4] = results[0].filled_rows
+          else
+            arrayAchievement[4] = 0
+          fetch('/api/game/count?mode=3&isWon=true' + id, {
+            method: 'GET'
+          }).then(response => {
+            return response.json();
+          }).then(data =>{
+            if (data.length !== 0)
+              arrayAchievement[6] = data.count;
+            else
+            arrayAchievement[6] = 0;
+            ViewAchievement(arrayAchievement)
+          })
+        });
+      });
+      
+    })
   })
 }
 
-
 async function foundAchievment(sortKey, count, mode)
 {
-    let response = await fetch(`/api/game/rating?sortKey=${sortKey}&count=${count}&mode=${mode}`, {
+    let response = await fetch(`/api/game/rating?sortKey=${sortKey}&count=${count}&mode=${mode}&playerId=${id}`, {
         method: 'GET'
     });
     return await response.json();
 }
+
+updateSlider();
+UpdateAchievement()
