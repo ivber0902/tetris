@@ -27,9 +27,9 @@ let settingLobby = {
     }
 }
 
-let wsUrl = "ws://" + host + ":8080/lobby";
+let wsUrl = "ws://" + host + ":8080/lobby" + "?player=" + userId;
 if (lobbyId) {
-    wsUrl += "?lobby=" + lobbyId + "&player=" + userId;
+    wsUrl += "&lobby=" + lobbyId
 }
 
 let ws = new WebSocket(wsUrl);
