@@ -12,7 +12,7 @@ class SingleGame extends Game
     private int $fieldMode = 0;
     private bool $isWon = false;
 
-    public function getPlayerId(): string
+    public function getPlayerId(): ?string
     {
         return $this->playerId;
     }
