@@ -26,7 +26,7 @@ function createLobbyLink(title, countPlayers, idLobby) {
 
     let itemDescription = document.createElement('p');
     itemDescription.setAttribute('class', 'item__subtitle');
-    itemDescription.textContent = `участников ${countPlayers}/4`;
+    itemDescription.textContent = `участников: ${countPlayers}`;
 
     div.appendChild(itemTitle);
     div.appendChild(itemDescription);

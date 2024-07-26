@@ -135,7 +135,11 @@ ws.onmessage = (msg) => {
         }
         foundUser(joinPlayerId).then((user)=>{
             if(newPlayer){
-                newPlayer.querySelector('.player__name').textContent = user.login
+                console.log(user.login)
+                if(user.login.length < 9)
+                    newPlayer.querySelector('.player__name').textContent = user.login
+                else
+                    newPlayer.querySelector('.player__name').textContent = user.login.substring(0, 9) + '...';
                 newPlayer.querySelector('.profile__avatar').src = `../uploads/${user.avatar ?? "avatar-placeholder.png"}`
             }
         })
