@@ -11,7 +11,7 @@ function createMaxScoreBlock(){
 
     const playerName = document.createElement('p');
     playerName.classList.add('player-name');
-    playerName.textContent = 'Тверь'
+    playerName.textContent = ''
 
     const playerInfo = document.createElement('div');
     playerInfo.classList.add('player-info');
@@ -21,7 +21,7 @@ function createMaxScoreBlock(){
 
     const playerScore = document.createElement('p');
     playerScore.classList.add('player-score');
-    playerScore.textContent = '123456789'
+    playerScore.textContent = ''
 
     player.appendChild(playerInfo);
     player.appendChild(playerScore);
@@ -43,7 +43,7 @@ function createTotalScoreBlock(){
 
     const playerName = document.createElement('p');
     playerName.classList.add('player-name');
-    playerName.textContent = 'Тверь'
+    playerName.textContent = ''
 
     const playerInfo = document.createElement('div');
     playerInfo.classList.add('player-info');
@@ -53,7 +53,7 @@ function createTotalScoreBlock(){
 
     const playerScore = document.createElement('p');
     playerScore.classList.add('player-score');
-    playerScore.textContent = 'average'
+    playerScore.textContent = ''
 
     player.appendChild(playerInfo);
     player.appendChild(playerScore);
@@ -75,7 +75,7 @@ function createMaxWinBlock(){
 
     const playerName = document.createElement('p');
     playerName.classList.add('player-name');
-    playerName.textContent = 'Тверь'
+    playerName.textContent = ''
 
     const playerInfo = document.createElement('div');
     playerInfo.classList.add('player-info');
@@ -85,7 +85,7 @@ function createMaxWinBlock(){
 
     const playerScore = document.createElement('p');
     playerScore.classList.add('player-score');
-    playerScore.textContent = 'win'
+    playerScore.textContent = ''
 
     player.appendChild(playerInfo);
     player.appendChild(playerScore);
