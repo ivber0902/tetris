@@ -11,7 +11,7 @@ function createMaxScoreBlock(){
 
     const playerName = document.createElement('p');
     playerName.classList.add('player-name');
-    playerName.textContent = 'Тверь'
+    playerName.textContent = ''
 
     const playerInfo = document.createElement('div');
     playerInfo.classList.add('player-info');
@@ -21,14 +21,19 @@ function createMaxScoreBlock(){
 
     const playerScore = document.createElement('p');
     playerScore.classList.add('player-score');
-    playerScore.textContent = '123456789'
+    playerScore.textContent = ''
 
     player.appendChild(playerInfo);
     player.appendChild(playerScore);
 
     const playerWrapper = document.createElement('div')
     playerWrapper.classList.add('menu-wrapper')
-    playerWrapper.appendChild(player)
+
+    const playerLink = document.createElement('a')
+    playerLink.href = '/'
+    playerLink.appendChild(player)
+
+    playerWrapper.appendChild(playerLink)
 
     return playerWrapper
 }
@@ -43,7 +48,7 @@ function createTotalScoreBlock(){
 
     const playerName = document.createElement('p');
     playerName.classList.add('player-name');
-    playerName.textContent = 'Тверь'
+    playerName.textContent = ''
 
     const playerInfo = document.createElement('div');
     playerInfo.classList.add('player-info');
@@ -53,14 +58,19 @@ function createTotalScoreBlock(){
 
     const playerScore = document.createElement('p');
     playerScore.classList.add('player-score');
-    playerScore.textContent = 'average'
+    playerScore.textContent = ''
 
     player.appendChild(playerInfo);
     player.appendChild(playerScore);
 
     const playerWrapper = document.createElement('div')
     playerWrapper.classList.add('menu-wrapper')
-    playerWrapper.appendChild(player)
+
+    const playerLink = document.createElement('a')
+    playerLink.href = '/'
+    playerLink.appendChild(player)
+
+    playerWrapper.appendChild(playerLink)
 
     return playerWrapper
 }
@@ -75,7 +85,7 @@ function createMaxWinBlock(){
 
     const playerName = document.createElement('p');
     playerName.classList.add('player-name');
-    playerName.textContent = 'Тверь'
+    playerName.textContent = ''
 
     const playerInfo = document.createElement('div');
     playerInfo.classList.add('player-info');
@@ -85,14 +95,19 @@ function createMaxWinBlock(){
 
     const playerScore = document.createElement('p');
     playerScore.classList.add('player-score');
-    playerScore.textContent = 'win'
+    playerScore.textContent = ''
 
     player.appendChild(playerInfo);
     player.appendChild(playerScore);
 
     const playerWrapper = document.createElement('div')
     playerWrapper.classList.add('menu-wrapper')
-    playerWrapper.appendChild(player)
+
+    const playerLink = document.createElement('a')
+    playerLink.href = '/'
+    playerLink.appendChild(player)
+
+    playerWrapper.appendChild(playerLink)
 
     return playerWrapper
 }
@@ -105,6 +120,7 @@ function maxScoreResults(data){
             playerWrapper.querySelector('.player-name').textContent = user.login
             playerWrapper.querySelector('.player-score').textContent = user.statistics.max_score
             playerWrapper.querySelector('.player-position').textContent = '№' + (i + 1)
+            playerWrapper.querySelector('a').href = '/profile/' + user.login
             if (playerNickname === user.login){
                 playerWrapper.querySelector('.player').style.background = "#2e815d"
                 playerWrapper.querySelector('.player-position').style.background = "#236d4d"
@@ -124,6 +140,7 @@ function totalScoreResults(data){
             playerWrapper.querySelector('.player-name').textContent = user.login
             playerWrapper.querySelector('.player-score').textContent = user.statistics.total_score
             playerWrapper.querySelector('.player-position').textContent = '№' + (i + 1)
+            playerWrapper.querySelector('a').href = '/profile/' + user.login
             if (playerNickname === user.login){
                 playerWrapper.querySelector('.player').style.background = "#2e815d"
                 playerWrapper.querySelector('.player-position').style.background = "#236d4d"
@@ -142,6 +159,7 @@ function winCountResults(data){
             playerWrapper.querySelector('.player-name').textContent = user.login
             playerWrapper.querySelector('.player-score').textContent = user.statistics.win_count
             playerWrapper.querySelector('.player-position').textContent = '№' + (i + 1)
+            playerWrapper.querySelector('a').href = '/profile/' + user.login
             if (playerNickname === user.login){
                 playerWrapper.querySelector('.player').style.background = "#2e815d"
                 playerWrapper.querySelector('.player-position').style.background = "#236d4d"
