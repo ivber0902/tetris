@@ -1,4 +1,5 @@
 const host = window.location.hostname;
+let playerNickname = document.querySelector('.profile__nickname').textContent
 
 function createMaxScoreBlock(){
     const player = document.createElement('div');
@@ -104,6 +105,12 @@ function maxScoreResults(data){
             playerWrapper.querySelector('.player-name').textContent = user.login
             playerWrapper.querySelector('.player-score').textContent = user.statistics.max_score
             playerWrapper.querySelector('.player-position').textContent = '№' + (i + 1)
+            if (playerNickname === user.login){
+                playerWrapper.querySelector('.player').style.background = "#2e815d"
+                playerWrapper.querySelector('.player-position').style.background = "#236d4d"
+                playerWrapper.querySelector('.player').style.borderLeft = "3px solid #31af78"
+                playerWrapper.querySelector('.player').style.borderTop = "3px solid #31af78"
+            }
         })
     }
 }
@@ -117,6 +124,12 @@ function totalScoreResults(data){
             playerWrapper.querySelector('.player-name').textContent = user.login
             playerWrapper.querySelector('.player-score').textContent = user.statistics.total_score
             playerWrapper.querySelector('.player-position').textContent = '№' + (i + 1)
+            if (playerNickname === user.login){
+                playerWrapper.querySelector('.player').style.background = "#2e815d"
+                playerWrapper.querySelector('.player-position').style.background = "#236d4d"
+                playerWrapper.querySelector('.player').style.borderLeft = "3px solid #31af78"
+                playerWrapper.querySelector('.player').style.borderTop = "3px solid #31af78"
+            }
         })
     }
 }
@@ -129,6 +142,12 @@ function winCountResults(data){
             playerWrapper.querySelector('.player-name').textContent = user.login
             playerWrapper.querySelector('.player-score').textContent = user.statistics.win_count
             playerWrapper.querySelector('.player-position').textContent = '№' + (i + 1)
+            if (playerNickname === user.login){
+                playerWrapper.querySelector('.player').style.background = "#2e815d"
+                playerWrapper.querySelector('.player-position').style.background = "#236d4d"
+                playerWrapper.querySelector('.player').style.borderLeft = "3px solid #31af78"
+                playerWrapper.querySelector('.player').style.borderTop = "3px solid #31af78"
+            }
         })
     }
 }

@@ -58,10 +58,15 @@
 
 .menu{
     text-align: center;
-    padding: 50px;
+    padding: 25px;
     display: flex;
     flex: 1;
     justify-content: space-between;
+}
+
+.max__score, .max__win, .max__total{
+    flex: 1;
+    margin-right: 10px;
 }
 
 .menu__title{
@@ -71,7 +76,7 @@
     border-top: 3px solid #228057;
     border-left: 3px solid #228057;
     border-bottom: 3px solid #0c2e1f;
-    margin-bottom: 75px;
+    margin-bottom: 30px;
 }
 
 .menu__title h1{
