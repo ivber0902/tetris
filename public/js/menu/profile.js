@@ -1,4 +1,5 @@
 let button = document.querySelector('.back');
+let playerOwner = document.querySelector('.player_owner').value
 let userImageInput = document.getElementById('image-input');
 let userImageProfile = document.querySelector('.user-avatar')
 let form = document.querySelector('form');
@@ -93,6 +94,13 @@ function closeAchievement(achievement, countClouse){
 button.addEventListener('click', () => {
   window.history.back();
 })
+
+if (playerOwner === 'true'){
+  userImageInput.removeAttribute('disabled');
+}
+else{
+  userImageInput.setAttribute('disabled', 'disabled');
+}
 
 userImageInput.addEventListener('change', (event) => {
   const file = event.target.files[0];

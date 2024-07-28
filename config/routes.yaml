@@ -25,6 +25,9 @@ about:
 statistics:
     path: /statistics/{login}
     controller: App\Controller\PlayerController::statistics
+games_list:
+    path: /games_list/{login}
+    controller: App\Controller\PlayerController::gamesList
 leaderboard:
     path: /leaderboard
     controller: App\Controller\GameController::leaderboard

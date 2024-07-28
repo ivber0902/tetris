@@ -1,0 +1,30 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	Games List
+{% endblock %}
+{% block style %}
+	<link rel="stylesheet" href="/css/games_list.css"/>
+	<link rel="stylesheet" href="/css/mini-profile.css"/>
+	<link rel="stylesheet" href="/css/header.css"/>
+{% endblock %}
+{% block content %}
+    <input class="player-id" type="hidden" value="{{player.id}}">
+	<div class="bg">
+		<div class="header">
+			{% include 'header.html.twig' %}
+		</div>
+		<div class="menu">
+            <div class="menu__title">
+                <h1>список ваших последних игр</h1>
+            </div>
+			<div class="games_list">
+                
+			</div>
+			<h1 class="zero-games">вы пока не сыграли ни одной игры</h1>
+		</div>	
+	</div>
+	{% include 'mini-profile.html.twig' %}
+	<script src="/js/menu/games_list.js"></script>
+	<script src="/js/menu/mini-profile.js"></script>
+{% endblock %}

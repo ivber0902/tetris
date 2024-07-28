@@ -1,0 +1,111 @@
+.game-more_info{
+    display: flex;
+    flex-wrap: wrap;   
+    background-color: #051a11;
+    border-left: 3px solid #0d442c;
+    border-bottom: 3px solid #02110b;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+
+.game-block:hover .game-more_info {
+    opacity: 1;
+    max-height: 100px; 
+    padding: 10px;
+}
+
+.bg {
+    height: 100vh;
+}
+
+.game-block{
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+.menu{
+    height: 70%;
+    text-align: center;
+}
+
+.zero-games{
+    display: none;
+}
+
+.menu__title{
+    text-align: left;
+    padding: 10px;
+    background-color: #174632;
+    border-top: 3px solid #228057;
+    border-left: 3px solid #228057;
+    border-bottom: 3px solid #0c2e1f;
+    margin-bottom: 15px;
+}
+
+.menu__title h1{
+    font-size: 35px;
+    margin-bottom: 5px;
+}
+
+.games_list{
+    flex: 1;
+    margin-right: 10px;
+    overflow-y: scroll;
+    align-items: flex-end;
+    max-height: 75%;
+}
+
+.games_list::-webkit-scrollbar {
+    width: 5px;
+    background-color: #1a161d;
+}
+
+.games_list::-webkit-scrollbar-thumb {
+    width: 5px;
+    border-radius: 10px;
+    background-color: #243e25;
+}
+
+.games_list::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    background-color: #1a161d;
+}
+
+.game{
+    display: flex;
+    background-color: #174632;
+    border-top: 3px solid #228057;
+    border-left: 3px solid #228057;
+    border-bottom: 3px solid #0c2e1f;
+    justify-content: space-between;
+    font-size: 25px;
+}
+
+.game-info{
+    height: 100%;
+    display: flex;
+}
+
+.game-mode{
+    padding: 10px;
+}
+
+.game-position{
+    margin-right: 10px;
+    height: 100%;
+    padding: 10px;
+    background-color: #103a28;
+    width: 75px;
+}
+
+.game-score{
+    padding: 10px;
+}
+
+.game-field, .game-time, .game-tetris, .game-rows, .game-figures{
+    margin-right: 30px;
+}
