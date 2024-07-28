@@ -24,6 +24,7 @@ class Player {
         this.countTetris = 0;
         this.countClearLines = 0;
         this.fieldMode = 0;
+        this.figuresCount = 0;
     }
 
     initFigures(currentFigureIndex, bufferFigureIndex, NextFiguresIndex) {
@@ -197,7 +198,7 @@ class Player {
                             mode: parseInt(localStorage.mode),
                             score: this.score,
                             tetris_count: this.countTetris,
-                            figure_count: this.figureCount,
+                            figure_count: this.figuresCount,
                             filled_rows: this.countClearLines,
                             field_mode: this.fieldMode,
                             is_won: false
@@ -223,6 +224,7 @@ class Player {
         this.move.drop = 0;
         this.move.left = 0;
         this.move.right = 0;
+        this.figuresCount++
         this.figureCount++;
         this.updateScore(this.field.clearRow());
         this.updateLvl();

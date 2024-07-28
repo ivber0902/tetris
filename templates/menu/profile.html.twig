@@ -9,6 +9,7 @@
 {% block content %}
     <header class="header">
         <img src="/images/settings.png" alt="settings" class="header__settings">
+        <input class="player_owner" type="hidden" value="{{ owner }}">
         <a href="/logout">
             <img src="/images/exit-logo.svg" alt="exit" class="header__exit">
         </a>
@@ -19,7 +20,7 @@
             <label for="image-input">
                 <img class="user-avatar" src='../uploads/{{player.getAvatar() ?? "human.jpeg"}}' alt="avatar" >
             </label>
-            <input type="file" id="image-input"  name="avatarPath" accept="image/png, image/jpeg, image/jpg">
+            <input type="file" id="image-input"  name="avatarPath" accept="image/png, image/jpeg, image/jpg" disabled>
         </form>
             <div class="general-results">
                 <input class="player-id" type="hidden" value="{{player.id}}">
@@ -35,6 +36,7 @@
                 </div>
             </div>
             <a href="/statistics/{{player.user.login}}" class="all-statistic-view">посмотреть ВСЮ СТАТИСТИКУ</a>
+            <a href="/games_list/{{player.user.login}}" class="all-statistic-view">посмотреть историю игр</a>
         </div>
         <div class="other-information">
             <h2 class="other-information__title">достижения</h2>

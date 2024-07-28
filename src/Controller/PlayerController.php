@@ -27,9 +27,27 @@ class PlayerController extends AbstractController
     {
         $player = $this->service->findPlayerByLogin($login);
         if ($player !== null) {
-            return $this->render('menu/profile.html.twig', [
-                "player" => $player,
-            ]);
+            $securityUser = $this->getUser();
+            if ($securityUser === null) {
+                return $this->render('menu/profile.html.twig', [
+                    "player" => $player,
+                    "owner" => "false"
+                ]); 
+            }    
+            
+            $user = $this->service->findPlayer($securityUser->getId());
+            if($user === $player){
+                return $this->render('menu/profile.html.twig', [
+                    "player" => $player,
+                    "owner" => "true"
+                ]);
+            }
+            else{
+                return $this->render('menu/profile.html.twig', [
+                    "player" => $player,
+                    "owner" => "false"
+                ]);
+            }
         }
         throw new UnprocessableEntityHttpException();
     }
@@ -44,6 +62,19 @@ class PlayerController extends AbstractController
         }
         throw new UnprocessableEntityHttpException();
     }
+
+
+    public function gamesList(string $login): Response
+    {
+        $player = $this->service->findPlayerByLogin($login);
+        if ($player !== null) {
+            return $this->render('menu/games_list.html.twig', [
+                "player" => $player,
+            ]);
+        }
+        throw new UnprocessableEntityHttpException();
+    }
+
 
     public function updateStatistics(Request $request): Response
     {
