@@ -116,11 +116,34 @@ function createGame(data){
         gameBlock.querySelector('.game-tetris').textContent = 'тетрисов:' + data[i].tetris_count
         gameBlock.querySelector('.game-rows').textContent = 'линий:' + data[i].filled_rows
         gameBlock.querySelector('.game-figures').textContent = 'фигур:' + data[i].figure_count
+        if((data[i].mode === 1) || (data[i].mode === 2) || (data[i].mode === 3)){
+            if(data[i].is_won === true){
+                gameBlock.querySelector('.game').style.background = "#19ca45"
+                gameBlock.querySelector('.game-position').style.background = "#1ca73f"
+                gameBlock.querySelector('.game').style.borderLeft = "3px solid #43fa71"
+                gameBlock.querySelector('.game').style.borderTop = "3px solid #43fa71"
+                gameBlock.querySelector('.game').style.borderBottom = "3px solid #0e6e26"
+                gameBlock.querySelector('.game-more_info').style.background = "#0e6e26"
+                gameBlock.querySelector('.game-more_info').style.borderLeft = "3px solid #20b445"
+                gameBlock.querySelector('.game-more_info').style.borderBottom = "3px solid #073312"
+            }
+            else{
+                gameBlock.querySelector('.game').style.background = "#be1313"
+                gameBlock.querySelector('.game-position').style.background = "#8a1010"
+                gameBlock.querySelector('.game').style.borderLeft = "3px solid #fc3c3c"
+                gameBlock.querySelector('.game').style.borderTop = "3px solid #fc3c3c"
+                gameBlock.querySelector('.game').style.borderBottom = "3px solid #5a0c0c"
+                gameBlock.querySelector('.game-more_info').style.background = "#5a0c0c"
+                gameBlock.querySelector('.game-more_info').style.borderLeft = "3px solid #a32727"
+                gameBlock.querySelector('.game-more_info').style.borderBottom = "3px solid #380707"
+            }
+        }      
     }
 }
 
 foundGames().then((results) => {
     createGame(results)
+    console.log(results)
     if(results.length === 0)
         document.querySelector('.zero-games').style.display = 'inline'
     else

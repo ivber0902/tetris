@@ -38,7 +38,7 @@ GAME.play = (player) => {
                 time: 0,
                 score: player.score,
                 tetris_count: player.countTetris,
-                figure_count: player.figureCount,
+                figure_count: player.figuresCount,
                 filled_rows: player.countClearLines,
                 field_mode: player.fieldMode,
                 is_won: true

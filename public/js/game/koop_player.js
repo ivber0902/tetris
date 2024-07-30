@@ -205,7 +205,7 @@ class Player {
                             time: new Date() - GAME.startTime,
                             score: player.score,
                             tetris_count: player.countTetris,
-                            figure_count: player.figureCount,
+                            figure_count: player.figuresCount,
                             filled_rows: player.countClearLines,
                             field_mode: player.fieldMode,
                             is_won: false
@@ -248,7 +248,7 @@ class Player {
                             time: new Date() - GAME.startTime,
                             score: player.score,
                             tetris_count: player.countTetris,
-                            figure_count: player.figureCount,
+                            figure_count: player.figuresCount,
                             filled_rows: player.countClearLines,
                             field_mode: player.fieldMode,
                             is_won: false

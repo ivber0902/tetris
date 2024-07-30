@@ -1,14 +1,14 @@
 .game-more_info{
     display: flex;
     flex-wrap: wrap;   
-    background-color: #051a11;
+    background-color: #0c2e1f;
     border-left: 3px solid #0d442c;
     border-bottom: 3px solid #02110b;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     opacity: 0;
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease, opacity 0.3s ease;
+    transition: max-height 0.6s ease, opacity 0.6s ease;
 }
 
 .game-block:hover .game-more_info {
