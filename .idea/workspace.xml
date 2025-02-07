@@ -4,14 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7bcc5562-9455-45fa-9b4e-8407aadb17a9" name="Changes" comment="Исправил количичество игроков по-умолчанию с 1 на всех">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebSocket/database.go" beforeDir="false" afterPath="$PROJECT_DIR$/WebSocket/database/database.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebSocket/game/results.go" beforeDir="false" afterPath="$PROJECT_DIR$/WebSocket/game/results.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebSocket/game/room.go" beforeDir="false" afterPath="$PROJECT_DIR$/WebSocket/game/room.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebSocket/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/WebSocket/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebSocket/util.go" beforeDir="false" afterPath="$PROJECT_DIR$/WebSocket/util.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/multiplayer/lobby-socket.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/multiplayer/lobby-socket.js" afterDir="false" />
+    <list default="true" id="7bcc5562-9455-45fa-9b4e-8407aadb17a9" name="Changes" comment="Добавил base.css">
+      <change beforePath="$PROJECT_DIR$/public/css/bot.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/bot.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/game-over-multi.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/game-over-multi.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/login.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/login.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/profile.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/profile.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/register-style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/register-style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/settings.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/settings.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,7 +125,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "ChangeIPAuthToID",
+    "git-widget-placeholder": "main",
     "last_opened_file_path": "/web/tetris/config/doctrine",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -363,7 +362,23 @@
       <option name="project" value="LOCAL" />
       <updated>1721893376857</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Добавил base.css">
+      <option name="closed" value="true" />
+      <created>1738905752613</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1738905752614</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Добавил base.css">
+      <option name="closed" value="true" />
+      <created>1738905962815</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1738905962815</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -393,7 +408,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Исправил кнопку «Начать игру»" />
     <MESSAGE value="ХЕР" />
     <MESSAGE value="Коммит по-русски" />
     <MESSAGE value="Внедрил NoSQL. Необходимо много исправлений в JS, TWIG, CSS" />
@@ -418,6 +432,7 @@
     <MESSAGE value="Добавил PLayerID в API для статистики" />
     <MESSAGE value="Исправил bool в isWon в API для статистики" />
     <MESSAGE value="Исправил количичество игроков по-умолчанию с 1 на всех" />
-    <option name="LAST_COMMIT_MESSAGE" value="Исправил количичество игроков по-умолчанию с 1 на всех" />
+    <MESSAGE value="Добавил base.css" />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавил base.css" />
   </component>
 </project>

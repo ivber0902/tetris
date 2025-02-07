@@ -10,7 +10,7 @@
 body {
     height: 100vh;
     width: 100vw;
-    background: url("https://i.postimg.cc/1zyHTmtK/bg.png") no-repeat;
+    background-image: url("https://i.postimg.cc/1zyHTmtK/bg.png");
     background-size: cover;
 }
 

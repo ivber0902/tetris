@@ -11,7 +11,7 @@
 body {
     max-width: 100%;
     max-height: 100%;
-    background: url("https://i.postimg.cc/1zyHTmtK/bg.png") no-repeat;
+    background-image: url("https://i.postimg.cc/1zyHTmtK/bg.png");
     background-size: cover;
 }
 
